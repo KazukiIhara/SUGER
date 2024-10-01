@@ -6,8 +6,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\main.cpp">
+    <ClCompile Include="engine\main.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="engine\tools\logger\Logger.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="engine\tools\logger\Logger.h" />
   </ItemGroup>
 </Project>
