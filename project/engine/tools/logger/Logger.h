@@ -4,15 +4,15 @@
 #include <format>
 
 // 
-// ƒfƒoƒbƒOƒƒO•\¦—pƒNƒ‰ƒX
+// ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°è¡¨ç¤ºç”¨ã‚¯ãƒ©ã‚¹
 // 
 
 class Logger {
-public: // Ã“Iƒƒ“ƒoŠÖ”
-	// ƒfƒoƒbƒOƒƒO‚Ìo—Í
+public: // é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
+	// ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°ã®å‡ºåŠ›
 	static void Log(const std::string& message);
-	// stringŒ^‚ğwstringŒ^‚É•ÏŠ·‚·‚éŠÖ”
+	// stringå‹ã‚’wstringå‹ã«å¤‰æ›ã™ã‚‹é–¢æ•°
 	static std::wstring ConvertString(const std::string& str);
-	// wstringŒ^‚ğstringŒ^‚É•ÏŠ·‚·‚éŠÖ”
+	// wstringå‹ã‚’stringå‹ã«å¤‰æ›ã™ã‚‹é–¢æ•°
 	static std::string ConvertString(const std::wstring& str);
 };
