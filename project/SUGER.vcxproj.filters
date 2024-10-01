@@ -1,8 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Engine">
+    <Filter Include="engine">
       <UniqueIdentifier>{d1efecd4-6b6e-43bb-aefb-703fa4bd53df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\tools">
+      <UniqueIdentifier>{c99f3694-e6da-4654-a03d-740d87a1a660}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="engine\main.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tools\logger\Logger.cpp">
+      <Filter>engine\tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="engine\tools\logger\Logger.h">
+      <Filter>engine\tools</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
