@@ -7,6 +7,12 @@
     <Filter Include="engine\tools">
       <UniqueIdentifier>{c99f3694-e6da-4654-a03d-740d87a1a660}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\manager">
+      <UniqueIdentifier>{14188dd6-7b50-4d13-a611-8846a089a86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\window">
+      <UniqueIdentifier>{1b968b3b-d3a3-480d-a3c9-30320bb2b2e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\main.cpp">
@@ -15,12 +21,16 @@
     <ClCompile Include="engine\tools\logger\Logger.cpp">
       <Filter>engine\tools</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\window\WindowManager.cpp" />
+    <ClCompile Include="Engine\manager\window\WindowManager.cpp">
+      <Filter>engine\manager\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
       <Filter>engine\tools</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\window\WindowManager.h" />
+    <ClInclude Include="Engine\manager\window\WindowManager.h">
+      <Filter>engine\manager\window</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
