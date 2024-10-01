@@ -15,10 +15,12 @@
     <ClCompile Include="engine\tools\logger\Logger.cpp">
       <Filter>engine\tools</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\manager\window\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
       <Filter>engine\tools</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\manager\window\WindowManager.h" />
   </ItemGroup>
 </Project>
