@@ -25,6 +25,9 @@
     <Filter Include="engine\manager\imgui">
       <UniqueIdentifier>{e006ef4f-8eae-4962-bb3d-bd31cdadacaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\manager\directX">
+      <UniqueIdentifier>{22bbc639-552b-4393-955d-6d6ee1aca93f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\main.cpp">
@@ -42,6 +45,9 @@
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp">
       <Filter>engine\manager\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\manager\directX\DirectXManager.cpp">
+      <Filter>engine\manager\directX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
@@ -58,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="Engine\manager\imgui\ImGuiManager.h">
       <Filter>engine\manager\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\directX\DirectXManager.h">
+      <Filter>engine\manager\directX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
