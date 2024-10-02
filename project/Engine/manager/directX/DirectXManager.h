@@ -1,17 +1,20 @@
 #pragma once
-#pragma once
 
 // C++
 #include <chrono>
 #include <cmath>
 #include <cassert>
 #include <wrl.h>
+#include <memory>
 
 // DirectX
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <dxgidebug.h>
 #include <dxcapi.h>
+
+// デバイス
+#include "DirectXDevice.h"
 
 // 前方宣言
 class WindowManager;
@@ -29,10 +32,6 @@ public: // 公開メンバ関数
 	// 描画後処理
 	void PostDraw();
 
-	// デバイスの取得
-	ID3D12Device* GetDevice() {
-		return device_.Get();
-	}
 	// 描画コマンドリストの取得
 	ID3D12GraphicsCommandList* GetCommandList() {
 		return commandList_.Get();
@@ -69,8 +68,6 @@ private: // プライベートメンバ関数
 		windowManager_ = windowManager;
 	}
 
-	// DXGIデバイスの生成と初期化
-	void InitializeDXGIDevice(bool enableDebugLayer);
 
 	// コマンド関連初期化
 	void InitializeCommand();
@@ -111,15 +108,13 @@ private: // プライベートメンバ関数
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
 
 private: // メンバ変数
+
+	// デバイス
+	std::unique_ptr<DirectXDevice> device_;
+
 	// SUCCEEDEDでエラー判別君
 	HRESULT hr_ = S_FALSE;
 
-	// DXGIファクトリー
-	Microsoft::WRL::ComPtr <IDXGIFactory7> dxgiFactory_ = nullptr;
-	// 使用するアダプタ用の変数
-	Microsoft::WRL::ComPtr<IDXGIAdapter4> useAdapter_ = nullptr;
-	// Device
-	Microsoft::WRL::ComPtr<ID3D12Device> device_ = nullptr;
 	// コマンドキュー
 	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr;
 	// コマンドアロケータ
