@@ -14,7 +14,7 @@
 #include <dxcapi.h>
 
 // デバイス
-#include "DirectXDevice.h"
+#include "DXGIManager.h"
 
 // 前方宣言
 class WindowManager;
@@ -110,7 +110,7 @@ private: // プライベートメンバ関数
 private: // メンバ変数
 
 	// デバイス
-	std::unique_ptr<DirectXDevice> device_;
+	std::unique_ptr<DXGIManager> dxgi_;
 
 	// SUCCEEDEDでエラー判別君
 	HRESULT hr_ = S_FALSE;

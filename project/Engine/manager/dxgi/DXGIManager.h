@@ -5,10 +5,10 @@
 #include <d3d12.h>
 #include <dxgi1_6.h>
 
-class DirectXDevice {
+class DXGIManager {
 public:
-	DirectXDevice() = default;
-	~DirectXDevice() = default;
+	DXGIManager() = default;
+	~DXGIManager() = default;
 
 	void Initialize();
 

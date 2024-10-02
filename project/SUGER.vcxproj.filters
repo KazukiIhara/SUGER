@@ -36,26 +36,23 @@
     <ClCompile Include="engine\tools\logger\Logger.cpp">
       <Filter>engine\tools</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\window\WindowManager.cpp">
-      <Filter>engine\manager\window</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
       <Filter>engine\input\direct</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
+    <ClCompile Include="Engine\manager\directX\DirectXManager.cpp">
+      <Filter>engine\manager\directX</Filter>
     </ClCompile>
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp">
       <Filter>engine\manager\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\directX\DirectXManager.cpp">
-      <Filter>engine\manager\directX</Filter>
+    <ClCompile Include="Engine\manager\window\WindowManager.cpp">
+      <Filter>engine\manager\window</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\base\directX\device\DirectXDevice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
       <Filter>engine\tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\manager\window\WindowManager.h">
-      <Filter>engine\manager\window</Filter>
     </ClInclude>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
       <Filter>engine\input\direct</Filter>
@@ -63,12 +60,15 @@
     <ClInclude Include="Engine\include\ComPtr.h">
       <Filter>engine\include</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\imgui\ImGuiManager.h">
-      <Filter>engine\manager\imgui</Filter>
-    </ClInclude>
+    <ClInclude Include="Engine\manager\dxgi\DXGIManager.h" />
     <ClInclude Include="Engine\manager\directX\DirectXManager.h">
       <Filter>engine\manager\directX</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\base\directX\device\DirectXDevice.h" />
+    <ClInclude Include="Engine\manager\imgui\ImGuiManager.h">
+      <Filter>engine\manager\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\window\WindowManager.h">
+      <Filter>engine\manager\window</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

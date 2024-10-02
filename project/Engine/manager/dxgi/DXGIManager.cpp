@@ -1,9 +1,9 @@
-#include "DirectXDevice.h"
+#include "DXGIManager.h"
 
 #include <cassert>
 #include "Logger.h"
 
-void DirectXDevice::Initialize() {
+void DXGIManager::Initialize() {
 #ifdef _DEBUG
 	Microsoft::WRL::ComPtr<ID3D12Debug1> debugController = nullptr;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
@@ -91,10 +91,10 @@ void DirectXDevice::Initialize() {
 #endif // _DEBUG
 }
 
-ID3D12Device* DirectXDevice::GetDevice() {
+ID3D12Device* DXGIManager::GetDevice() {
 	return device_.Get();
 }
 
-IDXGIFactory7* DirectXDevice::GetFactory() {
+IDXGIFactory7* DXGIManager::GetFactory() {
 	return dxgiFactory_.Get();
 }
