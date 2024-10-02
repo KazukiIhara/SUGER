@@ -15,11 +15,6 @@ public: // 公開メンバ関数
 
 	// 初期化
 	void Initialize();
-	// ゲームウィンドウの作成
-	void CreateGameWindow(const wchar_t* title = L"DirectXGame", UINT windowStyle = WS_OVERLAPPEDWINDOW,
-		int32_t clientWidth = kClientWidth, int32_t clientHeight = kClientHeight);
-	// ゲームウィンドウの破棄
-	void TerminateGameWindow();
 	// メッセージの処理
 	bool ProcessMessage();
 	// 終了処理
@@ -33,6 +28,12 @@ public: // 公開メンバ関数
 	WNDCLASS GetWndClass() const {
 		return wc_;
 	}
+private:
+	// ゲームウィンドウの作成
+	void CreateGameWindow(const wchar_t* title = L"DirectXGame", UINT windowStyle = WS_OVERLAPPEDWINDOW,
+		int32_t clientWidth = kClientWidth, int32_t clientHeight = kClientHeight);
+	// ゲームウィンドウの破棄
+	void TerminateGameWindow();
 
 public: // 静的メンバ関数
 	// ウィンドウプロシージャ
