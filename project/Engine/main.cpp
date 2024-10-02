@@ -2,6 +2,7 @@
 
 #include "Logger.h"
 #include "WindowManager.h"
+#include "imgui.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
