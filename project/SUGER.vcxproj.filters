@@ -28,6 +28,9 @@
     <Filter Include="engine\manager\directX">
       <UniqueIdentifier>{22bbc639-552b-4393-955d-6d6ee1aca93f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\manager\dxgi">
+      <UniqueIdentifier>{59fb8c8d-6a53-4f33-b45b-6d7f8c66c067}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\main.cpp">
@@ -39,7 +42,6 @@
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
       <Filter>engine\input\direct</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp">
       <Filter>engine\manager\directX</Filter>
     </ClCompile>
@@ -48,6 +50,9 @@
     </ClCompile>
     <ClCompile Include="Engine\manager\window\WindowManager.cpp">
       <Filter>engine\manager\window</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp">
+      <Filter>engine\manager\dxgi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +65,6 @@
     <ClInclude Include="Engine\include\ComPtr.h">
       <Filter>engine\include</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\dxgi\DXGIManager.h" />
     <ClInclude Include="Engine\manager\directX\DirectXManager.h">
       <Filter>engine\manager\directX</Filter>
     </ClInclude>
@@ -69,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="Engine\manager\window\WindowManager.h">
       <Filter>engine\manager\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\dxgi\DXGIManager.h">
+      <Filter>engine\manager\dxgi</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
