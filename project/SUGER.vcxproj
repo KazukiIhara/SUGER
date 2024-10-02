@@ -62,10 +62,13 @@
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalOptions>/ignore:4049 /ignore:4098 %(AdditionalOptions)</AdditionalOptions>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -91,9 +94,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine\main.cpp" />
+    <ClCompile Include="Engine\manager\window\WindowManager.cpp" />
     <ClCompile Include="engine\tools\logger\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\manager\window\WindowManager.h" />
     <ClInclude Include="engine\tools\logger\Logger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
