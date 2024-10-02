@@ -4,6 +4,7 @@
 #include "WindowManager.h"
 #include "DirectXManager.h"
 #include "DirectInput.h"
+#include "SRVManager.h"
 #include "imgui.h"
 
 #include <memory>
@@ -24,6 +25,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	directXManager = std::make_unique<DirectXManager>();
 	directXManager->Initialize(windowManager.get());
 
+	std::unique_ptr<SRVManager> srvManager;
+	srvManager = std::make_unique<SRVManager>();
+	srvManager->Initialize(directXManager.get());
+
+
 	while (true) {
 
 		directInput->Update();
@@ -33,6 +39,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		directXManager->PreDraw();
+		srvManager->PreDraw();
 
 		directXManager->PostDraw();
 

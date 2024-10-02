@@ -12,16 +12,16 @@
 class DirectXManager;
 class DXGIManager;
 
-class SrvManager {
+class SRVManager {
 public: // インスタンスコピー関数
 
 
 public: // 公開メンバ関数
-	SrvManager() = default;
-	~SrvManager() = default;
+	SRVManager() = default;
+	~SRVManager() = default;
 
 	// 初期化
-	void Initialize(DirectXManager* directX, DXGIManager* dxgi);
+	void Initialize(DirectXManager* directX);
 	// 割り当て関数
 	uint32_t Allocate();
 	// CPUの特定のインデックスハンドルを取得

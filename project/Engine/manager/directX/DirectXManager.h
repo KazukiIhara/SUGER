@@ -53,6 +53,8 @@ public: // 公開メンバ関数
 		return rtvDesc_;
 	}
 
+	DXGIManager* GetDXGIManager()const;
+
 	// CPUの特定のインデックスのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
 	// GPUの特定のインデックスのハンドルを取得
