@@ -46,10 +46,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(SolutionDir)..\generated\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\generated\outputs\$(Configuration)\</OutDir>
+    <IncludePath>$(SolutionDir)\externals\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>$(SolutionDir)..\generated\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\generated\outputs\$(Configuration)\</OutDir>
+    <IncludePath>$(SolutionDir)\externals\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -57,11 +59,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\manager\window</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -79,7 +81,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\manager\window</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -95,14 +97,21 @@
   <ItemGroup>
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
     <ClCompile Include="engine\main.cpp" />
+    <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp" />
     <ClCompile Include="Engine\manager\window\WindowManager.cpp" />
     <ClCompile Include="engine\tools\logger\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\ComPtr.h" />
     <ClInclude Include="Engine\input\direct\DirectInput.h" />
+    <ClInclude Include="Engine\manager\imgui\ImGuiManager.h" />
     <ClInclude Include="Engine\manager\window\WindowManager.h" />
     <ClInclude Include="engine\tools\logger\Logger.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="externals\imgui\imgui.vcxproj">
+      <Project>{1b44f3b4-4e7f-4cff-a61d-a5e8b1c44849}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
