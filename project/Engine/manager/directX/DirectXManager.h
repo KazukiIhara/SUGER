@@ -109,7 +109,7 @@ private: // プライベートメンバ関数
 
 private: // メンバ変数
 
-	// デバイス
+	// DXGI
 	std::unique_ptr<DXGIManager> dxgi_;
 
 	// SUCCEEDEDでエラー判別君
