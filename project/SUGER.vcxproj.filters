@@ -48,6 +48,7 @@
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp">
       <Filter>engine\manager\directX</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\base\directX\device\DirectXDevice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
@@ -68,5 +69,6 @@
     <ClInclude Include="Engine\manager\directX\DirectXManager.h">
       <Filter>engine\manager\directX</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\base\directX\device\DirectXDevice.h" />
   </ItemGroup>
 </Project>
