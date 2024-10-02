@@ -42,6 +42,7 @@
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp">
       <Filter>engine\manager\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\manager\directX\DirectXManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
@@ -59,5 +60,6 @@
     <ClInclude Include="Engine\manager\imgui\ImGuiManager.h">
       <Filter>engine\manager\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\manager\directX\DirectXManager.h" />
   </ItemGroup>
 </Project>
