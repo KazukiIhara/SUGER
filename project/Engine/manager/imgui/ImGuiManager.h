@@ -11,7 +11,7 @@
 // 前方宣言
 class WindowManager;
 class DirectXManager;
-class SrvManager;
+class SRVManager;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
@@ -26,7 +26,7 @@ public: // インスタンスセット関数
 	void SetDirectXCommon(DirectXManager* directXManager) {
 		directXManager_ = directXManager;
 	}
-	void SetSrvManager(SrvManager* srvManager) {
+	void SetSrvManager(SRVManager* srvManager) {
 		srvManager_ = srvManager;
 	}
 public: // 公開メンバ関数
@@ -54,6 +54,6 @@ private: // インスタンスを受け取る変数
 	// DirectXCommon
 	DirectXManager* directXManager_ = nullptr;
 	// SrvManager
-	SrvManager* srvManager_ = nullptr;
+	SRVManager* srvManager_ = nullptr;
 };
 
