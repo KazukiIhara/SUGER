@@ -104,6 +104,11 @@
     <ClInclude Include="Engine\manager\window\WindowManager.h" />
     <ClInclude Include="engine\tools\logger\Logger.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\imgui\imgui.vcxproj">
+      <Project>{9e041f9c-388d-4a3a-bfb8-6ae3fb9c7eef}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
