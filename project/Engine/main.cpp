@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <memory>
 
 #include "Logger.h"
 #include "WindowManager.h"
@@ -7,7 +8,11 @@
 #include "SRVManager.h"
 #include "imgui.h"
 
-#include <memory>
+// Lib
+#pragma comment(lib,"d3d12.lib")
+#pragma comment(lib,"dxgi.lib")
+#pragma comment(lib,"dxguid.lib")
+#pragma comment(lib,"dxcompiler.lib")
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
