@@ -19,6 +19,9 @@
     <Filter Include="engine\input\direct">
       <UniqueIdentifier>{f3af9f91-07bb-457b-a5ae-a45945a3912b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\include">
+      <UniqueIdentifier>{5067b81e-e75a-4897-949e-1c6067d3a8a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\main.cpp">
@@ -41,9 +44,11 @@
     <ClInclude Include="Engine\manager\window\WindowManager.h">
       <Filter>engine\manager\window</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\ComPtr.h" />
     <ClInclude Include="Engine\input\direct\DirectInput.h">
       <Filter>engine\input\direct</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\ComPtr.h">
+      <Filter>engine\include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
