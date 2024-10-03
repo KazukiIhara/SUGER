@@ -2,8 +2,6 @@
 
 #include "ImGuiManager.h"
 
-#pragma comment(lib,"winmm.lib")
-
 void WindowManager::Initialize() {
 	// システムタイマー分解能をあげる
 	timeBeginPeriod(1);

@@ -14,6 +14,8 @@
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
+#pragma comment(lib,"winmm.lib")
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Logger::Log("Hello,DirectX!\n");

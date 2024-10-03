@@ -1,7 +1,6 @@
 // Include
 #include <cassert>
 
-
 // MyHedder
 #include "DirectInput.h"
 #include "WindowManager.h"
