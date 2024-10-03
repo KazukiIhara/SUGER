@@ -6,7 +6,7 @@
 #include "DirectXManager.h"
 #include "DirectInput.h"
 #include "SRVManager.h"
-#include "imgui.h"
+#include "ImGuiManager.h"
 
 // Lib
 #pragma comment(lib,"d3d12.lib")
@@ -34,18 +34,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	srvManager = std::make_unique<SRVManager>();
 	srvManager->Initialize(directXManager.get());
 
+	std::unique_ptr<ImGuiManager> imguiManager;
+	imguiManager = std::make_unique<ImGuiManager>();
+	imguiManager->Initialize(windowManager.get(), directXManager.get(), srvManager.get());
+
 
 	while (true) {
-
-		directInput->Update();
-
 		if (windowManager->ProcessMessage()) {
 			break;
 		}
 
+		directInput->Update();
+		
+		imguiManager->BeginFrame();
+
+		ImGui::ShowDemoWindow();
+
+
+		imguiManager->EndFrame();
 		directXManager->PreDraw();
 		srvManager->PreDraw();
 
+
+		imguiManager->Draw();
 		directXManager->PostDraw();
 
 		if (directInput->PushKey(DIK_ESCAPE)) {
@@ -53,6 +64,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 	}
 
+
+	imguiManager->Finalize();
 	windowManager->Finalize();
 
 	return 0;

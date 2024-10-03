@@ -19,22 +19,12 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 
 // imguiマネージャ
 class ImGuiManager {
-public: // インスタンスセット関数
-	void SetWindowManager(WindowManager* windowManager) {
-		windowManager_ = windowManager;
-	}
-	void SetDirectXCommon(DirectXManager* directXManager) {
-		directXManager_ = directXManager;
-	}
-	void SetSrvManager(SRVManager* srvManager) {
-		srvManager_ = srvManager;
-	}
 public: // 公開メンバ関数
 	ImGuiManager() = default;
 	~ImGuiManager() = default;
 
 	// 初期化
-	void Initialize();
+	void Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVManager* srvManager);
 
 	// 更新処理の先頭に呼び出す処理
 	void BeginFrame();
@@ -48,10 +38,15 @@ public: // 公開メンバ関数
 	// ImGuiの終了処理
 	void Finalize();
 
+private:
+	void SetWindowManager(WindowManager* windowManager);
+	void SetDirectXManager(DirectXManager* directXManager);
+	void SetSrvManager(SRVManager* srvManager);
+
 private: // インスタンスを受け取る変数
 	// WinAPI
 	WindowManager* windowManager_ = nullptr;
-	// DirectXCommon
+	// DirectXManager
 	DirectXManager* directXManager_ = nullptr;
 	// SrvManager
 	SRVManager* srvManager_ = nullptr;
