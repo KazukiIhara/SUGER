@@ -60,7 +60,7 @@
     <ClCompile Include="Engine\manager\srv\SRVManager.cpp">
       <Filter>engine\manager\srv</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\directXCommand\DirectXCommand.cpp" />
+    <ClCompile Include="Engine\manager\directX\command\DirectXCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
@@ -87,6 +87,6 @@
     <ClInclude Include="Engine\manager\srv\SRVManager.h">
       <Filter>engine\manager\srv</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\directXCommand\DirectXCommand.h" />
+    <ClInclude Include="Engine\manager\directX\command\DirectXCommand.h" />
   </ItemGroup>
 </Project>
