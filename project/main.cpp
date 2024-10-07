@@ -2,13 +2,16 @@
 #include <memory>
 
 #include "debugTools/logger/Logger.h"
+
+#include "input/direct/DirectInput.h"
+
 #include "manager/window/WindowManager.h"
 #include "manager/directX/DirectXManager.h"
-#include "input/direct/DirectInput.h"
 #include "manager/srv/SRVManager.h"
 #include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
+
 #include "2d/system/Object2dSystem.h"
 
 // Lib
