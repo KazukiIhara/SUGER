@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\directX\command;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -72,6 +72,10 @@
       <AdditionalOptions>/ignore:4049 /ignore:4098 %(AdditionalOptions)</AdditionalOptions>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
+copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -81,7 +85,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\directX\command;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -93,33 +97,64 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir)dxcompiler.dll"
+copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\manager\directX\command\DirectXCommand.cpp" />
+    <ClCompile Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\2d\sprite\Sprite.cpp" />
+    <ClCompile Include="Engine\2d\system\Object2dSystem.cpp" />
+    <ClCompile Include="Engine\directX\command\DirectXCommand.cpp" />
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp" />
     <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
+    <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp" />
+    <ClCompile Include="Engine\manager\texture\TextureManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp" />
     <ClCompile Include="Engine\manager\srv\SRVManager.cpp" />
     <ClCompile Include="Engine\manager\window\WindowManager.cpp" />
-    <ClCompile Include="engine\tools\logger\Logger.cpp" />
+    <ClCompile Include="Engine\debugTools\logger\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\manager\directX\command\DirectXCommand.h" />
+    <ClInclude Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.h" />
+    <ClInclude Include="Engine\2d\sprite\Sprite.h" />
+    <ClInclude Include="Engine\2d\system\Object2dSystem.h" />
+    <ClInclude Include="Engine\directX\command\DirectXCommand.h" />
     <ClInclude Include="Engine\manager\directX\DirectXManager.h" />
     <ClInclude Include="Engine\manager\dxgi\DXGIManager.h" />
-    <ClInclude Include="Engine\include\ComPtr.h" />
+    <ClInclude Include="Engine\directX\includes\ComPtr.h" />
     <ClInclude Include="Engine\input\direct\DirectInput.h" />
     <ClInclude Include="Engine\manager\imgui\ImGuiManager.h" />
+    <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h" />
     <ClInclude Include="Engine\manager\srv\SRVManager.h" />
+    <ClInclude Include="Engine\manager\texture\TextureManager.h" />
     <ClInclude Include="Engine\manager\window\WindowManager.h" />
-    <ClInclude Include="engine\tools\logger\Logger.h" />
+    <ClInclude Include="Engine\debugTools\logger\Logger.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
+      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
     <ProjectReference Include="externals\imgui\imgui.vcxproj">
       <Project>{1b44f3b4-4e7f-4cff-a61d-a5e8b1c44849}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="resources\shaders\objects\object2d.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\object2d.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

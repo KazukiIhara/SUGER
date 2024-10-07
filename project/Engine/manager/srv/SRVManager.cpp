@@ -2,21 +2,17 @@
 #include "SRVManager.h"
 
 // MyHedder
-#include "DirectXManager.h"
-#include "DXGIManager.h"
-#include "DirectXCommand.h"
+#include "manager/directX/DirectXManager.h"
+#include "manager/dxgi/DXGIManager.h"
+#include "directX/command/DirectXCommand.h"
 
 void SRVManager::Initialize(DirectXManager* directX) {
 	// DirectXManagerのインスタンスを取得
 	SetDirectXManager(directX);
-	// DXGIマネージャのインスタンスを取得
-	SetDXGIManager(directX_->GetDXGIManager());
-	// DxCommandのインスタンスを取得
-	SetDirectXCommand(directX_->GetDirectXCommand());
 	// デスクリプタヒープの作成
-	descriptorHeap_ = DirectXManager::CreateDescriptorHeap(dxgi_->GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
+	descriptorHeap_ = DirectXManager::CreateDescriptorHeap(directX_->GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
 	// デスクリプタ一個分のサイズを取得して記録
-	descriptorSize_ = dxgi_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	descriptorSize_ = directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
 uint32_t SRVManager::Allocate() {
@@ -45,7 +41,7 @@ void SRVManager::CreateSrvTexture2d(uint32_t srvIndex, ID3D12Resource* pResource
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = mipLevels;
 	// Srvの作成
-	dxgi_->GetDevice()->CreateShaderResourceView(pResource, &srvDesc, GetCPUDescriptorHandle(srvIndex));
+	directX_->GetDevice()->CreateShaderResourceView(pResource, &srvDesc, GetCPUDescriptorHandle(srvIndex));
 }
 
 bool SRVManager::IsLowerSrvMax() {
@@ -55,21 +51,13 @@ bool SRVManager::IsLowerSrvMax() {
 void SRVManager::PreDraw() {
 	// 描画用のDescriptorHeapの設定
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { descriptorHeap_ };
-	dxCommand_->GetList()->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
+	directX_->GetCommandList()->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
 }
 
 void SRVManager::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
-	dxCommand_->GetList()->SetGraphicsRootDescriptorTable(rootParameterIndex, GetGPUDescriptorHandle(srvIndex));
+	directX_->GetCommandList()->SetGraphicsRootDescriptorTable(rootParameterIndex, GetGPUDescriptorHandle(srvIndex));
 }
 
 void SRVManager::SetDirectXManager(DirectXManager* directX) {
 	directX_ = directX;
-}
-
-void SRVManager::SetDXGIManager(DXGIManager* dxgi) {
-	dxgi_ = dxgi;
-}
-
-void SRVManager::SetDirectXCommand(DirectXCommandManager* dxcommand) {
-	dxCommand_ = dxcommand;
 }

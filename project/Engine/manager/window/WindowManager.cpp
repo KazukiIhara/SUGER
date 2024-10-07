@@ -1,6 +1,6 @@
 #include "WindowManager.h"
 
-#include "ImGuiManager.h"
+#include "manager/imgui/ImGuiManager.h"
 
 void WindowManager::Initialize() {
 	// システムタイマー分解能をあげる

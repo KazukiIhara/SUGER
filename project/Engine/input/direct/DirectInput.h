@@ -2,7 +2,7 @@
 // Include
 #define DIRECTINPUT_VERSION	0x0800 // DirectInputのバージョン設定
 #include <dinput.h>
-#include "ComPtr.h"
+#include "directX/includes/ComPtr.h"
 
 // pragma comment
 #pragma comment(lib,"dinput8.lib")

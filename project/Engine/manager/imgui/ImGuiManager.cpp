@@ -2,17 +2,16 @@
 #include "ImGuiManager.h"
 
 // MyHedder
-#include "WindowManager.h"
-#include "DirectXManager.h"
-#include "DirectXCommand.h"
-#include "SRVManager.h"
+#include "manager/window/WindowManager.h"
+#include "manager/directX/DirectXManager.h"
+#include "directX/command/DirectXCommand.h"
+#include "manager/srv/SRVManager.h"
 
 void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVManager* srvManager) {
 	
 	// インスタンスのセット
 	SetWindowManager(windowManager);
 	SetDirectXManager(directXManager);
-	SetDirectXCommand(directXManager_->GetDirectXCommand());
 	SetSrvManager(srvManager);
 	
 	/*ImGuiの初期化*/
@@ -20,7 +19,7 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(windowManager_->GetHwnd());
-	ImGui_ImplDX12_Init(directXManager_->GetDXGIManager()->GetDevice(),
+	ImGui_ImplDX12_Init(directXManager_->GetDevice(),
 		directXManager_->GetSwapChainDesc().BufferCount,
 		directXManager_->GetRTVDesc().Format,
 		srvManager_->GetDescriptorHeap(),
@@ -43,7 +42,7 @@ void ImGuiManager::EndFrame() {
 
 void ImGuiManager::Draw() {
 	// 実際のCommandListのImGuiの描画コマンドを積む
-	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), dxCommand_->GetList());
+	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), directXManager_->GetCommandList());
 }
 
 void ImGuiManager::Finalize() {
@@ -58,10 +57,6 @@ void ImGuiManager::SetWindowManager(WindowManager* windowManager) {
 
 void ImGuiManager::SetDirectXManager(DirectXManager* directXManager) {
 	directXManager_ = directXManager;
-}
-
-void ImGuiManager::SetDirectXCommand(DirectXCommandManager* dxCommand) {
-	dxCommand_ = dxCommand;
 }
 
 void ImGuiManager::SetSrvManager(SRVManager* srvManager) {

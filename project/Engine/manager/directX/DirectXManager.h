@@ -13,9 +13,9 @@
 #include <dxcapi.h>
 
 // 自作ファイル
-#include "ComPtr.h"
-#include "DXGIManager.h"
-#include "DirectXCommand.h"
+#include "directX/includes/ComPtr.h"
+#include "manager/dxgi/DXGIManager.h"
+#include "directX/command/DirectXCommand.h"
 
 // 前方宣言
 class WindowManager;
@@ -33,6 +33,15 @@ public: // 公開メンバ関数
 	// 描画後処理
 	void PostDraw();
 
+	// コマンドの実行
+	void KickCommand();
+
+	// GPUを待機
+	void WaitGPU();
+
+	// コマンドリストをリセット
+	void ResetCommandList();
+
 	// スワップチェインディスクリプタを取得
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const {
 		return swapChainDesc_;
@@ -42,13 +51,19 @@ public: // 公開メンバ関数
 		return rtvDesc_;
 	}
 
-	DXGIManager* GetDXGIManager()const;
-	DirectXCommandManager* GetDirectXCommand()const;
+	ID3D12Device* GetDevice();
+
+	ID3D12CommandQueue* GetCommandQueue();
+	ID3D12CommandAllocator* GetCommandAllocator();
+	ID3D12GraphicsCommandList* GetCommandList();
 
 	// CPUの特定のインデックスのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
 	// GPUの特定のインデックスのハンドルを取得
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
+
+	// バッファリソースの作成
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 
 	// ディスクリプタヒープの作成
 	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
@@ -100,7 +115,7 @@ private: // メンバ変数
 	// DXGI
 	std::unique_ptr<DXGIManager> dxgi_;
 	// DirectXCommand
-	std::unique_ptr<DirectXCommandManager> dxCommand_;
+	std::unique_ptr<DirectXCommand> dxCommand_;
 
 	// SUCCEEDEDでエラー判別君
 	HRESULT hr_ = S_FALSE;

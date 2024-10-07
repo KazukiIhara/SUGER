@@ -6,12 +6,12 @@
 // DirectX
 #include <d3d12.h>
 
-#include "ComPtr.h"
+#include "directX/includes/ComPtr.h"
 
 // 前方宣言
 class DirectXManager;
 class DXGIManager;
-class DirectXCommandManager;
+class DirectXCommand;
 
 class SRVManager {
 public: // インスタンスコピー関数
@@ -51,8 +51,6 @@ public: // 公開メンバ関数
 private:
 	// DirectX
 	void SetDirectXManager(DirectXManager* directX);
-	void SetDXGIManager(DXGIManager* dxgi);
-	void SetDirectXCommand(DirectXCommandManager* dxcommand);
 public: // 公開メンバ変数
 	// 最大SRV数
 	static const uint32_t kMaxSRVCount = 512;
@@ -66,8 +64,4 @@ private: // 非公開メンバ変数
 private: // インスタンスコピーポインタ
 	// DirectXManager
 	DirectXManager* directX_ = nullptr;
-	// DXGIManager
-	DXGIManager* dxgi_ = nullptr;
-	// DXCommand
-	DirectXCommandManager* dxCommand_ = nullptr;
 };

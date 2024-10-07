@@ -1,12 +1,15 @@
 #include <Windows.h>
 #include <memory>
 
-#include "Logger.h"
-#include "WindowManager.h"
-#include "DirectXManager.h"
-#include "DirectInput.h"
-#include "SRVManager.h"
-#include "ImGuiManager.h"
+#include "debugTools/logger/Logger.h"
+#include "manager/window/WindowManager.h"
+#include "manager/directX/DirectXManager.h"
+#include "input/direct/DirectInput.h"
+#include "manager/srv/SRVManager.h"
+#include "manager/imgui/ImGuiManager.h"
+#include "manager/texture/TextureManager.h"
+#include "manager/pipeline/graphics/GraphicsPipelineManager.h"
+#include "2d/system/Object2dSystem.h"
 
 // Lib
 #pragma comment(lib,"d3d12.lib")
@@ -40,6 +43,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	imguiManager = std::make_unique<ImGuiManager>();
 	imguiManager->Initialize(windowManager.get(), directXManager.get(), srvManager.get());
 
+	std::unique_ptr<TextureManager> textureManager;
+	textureManager = std::make_unique<TextureManager>();
+	textureManager->Initialize(directXManager.get(), srvManager.get());
+
+	std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager;
+	graphicsPipelineManager = std::make_unique<GraphicsPipelineManager>();
+	graphicsPipelineManager->Initialize(directXManager.get());
+
+	std::unique_ptr<Object2DSystem> object2dSystem;
+	object2dSystem = std::make_unique<Object2DSystem>();
+	object2dSystem->Initialize(directXManager.get(), graphicsPipelineManager.get());
+
+	textureManager->Load("resources/images/uvChecker.png");
+
 
 	while (true) {
 		if (windowManager->ProcessMessage()) {
@@ -47,7 +64,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		directInput->Update();
-		
+
 		imguiManager->BeginFrame();
 
 		ImGui::ShowDemoWindow();
@@ -56,6 +73,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->EndFrame();
 		directXManager->PreDraw();
 		srvManager->PreDraw();
+
+
+
+		object2dSystem->PreDraw();
 
 
 		imguiManager->Draw();
