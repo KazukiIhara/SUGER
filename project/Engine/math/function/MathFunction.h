@@ -16,9 +16,9 @@
 /// Vector3
 /// 
 
-float Length(Vector3 a);
+float Length(const Vector3& a);
 
-Vector3 Normalize(Vector3 a);
+Vector3 Normalize(const Vector3& a);
 
 Vector3 ExtractionWorldPos(const Matrix4x4& m);
 
