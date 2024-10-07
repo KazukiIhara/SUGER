@@ -40,6 +40,12 @@
     <Filter Include="engine\manager\texture">
       <UniqueIdentifier>{c0f0735c-2f77-40d6-a967-7586bd14473e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\2d">
+      <UniqueIdentifier>{b96d4cb6-ce87-4c05-b8b3-c453e7783210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\2d\sprite">
+      <UniqueIdentifier>{b9e8ff79-bbd4-48a3-ac6f-e791e0c9d3c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\tools\logger\Logger.cpp">
@@ -70,7 +76,9 @@
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp">
       <Filter>engine\manager\texture</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2d\Sprite.cpp" />
+    <ClCompile Include="Engine\2d\Sprite.cpp">
+      <Filter>engine\2d\sprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
@@ -103,6 +111,8 @@
     <ClInclude Include="Engine\manager\texture\TextureManager.h">
       <Filter>engine\manager\texture</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2d\Sprite.h" />
+    <ClInclude Include="Engine\2d\Sprite.h">
+      <Filter>engine\2d\sprite</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
