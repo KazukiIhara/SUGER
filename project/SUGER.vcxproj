@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\2d\sprite;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\directX\command;$(ProjectDir)engine\manager\texture;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\2d\sprite;$(ProjectDir)engine\debugTools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\directX\command;$(ProjectDir)engine\manager\texture;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -81,7 +81,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\2d\sprite;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\directX\command;$(ProjectDir)engine\manager\texture;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\2d\sprite;$(ProjectDir)engine\debugTools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\directX\command;$(ProjectDir)engine\manager\texture;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -100,12 +100,13 @@
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp" />
     <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
+    <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp" />
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp" />
     <ClCompile Include="Engine\manager\srv\SRVManager.cpp" />
     <ClCompile Include="Engine\manager\window\WindowManager.cpp" />
-    <ClCompile Include="engine\tools\logger\Logger.cpp" />
+    <ClCompile Include="Engine\debugTools\logger\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\2d\sprite\Sprite.h" />
@@ -115,10 +116,11 @@
     <ClInclude Include="Engine\include\ComPtr.h" />
     <ClInclude Include="Engine\input\direct\DirectInput.h" />
     <ClInclude Include="Engine\manager\imgui\ImGuiManager.h" />
+    <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h" />
     <ClInclude Include="Engine\manager\srv\SRVManager.h" />
     <ClInclude Include="Engine\manager\texture\TextureManager.h" />
     <ClInclude Include="Engine\manager\window\WindowManager.h" />
-    <ClInclude Include="engine\tools\logger\Logger.h" />
+    <ClInclude Include="Engine\debugTools\logger\Logger.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

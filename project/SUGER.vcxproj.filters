@@ -4,9 +4,6 @@
     <Filter Include="engine">
       <UniqueIdentifier>{d1efecd4-6b6e-43bb-aefb-703fa4bd53df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="engine\tools">
-      <UniqueIdentifier>{c99f3694-e6da-4654-a03d-740d87a1a660}</UniqueIdentifier>
-    </Filter>
     <Filter Include="engine\manager">
       <UniqueIdentifier>{14188dd6-7b50-4d13-a611-8846a089a86f}</UniqueIdentifier>
     </Filter>
@@ -46,10 +43,13 @@
     <Filter Include="engine\2d\sprite">
       <UniqueIdentifier>{b9e8ff79-bbd4-48a3-ac6f-e791e0c9d3c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\debugTools">
+      <UniqueIdentifier>{c99f3694-e6da-4654-a03d-740d87a1a660}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\tools\logger\Logger.cpp">
-      <Filter>engine\tools</Filter>
+    <ClCompile Include="Engine\debugTools\logger\Logger.cpp">
+      <Filter>engine\debugTools</Filter>
     </ClCompile>
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
       <Filter>engine\input\direct</Filter>
@@ -79,10 +79,11 @@
     <ClCompile Include="Engine\2d\sprite\Sprite.cpp">
       <Filter>engine\2d\sprite</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\tools\logger\Logger.h">
-      <Filter>engine\tools</Filter>
+    <ClInclude Include="Engine\debugTools\logger\Logger.h">
+      <Filter>engine\debugTools</Filter>
     </ClInclude>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
       <Filter>engine\input\direct</Filter>
@@ -114,5 +115,6 @@
     <ClInclude Include="Engine\2d\sprite\Sprite.h">
       <Filter>engine\2d\sprite</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h" />
   </ItemGroup>
 </Project>
