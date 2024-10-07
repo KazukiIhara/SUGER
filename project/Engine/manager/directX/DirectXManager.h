@@ -33,6 +33,15 @@ public: // 公開メンバ関数
 	// 描画後処理
 	void PostDraw();
 
+	// コマンドの実行
+	void KickCommand();
+
+	// GPUを待機
+	void WaitGPU();
+
+	// コマンドリストをリセット
+	void ResetCommandList();
+
 	// スワップチェインディスクリプタを取得
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const {
 		return swapChainDesc_;
@@ -49,6 +58,9 @@ public: // 公開メンバ関数
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
 	// GPUの特定のインデックスのハンドルを取得
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
+
+	// バッファリソースの作成
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 
 	// ディスクリプタヒープの作成
 	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);

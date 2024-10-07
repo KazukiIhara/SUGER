@@ -20,7 +20,7 @@ void DirectXManager::Initialize(WindowManager* windowManager, bool enableDebugLa
 	// コマンドの初期化
 	dxCommand_ = std::make_unique<DirectXCommandManager>();
 	dxCommand_->Initialize(dxgi_.get());
-	
+
 	// スワップチェーンの生成
 	CreateSwapChain();
 	// レンダーターゲットの生成
@@ -73,15 +73,33 @@ void DirectXManager::PostDraw() {
 	// TransitionBarrierを張る
 	dxCommand_->GetList()->ResourceBarrier(1, &barrier_);
 
-	// コマンドのクローズ
-	dxCommand_->GetList()->Close();
-
 	// GPUにコマンドリストの実行を行わせる
-	ID3D12CommandList* commandLists[] = { dxCommand_->GetList() };
-	dxCommand_->GetQueue()->ExecuteCommandLists(1, commandLists);
+	KickCommand();
+
 	// GPUとOSに画面の交換を行うよう通知する
 	swapChain_->Present(1, 0);
 
+	// GPUを待機
+	WaitGPU();
+
+	// FPS固定更新処理
+	UpdateFixFPS();
+
+	// 次フレーム用のコマンドリストを準備
+	ResetCommandList();
+}
+
+void DirectXManager::KickCommand() {
+	HRESULT hr = S_FALSE;
+	// commandClose
+	dxCommand_->GetList()->Close();
+
+	// GPUにコマンドリストの実行を行わせる
+	Microsoft::WRL::ComPtr<ID3D12CommandList> commandLists[] = { dxCommand_->GetList() };
+	dxCommand_->GetQueue()->ExecuteCommandLists(1, commandLists->GetAddressOf());
+}
+
+void DirectXManager::WaitGPU() {
 	// Fenceの値を更新し、GPUがここまでたどり着いたときに、Fenceの値を指定した値に代入するようにSignalを送る
 	dxCommand_->GetQueue()->Signal(fence_.Get(), ++fenceValue_);
 	// Fenceの値が指定したSingnal値にたどり着いているか確認する
@@ -94,10 +112,9 @@ void DirectXManager::PostDraw() {
 		// イベントを待つ
 		WaitForSingleObject(fenceEvent, INFINITE);
 	}
+}
 
-	// FPS固定更新処理
-	UpdateFixFPS();
-
+void DirectXManager::ResetCommandList() {
 	// 次のフレーム用のコマンドリストを準備
 	hr_ = dxCommand_->GetAllocator()->Reset();
 	assert(SUCCEEDED(hr_));
@@ -123,6 +140,35 @@ D3D12_GPU_DESCRIPTOR_HANDLE DirectXManager::GetGPUDescriptorHandle(ID3D12Descrip
 	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descriptorHeap->GetGPUDescriptorHandleForHeapStart();
 	handleGPU.ptr += (descriptorSize * index);
 	return handleGPU;
+}
+
+Microsoft::WRL::ComPtr<ID3D12Resource> DirectXManager::CreateBufferResource(size_t sizeInBytes) {
+	HRESULT hr = S_FALSE;
+	// 頂点リソース用のヒープの設定
+	D3D12_HEAP_PROPERTIES uplodeHeapProperties{};
+	uplodeHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;//UploadHeapを使う
+
+	// マテリアル用のリソースの設定
+	D3D12_RESOURCE_DESC resourceDesc{};
+	// バッファリソース。テクスチャの場合はまた別の設定をする
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	resourceDesc.Width = sizeInBytes;
+	// バッファの場合はこれらは1にする決まり
+	resourceDesc.Height = 1;
+	resourceDesc.DepthOrArraySize = 1;
+	resourceDesc.MipLevels = 1;
+	resourceDesc.SampleDesc.Count = 1;
+	// バッファの場合はこれにする決まり
+	resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	// バッファリソースを作る
+	Microsoft::WRL::ComPtr<ID3D12Resource>resource = nullptr;
+	hr = dxgi_->GetDevice()->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
+		&resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+		IID_PPV_ARGS(&resource));
+	assert(SUCCEEDED(hr));
+	return resource;
+
 }
 
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXManager::CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible) {

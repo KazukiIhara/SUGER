@@ -6,6 +6,7 @@
 #include "DirectXManager.h"
 #include "DirectInput.h"
 #include "SRVManager.h"
+#include "TextureManager.h"
 #include "ImGuiManager.h"
 
 // Lib
@@ -39,6 +40,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::unique_ptr<ImGuiManager> imguiManager;
 	imguiManager = std::make_unique<ImGuiManager>();
 	imguiManager->Initialize(windowManager.get(), directXManager.get(), srvManager.get());
+
+	std::unique_ptr<TextureManager> textureManager;
+	textureManager = std::make_unique<TextureManager>();
+	textureManager->Initialize(directXManager.get(), srvManager.get());
+
+	textureManager->Load("resources/images/uvChecker.png");
 
 
 	while (true) {
