@@ -76,7 +76,7 @@
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp">
       <Filter>engine\manager\texture</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2d\Sprite.cpp">
+    <ClCompile Include="Engine\2d\sprite\Sprite.cpp">
       <Filter>engine\2d\sprite</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,7 +111,7 @@
     <ClInclude Include="Engine\manager\texture\TextureManager.h">
       <Filter>engine\manager\texture</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2d\Sprite.h">
+    <ClInclude Include="Engine\2d\sprite\Sprite.h">
       <Filter>engine\2d\sprite</Filter>
     </ClInclude>
   </ItemGroup>
