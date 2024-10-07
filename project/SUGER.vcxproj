@@ -95,6 +95,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\2d\Sprite.cpp" />
     <ClCompile Include="Engine\manager\directX\command\DirectXCommand.cpp" />
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp" />
     <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="engine\tools\logger\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\2d\Sprite.h" />
     <ClInclude Include="Engine\manager\directX\command\DirectXCommand.h" />
     <ClInclude Include="Engine\manager\directX\DirectXManager.h" />
     <ClInclude Include="Engine\manager\dxgi\DXGIManager.h" />

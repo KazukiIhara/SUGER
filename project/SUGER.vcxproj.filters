@@ -70,6 +70,7 @@
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp">
       <Filter>engine\manager\texture</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\2d\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
@@ -102,5 +103,6 @@
     <ClInclude Include="Engine\manager\texture\TextureManager.h">
       <Filter>engine\manager\texture</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\2d\Sprite.h" />
   </ItemGroup>
 </Project>
