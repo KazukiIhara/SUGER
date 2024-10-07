@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\directX\command;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -81,7 +81,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)engine;$(ProjectDir)engine\include;$(ProjectDir)engine\tools\logger;$(ProjectDir)engine\input\direct;$(ProjectDir)engine\manager\window;$(ProjectDir)engine\manager\dxgi;$(ProjectDir)engine\manager\directX;$(ProjectDir)engine\manager\directX\command;$(ProjectDir)engine\manager\srv;$(ProjectDir)engine\manager\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -95,6 +95,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\manager\directX\command\DirectXCommand.cpp" />
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp" />
     <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="engine\tools\logger\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\manager\directX\command\DirectXCommand.h" />
     <ClInclude Include="Engine\manager\directX\DirectXManager.h" />
     <ClInclude Include="Engine\manager\dxgi\DXGIManager.h" />
     <ClInclude Include="Engine\include\ComPtr.h" />

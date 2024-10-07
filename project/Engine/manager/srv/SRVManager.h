@@ -11,6 +11,7 @@
 // 前方宣言
 class DirectXManager;
 class DXGIManager;
+class DirectXCommandManager;
 
 class SRVManager {
 public: // インスタンスコピー関数
@@ -51,7 +52,7 @@ private:
 	// DirectX
 	void SetDirectXManager(DirectXManager* directX);
 	void SetDXGIManager(DXGIManager* dxgi);
-
+	void SetDirectXCommand(DirectXCommandManager* dxcommand);
 public: // 公開メンバ変数
 	// 最大SRV数
 	static const uint32_t kMaxSRVCount = 512;
@@ -67,4 +68,6 @@ private: // インスタンスコピーポインタ
 	DirectXManager* directX_ = nullptr;
 	// DXGIManager
 	DXGIManager* dxgi_ = nullptr;
+	// DXCommand
+	DirectXCommandManager* dxCommand_ = nullptr;
 };

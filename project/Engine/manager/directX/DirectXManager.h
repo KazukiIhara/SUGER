@@ -4,7 +4,6 @@
 #include <chrono>
 #include <cmath>
 #include <cassert>
-#include <wrl.h>
 #include <memory>
 
 // DirectX
@@ -13,8 +12,10 @@
 #include <dxgidebug.h>
 #include <dxcapi.h>
 
-// デバイス
+// 自作ファイル
+#include "ComPtr.h"
 #include "DXGIManager.h"
+#include "DirectXCommand.h"
 
 // 前方宣言
 class WindowManager;
@@ -32,18 +33,6 @@ public: // 公開メンバ関数
 	// 描画後処理
 	void PostDraw();
 
-	// 描画コマンドリストの取得
-	ID3D12GraphicsCommandList* GetCommandList() {
-		return commandList_.Get();
-	}
-	// コマンドキューの取得
-	ID3D12CommandQueue* GetCommandQueue() {
-		return commandQueue_.Get();
-	}
-	// コマンドアロケータの取得
-	ID3D12CommandAllocator* GetCommandAllocator() {
-		return commandAllocator_.Get();
-	}
 	// スワップチェインディスクリプタを取得
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const {
 		return swapChainDesc_;
@@ -54,6 +43,7 @@ public: // 公開メンバ関数
 	}
 
 	DXGIManager* GetDXGIManager()const;
+	DirectXCommandManager* GetDirectXCommand()const;
 
 	// CPUの特定のインデックスのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
@@ -69,10 +59,6 @@ private: // プライベートメンバ関数
 	void SetWindowManager(WindowManager* windowManager) {
 		windowManager_ = windowManager;
 	}
-
-
-	// コマンド関連初期化
-	void InitializeCommand();
 
 	// スワップチェーンを生成する
 	void CreateSwapChain();
@@ -113,16 +99,13 @@ private: // メンバ変数
 
 	// DXGI
 	std::unique_ptr<DXGIManager> dxgi_;
+	// DirectXCommand
+	std::unique_ptr<DirectXCommandManager> dxCommand_;
 
 	// SUCCEEDEDでエラー判別君
 	HRESULT hr_ = S_FALSE;
 
-	// コマンドキュー
-	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr;
-	// コマンドアロケータ
-	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr;
-	// コマンドリスト
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_ = nullptr;
+
 	// スワップチェーン
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_{};
 	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_ = nullptr;
