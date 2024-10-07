@@ -2,9 +2,9 @@
 #include "SRVManager.h"
 
 // MyHedder
-#include "DirectXManager.h"
-#include "DXGIManager.h"
-#include "DirectXCommand.h"
+#include "manager/directX/DirectXManager.h"
+#include "manager/dxgi/DXGIManager.h"
+#include "directX/command/DirectXCommand.h"
 
 void SRVManager::Initialize(DirectXManager* directX) {
 	// DirectXManagerのインスタンスを取得

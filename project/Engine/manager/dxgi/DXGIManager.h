@@ -1,5 +1,5 @@
 #pragma once
-#include "ComPtr.h"
+#include "directX/includes/ComPtr.h"
 
 // DirectX
 #include <d3d12.h>

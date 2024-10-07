@@ -3,8 +3,8 @@
 
 // MyHedder
 #include "DirectInput.h"
-#include "WindowManager.h"
-#include "Logger.h"
+#include "manager/window/WindowManager.h"
+#include "debugTools/logger/Logger.h"
 
 void DirectInput::Initialize(WindowManager* windowManager) {
 

@@ -8,7 +8,7 @@
 #include <dxcapi.h>
 
 // MyHedder
-#include "ComPtr.h"
+#include "directX/includes/ComPtr.h"
 
 class DirectXManager;
 

@@ -4,8 +4,8 @@
 #include <thread>
 
 // MyHedder
-#include "WindowManager.h"
-#include "Logger.h"
+#include "manager/window/WindowManager.h"
+#include "debugTools/logger/Logger.h"
 
 void DirectXManager::Initialize(WindowManager* windowManager, bool enableDebugLayer) {
 	// WindowManagerのインスタンスをセット
@@ -18,7 +18,7 @@ void DirectXManager::Initialize(WindowManager* windowManager, bool enableDebugLa
 	dxgi_->Initialize();
 
 	// コマンドの初期化
-	dxCommand_ = std::make_unique<DirectXCommandManager>();
+	dxCommand_ = std::make_unique<DirectXCommand>();
 	dxCommand_->Initialize(dxgi_.get());
 
 	// スワップチェーンの生成

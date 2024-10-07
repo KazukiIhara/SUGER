@@ -10,7 +10,7 @@
 #include "externals/DirectXTex/DirectXTex.h"
 #include "externals/DirectXTex/d3dx12.h"
 
-#include "ComPtr.h"
+#include "directX/includes/ComPtr.h"
 
 // 前方宣言
 class DirectXManager;

@@ -1,10 +1,10 @@
 #include "TextureManager.h"
 
-#include "Logger.h"
-#include "DirectXManager.h"
-#include "DXGIManager.h"
-#include "DirectXCommand.h"
-#include "SRVManager.h"
+#include "debugTools/logger/Logger.h"
+#include "manager/directX/DirectXManager.h"
+#include "manager/dxgi/DXGIManager.h"
+#include "directX/command/DirectXCommand.h"
+#include "manager/srv/SRVManager.h"
 
 void TextureManager::Initialize(DirectXManager* directXManager, SRVManager* srvManager) {
 	SetDirectXCommon(directXManager);

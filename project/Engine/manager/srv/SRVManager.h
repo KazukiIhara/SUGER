@@ -6,12 +6,12 @@
 // DirectX
 #include <d3d12.h>
 
-#include "ComPtr.h"
+#include "directX/includes/ComPtr.h"
 
 // 前方宣言
 class DirectXManager;
 class DXGIManager;
-class DirectXCommandManager;
+class DirectXCommand;
 
 class SRVManager {
 public: // インスタンスコピー関数

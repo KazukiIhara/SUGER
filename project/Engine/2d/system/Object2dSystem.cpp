@@ -2,8 +2,8 @@
 #include "Object2dSystem.h"
 
 // MyHedder
-#include "DirectXManager.h"
-#include "GraphicsPipelineManager.h"
+#include "manager/directX/DirectXManager.h"
+#include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 
 void Object2DSystem::Initialize(DirectXManager* directX, GraphicsPipelineManager* pipelineManager) {
 	SetDirectXManager(directX);

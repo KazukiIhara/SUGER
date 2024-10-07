@@ -1,7 +1,7 @@
 #include "DXGIManager.h"
 
 #include <cassert>
-#include "Logger.h"
+#include "debugTools/logger/Logger.h"
 
 void DXGIManager::Initialize() {
 #ifdef _DEBUG

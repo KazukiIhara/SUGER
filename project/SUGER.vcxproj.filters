@@ -69,7 +69,7 @@
     <ClCompile Include="Engine\manager\srv\SRVManager.cpp">
       <Filter>engine\manager\srv</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\directX\command\DirectXCommand.cpp">
+    <ClCompile Include="Engine\directX\command\DirectXCommand.cpp">
       <Filter>engine\manager\directX\command</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
@@ -90,7 +90,7 @@
     <ClInclude Include="Engine\input\direct\DirectInput.h">
       <Filter>engine\input\direct</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\ComPtr.h">
+    <ClInclude Include="Engine\directX\includes\ComPtr.h">
       <Filter>engine\include</Filter>
     </ClInclude>
     <ClInclude Include="Engine\manager\directX\DirectXManager.h">
@@ -108,7 +108,7 @@
     <ClInclude Include="Engine\manager\srv\SRVManager.h">
       <Filter>engine\manager\srv</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\directX\command\DirectXCommand.h">
+    <ClInclude Include="Engine\directX\command\DirectXCommand.h">
       <Filter>engine\manager\directX\command</Filter>
     </ClInclude>
     <ClInclude Include="Engine\manager\texture\TextureManager.h">

@@ -10,13 +10,13 @@
 #include <dxcapi.h>
 
 // 自作ファイル
-#include "ComPtr.h"
-#include "DXGIManager.h"
+#include "directX/includes/ComPtr.h"
+#include "manager/dxgi/DXGIManager.h"
 
-class DirectXCommandManager {
+class DirectXCommand {
 public:
-	DirectXCommandManager() = default;
-	~DirectXCommandManager() = default;
+	DirectXCommand() = default;
+	~DirectXCommand() = default;
 
 	void Initialize(DXGIManager* dxgi);
 

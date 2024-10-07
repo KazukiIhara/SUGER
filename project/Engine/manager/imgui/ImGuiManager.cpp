@@ -2,10 +2,10 @@
 #include "ImGuiManager.h"
 
 // MyHedder
-#include "WindowManager.h"
-#include "DirectXManager.h"
-#include "DirectXCommand.h"
-#include "SRVManager.h"
+#include "manager/window/WindowManager.h"
+#include "manager/directX/DirectXManager.h"
+#include "directX/command/DirectXCommand.h"
+#include "manager/srv/SRVManager.h"
 
 void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVManager* srvManager) {
 	

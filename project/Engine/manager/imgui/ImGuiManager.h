@@ -11,7 +11,7 @@
 // 前方宣言
 class WindowManager;
 class DirectXManager;
-class DirectXCommandManager;
+class DirectXCommand;
 class SRVManager;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(

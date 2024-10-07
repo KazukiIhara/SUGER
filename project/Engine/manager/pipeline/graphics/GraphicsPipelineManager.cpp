@@ -9,8 +9,8 @@
 #pragma comment(lib,"dxcompiler.lib")
 
 // MyHedder
-#include "Logger.h"
-#include "DirectXManager.h"
+#include "debugTools/logger/Logger.h"
+#include "manager/directX/DirectXManager.h"
 
 void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
 

@@ -1,15 +1,15 @@
 #include <Windows.h>
 #include <memory>
 
-#include "Logger.h"
-#include "WindowManager.h"
-#include "DirectXManager.h"
-#include "DirectInput.h"
-#include "SRVManager.h"
-#include "ImGuiManager.h"
-#include "TextureManager.h"
-#include "GraphicsPipelineManager.h"
-#include "Object2dSystem.h"
+#include "debugTools/logger/Logger.h"
+#include "manager/window/WindowManager.h"
+#include "manager/directX/DirectXManager.h"
+#include "input/direct/DirectInput.h"
+#include "manager/srv/SRVManager.h"
+#include "manager/imgui/ImGuiManager.h"
+#include "manager/texture/TextureManager.h"
+#include "manager/pipeline/graphics/GraphicsPipelineManager.h"
+#include "2d/system/Object2dSystem.h"
 
 // Lib
 #pragma comment(lib,"d3d12.lib")
@@ -75,7 +75,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		srvManager->PreDraw();
 
 
-		
+
 		object2dSystem->PreDraw();
 
 

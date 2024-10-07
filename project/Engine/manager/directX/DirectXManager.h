@@ -13,9 +13,9 @@
 #include <dxcapi.h>
 
 // 自作ファイル
-#include "ComPtr.h"
-#include "DXGIManager.h"
-#include "DirectXCommand.h"
+#include "directX/includes/ComPtr.h"
+#include "manager/dxgi/DXGIManager.h"
+#include "directX/command/DirectXCommand.h"
 
 // 前方宣言
 class WindowManager;
@@ -115,7 +115,7 @@ private: // メンバ変数
 	// DXGI
 	std::unique_ptr<DXGIManager> dxgi_;
 	// DirectXCommand
-	std::unique_ptr<DirectXCommandManager> dxCommand_;
+	std::unique_ptr<DirectXCommand> dxCommand_;
 
 	// SUCCEEDEDでエラー判別君
 	HRESULT hr_ = S_FALSE;
