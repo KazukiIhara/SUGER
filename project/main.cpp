@@ -6,8 +6,10 @@
 #include "DirectXManager.h"
 #include "DirectInput.h"
 #include "SRVManager.h"
-#include "TextureManager.h"
 #include "ImGuiManager.h"
+#include "TextureManager.h"
+#include "GraphicsPipelineManager.h"
+#include "Object2dSystem.h"
 
 // Lib
 #pragma comment(lib,"d3d12.lib")
@@ -45,6 +47,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	textureManager = std::make_unique<TextureManager>();
 	textureManager->Initialize(directXManager.get(), srvManager.get());
 
+	std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager;
+	graphicsPipelineManager = std::make_unique<GraphicsPipelineManager>();
+	graphicsPipelineManager->Initialize(directXManager.get());
+
+	std::unique_ptr<Object2DSystem> object2dSystem;
+	object2dSystem = std::make_unique<Object2DSystem>();
+	object2dSystem->Initialize(directXManager.get(), graphicsPipelineManager.get());
+
 	textureManager->Load("resources/images/uvChecker.png");
 
 
@@ -54,7 +64,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		directInput->Update();
-		
+
 		imguiManager->BeginFrame();
 
 		ImGui::ShowDemoWindow();
@@ -63,6 +73,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->EndFrame();
 		directXManager->PreDraw();
 		srvManager->PreDraw();
+
+
+		
+		object2dSystem->PreDraw();
 
 
 		imguiManager->Draw();

@@ -51,8 +51,6 @@ public: // 公開メンバ関数
 private:
 	// DirectX
 	void SetDirectXManager(DirectXManager* directX);
-	void SetDXGIManager(DXGIManager* dxgi);
-	void SetDirectXCommand(DirectXCommandManager* dxcommand);
 public: // 公開メンバ変数
 	// 最大SRV数
 	static const uint32_t kMaxSRVCount = 512;
@@ -66,8 +64,4 @@ private: // 非公開メンバ変数
 private: // インスタンスコピーポインタ
 	// DirectXManager
 	DirectXManager* directX_ = nullptr;
-	// DXGIManager
-	DXGIManager* dxgi_ = nullptr;
-	// DXCommand
-	DirectXCommandManager* dxCommand_ = nullptr;
 };

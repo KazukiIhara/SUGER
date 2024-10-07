@@ -51,8 +51,11 @@ public: // 公開メンバ関数
 		return rtvDesc_;
 	}
 
-	DXGIManager* GetDXGIManager()const;
-	DirectXCommandManager* GetDirectXCommand()const;
+	ID3D12Device* GetDevice();
+
+	ID3D12CommandQueue* GetCommandQueue();
+	ID3D12CommandAllocator* GetCommandAllocator();
+	ID3D12GraphicsCommandList* GetCommandList();
 
 	// CPUの特定のインデックスのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);

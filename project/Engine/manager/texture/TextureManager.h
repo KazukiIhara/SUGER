@@ -14,8 +14,6 @@
 
 // 前方宣言
 class DirectXManager;
-class DXGIManager;
-class DirectXCommandManager;
 class SRVManager;
 
 class TextureManager {
@@ -52,10 +50,6 @@ private: // 非公開メンバ関数
 
 	// DirectXCommon
 	void SetDirectXCommon(DirectXManager* directX);
-	// DXGIManager
-	void SetDXGIManager(DXGIManager* dxgi);
-	// DxCommand
-	void SetDxCommandManager(DirectXCommandManager* dxCommand);
 	// SrvManager
 	void SetSrvManager(SRVManager* srvManager);
 
@@ -72,10 +66,6 @@ private: // メンバ変数
 private: // インスタンス受け取り変数
 	// DirectXCommon
 	DirectXManager* directXManager_ = nullptr;
-	// DXGI
-	DXGIManager* dxgiManager_ = nullptr;
-	// DxCommand
-	DirectXCommandManager* dxCommand_ = nullptr;
 	// SrvManager
 	SRVManager* srvManager_ = nullptr;
 

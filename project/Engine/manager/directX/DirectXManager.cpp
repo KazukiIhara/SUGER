@@ -122,12 +122,20 @@ void DirectXManager::ResetCommandList() {
 	assert(SUCCEEDED(hr_));
 }
 
-DXGIManager* DirectXManager::GetDXGIManager() const {
-	return dxgi_.get();
+ID3D12Device* DirectXManager::GetDevice() {
+	return dxgi_->GetDevice();
 }
 
-DirectXCommandManager* DirectXManager::GetDirectXCommand() const {
-	return dxCommand_.get();
+ID3D12CommandQueue* DirectXManager::GetCommandQueue() {
+	return dxCommand_->GetQueue();
+}
+
+ID3D12CommandAllocator* DirectXManager::GetCommandAllocator() {
+	return dxCommand_->GetAllocator();
+}
+
+ID3D12GraphicsCommandList* DirectXManager::GetCommandList() {
+	return dxCommand_->GetList();
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE DirectXManager::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index) {
