@@ -33,18 +33,6 @@ public: // 公開メンバ関数
 	// 描画後処理
 	void PostDraw();
 
-	// 描画コマンドリストの取得
-	ID3D12GraphicsCommandList* GetCommandList() {
-		return commandList_.Get();
-	}
-	// コマンドキューの取得
-	ID3D12CommandQueue* GetCommandQueue() {
-		return commandQueue_.Get();
-	}
-	// コマンドアロケータの取得
-	ID3D12CommandAllocator* GetCommandAllocator() {
-		return commandAllocator_.Get();
-	}
 	// スワップチェインディスクリプタを取得
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const {
 		return swapChainDesc_;
@@ -55,6 +43,7 @@ public: // 公開メンバ関数
 	}
 
 	DXGIManager* GetDXGIManager()const;
+	DirectXCommand* GetDirectXCommand()const;
 
 	// CPUの特定のインデックスのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
@@ -70,10 +59,6 @@ private: // プライベートメンバ関数
 	void SetWindowManager(WindowManager* windowManager) {
 		windowManager_ = windowManager;
 	}
-
-
-	// コマンド関連初期化
-	void InitializeCommand();
 
 	// スワップチェーンを生成する
 	void CreateSwapChain();

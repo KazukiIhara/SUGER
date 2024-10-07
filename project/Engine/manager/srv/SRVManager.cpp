@@ -4,12 +4,15 @@
 // MyHedder
 #include "DirectXManager.h"
 #include "DXGIManager.h"
+#include "DirectXCommand.h"
 
 void SRVManager::Initialize(DirectXManager* directX) {
 	// DirectXManagerのインスタンスを取得
 	SetDirectXManager(directX);
 	// DXGIマネージャのインスタンスを取得
 	SetDXGIManager(directX_->GetDXGIManager());
+	// DxCommandのインスタンスを取得
+	SetDirectXCommand(directX_->GetDirectXCommand());
 	// デスクリプタヒープの作成
 	descriptorHeap_ = DirectXManager::CreateDescriptorHeap(dxgi_->GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
 	// デスクリプタ一個分のサイズを取得して記録
@@ -52,11 +55,11 @@ bool SRVManager::IsLowerSrvMax() {
 void SRVManager::PreDraw() {
 	// 描画用のDescriptorHeapの設定
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { descriptorHeap_ };
-	directX_->GetCommandList()->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
+	dxCommand_->GetList()->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
 }
 
 void SRVManager::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
-	directX_->GetCommandList()->SetGraphicsRootDescriptorTable(rootParameterIndex, GetGPUDescriptorHandle(srvIndex));
+	dxCommand_->GetList()->SetGraphicsRootDescriptorTable(rootParameterIndex, GetGPUDescriptorHandle(srvIndex));
 }
 
 void SRVManager::SetDirectXManager(DirectXManager* directX) {
@@ -65,4 +68,8 @@ void SRVManager::SetDirectXManager(DirectXManager* directX) {
 
 void SRVManager::SetDXGIManager(DXGIManager* dxgi) {
 	dxgi_ = dxgi;
+}
+
+void SRVManager::SetDirectXCommand(DirectXCommand* dxcommand) {
+	dxCommand_ = dxcommand;
 }

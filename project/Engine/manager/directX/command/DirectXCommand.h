@@ -18,20 +18,25 @@ public:
 	DirectXCommand() = default;
 	~DirectXCommand() = default;
 
-	void Initialize();
+	void Initialize(DXGIManager* dxgi);
 
+	ID3D12CommandQueue* GetQueue();
+	ID3D12CommandAllocator* GetAllocator();
+	ID3D12GraphicsCommandList* GetList();
+
+	void SetDXGIManager(DXGIManager* dxgi);
 private:
 	// SUCCEEDEDでエラー判別君
 	HRESULT hr_ = S_FALSE;
 
 	// DXGI
-	std::unique_ptr<DXGIManager> dxgi_;
+	DXGIManager* dxgi_ = nullptr;
 
 	// コマンドキュー
 	ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr;
 	// コマンドアロケータ
-	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr;
+	ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr;
 	// コマンドリスト
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_ = nullptr;
+	ComPtr<ID3D12GraphicsCommandList> commandList_ = nullptr;
 
 };

@@ -12,11 +12,15 @@ void DirectXManager::Initialize(WindowManager* windowManager, bool enableDebugLa
 	SetWindowManager(windowManager);
 	// FPS固定処理初期化
 	InitializeFixFPS();
+
 	// DXGIデバイスの初期化
 	dxgi_ = std::make_unique<DXGIManager>();
 	dxgi_->Initialize();
-	// コマンド関連の初期化
-	InitializeCommand();
+
+	// コマンドの初期化
+	dxCommand_ = std::make_unique<DirectXCommand>();
+	dxCommand_->Initialize(dxgi_.get());
+	
 	// スワップチェーンの生成
 	CreateSwapChain();
 	// レンダーターゲットの生成
@@ -42,7 +46,7 @@ void DirectXManager::PreDraw() {
 	// 遷移後のResourceState
 	barrier_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	// TransitionBarrierを張る
-	commandList_->ResourceBarrier(1, &barrier_);
+	dxCommand_->GetList()->ResourceBarrier(1, &barrier_);
 
 	// レンダーターゲット設定
 	SetRenderTargets();
@@ -67,19 +71,19 @@ void DirectXManager::PostDraw() {
 	barrier_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	barrier_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
 	// TransitionBarrierを張る
-	commandList_->ResourceBarrier(1, &barrier_);
+	dxCommand_->GetList()->ResourceBarrier(1, &barrier_);
 
 	// コマンドのクローズ
-	commandList_->Close();
+	dxCommand_->GetList()->Close();
 
 	// GPUにコマンドリストの実行を行わせる
-	ID3D12CommandList* commandLists[] = { commandList_.Get() };
-	commandQueue_->ExecuteCommandLists(1, commandLists);
+	ID3D12CommandList* commandLists[] = { dxCommand_->GetList() };
+	dxCommand_->GetQueue()->ExecuteCommandLists(1, commandLists);
 	// GPUとOSに画面の交換を行うよう通知する
 	swapChain_->Present(1, 0);
 
 	// Fenceの値を更新し、GPUがここまでたどり着いたときに、Fenceの値を指定した値に代入するようにSignalを送る
-	commandQueue_->Signal(fence_.Get(), ++fenceValue_);
+	dxCommand_->GetQueue()->Signal(fence_.Get(), ++fenceValue_);
 	// Fenceの値が指定したSingnal値にたどり着いているか確認する
 	// GetCompletedValueの初期値はFence作成時に渡した初期値
 	if (fence_->GetCompletedValue() < fenceValue_) {
@@ -95,14 +99,18 @@ void DirectXManager::PostDraw() {
 	UpdateFixFPS();
 
 	// 次のフレーム用のコマンドリストを準備
-	hr_ = commandAllocator_->Reset();
+	hr_ = dxCommand_->GetAllocator()->Reset();
 	assert(SUCCEEDED(hr_));
-	hr_ = commandList_->Reset(commandAllocator_.Get(), nullptr);
+	hr_ = dxCommand_->GetList()->Reset(dxCommand_->GetAllocator(), nullptr);
 	assert(SUCCEEDED(hr_));
 }
 
 DXGIManager* DirectXManager::GetDXGIManager() const {
 	return dxgi_.get();
+}
+
+DirectXCommand* DirectXManager::GetDirectXCommand() const {
+	return dxCommand_.get();
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE DirectXManager::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index) {
@@ -130,25 +138,6 @@ Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXManager::CreateDescriptorHea
 	return descriptorHeap;
 }
 
-void DirectXManager::InitializeCommand() {
-	// コマンドキューを生成する
-	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
-	hr_ = dxgi_->GetDevice()->CreateCommandQueue(&commandQueueDesc,
-		IID_PPV_ARGS(&commandQueue_));
-	// コマンドキューの生成がうまくいかなかったらassert
-	assert(SUCCEEDED(hr_));
-
-	// コマンドアロケータを生成する
-	hr_ = dxgi_->GetDevice()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator_));
-	// コマンドアロケータの生成がうまくいかなかったので起動できない
-	assert(SUCCEEDED(hr_));
-
-	// コマンドリストを生成する
-	hr_ = dxgi_->GetDevice()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator_.Get(), nullptr, IID_PPV_ARGS(&commandList_));
-	// コマンドリストの生成がうまくいかなかったので起動できない
-	assert(SUCCEEDED(hr_));
-}
-
 void DirectXManager::CreateSwapChain() {
 	swapChainDesc_.Width = WindowManager::kClientWidth;				// 画面の幅、ウィンドウのクライアント領域を同じものにしておく
 	swapChainDesc_.Height = WindowManager::kClientHeight;				// 画面の高さ、ウィンドウのクライアント領域を同じものしておく
@@ -158,7 +147,7 @@ void DirectXManager::CreateSwapChain() {
 	swapChainDesc_.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;	// モニタにうつしたら、中身を破棄
 
 	// コマンドキュー、ウィンドウハンドル、設定を渡して生成する
-	hr_ = dxgi_->GetFactory()->CreateSwapChainForHwnd(commandQueue_.Get(), windowManager_->GetHwnd(), &swapChainDesc_,
+	hr_ = dxgi_->GetFactory()->CreateSwapChainForHwnd(dxCommand_->GetQueue(), windowManager_->GetHwnd(), &swapChainDesc_,
 		nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(swapChain_.GetAddressOf()));
 	assert(SUCCEEDED(hr_));
 }
@@ -213,14 +202,14 @@ void DirectXManager::CreateFence() {
 
 void DirectXManager::ClearDepthView() {
 	// 指定した深度で画面全体をクリアする
-	commandList_->ClearDepthStencilView(dsvHandle_, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	dxCommand_->GetList()->ClearDepthStencilView(dsvHandle_, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
 void DirectXManager::ClearRenderTarget(float clearColor[]) {
 	// これから書き込むバックバッファインデックスを取得
 	backBufferIndex_ = swapChain_->GetCurrentBackBufferIndex();
 	// 指定した色で画面全体をクリアする
-	commandList_->ClearRenderTargetView(rtvHandles_[backBufferIndex_], clearColor, 0, nullptr);
+	dxCommand_->GetList()->ClearRenderTargetView(rtvHandles_[backBufferIndex_], clearColor, 0, nullptr);
 }
 
 void DirectXManager::SetRenderTargets() {
@@ -228,7 +217,7 @@ void DirectXManager::SetRenderTargets() {
 	backBufferIndex_ = swapChain_->GetCurrentBackBufferIndex();
 	dsvHandle_ = dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	// 描画先のRTVとDSVをを設定する
-	commandList_->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex_], false, &dsvHandle_);
+	dxCommand_->GetList()->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex_], false, &dsvHandle_);
 }
 
 void DirectXManager::SettingViewport() {
@@ -243,7 +232,7 @@ void DirectXManager::SettingViewport() {
 	viewport.MaxDepth = 1.0f;
 
 	// ビューポートを設定
-	commandList_->RSSetViewports(1, &viewport);
+	dxCommand_->GetList()->RSSetViewports(1, &viewport);
 }
 
 void DirectXManager::SettingScissorRect() {
@@ -256,7 +245,7 @@ void DirectXManager::SettingScissorRect() {
 	scissorRect.bottom = WindowManager::kClientHeight;
 
 	// シザー矩形を設定
-	commandList_->RSSetScissorRects(1, &scissorRect);
+	dxCommand_->GetList()->RSSetScissorRects(1, &scissorRect);
 }
 
 void DirectXManager::InitializeFixFPS() {
