@@ -60,7 +60,7 @@ void ImGuiManager::SetDirectXManager(DirectXManager* directXManager) {
 	directXManager_ = directXManager;
 }
 
-void ImGuiManager::SetDirectXCommand(DirectXCommand* dxCommand) {
+void ImGuiManager::SetDirectXCommand(DirectXCommandManager* dxCommand) {
 	dxCommand_ = dxCommand;
 }
 

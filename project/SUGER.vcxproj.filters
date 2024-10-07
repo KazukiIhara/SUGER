@@ -34,6 +34,9 @@
     <Filter Include="engine\manager\srv">
       <UniqueIdentifier>{e5b4c463-83ed-44ce-b1a3-d5372506d32a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\manager\directX\command">
+      <UniqueIdentifier>{7d3fa0f0-231e-4f02-8b22-f4d9e8962f4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\main.cpp">
@@ -60,7 +63,9 @@
     <ClCompile Include="Engine\manager\srv\SRVManager.cpp">
       <Filter>engine\manager\srv</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\directX\command\DirectXCommand.cpp" />
+    <ClCompile Include="Engine\manager\directX\command\DirectXCommand.cpp">
+      <Filter>engine\manager\directX\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
@@ -87,6 +92,8 @@
     <ClInclude Include="Engine\manager\srv\SRVManager.h">
       <Filter>engine\manager\srv</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\directX\command\DirectXCommand.h" />
+    <ClInclude Include="Engine\manager\directX\command\DirectXCommand.h">
+      <Filter>engine\manager\directX\command</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

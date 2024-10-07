@@ -18,7 +18,7 @@ void DirectXManager::Initialize(WindowManager* windowManager, bool enableDebugLa
 	dxgi_->Initialize();
 
 	// コマンドの初期化
-	dxCommand_ = std::make_unique<DirectXCommand>();
+	dxCommand_ = std::make_unique<DirectXCommandManager>();
 	dxCommand_->Initialize(dxgi_.get());
 	
 	// スワップチェーンの生成
@@ -109,7 +109,7 @@ DXGIManager* DirectXManager::GetDXGIManager() const {
 	return dxgi_.get();
 }
 
-DirectXCommand* DirectXManager::GetDirectXCommand() const {
+DirectXCommandManager* DirectXManager::GetDirectXCommand() const {
 	return dxCommand_.get();
 }
 

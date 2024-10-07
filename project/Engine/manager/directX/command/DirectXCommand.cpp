@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-void DirectXCommand::Initialize(DXGIManager* dxgi) {
+void DirectXCommandManager::Initialize(DXGIManager* dxgi) {
 	// DXGIのセット
 	SetDXGIManager(dxgi);
 	// コマンドキューを生成する
@@ -23,18 +23,18 @@ void DirectXCommand::Initialize(DXGIManager* dxgi) {
 	assert(SUCCEEDED(hr_));
 }
 
-ID3D12CommandQueue* DirectXCommand::GetQueue() {
+ID3D12CommandQueue* DirectXCommandManager::GetQueue() {
 	return commandQueue_.Get();
 }
 
-ID3D12CommandAllocator* DirectXCommand::GetAllocator() {
+ID3D12CommandAllocator* DirectXCommandManager::GetAllocator() {
 	return commandAllocator_.Get();
 }
 
-ID3D12GraphicsCommandList* DirectXCommand::GetList() {
+ID3D12GraphicsCommandList* DirectXCommandManager::GetList() {
 	return commandList_.Get();
 }
 
-void DirectXCommand::SetDXGIManager(DXGIManager* dxgi) {
+void DirectXCommandManager::SetDXGIManager(DXGIManager* dxgi) {
 	dxgi_ = dxgi;
 }

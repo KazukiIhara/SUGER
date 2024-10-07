@@ -43,7 +43,7 @@ public: // 公開メンバ関数
 	}
 
 	DXGIManager* GetDXGIManager()const;
-	DirectXCommand* GetDirectXCommand()const;
+	DirectXCommandManager* GetDirectXCommand()const;
 
 	// CPUの特定のインデックスのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
@@ -100,7 +100,7 @@ private: // メンバ変数
 	// DXGI
 	std::unique_ptr<DXGIManager> dxgi_;
 	// DirectXCommand
-	std::unique_ptr<DirectXCommand> dxCommand_;
+	std::unique_ptr<DirectXCommandManager> dxCommand_;
 
 	// SUCCEEDEDでエラー判別君
 	HRESULT hr_ = S_FALSE;

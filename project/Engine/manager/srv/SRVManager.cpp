@@ -70,6 +70,6 @@ void SRVManager::SetDXGIManager(DXGIManager* dxgi) {
 	dxgi_ = dxgi;
 }
 
-void SRVManager::SetDirectXCommand(DirectXCommand* dxcommand) {
+void SRVManager::SetDirectXCommand(DirectXCommandManager* dxcommand) {
 	dxCommand_ = dxcommand;
 }
