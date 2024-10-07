@@ -123,15 +123,6 @@ Matrix4x4 MakeRotateZMatrix(float radian) {
 	return rotateZ;
 }
 
-Matrix4x4 MakeRotateXYZMatrixRad(const Vector3& rotate) {
-	Matrix4x4 rotateX = MakeRotateXMatrix(rotate.x * std::numbers::pi_v<float>);
-	Matrix4x4 rotateY = MakeRotateYMatrix(rotate.y * std::numbers::pi_v<float>);
-	Matrix4x4 rotateZ = MakeRotateZMatrix(rotate.z * std::numbers::pi_v<float>);
-
-	Matrix4x4 result = rotateX * rotateY * rotateZ;
-	return result;
-}
-
 Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate) {
 	Matrix4x4 rotateX = MakeRotateXMatrix(rotate.x);
 	Matrix4x4 rotateY = MakeRotateYMatrix(rotate.y);
@@ -152,7 +143,7 @@ Matrix4x4 MakeTranslateMatrix(const Vector3& translate) {
 }
 
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
-	Matrix4x4 result = MakeScaleMatrix(scale) * MakeRotateXYZMatrixRad(rotate) * MakeTranslateMatrix(translate);
+	Matrix4x4 result = MakeScaleMatrix(scale) * MakeRotateXYZMatrix(rotate) * MakeTranslateMatrix(translate);
 	return result;
 }
 

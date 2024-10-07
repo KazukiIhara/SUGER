@@ -50,7 +50,6 @@ Matrix4x4 MakeScaleMatrix(const Vector3& scale);
 Matrix4x4 MakeRotateXMatrix(float radian); // X回転
 Matrix4x4 MakeRotateYMatrix(float radian); // Y回転
 Matrix4x4 MakeRotateZMatrix(float radian); // Z回転
-Matrix4x4 MakeRotateXYZMatrixRad(const Vector3& rotate); // XYZ回転*pi
 Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate); // XYZ回転
 
 // 平行移動行列作成関数
