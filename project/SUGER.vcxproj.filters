@@ -64,6 +64,7 @@
       <Filter>engine\manager\directX\command</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Engine\manager\texture\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">
@@ -93,5 +94,6 @@
     <ClInclude Include="Engine\manager\directX\command\DirectXCommand.h">
       <Filter>engine\manager\directX\command</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\manager\texture\TextureManager.h" />
   </ItemGroup>
 </Project>

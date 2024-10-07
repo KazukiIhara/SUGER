@@ -99,6 +99,7 @@
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp" />
     <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
+    <ClCompile Include="Engine\manager\texture\TextureManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp" />
     <ClCompile Include="Engine\manager\srv\SRVManager.cpp" />
@@ -113,10 +114,14 @@
     <ClInclude Include="Engine\input\direct\DirectInput.h" />
     <ClInclude Include="Engine\manager\imgui\ImGuiManager.h" />
     <ClInclude Include="Engine\manager\srv\SRVManager.h" />
+    <ClInclude Include="Engine\manager\texture\TextureManager.h" />
     <ClInclude Include="Engine\manager\window\WindowManager.h" />
     <ClInclude Include="engine\tools\logger\Logger.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
+      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
     <ProjectReference Include="externals\imgui\imgui.vcxproj">
       <Project>{1b44f3b4-4e7f-4cff-a61d-a5e8b1c44849}</Project>
     </ProjectReference>
