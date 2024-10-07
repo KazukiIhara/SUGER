@@ -112,6 +112,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
     <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp" />
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp" />
+    <ClCompile Include="Engine\math\function\MathFunction.cpp" />
+    <ClCompile Include="Engine\math\operator\MathOperator.cpp" />
+    <ClCompile Include="Engine\worldTransform\WorldTransform.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp" />
     <ClCompile Include="Engine\manager\srv\SRVManager.cpp" />
@@ -133,6 +136,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\texture\TextureManager.h" />
     <ClInclude Include="Engine\manager\window\WindowManager.h" />
     <ClInclude Include="Engine\debugTools\logger\Logger.h" />
+    <ClInclude Include="Engine\math\function\MathFunction.h" />
+    <ClInclude Include="Engine\math\types\Matrix4x4.h" />
+    <ClInclude Include="Engine\math\types\Vector2.h" />
+    <ClInclude Include="Engine\math\types\Vector3.h" />
+    <ClInclude Include="Engine\math\types\Vector4.h" />
+    <ClInclude Include="Engine\math\operator\MathOperator.h" />
+    <ClInclude Include="Engine\worldTransform\WorldTransform.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

@@ -82,6 +82,9 @@
     <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp" />
     <ClCompile Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\2d\system\Object2dSystem.cpp" />
+    <ClCompile Include="Engine\worldTransform\WorldTransform.cpp" />
+    <ClCompile Include="Engine\math\function\MathFunction.cpp" />
+    <ClCompile Include="Engine\math\operator\MathOperator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\debugTools\logger\Logger.h">
@@ -120,6 +123,13 @@
     <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h" />
     <ClInclude Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.h" />
     <ClInclude Include="Engine\2d\system\Object2dSystem.h" />
+    <ClInclude Include="Engine\worldTransform\WorldTransform.h" />
+    <ClInclude Include="Engine\math\function\MathFunction.h" />
+    <ClInclude Include="Engine\math\operator\MathOperator.h" />
+    <ClInclude Include="Engine\math\types\Vector2.h" />
+    <ClInclude Include="Engine\math\types\Vector3.h" />
+    <ClInclude Include="Engine\math\types\Vector4.h" />
+    <ClInclude Include="Engine\math\types\Matrix4x4.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\object2d.PS.hlsl" />
