@@ -39,9 +39,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\main.cpp">
-      <Filter>engine</Filter>
-    </ClCompile>
     <ClCompile Include="engine\tools\logger\Logger.cpp">
       <Filter>engine\tools</Filter>
     </ClCompile>
@@ -66,6 +63,7 @@
     <ClCompile Include="Engine\manager\directX\command\DirectXCommand.cpp">
       <Filter>engine\manager\directX\command</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\tools\logger\Logger.h">

@@ -99,7 +99,7 @@
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp" />
     <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
-    <ClCompile Include="engine\main.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp" />
     <ClCompile Include="Engine\manager\srv\SRVManager.cpp" />
     <ClCompile Include="Engine\manager\window\WindowManager.cpp" />
