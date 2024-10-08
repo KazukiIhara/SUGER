@@ -18,8 +18,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Logger::Log("Hello,DirectX!\n");
 
-	static std::unique_ptr<SUGER> game;
-	game = std::make_unique<MyGame>();
+	static std::unique_ptr<SUGER> game = std::make_unique<MyGame>();
 	game->Run();
 
 

@@ -30,6 +30,6 @@ public: // 公開メンバ関数
 private: // 非公開メンバ関数
 
 private: // 非公開メンバ変数
-	std::unique_ptr<Sprite> uvChecker_;
+	std::unique_ptr<Sprite> sampleTexture_;
 };
 

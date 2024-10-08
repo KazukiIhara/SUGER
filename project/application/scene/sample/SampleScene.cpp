@@ -12,9 +12,9 @@
 void SampleScene::Initialize() {
 	// デバッグ用文字
 	Logger::Log("SampleScene,Initialized\n");
-	
-	uvChecker_ = std::make_unique<Sprite>();
-	uvChecker_->Initialize("resources/images/uvChecker.png");
+
+	sampleTexture_ = std::make_unique<Sprite>();
+	sampleTexture_->Initialize("resources/images/nero.jpg ");
 
 }
 
@@ -30,11 +30,11 @@ void SampleScene::Update() {
 	ImGui::End();
 #endif // _DEBUG
 
-	uvChecker_->Update();
+	sampleTexture_->Update();
 }
 
 void SampleScene::Draw() {
 
 	SUGER::PreDrawObject2D();
-	uvChecker_->Draw();
+	sampleTexture_->Draw();
 }

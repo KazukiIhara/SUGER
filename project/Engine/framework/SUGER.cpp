@@ -12,12 +12,13 @@
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "2d/system/Object2dSystem.h"
 
-// Staticメンバ変数の初期化
+
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
 std::unique_ptr<D3DResourceLeakChecker> SUGER::leakCheck_ = nullptr;
 #endif // _DEBUG
 
+// Staticメンバ変数の初期化
 std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
 std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
 std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
