@@ -46,6 +46,81 @@
     <Filter Include="engine\debugTools">
       <UniqueIdentifier>{c99f3694-e6da-4654-a03d-740d87a1a660}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{206d3e5b-d85a-42fb-b4de-9f32831b115a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders">
+      <UniqueIdentifier>{95c22902-2fab-40c8-a086-d18cdcbb4f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders\objects">
+      <UniqueIdentifier>{4a876bf3-3fcf-413c-8815-182c87a2b821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders\objects\2d">
+      <UniqueIdentifier>{ac78ab6e-0ab8-4d4b-8dd1-d2e3e83f1281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application">
+      <UniqueIdentifier>{5ecc1898-96bf-4d14-80dd-7492d0aaad85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\myGame">
+      <UniqueIdentifier>{d2fa980a-8a83-454d-84d9-eb147874a685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\scene">
+      <UniqueIdentifier>{da95c943-0aaf-4ba5-9510-518a0fb831e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\scene\factory">
+      <UniqueIdentifier>{318b0b0e-6e16-452d-8c71-cd520516bf3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\scene\sample">
+      <UniqueIdentifier>{aba9d680-1b06-4ed0-9612-969e7f79182f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\structs">
+      <UniqueIdentifier>{2490f7b1-bdea-4920-8a62-afeee84e4cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\enums">
+      <UniqueIdentifier>{f815de47-7d00-4493-a501-c48b97038784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\math">
+      <UniqueIdentifier>{5e004705-9e2b-4f3e-9327-7d473ae08d53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\math\types">
+      <UniqueIdentifier>{9be0f832-576d-471b-8fce-7458caed6efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\math\operator">
+      <UniqueIdentifier>{f60a7434-87cf-4526-ab2d-726f521622b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\math\function">
+      <UniqueIdentifier>{1379d7cd-0ee5-4720-b92f-6840a614fdbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\2d\system">
+      <UniqueIdentifier>{eedd8238-391d-4cb4-8354-1f1d86a7deab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\2d\graphicsPipeline">
+      <UniqueIdentifier>{42196ed1-0e5e-4c4b-8795-65cb95e8ff6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\worldTransform">
+      <UniqueIdentifier>{605445cb-abde-4a76-8812-3704796854d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\framework">
+      <UniqueIdentifier>{1729ef8a-babb-4eab-ab4f-57cf0102d4af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\iScene">
+      <UniqueIdentifier>{ced399fc-1713-4e74-9525-85df2d785b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\iScene\abstractSceneFactory">
+      <UniqueIdentifier>{fe12ee4e-0a3f-47b3-9fda-2ba2aa451d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\iScene\baseScene">
+      <UniqueIdentifier>{b3687b31-7271-46a2-9086-c0c961035e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\pipeline">
+      <UniqueIdentifier>{f915daa7-705a-46f3-a4f4-15db886fd803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\pipeline\graphics">
+      <UniqueIdentifier>{8324064a-b44b-4f8c-983a-a31f7b751f90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\scene">
+      <UniqueIdentifier>{da2c1d87-b20a-419f-acaa-6e52f7e9cfa2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\debugTools\logger\Logger.cpp">
@@ -79,17 +154,39 @@
     <ClCompile Include="Engine\2d\sprite\Sprite.cpp">
       <Filter>engine\2d\sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp" />
-    <ClCompile Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.cpp" />
-    <ClCompile Include="Engine\2d\system\Object2dSystem.cpp" />
-    <ClCompile Include="Engine\worldTransform\WorldTransform.cpp" />
-    <ClCompile Include="Engine\math\function\MathFunction.cpp" />
-    <ClCompile Include="Engine\math\operator\MathOperator.cpp" />
-    <ClCompile Include="Engine\framework\SUGER.cpp" />
-    <ClCompile Include="application\myGame\MyGame.cpp" />
-    <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
-    <ClCompile Include="Engine\manager\scene\SceneManager.cpp" />
-    <ClCompile Include="application\scene\sample\SampleScene.cpp" />
+    <ClCompile Include="application\myGame\MyGame.cpp">
+      <Filter>application\myGame</Filter>
+    </ClCompile>
+    <ClCompile Include="application\scene\factory\SceneFactory.cpp">
+      <Filter>application\scene\factory</Filter>
+    </ClCompile>
+    <ClCompile Include="application\scene\sample\SampleScene.cpp">
+      <Filter>application\scene\sample</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\math\operator\MathOperator.cpp">
+      <Filter>engine\math\operator</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\math\function\MathFunction.cpp">
+      <Filter>engine\math\function</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2d\system\Object2dSystem.cpp">
+      <Filter>engine\2d\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.cpp">
+      <Filter>engine\2d\graphicsPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\worldTransform\WorldTransform.cpp">
+      <Filter>engine\worldTransform</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\framework\SUGER.cpp">
+      <Filter>engine\framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp">
+      <Filter>engine\manager\pipeline\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\scene\SceneManager.cpp">
+      <Filter>engine\manager\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\debugTools\logger\Logger.h">
@@ -125,32 +222,78 @@
     <ClInclude Include="Engine\2d\sprite\Sprite.h">
       <Filter>engine\2d\sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h" />
-    <ClInclude Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.h" />
-    <ClInclude Include="Engine\2d\system\Object2dSystem.h" />
-    <ClInclude Include="Engine\worldTransform\WorldTransform.h" />
-    <ClInclude Include="Engine\math\function\MathFunction.h" />
-    <ClInclude Include="Engine\math\operator\MathOperator.h" />
-    <ClInclude Include="Engine\math\types\Vector2.h" />
-    <ClInclude Include="Engine\math\types\Vector3.h" />
-    <ClInclude Include="Engine\math\types\Vector4.h" />
-    <ClInclude Include="Engine\math\types\Matrix4x4.h" />
-    <ClInclude Include="Engine\framework\SUGER.h" />
-    <ClInclude Include="application\myGame\MyGame.h" />
-    <ClInclude Include="Engine\structs\ObjectStructs.h" />
-    <ClInclude Include="application\scene\factory\SceneFactory.h" />
-    <ClInclude Include="Engine\iScene\abstractFactory\AbstractSceneFactory.h" />
-    <ClInclude Include="Engine\iScene\base\BaseScene.h" />
-    <ClInclude Include="Engine\manager\scene\SceneManager.h" />
-    <ClInclude Include="application\scene\sample\SampleScene.h" />
-    <ClInclude Include="Engine\structs\TextureStruct.h" />
-    <ClInclude Include="Engine\enum\GraphicsPipelineEnum.h" />
+    <ClInclude Include="application\myGame\MyGame.h">
+      <Filter>application\myGame</Filter>
+    </ClInclude>
+    <ClInclude Include="application\scene\factory\SceneFactory.h">
+      <Filter>application\scene\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="application\scene\sample\SampleScene.h">
+      <Filter>application\scene\sample</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\operator\MathOperator.h">
+      <Filter>engine\math\operator</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\function\MathFunction.h">
+      <Filter>engine\math\function</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\types\Matrix4x4.h">
+      <Filter>engine\math\types</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\types\Vector2.h">
+      <Filter>engine\math\types</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\types\Vector3.h">
+      <Filter>engine\math\types</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\types\Vector4.h">
+      <Filter>engine\math\types</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\enum\GraphicsPipelineEnum.h">
+      <Filter>engine\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\TextureStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2d\system\Object2dSystem.h">
+      <Filter>engine\2d\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.h">
+      <Filter>engine\2d\graphicsPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\worldTransform\WorldTransform.h">
+      <Filter>engine\worldTransform</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\framework\SUGER.h">
+      <Filter>engine\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\iScene\abstractFactory\AbstractSceneFactory.h">
+      <Filter>engine\iScene\abstractSceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\iScene\base\BaseScene.h">
+      <Filter>engine\iScene\baseScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\ObjectStructs.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h">
+      <Filter>engine\manager\pipeline\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\scene\SceneManager.h">
+      <Filter>engine\manager\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl" />
-    <FxCompile Include="resources\shaders\objects\2d\object2d.VS.hlsl" />
+    <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
+      <Filter>resources\shaders\objects\2d</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\2d\object2d.VS.hlsl">
+      <Filter>resources\shaders\objects\2d</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\shaders\objects\2d\object2d.hlsli" />
+    <None Include="resources\shaders\objects\2d\object2d.hlsli">
+      <Filter>resources\shaders\objects\2d</Filter>
+    </None>
   </ItemGroup>
 </Project>
