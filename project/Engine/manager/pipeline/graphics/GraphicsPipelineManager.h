@@ -9,26 +9,11 @@
 
 // MyHedder
 #include "directX/includes/ComPtr.h"
+#include "enum/GraphicsPipelineEnum.h"
 
 class DirectXManager;
 
 class GraphicsPipelineManager {
-public: // 列挙型
-	// ブレンドモード
-	enum eBlendMode {
-		kBlendModeNone,
-		kBlendModeNormal,
-		kBlendModeAdd,
-		kBlendModeSubtract,
-		kBlendModeMultiply,
-		kBlendModeScreen,
-	};
-
-	// パイプラインの種類
-	enum ePipelineState {
-		kObject2d,
-	};
-
 public: // 公開メンバ変数
 	GraphicsPipelineManager() = default;
 	~GraphicsPipelineManager() = default;
@@ -37,12 +22,12 @@ public: // 公開メンバ変数
 	void Initialize(DirectXManager* directXManager);
 
 	// ルートシグネイチャのゲッター
-	ID3D12RootSignature* GetRootSignature(ePipelineState pipelineState) {
+	ID3D12RootSignature* GetRootSignature(PipelineState pipelineState) {
 		return rootSignature_[pipelineState].Get();
 	}
 
 	// パイプラインステイトのゲッター
-	ID3D12PipelineState* GetPipelineState(ePipelineState pipelineState, eBlendMode blendMode);
+	ID3D12PipelineState* GetPipelineState(PipelineState pipelineState, BlendMode blendMode);
 
 private:
 	void SetDirectXCommon(DirectXManager* directX);

@@ -1,33 +1,12 @@
 #pragma once
 
-// C++
-#include <cstdint>
-
-// DirectX
-#include <d3d12.h>
-
-// DirectxTex
-#include "externals/DirectXTex/DirectXTex.h"
-#include "externals/DirectXTex/d3dx12.h"
-
-#include "directX/includes/ComPtr.h"
+#include "structs/TextureStruct.h"
 
 // 前方宣言
 class DirectXManager;
 class SRVManager;
 
 class TextureManager {
-public: // 構造体
-	// テクスチャ構造体
-	struct Texture {
-		// テクスチャリソース
-		Microsoft::WRL::ComPtr<ID3D12Resource> resource;
-		// メタデータ
-		DirectX::TexMetadata metaData;
-		// srvIndex
-		uint32_t srvIndex;
-	};
-
 public: // 公開メンバ関数
 	TextureManager() = default;
 	~TextureManager() = default;

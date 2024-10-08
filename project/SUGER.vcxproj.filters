@@ -87,6 +87,9 @@
     <ClCompile Include="Engine\math\operator\MathOperator.cpp" />
     <ClCompile Include="Engine\framework\SUGER.cpp" />
     <ClCompile Include="application\myGame\MyGame.cpp" />
+    <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
+    <ClCompile Include="Engine\manager\scene\SceneManager.cpp" />
+    <ClCompile Include="application\scene\sample\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\debugTools\logger\Logger.h">
@@ -134,9 +137,20 @@
     <ClInclude Include="Engine\math\types\Matrix4x4.h" />
     <ClInclude Include="Engine\framework\SUGER.h" />
     <ClInclude Include="application\myGame\MyGame.h" />
+    <ClInclude Include="Engine\structs\ObjectStructs.h" />
+    <ClInclude Include="application\scene\factory\SceneFactory.h" />
+    <ClInclude Include="Engine\iScene\abstractFactory\AbstractSceneFactory.h" />
+    <ClInclude Include="Engine\iScene\base\BaseScene.h" />
+    <ClInclude Include="Engine\manager\scene\SceneManager.h" />
+    <ClInclude Include="application\scene\sample\SampleScene.h" />
+    <ClInclude Include="Engine\structs\TextureStruct.h" />
+    <ClInclude Include="Engine\enum\GraphicsPipelineEnum.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="resources\shaders\objects\object2d.PS.hlsl" />
-    <FxCompile Include="resources\shaders\objects\object2d.VS.hlsl" />
+    <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl" />
+    <FxCompile Include="resources\shaders\objects\2d\object2d.VS.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\shaders\objects\2d\object2d.hlsli" />
   </ItemGroup>
 </Project>

@@ -4,10 +4,6 @@
 #include <dinput.h>
 #include "directX/includes/ComPtr.h"
 
-// pragma comment
-#pragma comment(lib,"dinput8.lib")
-#pragma comment(lib,"dxguid.lib")
-
 // 前方宣言
 class WindowManager;
 

@@ -27,7 +27,7 @@ void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
 	CreateObject2DGrapchicsPipelineStateObject();
 }
 
-ID3D12PipelineState* GraphicsPipelineManager::GetPipelineState(ePipelineState pipelineState, eBlendMode blendMode) {
+ID3D12PipelineState* GraphicsPipelineManager::GetPipelineState(PipelineState pipelineState, BlendMode blendMode) {
 	return graphicsPipelineState_[pipelineState][blendMode].Get();
 }
 
@@ -324,12 +324,12 @@ D3D12_RASTERIZER_DESC GraphicsPipelineManager::Object2DRasterizerStateSetting() 
 void GraphicsPipelineManager::CompileObject2DShaders() {
 	// Sprite用シェーダー
 	object2DVertexShaderBlob_ = nullptr;
-	object2DVertexShaderBlob_ = CompileShader(L"resources/shaders/objects/object2d.VS.hlsl",
+	object2DVertexShaderBlob_ = CompileShader(L"resources/shaders/objects/2d/object2d.VS.hlsl",
 		L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(object2DVertexShaderBlob_ != nullptr);
 
 	object2DPixelShaderBlob_ = nullptr;
-	object2DPixelShaderBlob_ = CompileShader(L"resources/shaders/objects/object2d.PS.hlsl",
+	object2DPixelShaderBlob_ = CompileShader(L"resources/shaders/objects/2d/object2d.PS.hlsl",
 		L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(object2DPixelShaderBlob_ != nullptr);
 }
