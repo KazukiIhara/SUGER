@@ -20,6 +20,8 @@ class ImGuiManager;
 class TextureManager;
 class GraphicsPipelineManager;
 class Object2DSystem;
+class AbstractSceneFactory;
+
 
 class SUGER {
 public:
@@ -110,5 +112,5 @@ private: // クラスのポインタ
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
-
+	static std::unique_ptr<AbstractSceneFactory> sceneFactory_;
 };

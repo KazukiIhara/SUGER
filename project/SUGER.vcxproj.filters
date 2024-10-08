@@ -121,11 +121,17 @@
     <Filter Include="engine\manager\scene">
       <UniqueIdentifier>{da2c1d87-b20a-419f-acaa-6e52f7e9cfa2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\debugTools\logger">
+      <UniqueIdentifier>{1abde696-205c-4a1c-acda-8c8d10eea591}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\debugTools\leakCheker">
+      <UniqueIdentifier>{8f4906c6-ab92-4b19-bfaa-76108dab2164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\debugTools\leakCheker\D3DResource">
+      <UniqueIdentifier>{ba26c6a3-060b-4a89-b1fd-b9a64b3136bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\debugTools\logger\Logger.cpp">
-      <Filter>engine\debugTools</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
       <Filter>engine\input\direct</Filter>
     </ClCompile>
@@ -187,11 +193,14 @@
     <ClCompile Include="Engine\manager\scene\SceneManager.cpp">
       <Filter>engine\manager\scene</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\debugTools\logger\Logger.cpp">
+      <Filter>engine\debugTools\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp">
+      <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\debugTools\logger\Logger.h">
-      <Filter>engine\debugTools</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
       <Filter>engine\input\direct</Filter>
     </ClInclude>
@@ -281,6 +290,12 @@
     </ClInclude>
     <ClInclude Include="Engine\manager\scene\SceneManager.h">
       <Filter>engine\manager\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\debugTools\logger\Logger.h">
+      <Filter>engine\debugTools\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h">
+      <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
