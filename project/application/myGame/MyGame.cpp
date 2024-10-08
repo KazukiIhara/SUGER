@@ -3,8 +3,7 @@
 
 // MyHedder
 #include "debugTools/logger/Logger.h"
-#include "scene/factory/SceneFactory.h"
-#include "manager/scene/SceneManager.h"
+
 
 MyGame::~MyGame() {
 }
@@ -14,18 +13,18 @@ void MyGame::Initialize() {
 	SUGER::Initialize();
 
 	// シーンファクトリ生成
-	sceneFactory_ = new SceneFactory();
+	sceneFactory_ = std::make_unique<SceneFactory>();
 	// シーンマネージャ作成
-	sceneManager_ = new SceneManager();
+	sceneManager_ = std::make_unique<SceneManager>();
 	// シーンマネージャにシーンファクトリをセット
-	sceneManager_->SetSceneFactory(sceneFactory_);
+	sceneManager_->SetSceneFactory(sceneFactory_.get());
 	// 初期シーンのセット
 	sceneManager_->ChangeScene("SAMPLE");
 }
 
 void MyGame::Finalize() {
 	// ゲーム固有の終了処理
-	delete sceneManager_;
+
 	// 基底システムの終了
 	SUGER::Finalize();
 }

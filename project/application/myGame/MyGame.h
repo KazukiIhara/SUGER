@@ -1,11 +1,8 @@
 #pragma once
-
 // MyHedder
 #include "framework/SUGER.h"
-
-// 前方宣言
-class SceneFactory;
-class SceneManager;
+#include "scene/factory/SceneFactory.h"
+#include "manager/scene/SceneManager.h"
 
 // ゲームクラス
 class MyGame :public SUGER {
@@ -24,7 +21,7 @@ public: // 公開メンバ関数
 
 private: // メンバ変数
 	// シーンファクトリ
-	SceneFactory* sceneFactory_ = nullptr;
+	std::unique_ptr<SceneFactory> sceneFactory_ = nullptr;
 	// シーンマネージャ
-	SceneManager* sceneManager_ = nullptr;
+	std::unique_ptr<SceneManager> sceneManager_ = nullptr;
 };

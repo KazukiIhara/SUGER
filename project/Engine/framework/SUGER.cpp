@@ -27,7 +27,6 @@ std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
-std::unique_ptr<AbstractSceneFactory> SUGER::sceneFactory_ = nullptr;
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
