@@ -14,11 +14,6 @@
 // MyHedder
 #include "debugTools/logger/Logger.h"
 
-D3DResourceLeakChecker* D3DResourceLeakChecker::GetInstance() {
-	static D3DResourceLeakChecker instance;
-	return &instance;
-}
-
 D3DResourceLeakChecker::~D3DResourceLeakChecker() {
 	// リソースリークチェック
 	Microsoft::WRL::ComPtr<IDXGIDebug1> debug;

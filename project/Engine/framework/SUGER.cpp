@@ -13,60 +13,88 @@
 #include "2d/system/Object2dSystem.h"
 
 // Staticメンバ変数の初期化
-std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
-std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
-std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
-std::unique_ptr<SRVManager> SUGER::srvManager_ = nullptr;
-std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
-std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
-std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
-std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
+WindowManager* SUGER::windowManager_ = nullptr;
+DirectInput* SUGER::directInput_ = nullptr;
+DirectXManager* SUGER::directXManager_ = nullptr;
+SRVManager* SUGER::srvManager_ = nullptr;
+ImGuiManager* SUGER::imguiManager_ = nullptr;
+TextureManager* SUGER::textureManager_ = nullptr;
+GraphicsPipelineManager* SUGER::graphicsPipelineManager_ = nullptr;
+Object2DSystem* SUGER::object2dSystem_ = nullptr;
+AbstractSceneFactory* SUGER::sceneFactory_ = nullptr;
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
 
 	// WindowManagerの初期化
-	windowManager_ = std::make_unique<WindowManager>();
+	windowManager_ = new WindowManager();
 	windowManager_->Initialize();
 
 	// DirectInputの初期化
-	directInput_ = std::make_unique<DirectInput>();
-	directInput_->Initialize(windowManager_.get());
+	directInput_ = new DirectInput();
+	directInput_->Initialize(windowManager_);
 
 	// DirectXManagerの初期化
-	directXManager_ = std::make_unique<DirectXManager>();
-	directXManager_->Initialize(windowManager_.get());
+	directXManager_ = new DirectXManager();
+	directXManager_->Initialize(windowManager_);
 
 	// SRVManagerの初期化
-	srvManager_ = std::make_unique<SRVManager>();
-	srvManager_->Initialize(directXManager_.get());
+	srvManager_ = new SRVManager();
+	srvManager_->Initialize(directXManager_);
 
 	// ImGuiManagerの初期化
-	imguiManager_ = std::make_unique<ImGuiManager>();
-	imguiManager_->Initialize(windowManager_.get(), directXManager_.get(), srvManager_.get());
+	imguiManager_ = new ImGuiManager();
+	imguiManager_->Initialize(windowManager_, directXManager_, srvManager_);
 
 	// TextureManagerの初期化
-	textureManager_ = std::make_unique<TextureManager>();
-	textureManager_->Initialize(directXManager_.get(), srvManager_.get());
+	textureManager_ = new TextureManager();
+	textureManager_->Initialize(directXManager_, srvManager_);
 
 	// GraphicsPipelineManagerの初期化
-	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
-	graphicsPipelineManager_->Initialize(directXManager_.get());
+	graphicsPipelineManager_ = new GraphicsPipelineManager();
+	graphicsPipelineManager_->Initialize(directXManager_);
 
 	// Object2DSystemの初期化
-	object2dSystem_ = std::make_unique<Object2DSystem>();
-	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
-
+	object2dSystem_ = new Object2DSystem();
+	object2dSystem_->Initialize(directXManager_, graphicsPipelineManager_);
 }
 
 void SUGER::Finalize() {
 	Logger::Log("SUGER,Finalized\n");
 
+	// 各オブジェクトの終了処理とメモリ解放
 	delete sceneFactory_;
+	sceneFactory_ = nullptr;
 
-	imguiManager_->Finalize();
+	delete object2dSystem_;
+	object2dSystem_ = nullptr;
 
-	windowManager_->Finalize();
+	delete graphicsPipelineManager_;
+	graphicsPipelineManager_ = nullptr;
+
+	delete textureManager_;
+	textureManager_ = nullptr;
+
+	delete srvManager_;
+	srvManager_ = nullptr;
+
+	if (imguiManager_) {
+		imguiManager_->Finalize();
+		delete imguiManager_;
+		imguiManager_ = nullptr;
+	}
+
+	delete directInput_;
+	directInput_ = nullptr;
+
+	delete directXManager_;
+	directXManager_ = nullptr;
+
+	if (windowManager_) {
+		windowManager_->Finalize();
+		delete windowManager_;
+		windowManager_ = nullptr;
+	}
 }
 
 void SUGER::Update() {
@@ -92,7 +120,6 @@ void SUGER::Update() {
 	ImGui::Text("framelate %f", ImGui::GetIO().Framerate);
 	ImGui::End();
 #endif // _DEBUG
-
 }
 
 void SUGER::Run() {
