@@ -12,6 +12,7 @@
 #include "structs/TextureStruct.h"
 #include "enum/GraphicsPipelineEnum.h"
 
+class D3DResourceLeakChecker;
 class WindowManager;
 class DirectInput;
 class DirectXManager;
@@ -104,13 +105,14 @@ private: // メンバ変数
 	// 終了リクエスト
 	bool endRequest_ = false;
 private: // クラスのポインタ
-	static WindowManager* windowManager_;
-	static DirectInput* directInput_;
-	static DirectXManager* directXManager_;
-	static SRVManager* srvManager_;
-	static ImGuiManager* imguiManager_;
-	static TextureManager* textureManager_;
-	static GraphicsPipelineManager* graphicsPipelineManager_;
-	static Object2DSystem* object2dSystem_;
-	static AbstractSceneFactory* sceneFactory_;
+	static std::unique_ptr<D3DResourceLeakChecker> leakCheck_;
+	static std::unique_ptr<WindowManager> windowManager_;
+	static std::unique_ptr<DirectInput> directInput_;
+	static std::unique_ptr<DirectXManager> directXManager_;
+	static std::unique_ptr<SRVManager> srvManager_;
+	static std::unique_ptr<ImGuiManager> imguiManager_;
+	static std::unique_ptr<TextureManager> textureManager_;
+	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
+	static std::unique_ptr<Object2DSystem> object2dSystem_;
+	static std::unique_ptr<AbstractSceneFactory> sceneFactory_;
 };

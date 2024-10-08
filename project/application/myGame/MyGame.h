@@ -11,7 +11,7 @@ class SceneManager;
 class MyGame :public SUGER {
 public: // 公開メンバ関数
 	MyGame() = default;
-	~MyGame() = default;
+	~MyGame();
 
 	// 初期化
 	void Initialize()override;

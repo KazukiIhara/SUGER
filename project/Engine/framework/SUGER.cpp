@@ -13,87 +13,101 @@
 #include "2d/system/Object2dSystem.h"
 
 // Staticメンバ変数の初期化
-WindowManager* SUGER::windowManager_ = nullptr;
-DirectInput* SUGER::directInput_ = nullptr;
-DirectXManager* SUGER::directXManager_ = nullptr;
-SRVManager* SUGER::srvManager_ = nullptr;
-ImGuiManager* SUGER::imguiManager_ = nullptr;
-TextureManager* SUGER::textureManager_ = nullptr;
-GraphicsPipelineManager* SUGER::graphicsPipelineManager_ = nullptr;
-Object2DSystem* SUGER::object2dSystem_ = nullptr;
-AbstractSceneFactory* SUGER::sceneFactory_ = nullptr;
+#ifdef _DEBUG
+#include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
+std::unique_ptr<D3DResourceLeakChecker> SUGER::leakCheck_ = nullptr;
+#endif // _DEBUG
+
+std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
+std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
+std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
+std::unique_ptr<SRVManager> SUGER::srvManager_ = nullptr;
+std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
+std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
+std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
+std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
+std::unique_ptr<AbstractSceneFactory> SUGER::sceneFactory_ = nullptr;
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
 
 	// WindowManagerの初期化
-	windowManager_ = new WindowManager();
+	windowManager_ = std::make_unique<WindowManager>();
 	windowManager_->Initialize();
 
 	// DirectInputの初期化
-	directInput_ = new DirectInput();
-	directInput_->Initialize(windowManager_);
+	directInput_ = std::make_unique<DirectInput>();
+	directInput_->Initialize(windowManager_.get());
 
 	// DirectXManagerの初期化
-	directXManager_ = new DirectXManager();
-	directXManager_->Initialize(windowManager_);
+	directXManager_ = std::make_unique<DirectXManager>();
+	directXManager_->Initialize(windowManager_.get());
 
 	// SRVManagerの初期化
-	srvManager_ = new SRVManager();
-	srvManager_->Initialize(directXManager_);
+	srvManager_ = std::make_unique<SRVManager>();
+	srvManager_->Initialize(directXManager_.get());
 
 	// ImGuiManagerの初期化
-	imguiManager_ = new ImGuiManager();
-	imguiManager_->Initialize(windowManager_, directXManager_, srvManager_);
+	imguiManager_ = std::make_unique<ImGuiManager>();
+	imguiManager_->Initialize(windowManager_.get(), directXManager_.get(), srvManager_.get());
 
 	// TextureManagerの初期化
-	textureManager_ = new TextureManager();
-	textureManager_->Initialize(directXManager_, srvManager_);
+	textureManager_ = std::make_unique<TextureManager>();
+	textureManager_->Initialize(directXManager_.get(), srvManager_.get());
 
 	// GraphicsPipelineManagerの初期化
-	graphicsPipelineManager_ = new GraphicsPipelineManager();
-	graphicsPipelineManager_->Initialize(directXManager_);
+	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
+	graphicsPipelineManager_->Initialize(directXManager_.get());
 
 	// Object2DSystemの初期化
-	object2dSystem_ = new Object2DSystem();
-	object2dSystem_->Initialize(directXManager_, graphicsPipelineManager_);
+	object2dSystem_ = std::make_unique<Object2DSystem>();
+	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
 }
 
 void SUGER::Finalize() {
 	Logger::Log("SUGER,Finalized\n");
 
-	// 各オブジェクトの終了処理とメモリ解放
-	delete sceneFactory_;
-	sceneFactory_ = nullptr;
+	// 各オブジェクトの終了処理を生成した順番とは逆に行う
 
-	delete object2dSystem_;
-	object2dSystem_ = nullptr;
-
-	delete graphicsPipelineManager_;
-	graphicsPipelineManager_ = nullptr;
-
-	delete textureManager_;
-	textureManager_ = nullptr;
-
-	delete srvManager_;
-	srvManager_ = nullptr;
-
-	if (imguiManager_) {
-		imguiManager_->Finalize();
-		delete imguiManager_;
-		imguiManager_ = nullptr;
+	// Object2DSystemの終了処理
+	if (object2dSystem_) {
+		object2dSystem_.reset();
 	}
 
-	delete directInput_;
-	directInput_ = nullptr;
+	// GraphicsPipelineManagerの終了処理
+	if (graphicsPipelineManager_) {
+		graphicsPipelineManager_.reset();
+	}
 
-	delete directXManager_;
-	directXManager_ = nullptr;
+	// TextureManagerの終了処理
+	if (textureManager_) {
+		textureManager_.reset();
+	}
 
+	// ImGuiManagerの終了処理
+	if (imguiManager_) {
+		imguiManager_->Finalize();
+		imguiManager_.reset();
+	}
+
+	// SRVManagerの終了処理
+	if (srvManager_) {
+		srvManager_.reset();
+	}
+
+	// DirectXManagerの終了処理
+	if (directXManager_) {
+	}
+
+	// DirectInputの終了処理
+	if (directInput_) {
+		directInput_.reset();
+	}
+
+	// WindowManagerの終了処理
 	if (windowManager_) {
 		windowManager_->Finalize();
-		delete windowManager_;
-		windowManager_ = nullptr;
+		windowManager_.reset();
 	}
 }
 

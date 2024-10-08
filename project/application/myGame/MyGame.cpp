@@ -6,6 +6,9 @@
 #include "scene/factory/SceneFactory.h"
 #include "manager/scene/SceneManager.h"
 
+MyGame::~MyGame() {
+}
+
 void MyGame::Initialize() {
 	// 基底システムの初期化
 	SUGER::Initialize();
