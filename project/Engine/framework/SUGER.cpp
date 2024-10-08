@@ -9,7 +9,7 @@
 #include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
-
+#include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "2d/system/Object2dSystem.h"
 
 // Staticメンバ変数の初期化
@@ -21,7 +21,6 @@ std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
-std::unique_ptr<AbstractSceneFactory> SUGER::sceneFactory_ = nullptr;
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
@@ -63,7 +62,7 @@ void SUGER::Initialize() {
 void SUGER::Finalize() {
 	Logger::Log("SUGER,Finalized\n");
 
-	
+	delete sceneFactory_;
 
 	imguiManager_->Finalize();
 

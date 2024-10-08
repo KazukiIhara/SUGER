@@ -31,9 +31,6 @@
     <Filter Include="engine\manager\srv">
       <UniqueIdentifier>{e5b4c463-83ed-44ce-b1a3-d5372506d32a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="engine\manager\directX\command">
-      <UniqueIdentifier>{7d3fa0f0-231e-4f02-8b22-f4d9e8962f4c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="engine\manager\texture">
       <UniqueIdentifier>{c0f0735c-2f77-40d6-a967-7586bd14473e}</UniqueIdentifier>
     </Filter>
@@ -130,6 +127,12 @@
     <Filter Include="engine\debugTools\leakCheker\D3DResource">
       <UniqueIdentifier>{ba26c6a3-060b-4a89-b1fd-b9a64b3136bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\directX">
+      <UniqueIdentifier>{e7c7aeee-28ab-49bd-87cc-1d42886fde15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\directX\command">
+      <UniqueIdentifier>{7d3fa0f0-231e-4f02-8b22-f4d9e8962f4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
@@ -151,7 +154,7 @@
       <Filter>engine\manager\srv</Filter>
     </ClCompile>
     <ClCompile Include="Engine\directX\command\DirectXCommand.cpp">
-      <Filter>engine\manager\directX\command</Filter>
+      <Filter>engine\directX\command</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp">
@@ -223,7 +226,7 @@
       <Filter>engine\manager\srv</Filter>
     </ClInclude>
     <ClInclude Include="Engine\directX\command\DirectXCommand.h">
-      <Filter>engine\manager\directX\command</Filter>
+      <Filter>engine\directX\command</Filter>
     </ClInclude>
     <ClInclude Include="Engine\manager\texture\TextureManager.h">
       <Filter>engine\manager\texture</Filter>
