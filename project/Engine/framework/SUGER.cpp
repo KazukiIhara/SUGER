@@ -97,6 +97,7 @@ void SUGER::Finalize() {
 
 	// DirectXManagerの終了処理
 	if (directXManager_) {
+		directXManager_.reset();
 	}
 
 	// DirectInputの終了処理
