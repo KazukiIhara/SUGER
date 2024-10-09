@@ -13,4 +13,5 @@
 	// パイプラインの種類
 	enum PipelineState {
 		kObject2d,
+		kObject3d,
 	};

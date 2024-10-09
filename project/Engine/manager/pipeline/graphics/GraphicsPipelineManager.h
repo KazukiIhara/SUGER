@@ -13,6 +13,7 @@
 #include "enum/GraphicsPipelineEnum.h"
 
 #include "2d/graphicsPipeline/Object2dGraphicsPipeline.h"
+#include "3d/graphicsPipeline/Object3dGraphicsPipeline.h"
 
 class DirectXManager;
 
@@ -38,7 +39,7 @@ private: // 静的メンバ変数
 	// ブレンドモードの数
 	static const uint32_t kBlendModeNum = 6;
 	// パイプラインの種類の数 
-	static const uint32_t kPipelineStateNum = 1;
+	static const uint32_t kPipelineStateNum = 2;
 
 private: // メンバ変数
 	// ルートシグネイチャ
@@ -49,5 +50,6 @@ private: // メンバ変数
 private: // インスタンスを受け取るポインタ
 	// 2DGraphicsPipelineManager
 	std::unique_ptr<Object2DGraphicsPipeline> object2dGraphicsPipeline_ = nullptr;
-
+	// 3DGraphicsPipelineManager
+	std::unique_ptr<Object3DGraphicsPipeline> object3dGraphicsPipeline_ = nullptr;
 };

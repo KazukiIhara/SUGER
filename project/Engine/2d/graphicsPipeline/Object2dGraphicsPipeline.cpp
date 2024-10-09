@@ -134,7 +134,6 @@ void Object2DGraphicsPipeline::CreateGraphicsPipelineObject() {
 			IID_PPV_ARGS(&graphicsPipelineState_[i]));
 		assert(SUCCEEDED(hr));
 	}
-
 }
 
 void Object2DGraphicsPipeline::InitializeDxCompiler() {
