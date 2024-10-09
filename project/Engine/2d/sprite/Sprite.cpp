@@ -132,7 +132,7 @@ void Sprite::Draw(BlendMode blendMode) {
 }
 
 void Sprite::CreateVertexResource() {
-	vertexResource_ = CreateBufferResource(SUGER::GetDirectXDevice(), sizeof(sVertexData2D) * 6);
+	vertexResource_ = SUGER::CreateBufferResource(sizeof(sVertexData2D) * 6);
 }
 
 void Sprite::CreateVretexBufferView() {
@@ -164,7 +164,7 @@ void Sprite::MapVertexData() {
 }
 
 void Sprite::CreateIndexResource() {
-	indexResource_ = CreateBufferResource(SUGER::GetDirectXDevice(), sizeof(uint32_t) * 6);
+	indexResource_ = SUGER::CreateBufferResource(sizeof(uint32_t) * 6);
 }
 
 void Sprite::CreateIndexBufferView() {
@@ -186,7 +186,7 @@ void Sprite::MapIndexResource() {
 
 void Sprite::CreateMaterialResource() {
 	/*マテリアル用のリソースを作る*/
-	materialResource_ = CreateBufferResource(SUGER::GetDirectXDevice(), sizeof(sMaterial2D));
+	materialResource_ = SUGER::CreateBufferResource(sizeof(sMaterial2D));
 }
 
 void Sprite::MapMaterialData() {
@@ -200,7 +200,7 @@ void Sprite::MapMaterialData() {
 
 void Sprite::CreateWVPResource() {
 	/*WVP用のリソースを作る*/
-	transformationResource_ = CreateBufferResource(SUGER::GetDirectXDevice(), sizeof(Matrix4x4));
+	transformationResource_ = SUGER::CreateBufferResource(sizeof(Matrix4x4));
 }
 
 void Sprite::MapWVPData() {
@@ -210,34 +210,6 @@ void Sprite::MapWVPData() {
 	transformationResource_->Map(0, nullptr, reinterpret_cast<void**>(&wvpData_));
 	/*単位行列を書き込んでおく*/
 	*wvpData_ = MakeIdentityMatrix4x4();
-}
-
-Microsoft::WRL::ComPtr<ID3D12Resource> Sprite::CreateBufferResource(ID3D12Device* device, size_t sizeInBytes) {
-	HRESULT hr = S_FALSE;
-	//頂点リソース用のヒープの設定
-	D3D12_HEAP_PROPERTIES uplodeHeapProperties{};
-	uplodeHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;//UploadHeapを使う
-
-	//マテリアル用のリソースの設定
-	D3D12_RESOURCE_DESC resourceDesc{};
-	//バッファリソース。テクスチャの場合はまた別の設定をする
-	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resourceDesc.Width = sizeInBytes;
-	//バッファの場合はこれらは1にする決まり
-	resourceDesc.Height = 1;
-	resourceDesc.DepthOrArraySize = 1;
-	resourceDesc.MipLevels = 1;
-	resourceDesc.SampleDesc.Count = 1;
-	//バッファの場合はこれにする決まり
-	resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
-	//バッファリソースを作る
-	Microsoft::WRL::ComPtr<ID3D12Resource>resource = nullptr;
-	hr = device->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
-		&resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&resource));
-	assert(SUCCEEDED(hr));
-	return resource;
 }
 
 void Sprite::AdjustTextureSize() {

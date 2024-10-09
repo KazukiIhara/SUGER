@@ -198,6 +198,10 @@ ID3D12GraphicsCommandList* SUGER::GetDirectXCommandList() {
 	return directXManager_->GetCommandList();
 }
 
+ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes) {
+	return directXManager_->CreateBufferResource(sizeInBytes);
+}
+
 void SUGER::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
 	srvManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
 }

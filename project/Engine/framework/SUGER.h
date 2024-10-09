@@ -66,6 +66,8 @@ public: // クラスメソッド
 	static ID3D12Device* GetDirectXDevice();
 	// コマンドリスト取得関数
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
+	// バッファリソースの作成
+	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 #pragma endregion
 
 #pragma region SRVManager

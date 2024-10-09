@@ -146,10 +146,6 @@ private: // メンバ関数
 	void MapWVPData();
 #pragma endregion
 
-#pragma region BufferResource
-	/*バッファリソースを作成する*/
-	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
-#pragma endregion
 
 	// テクスチャサイズをイメージに合わせる
 	void AdjustTextureSize();
