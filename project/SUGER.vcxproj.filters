@@ -315,10 +315,13 @@
     <FxCompile Include="resources\shaders\objects\2d\object2d.VS.hlsl">
       <Filter>resources\shaders\objects\2d</Filter>
     </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3d\object3d.VS.hlsl" />
+    <FxCompile Include="resources\shaders\objects\3d\object3d.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
       <Filter>resources\shaders\objects\2d</Filter>
     </None>
+    <None Include="resources\shaders\objects\3d\object3d.hlsli" />
   </ItemGroup>
 </Project>
