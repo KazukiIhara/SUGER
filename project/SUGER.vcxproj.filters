@@ -207,6 +207,7 @@
     <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
     <ClCompile Include="Engine\3d\object\Object3d.cpp" />
+    <ClCompile Include="Engine\3d\camera\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -311,6 +312,7 @@
     <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
+    <ClInclude Include="Engine\3d\camera\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
