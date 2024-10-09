@@ -7,7 +7,7 @@
 #include <d3d12.h>
 #include <dxcapi.h>
 
-// MyHedder
+// ヘッダファイル
 #include "directX/includes/ComPtr.h"
 #include "enum/GraphicsPipelineEnum.h"
 
@@ -15,47 +15,57 @@ class DirectXManager;
 
 class Object2DGraphicsPipeline {
 public:
+	// コンストラクタとデストラクタ
 	Object2DGraphicsPipeline() = default;
 	~Object2DGraphicsPipeline() = default;
 
+	// 初期化処理
 	void Initialize(DirectXManager* directXManager);
 
-	// ルートシグネイチャのゲッター
+	// ルートシグネチャを取得する
 	ID3D12RootSignature* GetRootSignature();
 
-	// パイプラインステイトのゲッター
+	// 指定されたブレンドモードに対応するパイプラインステートを取得する
 	ID3D12PipelineState* GetPipelineState(BlendMode blendMode);
 
 private:
+	// DirectXの共通設定を行う
 	void SetDirectXCommon(DirectXManager* directX);
-	void CreateRootSignature();
-	void CompileShaders();
-	void CreateGraphicsPipelineObject();
 
-	
+	// ルートシグネチャを作成する
+	void CreateRootSignature();
+
+	// シェーダーをコンパイルする
+	void CompileShaders();
+
+	// グラフィックスパイプラインオブジェクトを作成する
+	void CreateGraphicsPipelineObject();
 
 	// シェーダーコンパイラの初期化
 	void InitializeDxCompiler();
 
-	// シェーダーをコンパイル
+	// シェーダーをコンパイルする
 	ComPtr<ID3DBlob> CompileShader(
-		//CompileするShaderファイルへのパス
+		// シェーダーファイルのパス
 		const std::wstring& filePath,
-		//Compileに使用するProfile
+		// コンパイルに使用するプロファイル
 		const wchar_t* profile,
-		//初期化で生成したものを3つ
+		// 初期化で生成したシェーダーコンパイラ関連の3つ
 		IDxcUtils* dxcUtils,
 		IDxcCompiler3* dxcCompiler,
-		IDxcIncludeHandler* includeHandler);
+		IDxcIncludeHandler* includeHandler
+	);
 
-
-	// BlendStateの設定
+	// BlendStateの設定を行う
 	D3D12_BLEND_DESC BlendStateSetting(uint32_t blendModeNum);
-	// DepthStencilStateの設定
+
+	// DepthStencilStateの設定を行う
 	D3D12_DEPTH_STENCIL_DESC DepthStecilDescSetting();
-	// InputLayoutの設定
+
+	// InputLayoutの設定を行う
 	D3D12_INPUT_LAYOUT_DESC InputLayoutSetting();
-	// RasterizerStateの設定
+
+	// RasterizerStateの設定を行う
 	D3D12_RASTERIZER_DESC RasterizerStateSetting();
 
 private: // 静的メンバ変数
@@ -63,22 +73,23 @@ private: // 静的メンバ変数
 	static const uint32_t kBlendModeNum = 6;
 
 private:
-	// ルートシグネイチャ
+	// ルートシグネチャ
 	ComPtr<ID3D12RootSignature> rootSignature_;
-	// グラフィックスパイプライン
+
+	// グラフィックスパイプラインステート (ブレンドモードごとに設定)
 	ComPtr<ID3D12PipelineState> graphicsPipelineState_[kBlendModeNum];
 
-	// 頂点シェーダー
+	// 頂点シェーダーのバイナリデータ
 	ComPtr<ID3DBlob> vertexShaderBlob_;
-	// ピクセルシェーダー
+
+	// ピクセルシェーダーのバイナリデータ
 	ComPtr<ID3DBlob> pixelShaderBlob_;
 
-	// シェーダー
+	// シェーダーコンパイルに使用するオブジェクト
 	IDxcUtils* dxcUtils = nullptr;
 	IDxcCompiler3* dxcCompiler = nullptr;
 	IDxcIncludeHandler* includeHandler = nullptr;
 
-private: // インスタンスを受け取るポインタ
-	// DirectX
+private: // ポインタでDirectXManagerのインスタンスを保持
 	DirectXManager* directX_ = nullptr;
 };
