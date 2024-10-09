@@ -12,7 +12,7 @@
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "manager/model/ModelManager.h"
 #include "2d/system/Object2dSystem.h"
-
+#include "3d/system/Object3dSystem.h"
 
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
@@ -29,6 +29,7 @@ std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
 std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
+std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
@@ -68,6 +69,10 @@ void SUGER::Initialize() {
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
 	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+
+	// Object3DSystemの初期化
+	object3dSystem_ = std::make_unique<Object3DSystem>();
+	object3dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
 }
 
 void SUGER::Finalize() {
@@ -78,6 +83,11 @@ void SUGER::Finalize() {
 	// Object2DSystemの終了処理
 	if (object2dSystem_) {
 		object2dSystem_.reset();
+	}
+
+	// ModelManagerの終了処理
+	if (modelManager_) {
+		modelManager_.reset();
 	}
 
 	// GraphicsPipelineManagerの終了処理
@@ -222,4 +232,8 @@ Model* SUGER::FindModel(const std::string& filePath) {
 
 void SUGER::PreDrawObject2D() {
 	object2dSystem_->PreDraw();
+}
+
+void SUGER::PreDrawObject3D() {
+	object3dSystem_->PreDraw();
 }

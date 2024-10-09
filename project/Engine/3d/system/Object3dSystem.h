@@ -6,24 +6,25 @@
 class DirectXManager;
 class GraphicsPipelineManager;
 
-class cObject3dSystem {
-public: // インスタンスセット関数
+class Object3DSystem {
+public: // 公開メンバ関数
+	Object3DSystem() = default;
+	~Object3DSystem() = default;
+
+	// 初期化処理
+	void Initialize(DirectXManager* directXManager, GraphicsPipelineManager* pipelineManager_);
+
+	// 描画前処理
+	void PreDraw();
+private:
 	// DirectXCommon
-	void SetDirectXCommon(DirectXManager* directX) {
-		directX_ = directX;
+	void SetDirectXManager(DirectXManager* directX) {
+		directXManager_ = directX;
 	}
 	// PipelineManager
 	void SetPipelineManager(GraphicsPipelineManager* pipelineManager) {
 		pipelineManager_ = pipelineManager;
 	}
-
-public: // 公開メンバ関数
-	cObject3dSystem() = default;
-	~cObject3dSystem() = default;
-
-	// 描画前処理
-	void PreDraw();
-
 private: // インスタンスを受け取るポインタ
 	// DirectXManager
 	DirectXManager* directXManager_ = nullptr;

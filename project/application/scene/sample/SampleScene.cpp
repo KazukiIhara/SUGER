@@ -37,6 +37,12 @@ void SampleScene::Update() {
 
 void SampleScene::Draw() {
 
+	// 3Dオブジェクト描画前処理
+	SUGER::PreDrawObject3D();
+
+
+	// 2Dオブジェクト描画前処理
 	SUGER::PreDrawObject2D();
 	sampleTexture_->Draw();
+
 }

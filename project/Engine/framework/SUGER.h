@@ -23,6 +23,7 @@ class GraphicsPipelineManager;
 class ModelManager;
 class Model;
 class Object2DSystem;
+class Object3DSystem;
 class AbstractSceneFactory;
 
 
@@ -112,6 +113,11 @@ public: // クラスメソッド
 	static void PreDrawObject2D();
 #pragma endregion
 
+#pragma region Object3DSystem
+	// Object3DSystemの機能
+	// 3dオブジェクト描画前処理
+	static void PreDrawObject3D();
+#pragma endregion
 
 private: // メンバ変数
 	// 終了リクエスト
@@ -127,4 +133,5 @@ private: // クラスのポインタ
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
 	static std::unique_ptr<ModelManager> modelManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
+	static std::unique_ptr<Object3DSystem> object3dSystem_;
 };
