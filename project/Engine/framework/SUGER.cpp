@@ -10,6 +10,7 @@
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
+#include "manager/model/ModelManager.h"
 #include "2d/system/Object2dSystem.h"
 
 
@@ -26,6 +27,7 @@ std::unique_ptr<SRVManager> SUGER::srvManager_ = nullptr;
 std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
+std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 
 void SUGER::Initialize() {
@@ -58,6 +60,10 @@ void SUGER::Initialize() {
 	// GraphicsPipelineManagerの初期化
 	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
 	graphicsPipelineManager_->Initialize(directXManager_.get());
+
+	// ModelManagerの初期化
+	modelManager_ = std::make_unique<ModelManager>();
+	modelManager_->Initialize();
 
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
@@ -200,6 +206,18 @@ const DirectX::TexMetadata& SUGER::GetTextureMetaData(const std::string& filePat
 
 ID3D12PipelineState* SUGER::GetPipelineState(PipelineState pipelineState, BlendMode blendMode) {
 	return graphicsPipelineManager_->GetPipelineState(pipelineState, blendMode);
+}
+
+void SUGER::LoadModel(const std::string& filePath) {
+	modelManager_->Load(filePath);
+}
+
+void SUGER::CreateSphere(const std::string& textureFilePath) {
+	modelManager_->CreateSphere(textureFilePath);
+}
+
+Model* SUGER::FindModel(const std::string& filePath) {
+	return modelManager_->Find(filePath);
 }
 
 void SUGER::PreDrawObject2D() {

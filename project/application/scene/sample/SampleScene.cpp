@@ -16,6 +16,8 @@ void SampleScene::Initialize() {
 	sampleTexture_ = std::make_unique<Sprite>();
 	sampleTexture_->Initialize("resources/images/nero.jpg ");
 
+	SUGER::LoadModel("teapot");
+
 }
 
 void SampleScene::Finalize() {

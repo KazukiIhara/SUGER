@@ -20,6 +20,8 @@ class SRVManager;
 class ImGuiManager;
 class TextureManager;
 class GraphicsPipelineManager;
+class ModelManager;
+class Model;
 class Object2DSystem;
 class AbstractSceneFactory;
 
@@ -94,6 +96,16 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region ModelManager
+	// モデルの読み込み
+	static void LoadModel(const std::string& filePath);
+	// 球体の作成
+	static void CreateSphere(const std::string& textureFilePath);
+	// モデルの検索
+	static Model* FindModel(const std::string& filePath);
+#pragma endregion
+
+
 #pragma region Object2DSystem
 	// Object2DSystemの機能
 	// 2dオブジェクト描画前処理
@@ -113,5 +125,6 @@ private: // クラスのポインタ
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
+	static std::unique_ptr<ModelManager> modelManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 };

@@ -203,6 +203,8 @@
       <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
     </ClCompile>
     <ClCompile Include="Engine\manager\model\ModelManager.cpp" />
+    <ClCompile Include="Engine\3d\model\Model.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -302,6 +304,9 @@
       <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
     </ClInclude>
     <ClInclude Include="Engine\manager\model\ModelManager.h" />
+    <ClInclude Include="Engine\3d\model\Model.h" />
+    <ClInclude Include="Engine\structs\ModelStructs.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
