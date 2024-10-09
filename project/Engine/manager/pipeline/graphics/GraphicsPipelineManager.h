@@ -2,6 +2,7 @@
 
 // C++
 #include <string>
+#include <memory>
 
 // DirectX
 #include <d3d12.h>
@@ -29,8 +30,9 @@ public: // 公開メンバ変数
 	// パイプラインステイトのゲッター
 	ID3D12PipelineState* GetPipelineState(PipelineState pipelineState, BlendMode blendMode);
 
-private:
-	void SetDirectXCommon(DirectXManager* directX);
+	void SetRootSignature(PipelineState pipelineState);
+
+	void SetGraphicsPipeline(PipelineState pipelineState);
 
 private: // 静的メンバ変数
 	// ブレンドモードの数
@@ -45,6 +47,7 @@ private: // メンバ変数
 	ComPtr<ID3D12PipelineState> graphicsPipelineStates_[kPipelineStateNum][kBlendModeNum];
 
 private: // インスタンスを受け取るポインタ
-	// DirectX
-	DirectXManager* directX_ = nullptr;
+	// 2DGraphicsPipelineManager
+	std::unique_ptr<Object2DGraphicsPipeline> object2dGraphicsPipeline_ = nullptr;
+
 };

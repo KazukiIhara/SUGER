@@ -21,9 +21,7 @@ public:
 	void Initialize(DirectXManager* directXManager);
 
 	// ルートシグネイチャのゲッター
-	ID3D12RootSignature* GetRootSignature() {
-		return rootSignature_.Get();
-	}
+	ID3D12RootSignature* GetRootSignature();
 
 	// パイプラインステイトのゲッター
 	ID3D12PipelineState* GetPipelineState(BlendMode blendMode);
@@ -33,6 +31,8 @@ private:
 	void CreateRootSignature();
 	void CompileShaders();
 	void CreateGraphicsPipelineObject();
+
+	
 
 	// シェーダーコンパイラの初期化
 	void InitializeDxCompiler();

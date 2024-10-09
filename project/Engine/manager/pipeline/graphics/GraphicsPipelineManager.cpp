@@ -13,9 +13,11 @@
 #include "manager/directX/DirectXManager.h"
 
 void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
-	// DxCommonのインスタンスをセット
-	SetDirectXCommon(directXManager);
-
+	// 2D用グラフィックスパイプラインを生成
+	object2dGraphicsPipeline_ = std::make_unique<Object2DGraphicsPipeline>();
+	object2dGraphicsPipeline_->Initialize(directXManager);
+	SetRootSignature(kObject2d);
+	SetGraphicsPipeline(kObject2d);
 
 }
 
@@ -27,6 +29,20 @@ ID3D12PipelineState* GraphicsPipelineManager::GetPipelineState(PipelineState pip
 	return graphicsPipelineStates_[pipelineState][blendMode].Get();
 }
 
-void GraphicsPipelineManager::SetDirectXCommon(DirectXManager* directX) {
-	directX_ = directX;
+void GraphicsPipelineManager::SetRootSignature(PipelineState pipelineState) {
+	switch (pipelineState) {
+	case kObject2d:
+		rootSignatures_[pipelineState] = object2dGraphicsPipeline_->GetRootSignature();
+		break;
+	}
+}
+
+void GraphicsPipelineManager::SetGraphicsPipeline(PipelineState pipelineState) {
+	switch (pipelineState) {
+	case kObject2d:
+		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+			graphicsPipelineStates_[pipelineState][mode] = object2dGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
+		}
+		break;
+	}
 }

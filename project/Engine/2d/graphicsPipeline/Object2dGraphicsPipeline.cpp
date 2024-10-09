@@ -7,12 +7,18 @@
 
 void Object2DGraphicsPipeline::Initialize(DirectXManager* directXManager) {
 	SetDirectXCommon(directXManager);
+	InitializeDxCompiler();
+	CreateRootSignature();
+	CompileShaders();
+	CreateGraphicsPipelineObject();
+}
 
-
+ID3D12RootSignature* Object2DGraphicsPipeline::GetRootSignature() {
+	return rootSignature_.Get();
 }
 
 ID3D12PipelineState* Object2DGraphicsPipeline::GetPipelineState(BlendMode blendMode) {
-	return nullptr;
+	return graphicsPipelineState_[blendMode].Get();
 }
 
 void Object2DGraphicsPipeline::SetDirectXCommon(DirectXManager* directX) {
