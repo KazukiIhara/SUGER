@@ -205,6 +205,7 @@
     <ClCompile Include="Engine\manager\model\ModelManager.cpp" />
     <ClCompile Include="Engine\3d\model\Model.cpp" />
     <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -307,6 +308,7 @@
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\structs\ModelStructs.h" />
     <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h" />
+    <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

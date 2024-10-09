@@ -115,6 +115,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\2d\system\Object2dSystem.cpp" />
     <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\model\Model.cpp" />
+    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
     <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp" />
     <ClCompile Include="Engine\directX\command\DirectXCommand.cpp" />
     <ClCompile Include="Engine\framework\SUGER.cpp" />
@@ -143,6 +144,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\2d\system\Object2dSystem.h" />
     <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\model\Model.h" />
+    <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
     <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h" />
     <ClInclude Include="Engine\directX\command\DirectXCommand.h" />
     <ClInclude Include="Engine\framework\SUGER.h" />
