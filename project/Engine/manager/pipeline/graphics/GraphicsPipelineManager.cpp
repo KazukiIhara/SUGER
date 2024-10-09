@@ -30,13 +30,13 @@ void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
 	SetRootSignature(kObject2d);
 
 	// 2D描画用のグラフィックスパイプラインステートを設定
-	SetGraphicsPipeline(kObject2d);
+	SetGraphicsPipelineState(kObject2d);
 
 	// 3Dオブジェクト描画用のルートシグネチャを設定
 	SetRootSignature(kObject3d);
 
 	// 3D描画用のグラフィックスパイプラインステートを設定
-	SetGraphicsPipeline(kObject3d);
+	SetGraphicsPipelineState(kObject3d);
 
 }
 
@@ -70,7 +70,7 @@ void GraphicsPipelineManager::SetRootSignature(PipelineState pipelineState) {
 }
 
 // 指定されたパイプラインステートに対応するグラフィックスパイプラインステートを設定する
-void GraphicsPipelineManager::SetGraphicsPipeline(PipelineState pipelineState) {
+void GraphicsPipelineManager::SetGraphicsPipelineState(PipelineState pipelineState) {
 	// パイプラインステートごとに対応するグラフィックスパイプラインを設定
 	switch (pipelineState) {
 	case kObject2d:
