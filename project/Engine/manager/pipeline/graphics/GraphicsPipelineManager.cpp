@@ -70,7 +70,7 @@ void GraphicsPipelineManager::SetRootSignature(PipelineState pipelineState) {
 }
 
 // 指定されたパイプラインステートに対応するグラフィックスパイプラインステートを設定する
-void GraphicsPipelineManager::SetGraphicsPipelineStatekans(PipelineState pipelineState) {
+void GraphicsPipelineManager::SetGraphicsPipelineState(PipelineState pipelineState) {
 	// パイプラインステートごとに対応するグラフィックスパイプラインを設定
 	switch (pipelineState) {
 	case kObject2d:
