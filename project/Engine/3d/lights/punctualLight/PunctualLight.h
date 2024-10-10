@@ -10,7 +10,7 @@
 #include "structs/PunctualLightStruct.h"
 #include "directX/includes/ComPtr.h"
 
-class cPunctualLight {
+class PunctualLight {
 public: // 構造体
 	// シェーダーに送るカメラ座標
 	struct sCameraForGPU {
@@ -24,6 +24,7 @@ public: // メンバ関数
 	void Update();
 	void TransferLight();
 
+	void InitializeLightSetting();
 	void SetPunctualLightSetting(const PunctualLightData& punctualLightSetting);
 	void SetCameraPosition(const Vector3& cameraPosition);
 

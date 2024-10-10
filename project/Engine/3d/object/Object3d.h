@@ -54,7 +54,7 @@ public: // Setter
 		this->transform_.translate = transform.translate;
 	}
 	// ライトのセット
-	void SetPunctualLight(PunctualLightData* punctualLight) {
+	void SetPunctualLight(PunctualLight* punctualLight) {
 		punctualLight_ = punctualLight;
 	}
 public: // Getter
@@ -94,7 +94,7 @@ private:/*メンバ変数*/
 	Matrix4x4* viewProjection_ = nullptr;
 
 	// ライトを受け取る箱
-	PunctualLightData* punctualLight_ = nullptr;
+	PunctualLight* punctualLight_ = nullptr;
 
 	// オブジェクトの名前
 	std::string objectname_{};
