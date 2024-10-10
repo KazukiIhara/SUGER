@@ -57,6 +57,10 @@ public: // Setter
 	void SetPunctualLight(PunctualLight* punctualLight) {
 		punctualLight_ = punctualLight;
 	}
+	// ビュープロジェクションのセット
+	void SetViewProjection(Matrix4x4* viewProjection) {
+		viewProjection_ = viewProjection;
+	}
 public: // Getter
 	// 拡縮のゲッター
 	const Vector3& GetScale() const {

@@ -6,7 +6,7 @@
 #include "worldTransform/WorldTransform.h"
 #include "math/function/MathFunction.h"
 
-class cCamera {
+class Camera {
 public:
 	// 初期化
 	void Initialize(WorldTransform* transform);

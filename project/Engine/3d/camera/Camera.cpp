@@ -7,7 +7,7 @@
 // ImGui
 #include "externals/imgui/imgui.h"
 
-void cCamera::Initialize(WorldTransform* transform) {
+void Camera::Initialize(WorldTransform* transform) {
 	assert(transform);
 
 	transform_ = transform;
@@ -18,7 +18,7 @@ void cCamera::Initialize(WorldTransform* transform) {
 	worldPos_ = ExtractionWorldPos(worldMatrix_);
 }
 
-void cCamera::Update() {
+void Camera::Update() {
 	worldMatrix_ = MakeAffineMatrix(transform_->scale, transform_->rotate, transform_->translate);
 	Matrix4x4 viewMatrix = Inverse(worldMatrix_);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, nearClipRange_, farClipRange_);
