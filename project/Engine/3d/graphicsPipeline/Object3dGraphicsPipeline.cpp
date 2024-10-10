@@ -1,31 +1,31 @@
-#include "Object2dGraphicsPipeline.h"
+#include "Object3dGraphicsPipeline.h"
 
 #include <cassert>
 
 #include "debugTools/logger/Logger.h"
 #include "manager/directX/DirectXManager.h"
 
-void Object2DGraphicsPipeline::Initialize(DirectXManager* directXManager) {
-	SetDirectXCommon(directXManager);
+void Object3DGraphicsPipeline::Initialize(DirectXManager* directXManager) {
+	SetDirectXManager(directXManager);
 	InitializeDxCompiler();
 	CreateRootSignature();
 	CompileShaders();
 	CreateGraphicsPipelineObject();
 }
 
-ID3D12RootSignature* Object2DGraphicsPipeline::GetRootSignature() {
+ID3D12RootSignature* Object3DGraphicsPipeline::GetRootSignature() {
 	return rootSignature_.Get();
 }
 
-ID3D12PipelineState* Object2DGraphicsPipeline::GetPipelineState(BlendMode blendMode) {
+ID3D12PipelineState* Object3DGraphicsPipeline::GetPipelineState(BlendMode blendMode) {
 	return graphicsPipelineState_[blendMode].Get();
 }
 
-void Object2DGraphicsPipeline::SetDirectXCommon(DirectXManager* directX) {
+void Object3DGraphicsPipeline::SetDirectXManager(DirectXManager* directX) {
 	directX_ = directX;
 }
 
-void Object2DGraphicsPipeline::CreateRootSignature() {
+void Object3DGraphicsPipeline::CreateRootSignature() {
 	HRESULT hr = S_FALSE;
 
 	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
@@ -40,7 +40,7 @@ void Object2DGraphicsPipeline::CreateRootSignature() {
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	// RootParameter作成。
-	D3D12_ROOT_PARAMETER rootParameters[3] = {};
+	D3D12_ROOT_PARAMETER rootParameters[5] = {};
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//CBVを使う
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	//PixelShaderで使う
 	rootParameters[0].Descriptor.ShaderRegister = 0;					//レジスタ番号0とバインド
@@ -49,10 +49,18 @@ void Object2DGraphicsPipeline::CreateRootSignature() {
 	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;//VirtexShaderで使う
 	rootParameters[1].Descriptor.ShaderRegister = 0;
 
-	rootParameters[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRange;
-	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+	rootParameters[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//CBVを使う
+	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	//PixelShaderで使う
+	rootParameters[2].Descriptor.ShaderRegister = 1;					//レジスタ番号1とバインド
+
+	rootParameters[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//CBVを使う
+	rootParameters[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	//PixelShaderで使う
+	rootParameters[3].Descriptor.ShaderRegister = 2;					//レジスタ番号1とバインド
+
+	rootParameters[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[4].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParameters[4].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
 
 	descriptionRootSignature.pParameters = rootParameters;				//ルートパラメータ配列へのポインタ
 	descriptionRootSignature.NumParameters = _countof(rootParameters);	//配列の長さ
@@ -79,26 +87,26 @@ void Object2DGraphicsPipeline::CreateRootSignature() {
 		Logger::Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
 		assert(false);
 	}
-	//バイナリをもとに生成
+	// バイナリをもとに生成
 	rootSignature_ = nullptr;
 	hr = directX_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 }
 
-void Object2DGraphicsPipeline::CompileShaders() {
+void Object3DGraphicsPipeline::CompileShaders() {
 	vertexShaderBlob_ = nullptr;
-	vertexShaderBlob_ = CompileShader(L"resources/shaders/objects/2d/object2d.VS.hlsl",
+	vertexShaderBlob_ = CompileShader(L"resources/shaders/objects/3d/object3d.VS.hlsl",
 		L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(vertexShaderBlob_ != nullptr);
 
 	pixelShaderBlob_ = nullptr;
-	pixelShaderBlob_ = CompileShader(L"resources/shaders/objects/2d/object2d.PS.hlsl",
+	pixelShaderBlob_ = CompileShader(L"resources/shaders/objects/3d/object3d.PS.hlsl",
 		L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(pixelShaderBlob_ != nullptr);
 }
 
-void Object2DGraphicsPipeline::CreateGraphicsPipelineObject() {
+void Object3DGraphicsPipeline::CreateGraphicsPipelineObject() {
 	HRESULT hr;
 
 	assert(rootSignature_);
@@ -113,20 +121,20 @@ void Object2DGraphicsPipeline::CreateGraphicsPipelineObject() {
 	graphicsPipelineStateDesc.PS = { pixelShaderBlob_->GetBufferPointer(),
 	pixelShaderBlob_->GetBufferSize() };
 	graphicsPipelineStateDesc.RasterizerState = RasterizerStateSetting();
-	//書き込むRTVの情報
+	// 書き込むRTVの情報
 	graphicsPipelineStateDesc.NumRenderTargets = 1;
 	graphicsPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	//利用するトポロジ(形状)のタイプ、三角形
+	// 利用するトポロジ(形状)のタイプ、三角形
 	graphicsPipelineStateDesc.PrimitiveTopologyType =
 		D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-	//どのように画面に色を打ち込むかの設定(気にしなくて良い)
+	// どのように画面に色を打ち込むかの設定(気にしなくて良い)
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-	/*DepthStencilの設定*/
+	// DepthStencilの設定
 	graphicsPipelineStateDesc.DepthStencilState = DepthStecilDescSetting();
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	//実際に生成
+	// 実際に生成
 	for (uint32_t i = 0; i < kBlendModeNum; i++) {
 		graphicsPipelineStateDesc.BlendState = BlendStateSetting(i);
 		graphicsPipelineState_[i] = nullptr;
@@ -136,7 +144,7 @@ void Object2DGraphicsPipeline::CreateGraphicsPipelineObject() {
 	}
 }
 
-void Object2DGraphicsPipeline::InitializeDxCompiler() {
+void Object3DGraphicsPipeline::InitializeDxCompiler() {
 	HRESULT hr = S_FALSE;
 	// dxCompilerを初期化
 	hr = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
@@ -147,7 +155,7 @@ void Object2DGraphicsPipeline::InitializeDxCompiler() {
 	assert(SUCCEEDED(hr));
 }
 
-ComPtr<ID3DBlob> Object2DGraphicsPipeline::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler) {
+ComPtr<ID3DBlob> Object3DGraphicsPipeline::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler) {
 	// これからシェーダーをコンパイルする旨をログに出す
 	Logger::Log(Logger::ConvertString(std::format(L"Begin CompileShader, path:{}, profile:{}\n", filePath, profile)));
 	// hlslファイルを読む
@@ -200,7 +208,7 @@ ComPtr<ID3DBlob> Object2DGraphicsPipeline::CompileShader(const std::wstring& fil
 	return shaderBlob;
 }
 
-D3D12_BLEND_DESC Object2DGraphicsPipeline::BlendStateSetting(uint32_t blendModeNum) {
+D3D12_BLEND_DESC Object3DGraphicsPipeline::BlendStateSetting(uint32_t blendModeNum) {
 	D3D12_BLEND_DESC blendDesc{};
 	switch (blendModeNum) {
 	case 0:// kBlendModeNone
@@ -268,25 +276,24 @@ D3D12_BLEND_DESC Object2DGraphicsPipeline::BlendStateSetting(uint32_t blendModeN
 	// ブレンドモードNone D3D12_COLOR_WRITE_ENABLE_ALLだけ
 
 	return blendDesc;
-
 }
 
-D3D12_DEPTH_STENCIL_DESC Object2DGraphicsPipeline::DepthStecilDescSetting() {
-	/*DepthStencilStateの設定*/
+D3D12_DEPTH_STENCIL_DESC Object3DGraphicsPipeline::DepthStecilDescSetting() {
+	// DepthStencilStateの設定
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};
-	/*Depthの機能を有効化する*/
+	// Depthの機能を有効化する
 	depthStencilDesc.DepthEnable = true;
-	/*書き込みします*/
+	// 書き込みします
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	/*比較関数はLessEqual*/
+	// 比較関数はLessEqual
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 
 	return depthStencilDesc;
 }
 
-D3D12_INPUT_LAYOUT_DESC Object2DGraphicsPipeline::InputLayoutSetting() {
+D3D12_INPUT_LAYOUT_DESC Object3DGraphicsPipeline::InputLayoutSetting() {
 	// InputLayout
-	static D3D12_INPUT_ELEMENT_DESC inputElementDescs[2] = {};
+	static D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
 	inputElementDescs[0].SemanticName = "POSITION";
 	inputElementDescs[0].SemanticIndex = 0;
 	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -297,6 +304,10 @@ D3D12_INPUT_LAYOUT_DESC Object2DGraphicsPipeline::InputLayoutSetting() {
 	inputElementDescs[1].SemanticName = "TEXCOORD";
 	inputElementDescs[1].Format = DXGI_FORMAT_R32G32_FLOAT;
 	inputElementDescs[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+	inputElementDescs[2].SemanticName = "NORMAL";
+	inputElementDescs[2].SemanticIndex = 0;
+	inputElementDescs[2].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	inputElementDescs[2].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
 	inputLayoutDesc.pInputElementDescs = inputElementDescs;
@@ -305,12 +316,12 @@ D3D12_INPUT_LAYOUT_DESC Object2DGraphicsPipeline::InputLayoutSetting() {
 	return inputLayoutDesc;
 }
 
-D3D12_RASTERIZER_DESC Object2DGraphicsPipeline::RasterizerStateSetting() {
-	//RasterizerStateの設定
+D3D12_RASTERIZER_DESC Object3DGraphicsPipeline::RasterizerStateSetting() {
+	// RasterizerStateの設定
 	D3D12_RASTERIZER_DESC rasterizerDesc_{};
-	//裏側(時計回り)を表示しない
-	rasterizerDesc_.CullMode = D3D12_CULL_MODE_NONE;
-	//三角形の中を塗りつぶす
+	// 裏側(時計回り)を表示しない
+	rasterizerDesc_.CullMode = D3D12_CULL_MODE_BACK;
+	// 三角形の中を塗りつぶす
 	rasterizerDesc_.FillMode = D3D12_FILL_MODE_SOLID;
 
 	return rasterizerDesc_;

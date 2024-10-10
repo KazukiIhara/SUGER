@@ -203,6 +203,12 @@
       <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
     </ClCompile>
     <ClCompile Include="Engine\manager\model\ModelManager.cpp" />
+    <ClCompile Include="Engine\3d\model\Model.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
+    <ClCompile Include="Engine\3d\object\Object3d.cpp" />
+    <ClCompile Include="Engine\3d\camera\Camera.cpp" />
+    <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -302,6 +308,14 @@
       <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
     </ClInclude>
     <ClInclude Include="Engine\manager\model\ModelManager.h" />
+    <ClInclude Include="Engine\3d\model\Model.h" />
+    <ClInclude Include="Engine\structs\ModelStructs.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h" />
+    <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
+    <ClInclude Include="Engine\3d\object\Object3d.h" />
+    <ClInclude Include="Engine\3d\camera\Camera.h" />
+    <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
+    <ClInclude Include="Engine\structs\PunctualLightStruct.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
@@ -310,10 +324,13 @@
     <FxCompile Include="resources\shaders\objects\2d\object2d.VS.hlsl">
       <Filter>resources\shaders\objects\2d</Filter>
     </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3d\object3d.VS.hlsl" />
+    <FxCompile Include="resources\shaders\objects\3d\object3d.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
       <Filter>resources\shaders\objects\2d</Filter>
     </None>
+    <None Include="resources\shaders\objects\3d\object3d.hlsli" />
   </ItemGroup>
 </Project>

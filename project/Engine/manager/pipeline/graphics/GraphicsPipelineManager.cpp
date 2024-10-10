@@ -7,9 +7,6 @@
 #include <cassert>
 #include <format>  
 
-// DirectXのシェーダーコンパイラをリンク
-#pragma comment(lib,"dxcompiler.lib")
-
 // カスタムヘッダー
 #include "debugTools/logger/Logger.h"  // ログ出力に使用
 #include "manager/directX/DirectXManager.h"  // DirectXManager依存関係
@@ -23,11 +20,24 @@ void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
 	// 2DグラフィックスパイプラインをDirectXManagerを使って初期化
 	object2dGraphicsPipeline_->Initialize(directXManager);
 
+	// 3Dオブジェクト描画用のグラフィックスパイプラインを生成
+	object3dGraphicsPipeline_ = std::make_unique<Object3DGraphicsPipeline>();
+
+	// 3DグラフィックスパイプラインをDirectXManagerを使って初期化
+	object3dGraphicsPipeline_->Initialize(directXManager);
+
 	// 2Dオブジェクト描画用のルートシグネチャを設定
 	SetRootSignature(kObject2d);
 
 	// 2D描画用のグラフィックスパイプラインステートを設定
-	SetGraphicsPipeline(kObject2d);
+	SetGraphicsPipelineState(kObject2d);
+
+	// 3Dオブジェクト描画用のルートシグネチャを設定
+	SetRootSignature(kObject3d);
+
+	// 3D描画用のグラフィックスパイプラインステートを設定
+	SetGraphicsPipelineState(kObject3d);
+
 }
 
 // 指定されたパイプラインステートに対応するルートシグネチャを取得する
@@ -50,13 +60,17 @@ void GraphicsPipelineManager::SetRootSignature(PipelineState pipelineState) {
 		// 2Dオブジェクト描画用のルートシグネチャを設定
 		rootSignatures_[pipelineState] = object2dGraphicsPipeline_->GetRootSignature();
 		break;
-
+	case kObject3d:
+		// 2Dオブジェクト描画用のルートシグネチャを設定
+		rootSignatures_[pipelineState] = object3dGraphicsPipeline_->GetRootSignature();
+		break;
 		// 他のパイプラインステートが追加された場合はここに追加
+
 	}
 }
 
 // 指定されたパイプラインステートに対応するグラフィックスパイプラインステートを設定する
-void GraphicsPipelineManager::SetGraphicsPipeline(PipelineState pipelineState) {
+void GraphicsPipelineManager::SetGraphicsPipelineState(PipelineState pipelineState) {
 	// パイプラインステートごとに対応するグラフィックスパイプラインを設定
 	switch (pipelineState) {
 	case kObject2d:
@@ -66,6 +80,13 @@ void GraphicsPipelineManager::SetGraphicsPipeline(PipelineState pipelineState) {
 		}
 		break;
 
+	case kObject3d:
+		// 各ブレンドモードに対応するパイプラインステートを設定
+		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+			graphicsPipelineStates_[pipelineState][mode] = object3dGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
+		}
+		break;
 		// 他のパイプラインステートが追加された場合はここに追加
+
 	}
 }

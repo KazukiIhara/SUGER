@@ -20,7 +20,10 @@ class SRVManager;
 class ImGuiManager;
 class TextureManager;
 class GraphicsPipelineManager;
+class ModelManager;
+class Model;
 class Object2DSystem;
+class Object3DSystem;
 class AbstractSceneFactory;
 
 
@@ -63,6 +66,8 @@ public: // クラスメソッド
 	static ID3D12Device* GetDirectXDevice();
 	// コマンドリスト取得関数
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
+	// バッファリソースの作成
+	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 #pragma endregion
 
 #pragma region SRVManager
@@ -94,12 +99,27 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region ModelManager
+	// モデルの読み込み
+	static void LoadModel(const std::string& filePath);
+	// 球体の作成
+	static void CreateSphere(const std::string& textureFilePath);
+	// モデルの検索
+	static Model* FindModel(const std::string& filePath);
+#pragma endregion
+
+
 #pragma region Object2DSystem
 	// Object2DSystemの機能
 	// 2dオブジェクト描画前処理
 	static void PreDrawObject2D();
 #pragma endregion
 
+#pragma region Object3DSystem
+	// Object3DSystemの機能
+	// 3dオブジェクト描画前処理
+	static void PreDrawObject3D();
+#pragma endregion
 
 private: // メンバ変数
 	// 終了リクエスト
@@ -113,5 +133,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
+	static std::unique_ptr<ModelManager> modelManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
+	static std::unique_ptr<Object3DSystem> object3dSystem_;
 };
