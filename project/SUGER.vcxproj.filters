@@ -208,6 +208,7 @@
     <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
     <ClCompile Include="Engine\3d\object\Object3d.cpp" />
     <ClCompile Include="Engine\3d\camera\Camera.cpp" />
+    <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -313,6 +314,7 @@
     <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
     <ClInclude Include="Engine\3d\camera\Camera.h" />
+    <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
