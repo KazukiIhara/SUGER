@@ -177,6 +177,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\enum\GraphicsPipelineEnum.h" />
     <ClInclude Include="Engine\structs\ModelStructs.h" />
     <ClInclude Include="Engine\structs\ObjectStructs.h" />
+    <ClInclude Include="Engine\structs\PunctualLightStruct.h" />
     <ClInclude Include="Engine\structs\TextureStruct.h" />
     <ClInclude Include="Engine\worldTransform\WorldTransform.h" />
   </ItemGroup>

@@ -315,6 +315,7 @@
     <ClInclude Include="Engine\3d\object\Object3d.h" />
     <ClInclude Include="Engine\3d\camera\Camera.h" />
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
+    <ClInclude Include="Engine\structs\PunctualLightStruct.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

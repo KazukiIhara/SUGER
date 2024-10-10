@@ -13,6 +13,7 @@
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 #include "3d/model/Model.h"
 #include "worldTransform/WorldTransform.h"
+#include "3d/lights/punctualLight/PunctualLight.h"
 
 
 class Object3D {
@@ -53,7 +54,7 @@ public: // Setter
 		this->transform_.translate = transform.translate;
 	}
 	// ライトのセット
-	void SetPunctualLight(PunctualLight* punctualLight) {
+	void SetPunctualLight(PunctualLightData* punctualLight) {
 		punctualLight_ = punctualLight;
 	}
 public: // Getter
@@ -93,7 +94,7 @@ private:/*メンバ変数*/
 	Matrix4x4* viewProjection_ = nullptr;
 
 	// ライトを受け取る箱
-	PunctualLight* punctualLight_ = nullptr;
+	PunctualLightData* punctualLight_ = nullptr;
 
 	// オブジェクトの名前
 	std::string objectname_{};
