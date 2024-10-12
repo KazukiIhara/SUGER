@@ -153,6 +153,8 @@ void SUGER::Update() {
 #endif // _DEBUG
 }
 
+void SUGER::Draw() {}
+
 void SUGER::Run() {
 	// 初期化
 	Initialize();

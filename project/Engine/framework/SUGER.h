@@ -38,7 +38,7 @@ public:
 	// 更新
 	virtual void Update();
 	// 描画
-	virtual void Draw() = 0;
+	virtual void Draw();
 	// 終了チェック
 	virtual bool IsEndRequest() {
 		return endRequest_;
