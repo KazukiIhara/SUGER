@@ -41,6 +41,8 @@ void MyGame::Draw() {
 	SUGER::PreDraw();
 	// シーンの描画処理
 	sceneManager_->Draw();
+	// 規定システムの描画処理
+	SUGER::Draw();
 	// 基底システムの描画後処理
 	SUGER::PostDraw();
 }
