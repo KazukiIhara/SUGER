@@ -13,9 +13,12 @@ void SampleScene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
 
+	// 
+	// シーンの初期化処理ここから
+	// 
+
 	// オブジェクトの作成
 	SUGER::Create3DObject("teapot", "teapot");
-
 	SUGER::Create2DObject("nero", "nero.jpg");
 
 }
@@ -27,6 +30,16 @@ void SampleScene::Finalize() {
 }
 
 void SampleScene::Update() {
+
+	// 
+	// シーンの更新処理ここから
+	// 
+
+
+
+	// 
+	// シーンの更新処理ここまで
+	//
 
 	// シーンの更新(更新処理の最後)
 	BaseScene::Update();
