@@ -34,17 +34,17 @@ void MyGame::Update() {
 	SUGER::Update();
 	// シーンの更新処理
 	sceneManager_->Update();
+	// 2DObjectの更新
+	SUGER::Update2DObjects();
 	// 3DObjectの更新
 	SUGER::Update3DObjects();
 }
 
 void MyGame::Draw() {
-	// 基底システムの描画後処理
+	// 描画前処理
 	SUGER::PreDraw();
-	// シーンの描画処理
-	sceneManager_->Draw();
-	// 規定システムの描画処理
+	// 描画処理
 	SUGER::Draw();
-	// 基底システムの描画後処理
+	// 描画後処理
 	SUGER::PostDraw();
 }

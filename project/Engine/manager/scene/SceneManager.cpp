@@ -20,11 +20,6 @@ void SceneManager::Update() {
 	currentScene_->Update();
 }
 
-void SceneManager::Draw() {
-	// 現在のシーンの描画処理
-	currentScene_->Draw();
-}
-
 void SceneManager::SwitchScene() {
 	// 次シーンの予約があるなら
 	if (nextScene_) {

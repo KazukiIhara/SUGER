@@ -21,6 +21,7 @@ class ImGuiManager;
 class TextureManager;
 class GraphicsPipelineManager;
 class ModelManager;
+class Object2DManager;
 class Object3DManager;
 class Object2DSystem;
 class Object3DSystem;
@@ -111,6 +112,15 @@ public: // クラスメソッド
 	static Model* FindModel(const std::string& filePath);
 #pragma endregion
 
+#pragma region Object2DManager
+	// 2Dオブジェクトの作成
+	static void Create2DObject(const std::string& name, const std::string& filePath);
+	// 2Dオブジェクトの更新
+	static void Update2DObjects();
+	// 2Dオブジェクトの描画
+	static void Draw2DObjects();
+#pragma endregion
+
 #pragma region Object3DManager
 	// 3Dオブジェクトの作成
 	static void Create3DObject(const std::string& name, const std::string& filePath = "");
@@ -148,6 +158,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
 	static std::unique_ptr<ModelManager> modelManager_;
+	static std::unique_ptr<Object2DManager> object2dManager_;
 	static std::unique_ptr<Object3DManager> object3dManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
