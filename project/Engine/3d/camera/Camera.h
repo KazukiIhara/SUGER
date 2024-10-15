@@ -13,7 +13,7 @@
 class Camera {
 public:
 	// 初期化
-	void Initialize(WorldTransform* transform);
+	void Initialize();
 
 	// 更新
 	void Update();
@@ -24,6 +24,11 @@ public:
 	void UpdateCameraData();
 
 	void TransferCamera();
+
+	// カメラのTranslateをセット
+	void SetTranslate(const Vector3& translate);
+	// カメラのrotateをセット
+	void SetRotate(const Vector3& rotate);
 
 	// ビュープロジェクションマトリックスを送る関数
 	Matrix4x4 GetViewProjectionMatrix()const {
@@ -40,7 +45,7 @@ public:
 
 private:
 	// カメラのトランスフォームを受け取る箱
-	WorldTransform* transform_{};
+	WorldTransform transform_{};
 	// カメラのワールドマトリックス
 	Matrix4x4 worldMatrix_{};
 	// カメラのワールドポジション

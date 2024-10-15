@@ -34,7 +34,8 @@ private:
 protected:
 	// カメラ
 	std::unique_ptr<Camera> camera_;
-	WorldTransform cameraTransform_{};
+	// カメラの初期位置
+	const Vector3 kDefaultCameraTranslate_ = { 0.0f,0.0f,-10.0f };
 
 	// ライト
 	std::unique_ptr<PunctualLight> light_;

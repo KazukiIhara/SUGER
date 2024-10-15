@@ -4,10 +4,10 @@
 
 void BaseScene::Initialize() {
 	// カメラ作成
-	cameraTransform_.Initialize();
-	cameraTransform_.translate.z = -10.0f;
 	camera_ = std::make_unique<Camera>();
-	camera_->Initialize(&cameraTransform_);
+	camera_->Initialize();
+	// カメラの初期位置を設定
+	camera_->SetTranslate(kDefaultCameraTranslate_);
 
 	// ライト作成
 	light_ = std::make_unique<PunctualLight>();

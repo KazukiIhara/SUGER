@@ -10,11 +10,10 @@
 // MyHedder
 #include "framework/SUGER.h"
 
-void Camera::Initialize(WorldTransform* transform) {
-	assert(transform);
+void Camera::Initialize() {
 
-	transform_ = transform;
-	worldMatrix_ = MakeAffineMatrix(transform_->scale, transform_->rotate, transform_->translate);
+	transform_.Initialize();
+	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	Matrix4x4 viewMatrix = Inverse(worldMatrix_);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, 0.1f, 100.0f);
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
@@ -25,7 +24,7 @@ void Camera::Initialize(WorldTransform* transform) {
 }
 
 void Camera::Update() {
-	worldMatrix_ = MakeAffineMatrix(transform_->scale, transform_->rotate, transform_->translate);
+	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	Matrix4x4 viewMatrix = Inverse(worldMatrix_);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, nearClipRange_, farClipRange_);
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
@@ -60,3 +59,12 @@ void Camera::TransferCamera() {
 	// 定数バッファを転送
 	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(3, cameraResource_->GetGPUVirtualAddress());
 }
+
+void Camera::SetTranslate(const Vector3& translate) {
+	this->transform_.translate = translate;
+}
+
+void Camera::SetRotate(const Vector3& rotate) {
+	this->transform_.rotate = rotate;
+}
+
