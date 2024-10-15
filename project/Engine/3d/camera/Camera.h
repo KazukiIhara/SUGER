@@ -64,6 +64,6 @@ private:
 	// Camera用リソース
 	ComPtr<ID3D12Resource> cameraResource_ = nullptr;
 	// Camera用データ
-	sCameraForGPU* cameraData_ = nullptr;
+	CameraForGPU* cameraData_ = nullptr;
 
 };

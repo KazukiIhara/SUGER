@@ -47,13 +47,13 @@ void PunctualLight::InitializeLightSetting() {
 	punctualLight.spotLight.cosAngle = std::cos(std::numbers::pi_v<float> / 3.0f);
 }
 
-void PunctualLight::SetPunctualLightSetting(const PunctualLightData& punctualLightSetting) {
+void PunctualLight::SetPunctualLightSetting(const PunctualLightForGPU& punctualLightSetting) {
 	punctualLight = punctualLightSetting;
 }
 
 void PunctualLight::CreatePunctualLightResource() {
 	// WVP用のリソースを作る
-	punctualLightResource_ = SUGER::CreateBufferResource(sizeof(PunctualLightData));
+	punctualLightResource_ = SUGER::CreateBufferResource(sizeof(PunctualLightForGPU));
 }
 
 void PunctualLight::MapPunctualLightData() {

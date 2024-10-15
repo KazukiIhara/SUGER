@@ -34,7 +34,7 @@ void Camera::Update() {
 }
 
 void Camera::CreateCameraResource() {
-	cameraResource_ = SUGER::CreateBufferResource(sizeof(sCameraForGPU));
+	cameraResource_ = SUGER::CreateBufferResource(sizeof(CameraForGPU));
 }
 
 void Camera::MapCameraData() {

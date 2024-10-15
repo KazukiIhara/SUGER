@@ -3,14 +3,14 @@
 #include "math/function/MathFunction.h"
 
 // ディレクショナルライト
-struct DirectionalLightData {
+struct DirectionalLightForGPU {
 	Vector4 color; //ライトの色
 	Vector3 direction; //ライトの向き
 	float intensity; //輝度
 };
 
 // ポイントライト
-struct PointLightData {
+struct PointLightForGPU {
 	Vector4 color;
 	Vector3 position;
 	float intensity;
@@ -20,7 +20,7 @@ struct PointLightData {
 };
 
 // スポットライト
-struct SpotLightData {
+struct SpotLightForGPU {
 	Vector4 color;
 	Vector3 position;
 	float intensity;
@@ -33,8 +33,8 @@ struct SpotLightData {
 };
 
 // PunctualLight
-struct PunctualLightData {
-	DirectionalLightData directionalLight;
-	PointLightData pointLight;
-	SpotLightData spotLight;
+struct PunctualLightForGPU {
+	DirectionalLightForGPU directionalLight;
+	PointLightForGPU pointLight;
+	SpotLightForGPU spotLight;
 };

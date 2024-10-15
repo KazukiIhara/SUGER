@@ -16,7 +16,7 @@ public: // メンバ関数
 	void TransferLight();
 
 	void InitializeLightSetting();
-	void SetPunctualLightSetting(const PunctualLightData& punctualLightSetting);
+	void SetPunctualLightSetting(const PunctualLightForGPU& punctualLightSetting);
 
 private: // 非公開メンバ関数
 	void CreatePunctualLightResource();
@@ -30,8 +30,8 @@ private: // メンバ変数
 	// PunctualLight用のリソース
 	ComPtr<ID3D12Resource> punctualLightResource_ = nullptr;
 	// シェーダーに送るライトのデータ
-	PunctualLightData* punctualLightData_ = nullptr;
+	PunctualLightForGPU* punctualLightData_ = nullptr;
 	// PunctualLight
-	PunctualLightData punctualLight{};
+	PunctualLightForGPU punctualLight{};
 
 };
