@@ -11,6 +11,7 @@
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "manager/model/ModelManager.h"
+#include "manager/object/3d/Object3DManager.h"
 #include "2d/system/Object2dSystem.h"
 #include "3d/system/Object3dSystem.h"
 
@@ -28,6 +29,7 @@ std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
 std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
+std::unique_ptr<Object3DManager> SUGER::object3dManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 
@@ -66,6 +68,10 @@ void SUGER::Initialize() {
 	modelManager_ = std::make_unique<ModelManager>();
 	modelManager_->Initialize();
 
+	// object3dManagerの初期化
+	object3dManager_ = std::make_unique<Object3DManager>();
+	object3dManager_->Initialize(modelManager_.get());
+
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
 	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
@@ -80,9 +86,20 @@ void SUGER::Finalize() {
 
 	// 各オブジェクトの終了処理を生成した順番とは逆に行う
 
+	// Object3DSystemの終了処理
+	if (object3dSystem_) {
+		object3dSystem_.reset();
+	}
+
 	// Object2DSystemの終了処理
 	if (object2dSystem_) {
 		object2dSystem_.reset();
+	}
+
+	// Object3DManagerの終了処理
+	if (object3dManager_) {
+		object3dManager_->Finalize();
+		object3dManager_.reset();
 	}
 
 	// ModelManagerの終了処理
@@ -153,7 +170,13 @@ void SUGER::Update() {
 #endif // _DEBUG
 }
 
-void SUGER::Draw() {}
+void SUGER::Draw() {
+	// 3Dオブジェクト描画前処理
+	PreDrawObject3D();
+	// 3Dオブジェクト描画処理
+	Draw3DObjects(); 
+
+}
 
 void SUGER::Run() {
 	// 初期化
@@ -234,6 +257,22 @@ void SUGER::CreateSphere(const std::string& textureFilePath) {
 
 Model* SUGER::FindModel(const std::string& filePath) {
 	return modelManager_->Find(filePath);
+}
+
+void SUGER::Create3DObject(const std::string& name, const std::string& filePath) {
+	object3dManager_->Create(name, filePath);
+}
+
+void SUGER::Update3DObjects() {
+	object3dManager_->Update();
+}
+
+void SUGER::Draw3DObjects() {
+	object3dManager_->Draw();
+}
+
+void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
+	object3dManager_->SetRequiredObjects(camera, punctualLight);
 }
 
 void SUGER::PreDrawObject2D() {
