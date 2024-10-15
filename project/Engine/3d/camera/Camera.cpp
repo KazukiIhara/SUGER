@@ -45,15 +45,15 @@ void Camera::MapCameraData() {
 	cameraResource_->Map(0, nullptr, reinterpret_cast<void**>(&cameraData_));
 
 	// カメラ
-	cameraData_->worldPosition.x = camera.worldPosition.x;
-	cameraData_->worldPosition.y = camera.worldPosition.y;
-	cameraData_->worldPosition.z = camera.worldPosition.z;
+	cameraData_->worldPosition.x = worldPos_.x;
+	cameraData_->worldPosition.y = worldPos_.y;
+	cameraData_->worldPosition.z = worldPos_.z;
 }
 
 void Camera::UpdateCamera() {
-	cameraData_->worldPosition.x = camera.worldPosition.x;
-	cameraData_->worldPosition.y = camera.worldPosition.y;
-	cameraData_->worldPosition.z = camera.worldPosition.z;
+	cameraData_->worldPosition.x = worldPos_.x;
+	cameraData_->worldPosition.y = worldPos_.y;
+	cameraData_->worldPosition.z = worldPos_.z;
 }
 
 void Camera::TransferCamera() {
