@@ -1,5 +1,7 @@
 #include "Object3d.h"
 
+#include "framework/SUGER.h"
+
 void Object3D::Initialize() {
 	// wvp用のリソース作成
 	CreateWVPResource();
@@ -15,7 +17,7 @@ void Object3D::Update() {
 
 	// WVPマトリックスを作る
 	transform_.Update();
-	transformationData_->WVP = transform_.worldMatrix_ * *viewProjection_;
+	transformationData_->WVP = transform_.worldMatrix_ * camera_->GetViewProjectionMatrix();
 	transformationData_->World = transform_.worldMatrix_;
 	transformationData_->WorldInverseTransepose = MakeInverseTransposeMatrix(transform_.worldMatrix_);
 }
@@ -25,9 +27,10 @@ void Object3D::Draw(BlendMode blendMode) {
 	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kObject3d, blendMode));
 	// wvp用のCBufferの場所を設定
 	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(1, transformationResource_->GetGPUVirtualAddress());
-	// PunctualLight
+	// ライトを転送
 	punctualLight_->TransferLight();
-
+	// カメラ情報を転送
+	camera_->TransferCamera();
 	// 3Dモデルが割り当てられていれば描画する
 	if (model) {
 		model->Draw();

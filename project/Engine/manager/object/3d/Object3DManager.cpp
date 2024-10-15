@@ -39,7 +39,7 @@ void Object3DManager::Create(const std::string& name, const std::string& filePat
 	std::unique_ptr<Object3D> newObject = std::make_unique<Object3D>();
 	newObject->Initialize();
 
-	newObject->SetViewProjection(camera_->GetViewProjectionMatrix());
+	newObject->SetCamera(camera_);
 	newObject->SetPunctualLight(light_);
 
 	// filePathの指定がある場合、モデル読み込み

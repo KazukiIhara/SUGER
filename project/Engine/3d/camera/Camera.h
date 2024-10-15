@@ -2,9 +2,13 @@
 // C++
 #include <memory>
 
+// DirectX
+#include <d3d12.h>
+
 // MyHedder
+#include "directX/includes/ComPtr.h"
 #include "worldTransform/WorldTransform.h"
-#include "math/function/MathFunction.h"
+#include "structs/CameraStruct.h"
 
 class Camera {
 public:
@@ -14,17 +18,24 @@ public:
 	// 更新
 	void Update();
 
+	void CreateCameraResource();
+	void MapCameraData();
+
+	void UpdateCamera();
+
+	void TransferCamera();
+
 	// ビュープロジェクションマトリックスを送る関数
-	Matrix4x4* GetViewProjectionMatrix() {
-		return &viewProjectionMatrix_;
+	Matrix4x4 GetViewProjectionMatrix()const {
+		return viewProjectionMatrix_;
 	}
 	// ワールド行列を送る関数
-	Matrix4x4* GetWorldMatrix() {
-		return &worldMatrix_;
+	Matrix4x4 GetWorldMatrix()const {
+		return worldMatrix_;
 	}
 	// ワールド座標を送る関数
-	Vector3* GetWorldPos() {
-		return &worldPos_;
+	Vector3 GetWorldPos()const {
+		return worldPos_;
 	}
 
 private:
@@ -44,4 +55,12 @@ private:
 	float nearClipRange_ = 0.1f;
 	// ファークリップ距離
 	float farClipRange_ = 100.0f;
+
+	// Camera用リソース
+	ComPtr<ID3D12Resource> cameraResource_ = nullptr;
+	// Camera用データ
+	sCameraForGPU* cameraData_ = nullptr;
+	// カメラを受け取る箱
+	sCameraForGPU camera;
+
 };

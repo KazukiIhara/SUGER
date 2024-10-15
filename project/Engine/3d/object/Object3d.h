@@ -11,10 +11,10 @@
 #include "structs/ObjectStructs.h"
 #include "structs/ModelStructs.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
-#include "3d/model/Model.h"
 #include "worldTransform/WorldTransform.h"
+#include "3d/model/Model.h"
 #include "3d/lights/punctualLight/PunctualLight.h"
-
+#include "3d/camera/Camera.h"
 
 class Object3D {
 public:
@@ -58,8 +58,8 @@ public: // Setter
 		punctualLight_ = punctualLight;
 	}
 	// ビュープロジェクションのセット
-	void SetViewProjection(Matrix4x4* viewProjection) {
-		viewProjection_ = viewProjection;
+	void SetCamera(Camera* camera) {
+		camera_ = camera;
 	}
 public: // Getter
 	// 拡縮のゲッター
@@ -94,8 +94,8 @@ private:/*メンバ変数*/
 	/*トランスフォーム*/
 	WorldTransform transform_;
 
-	/*ビュープロジェクションを受け取る箱*/
-	Matrix4x4* viewProjection_ = nullptr;
+	// カメラを受け取る箱
+	Camera* camera_ = nullptr;
 
 	// ライトを受け取る箱
 	PunctualLight* punctualLight_ = nullptr;

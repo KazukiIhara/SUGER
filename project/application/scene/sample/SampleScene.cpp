@@ -10,21 +10,8 @@
 
 
 void SampleScene::Initialize() {
-	// デバッグ用文字
-	Logger::Log("SampleScene,Initialized\n");
-
-	// カメラ作成
-	cameraTransform_.Initialize();
-	cameraTransform_.translate.z = -10.0f;
-	camera_ = std::make_unique<Camera>();
-	camera_->Initialize(&cameraTransform_);
-
-	// ライト作成
-	light_ = std::make_unique<PunctualLight>();
-	light_->Initialize();
-
-	// シーンに必要なカメラとライトのセット
-	SUGER::SetRequiredObjects(camera_.get(), light_.get());
+	// シーンの初期化(初期化処理の先頭)
+	BaseScene::Initialize();
 
 	sampleTexture_ = std::make_unique<Sprite>();
 	sampleTexture_->Initialize("resources/images/nero.jpg ");
@@ -41,11 +28,12 @@ void SampleScene::Finalize() {
 }
 
 void SampleScene::Update() {
-	camera_->Update();
-	light_->SetCameraPosition(*camera_->GetWorldPos());
-	light_->Update();
+
 
 	sampleTexture_->Update();
+
+	// シーンの更新(更新処理の最後)
+	BaseScene::Update();
 }
 
 void SampleScene::Draw() {

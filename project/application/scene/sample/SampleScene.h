@@ -8,9 +8,7 @@
 #include "iScene/base/BaseScene.h"
 
 #include "2d/sprite/Sprite.h"
-#include "3d/camera/Camera.h"
-#include "3d/lights/punctualLight/PunctualLight.h"
-#include "3d/object/Object3d.h"
+
 
 class SampleScene:public BaseScene {
 public: // 公開メンバ関数
@@ -29,11 +27,5 @@ public: // 公開メンバ関数
 private: // 非公開メンバ変数
 	std::unique_ptr<Sprite> sampleTexture_;
 
-	std::unique_ptr<Camera> camera_;
-	WorldTransform cameraTransform_{};
-
-	std::unique_ptr<PunctualLight> light_;
-
-	std::unique_ptr<Object3D> sampleObject_;
 };
 
