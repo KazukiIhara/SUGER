@@ -41,10 +41,6 @@ void SampleScene::Finalize() {
 }
 
 void SampleScene::Update() {
-#ifdef _DEBUG
-	ImGui::Begin("SampleScene Update");
-	ImGui::End();
-#endif // _DEBUG
 	camera_->Update();
 	light_->SetCameraPosition(*camera_->GetWorldPos());
 	light_->Update();
