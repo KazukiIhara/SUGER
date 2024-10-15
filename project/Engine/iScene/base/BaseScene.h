@@ -1,5 +1,12 @@
 #pragma once
 
+// C++
+#include <memory>
+
+// MyHedder
+#include "3d/camera/Camera.h"
+#include "3d/lights/punctualLight/PunctualLight.h"
+
 // 前方宣言
 class SceneManager;
 
@@ -9,11 +16,11 @@ public: // 仮想関数
 	// 仮想デストラクタ
 	virtual ~BaseScene() = default;
 	// 初期化
-	virtual void Initialize() = 0;
+	virtual void Initialize();
 	// 終了
 	virtual void Finalize() = 0;
 	// 更新
-	virtual void Update() = 0;
+	virtual void Update();
 	// 描画
 	virtual void Draw() = 0;
 
@@ -24,4 +31,12 @@ public: // 仮想関数
 private:
 	// シーンマネージャ
 	SceneManager* sceneManager_ = nullptr;
+protected:
+	// カメラ
+	std::unique_ptr<Camera> camera_;
+	// カメラの初期位置
+	const Vector3 kDefaultCameraTranslate_ = { 0.0f,0.0f,-10.0f };
+
+	// ライト
+	std::unique_ptr<PunctualLight> light_;
 };

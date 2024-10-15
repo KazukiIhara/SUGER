@@ -122,6 +122,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp" />
     <ClCompile Include="Engine\directX\command\DirectXCommand.cpp" />
     <ClCompile Include="Engine\framework\SUGER.cpp" />
+    <ClCompile Include="Engine\iScene\base\BaseScene.cpp" />
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp" />
     <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
@@ -177,6 +178,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\iScene\abstractFactory\AbstractSceneFactory.h" />
     <ClInclude Include="Engine\iScene\base\BaseScene.h" />
     <ClInclude Include="Engine\enum\GraphicsPipelineEnum.h" />
+    <ClInclude Include="Engine\structs\CameraStruct.h" />
     <ClInclude Include="Engine\structs\ModelStructs.h" />
     <ClInclude Include="Engine\structs\ObjectStructs.h" />
     <ClInclude Include="Engine\structs\PunctualLightStruct.h" />

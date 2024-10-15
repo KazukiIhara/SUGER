@@ -1,28 +1,26 @@
 #include "PunctualLight.h"
 
+// MyHedder
+#include "framework/SUGER.h"
+
 void PunctualLight::Initialize() {
 	// ライトの状態を初期化
 	InitializeLightSetting();
 	// リソース作成
 	CreatePunctualLightResource();
-	CreateCameraResource();
 	// データ書き込み
 	MapPunctualLightData();
-	MapCameraData();
 }
 
 void PunctualLight::Update() {
 	UpdateDirectionalLight();
 	UpdatePointLight();
 	UpdateSpotLight();
-
-	UpdateCamera();
 }
 
 void PunctualLight::TransferLight() {
 	// 定数バッファを転送
 	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(2, punctualLightResource_->GetGPUVirtualAddress());
-	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(3, cameraResource_->GetGPUVirtualAddress());
 }
 
 void PunctualLight::InitializeLightSetting() {
@@ -51,12 +49,6 @@ void PunctualLight::InitializeLightSetting() {
 
 void PunctualLight::SetPunctualLightSetting(const PunctualLightData& punctualLightSetting) {
 	punctualLight = punctualLightSetting;
-}
-
-void PunctualLight::SetCameraPosition(const Vector3& cameraPosition) {
-	camera.worldPosition.x = cameraPosition.x;
-	camera.worldPosition.y = cameraPosition.y;
-	camera.worldPosition.z = cameraPosition.z;
 }
 
 void PunctualLight::CreatePunctualLightResource() {
@@ -94,22 +86,6 @@ void PunctualLight::MapPunctualLightData() {
 
 }
 
-void PunctualLight::CreateCameraResource() {
-	cameraResource_ = SUGER::CreateBufferResource(sizeof(sCameraForGPU));
-}
-
-void PunctualLight::MapCameraData() {
-	// データを書き込む
-	cameraData_ = nullptr;
-	// 書き込むためのアドレスを取得
-	cameraResource_->Map(0, nullptr, reinterpret_cast<void**>(&cameraData_));
-
-	// カメラ
-	cameraData_->worldPosition.x = camera.worldPosition.x;
-	cameraData_->worldPosition.y = camera.worldPosition.y;
-	cameraData_->worldPosition.z = camera.worldPosition.z;
-}
-
 void PunctualLight::UpdateDirectionalLight() {
 	punctualLightData_->directionalLight.color = punctualLight.directionalLight.color;
 	punctualLightData_->directionalLight.direction = punctualLight.directionalLight.direction;
@@ -133,10 +109,4 @@ void PunctualLight::UpdateSpotLight() {
 	punctualLightData_->spotLight.distance = punctualLight.spotLight.distance;
 	punctualLightData_->spotLight.intensity = punctualLight.spotLight.intensity;
 	punctualLightData_->spotLight.position = punctualLight.spotLight.position;
-}
-
-void PunctualLight::UpdateCamera() {
-	cameraData_->worldPosition.x = camera.worldPosition.x;
-	cameraData_->worldPosition.y = camera.worldPosition.y;
-	cameraData_->worldPosition.z = camera.worldPosition.z;
 }
