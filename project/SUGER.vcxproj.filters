@@ -133,6 +133,45 @@
     <Filter Include="engine\directX\command">
       <UniqueIdentifier>{7d3fa0f0-231e-4f02-8b22-f4d9e8962f4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\3d">
+      <UniqueIdentifier>{85cf3e7c-ab25-4715-830f-c4c89116e023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\model">
+      <UniqueIdentifier>{6b5b1095-33b2-4ef2-b522-5ebc3e68381d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\model">
+      <UniqueIdentifier>{050f0c25-d05c-4bc7-b55b-439a7181dffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders\objects\3d">
+      <UniqueIdentifier>{f4a8ee24-e836-47cc-a01e-964a8d7fb9c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\camera">
+      <UniqueIdentifier>{cd1c6f9a-ae27-4628-87ea-fab274f9cc41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\object">
+      <UniqueIdentifier>{07447d94-4f68-4f8e-87f3-bb9e4944f5ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\object">
+      <UniqueIdentifier>{6bfd21ae-50e8-4200-9ad3-036302848882}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\object\2d">
+      <UniqueIdentifier>{ec33287b-6b1e-4ad2-8699-09c7be77cb33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\object\3d">
+      <UniqueIdentifier>{7087ec76-c4ae-4f0e-8328-729caa645a1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\graphicsPipeline">
+      <UniqueIdentifier>{c2a652d9-921b-4dd6-997f-3aedb16fab61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\system">
+      <UniqueIdentifier>{6723d402-9440-4ea5-80c4-edeef2d20993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\lights">
+      <UniqueIdentifier>{06e7cd5d-a3e6-4f8c-9293-d67a3950b860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\lights\punctualLight">
+      <UniqueIdentifier>{90f62ea2-d8df-4c22-a9b1-64306091cd54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
@@ -202,16 +241,36 @@
     <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp">
       <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\model\ModelManager.cpp" />
-    <ClCompile Include="Engine\3d\model\Model.cpp" />
-    <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp" />
-    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
-    <ClCompile Include="Engine\3d\object\Object3d.cpp" />
-    <ClCompile Include="Engine\3d\camera\Camera.cpp" />
-    <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
-    <ClCompile Include="Engine\manager\object\3d\Object3DManager.cpp" />
-    <ClCompile Include="Engine\iScene\base\BaseScene.cpp" />
-    <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp" />
+    <ClCompile Include="Engine\3d\model\Model.cpp">
+      <Filter>engine\3d\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\model\ModelManager.cpp">
+      <Filter>engine\manager\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\camera\Camera.cpp">
+      <Filter>engine\3d\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\object\Object3d.cpp">
+      <Filter>engine\3d\object</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp">
+      <Filter>engine\manager\object\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\object\3d\Object3DManager.cpp">
+      <Filter>engine\manager\object\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp">
+      <Filter>engine\3d\graphicsPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp">
+      <Filter>engine\3d\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\iScene\base\BaseScene.cpp">
+      <Filter>engine\iScene\baseScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp">
+      <Filter>engine\3d\lights\punctualLight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -310,18 +369,42 @@
     <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h">
       <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\model\ModelManager.h" />
-    <ClInclude Include="Engine\3d\model\Model.h" />
-    <ClInclude Include="Engine\structs\ModelStructs.h" />
-    <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h" />
-    <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
-    <ClInclude Include="Engine\3d\object\Object3d.h" />
-    <ClInclude Include="Engine\3d\camera\Camera.h" />
-    <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
-    <ClInclude Include="Engine\structs\PunctualLightStruct.h" />
-    <ClInclude Include="Engine\manager\object\3d\Object3DManager.h" />
-    <ClInclude Include="Engine\structs\CameraStruct.h" />
-    <ClInclude Include="Engine\manager\object\2d\Object2DManager.h" />
+    <ClInclude Include="Engine\structs\CameraStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\PunctualLightStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\model\Model.h">
+      <Filter>engine\3d\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\model\ModelManager.h">
+      <Filter>engine\manager\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\camera\Camera.h">
+      <Filter>engine\3d\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\object\Object3d.h">
+      <Filter>engine\3d\object</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\object\2d\Object2DManager.h">
+      <Filter>engine\manager\object\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\ModelStructs.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\object\3d\Object3DManager.h">
+      <Filter>engine\manager\object\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h">
+      <Filter>engine\3d\graphicsPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\system\Object3dSystem.h">
+      <Filter>engine\3d\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h">
+      <Filter>engine\3d\lights\punctualLight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
@@ -330,13 +413,19 @@
     <FxCompile Include="resources\shaders\objects\2d\object2d.VS.hlsl">
       <Filter>resources\shaders\objects\2d</Filter>
     </FxCompile>
-    <FxCompile Include="resources\shaders\objects\3d\object3d.VS.hlsl" />
-    <FxCompile Include="resources\shaders\objects\3d\object3d.PS.hlsl" />
+    <FxCompile Include="resources\shaders\objects\3d\object3d.PS.hlsl">
+      <Filter>resources\shaders\objects\3d</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3d\object3d.VS.hlsl">
+      <Filter>resources\shaders\objects\3d</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
       <Filter>resources\shaders\objects\2d</Filter>
     </None>
-    <None Include="resources\shaders\objects\3d\object3d.hlsli" />
+    <None Include="resources\shaders\objects\3d\object3d.hlsli">
+      <Filter>resources\shaders\objects\3d</Filter>
+    </None>
   </ItemGroup>
 </Project>
