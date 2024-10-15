@@ -10,7 +10,7 @@
 #include "2d/sprite/Sprite.h"
 
 
-class SampleScene:public BaseScene {
+class SampleScene :public BaseScene {
 public: // 公開メンバ関数
 	// コンストラクタ
 	SampleScene() = default;
@@ -22,10 +22,7 @@ public: // 公開メンバ関数
 	void Finalize()override;
 	// 更新
 	void Update()override;
-	// 描画
-	void Draw()override;
 private: // 非公開メンバ変数
-	std::unique_ptr<Sprite> sampleTexture_;
 
 };
 

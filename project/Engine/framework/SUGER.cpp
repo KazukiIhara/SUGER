@@ -11,6 +11,7 @@
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "manager/model/ModelManager.h"
+#include "manager/object/2d/Object2DManager.h"
 #include "manager/object/3d/Object3DManager.h"
 #include "2d/system/Object2dSystem.h"
 #include "3d/system/Object3dSystem.h"
@@ -29,6 +30,7 @@ std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
 std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
+std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
 std::unique_ptr<Object3DManager> SUGER::object3dManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
@@ -71,6 +73,10 @@ void SUGER::Initialize() {
 	// object3dManagerの初期化
 	object3dManager_ = std::make_unique<Object3DManager>();
 	object3dManager_->Initialize(modelManager_.get());
+
+	// object2dManagerの初期化
+	object2dManager_ = std::make_unique<Object2DManager>();
+	object2dManager_->Initialize();
 
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
@@ -174,7 +180,12 @@ void SUGER::Draw() {
 	// 3Dオブジェクト描画前処理
 	PreDrawObject3D();
 	// 3Dオブジェクト描画処理
-	Draw3DObjects(); 
+	Draw3DObjects();
+
+	// 2Dオブジェクト描画前処理
+	PreDrawObject2D();
+	// 2Dオブジェクト描画処理
+	Draw2DObjects();
 
 }
 
@@ -257,6 +268,18 @@ void SUGER::CreateSphere(const std::string& textureFilePath) {
 
 Model* SUGER::FindModel(const std::string& filePath) {
 	return modelManager_->Find(filePath);
+}
+
+void SUGER::Create2DObject(const std::string& name, const std::string& filePath) {
+	object2dManager_->Create(name, filePath);
+}
+
+void SUGER::Update2DObjects() {
+	object2dManager_->Update();
+}
+
+void SUGER::Draw2DObjects() {
+	object2dManager_->Draw();
 }
 
 void SUGER::Create3DObject(const std::string& name, const std::string& filePath) {

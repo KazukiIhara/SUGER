@@ -12,7 +12,7 @@
 class Sprite {
 public: // メンバ関数
 	// 初期化
-	void Initialize(const std::string& textureFilePath);
+	void Initialize(const std::string& texturename, const std::string& directoryPath = "resources/images");
 	// 更新
 	void Update();
 	// 描画

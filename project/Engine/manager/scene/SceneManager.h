@@ -17,8 +17,6 @@ public: // メンバ関数
 
 	// 更新
 	void Update();
-	// 描画
-	void Draw();
 
 	// シーン変更処理
 	void SwitchScene();

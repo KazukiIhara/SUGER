@@ -21,8 +21,6 @@ public: // 仮想関数
 	virtual void Finalize() = 0;
 	// 更新
 	virtual void Update();
-	// 描画
-	virtual void Draw() = 0;
 
 	// シーンマネージャのセット
 	virtual void SetSceneManager(SceneManager* sceneManager) {

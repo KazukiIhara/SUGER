@@ -6,7 +6,10 @@
 #include "manager/window/WindowManager.h"
 #include "externals/DirectXTex/DirectXTex.h"
 
-void Sprite::Initialize(const std::string& textureFilePath) {
+void Sprite::Initialize(const std::string& texturename, const std::string& directoryPath) {
+
+	// パスを連結
+	const std::string& textureFilePath = directoryPath + "/" + texturename;
 
 	// ワールドトランスフォームを初期化
 	worldTransform_.Initialize();
