@@ -31,7 +31,7 @@ void Camera::Update() {
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
 	worldPos_ = ExtractionWorldPos(worldMatrix_);
 
-	UpdateCamera();
+	UpdateCameraData();
 }
 
 void Camera::CreateCameraResource() {
@@ -50,7 +50,7 @@ void Camera::MapCameraData() {
 	cameraData_->worldPosition.z = worldPos_.z;
 }
 
-void Camera::UpdateCamera() {
+void Camera::UpdateCameraData() {
 	cameraData_->worldPosition.x = worldPos_.x;
 	cameraData_->worldPosition.y = worldPos_.y;
 	cameraData_->worldPosition.z = worldPos_.z;

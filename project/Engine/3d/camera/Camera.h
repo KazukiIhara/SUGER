@@ -21,7 +21,7 @@ public:
 	void CreateCameraResource();
 	void MapCameraData();
 
-	void UpdateCamera();
+	void UpdateCameraData();
 
 	void TransferCamera();
 
