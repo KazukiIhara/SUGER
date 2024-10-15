@@ -34,6 +34,8 @@ void MyGame::Update() {
 	SUGER::Update();
 	// シーンの更新処理
 	sceneManager_->Update();
+	// 3DObjectの更新
+	SUGER::Update3DObjects();
 }
 
 void MyGame::Draw() {

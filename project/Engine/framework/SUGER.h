@@ -21,11 +21,14 @@ class ImGuiManager;
 class TextureManager;
 class GraphicsPipelineManager;
 class ModelManager;
-class Model;
+class Object3DManager;
 class Object2DSystem;
 class Object3DSystem;
 class AbstractSceneFactory;
 
+class Model;
+class Camera;
+class PunctualLight;
 
 class SUGER {
 public:
@@ -108,6 +111,17 @@ public: // クラスメソッド
 	static Model* FindModel(const std::string& filePath);
 #pragma endregion
 
+#pragma region Object3DManager
+	// 3Dオブジェクトの作成
+	static void Create3DObject(const std::string& name, const std::string& filePath = "");
+	// 3Dオブジェクトの更新
+	static void Update3DObjects();
+	// 3Dオブジェクトの描画
+	static void Draw3DObjects();
+
+	// シーンのカメラとライトをセット
+	static void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
+#pragma endregion
 
 #pragma region Object2DSystem
 	// Object2DSystemの機能
@@ -134,6 +148,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
 	static std::unique_ptr<ModelManager> modelManager_;
+	static std::unique_ptr<Object3DManager> object3dManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
 };

@@ -126,6 +126,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
     <ClCompile Include="Engine\manager\model\ModelManager.cpp" />
+    <ClCompile Include="Engine\manager\object\3d\Object3DManager.cpp" />
     <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp" />
     <ClCompile Include="Engine\manager\scene\SceneManager.cpp" />
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp" />
@@ -160,6 +161,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\input\direct\DirectInput.h" />
     <ClInclude Include="Engine\manager\imgui\ImGuiManager.h" />
     <ClInclude Include="Engine\manager\model\ModelManager.h" />
+    <ClInclude Include="Engine\manager\object\3d\Object3DManager.h" />
     <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h" />
     <ClInclude Include="Engine\manager\scene\SceneManager.h" />
     <ClInclude Include="Engine\manager\srv\SRVManager.h" />
