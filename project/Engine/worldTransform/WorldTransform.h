@@ -25,9 +25,9 @@ private: // コピー禁止
 
 public: // メンバ変数
 	// ローカルトランスフォーム
-	Vector3 scale = { 1.0f,1.0f,1.0f };// 拡縮量
-	Vector3 rotate = { 0.0f,0.0f,0.0f };// 回転量
-	Vector3 translate = { 0.0f,0.0f,0.0f };// 移動量
+	Vector3 scale_ = { 1.0f,1.0f,1.0f };// 拡縮量
+	Vector3 rotate_ = { 0.0f,0.0f,0.0f };// 回転量
+	Vector3 translate_ = { 0.0f,0.0f,0.0f };// 移動量
 
 	// ワールド行列
 	Matrix4x4 worldMatrix_{};
