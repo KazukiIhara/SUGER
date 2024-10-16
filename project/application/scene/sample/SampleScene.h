@@ -22,10 +22,8 @@ public: // 公開メンバ関数
 	// 更新
 	void Update()override;
 private: // 非公開メンバ変数
-	// レールの最大数
-	static const uint32_t kRailNum_ = 10;
-	// レールのトランスフォーム
-	std::array<WorldTransform, kRailNum_> railTransform_{};
 
+	// サンプルオブジェクトのトランスフォーム
+	WorldTransform sampleWorldTransform_{};
 };
 
