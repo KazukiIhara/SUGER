@@ -27,7 +27,7 @@ public:
 	void Finalize();
 
 	// オブジェクト作成
-	void Create(const std::string& name, const std::string& filePath);
+	void Create(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath);
 
 	void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
 

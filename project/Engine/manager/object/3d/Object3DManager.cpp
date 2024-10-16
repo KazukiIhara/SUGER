@@ -34,12 +34,19 @@ void Object3DManager::Finalize() {
 	objects_.clear();
 }
 
-void Object3DManager::Create(const std::string& name, const std::string& filePath) {
+void Object3DManager::Create(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath) {
 	// オブジェクトの生成と初期化
 	std::unique_ptr<Object3D> newObject = std::make_unique<Object3D>();
 	newObject->Initialize();
 
+	// トランスフォームのセット
+	newObject->SetScale(worldTransform.scale);
+	newObject->SetRotate(worldTransform.rotate);
+	newObject->SetTranslate(worldTransform.translate);
+
+	// カメラのセット
 	newObject->SetCamera(camera_);
+	// ライトのセット
 	newObject->SetPunctualLight(light_);
 
 	// filePathの指定がある場合、モデル読み込み

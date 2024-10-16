@@ -282,8 +282,8 @@ void SUGER::Draw2DObjects() {
 	object2dManager_->Draw();
 }
 
-void SUGER::Create3DObject(const std::string& name, const std::string& filePath) {
-	object3dManager_->Create(name, filePath);
+void SUGER::Create3DObject(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath) {
+	object3dManager_->Create(worldTransform, name, filePath);
 }
 
 void SUGER::Update3DObjects() {

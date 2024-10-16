@@ -19,7 +19,6 @@ void SampleScene::Initialize() {
 
 	// オブジェクトの作成
 	SUGER::Create3DObject("teapot", "teapot");
-	SUGER::Create2DObject("nero", "nero.jpg");
 
 }
 
