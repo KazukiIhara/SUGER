@@ -277,9 +277,9 @@ void Model::CreateVertexResource() {
 	for (auto& mesh : modelData.meshes) {
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
 		if (mesh.material.haveUV_) {
-			vertexResource = CreateBufferResource(SUGER::GetDirectXDevice(), sizeof(sVertexData3D) * mesh.vertices.size());
+			vertexResource = SUGER::CreateBufferResource(sizeof(sVertexData3D) * mesh.vertices.size());
 		} else {
-			vertexResource = CreateBufferResource(SUGER::GetDirectXDevice(), sizeof(sVertexData3DUnUV) * mesh.verticesUnUV.size());
+			vertexResource = SUGER::CreateBufferResource(sizeof(sVertexData3DUnUV) * mesh.verticesUnUV.size());
 		}
 		vertexResources_.push_back(vertexResource);
 	}
@@ -318,7 +318,7 @@ void Model::MapVertexData() {
 
 void Model::CreateMaterialResource() {
 	for (size_t i = 0; i < materials_.size(); ++i) {
-		Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = CreateBufferResource(SUGER::GetDirectXDevice(), sizeof(sMaterial3D));
+		Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = SUGER::CreateBufferResource(sizeof(sMaterial3D));
 		materialResources_.push_back(materialResource);
 	}
 }
@@ -333,32 +333,4 @@ void Model::MapMaterialData() {
 		materialData->uvTransformMatrix = materials_[i].uvTransformMatrix;
 		materialData_.push_back(materialData);
 	}
-}
-
-Microsoft::WRL::ComPtr<ID3D12Resource> Model::CreateBufferResource(ID3D12Device* device, size_t sizeInBytes) {
-	HRESULT hr = S_FALSE;
-	//頂点リソース用のヒープの設定
-	D3D12_HEAP_PROPERTIES uplodeHeapProperties{};
-	uplodeHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;//UploadHeapを使う
-
-	//マテリアル用のリソースの設定
-	D3D12_RESOURCE_DESC resourceDesc{};
-	//バッファリソース。テクスチャの場合はまた別の設定をする
-	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resourceDesc.Width = sizeInBytes;
-	//バッファの場合はこれらは1にする決まり
-	resourceDesc.Height = 1;
-	resourceDesc.DepthOrArraySize = 1;
-	resourceDesc.MipLevels = 1;
-	resourceDesc.SampleDesc.Count = 1;
-	//バッファの場合はこれにする決まり
-	resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
-	//バッファリソースを作る
-	Microsoft::WRL::ComPtr<ID3D12Resource>resource = nullptr;
-	hr = device->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
-		&resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&resource));
-	assert(SUCCEEDED(hr));
-	return resource;
 }

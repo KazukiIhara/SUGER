@@ -65,8 +65,6 @@ private: // メンバ関数
 	/*マテリアルデータの書き込み*/
 	void MapMaterialData();
 #pragma endregion
-	/*バッファリソースを作成する*/
-	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
 
 private: // メンバ変数
 #pragma region モデル
