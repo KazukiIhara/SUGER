@@ -52,8 +52,8 @@ struct sVertexData3DUnUV {
 
 // トランスフォーメーション構造体
 struct sTransformationMatrix {
-	Matrix4x4 WVP;
 	Matrix4x4 World;
+	Matrix4x4 ViewProjection;
 	Matrix4x4 WorldInverseTransepose;
 };
 
