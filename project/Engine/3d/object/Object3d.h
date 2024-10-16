@@ -37,21 +37,21 @@ public: // Setter
 	void SetModel(const std::string& filePath);
 	// 拡縮のセット
 	void SetScale(const Vector3& scale) {
-		this->transform_.scale = scale;
+		this->transform_.scale_ = scale;
 	}
 	// 回転のセット
 	void SetRotate(const Vector3& rotate) {
-		this->transform_.rotate = rotate;
+		this->transform_.rotate_ = rotate;
 	}
 	// 移動量のセット
 	void SetTranslate(const Vector3& translate) {
-		this->transform_.translate = translate;
+		this->transform_.translate_ = translate;
 	}
 	// トランスフォームのセット
 	void SetTransform(const WorldTransform& transform) {
-		this->transform_.scale = transform.scale;
-		this->transform_.rotate = transform.rotate;
-		this->transform_.translate = transform.translate;
+		this->transform_.scale_ = transform.scale_;
+		this->transform_.rotate_ = transform.rotate_;
+		this->transform_.translate_ = transform.translate_;
 	}
 	// ライトのセット
 	void SetPunctualLight(PunctualLight* punctualLight) {
@@ -64,15 +64,15 @@ public: // Setter
 public: // Getter
 	// 拡縮のゲッター
 	const Vector3& GetScale() const {
-		return transform_.scale;
+		return transform_.scale_;
 	}
 	// 回転のゲッター
 	const Vector3& GetRotate() const {
-		return transform_.rotate;
+		return transform_.rotate_;
 	}
 	// 移動量のゲッター
 	const Vector3& GetTranslate() const {
-		return transform_.translate;
+		return transform_.translate_;
 	}
 	// オブジェクトの名前のゲッター
 	const std::string& GetName()const {

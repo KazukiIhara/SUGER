@@ -47,7 +47,7 @@ private:
 	// カメラのデータを更新
 	void UpdateCameraData();
 
-private:
+protected:
 	// カメラのトランスフォームを受け取る箱
 	WorldTransform transform_{};
 	// カメラのワールドマトリックス

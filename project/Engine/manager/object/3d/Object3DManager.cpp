@@ -40,9 +40,9 @@ void Object3DManager::Create(const WorldTransform& worldTransform, const std::st
 	newObject->Initialize();
 
 	// トランスフォームのセット
-	newObject->SetScale(worldTransform.scale);
-	newObject->SetRotate(worldTransform.rotate);
-	newObject->SetTranslate(worldTransform.translate);
+	newObject->SetScale(worldTransform.scale_);
+	newObject->SetRotate(worldTransform.rotate_);
+	newObject->SetTranslate(worldTransform.translate_);
 
 	// カメラのセット
 	newObject->SetCamera(camera_);
