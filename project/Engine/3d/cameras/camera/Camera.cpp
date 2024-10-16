@@ -13,7 +13,7 @@
 void Camera::Initialize() {
 
 	transform_.Initialize();
-	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
+	worldMatrix_ = MakeAffineMatrix(transform_.scale_, transform_.rotate_, transform_.translate_);
 	Matrix4x4 viewMatrix = Inverse(worldMatrix_);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, nearClipRange_, farClipRange_);
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
@@ -24,7 +24,7 @@ void Camera::Initialize() {
 }
 
 void Camera::Update() {
-	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
+	worldMatrix_ = MakeAffineMatrix(transform_.scale_, transform_.rotate_, transform_.translate_);
 	Matrix4x4 viewMatrix = Inverse(worldMatrix_);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, nearClipRange_, farClipRange_);
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
@@ -61,10 +61,10 @@ void Camera::TransferCamera() {
 }
 
 void Camera::SetTranslate(const Vector3& translate) {
-	this->transform_.translate = translate;
+	this->transform_.translate_ = translate;
 }
 
 void Camera::SetRotate(const Vector3& rotate) {
-	this->transform_.rotate = rotate;
+	this->transform_.rotate_ = rotate;
 }
 

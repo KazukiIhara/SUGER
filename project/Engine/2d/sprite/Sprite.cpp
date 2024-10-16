@@ -100,11 +100,11 @@ void Sprite::Update() {
 
 
 	// 座標を反映
-	worldTransform_.translate = { transform.position.x,transform.position.y,0.0f };
+	worldTransform_.translate_ = { transform.position.x,transform.position.y,0.0f };
 	// 回転を反映
-	worldTransform_.rotate = { 0.0f,0.0f,transform.rotate };
+	worldTransform_.rotate_ = { 0.0f,0.0f,transform.rotate };
 	// サイズを反映
-	worldTransform_.scale = { transform.size.x,transform.size.y,1.0f };
+	worldTransform_.scale_ = { transform.size.x,transform.size.y,1.0f };
 
 	// ワールド行列の更新
 	worldTransform_.Update();
