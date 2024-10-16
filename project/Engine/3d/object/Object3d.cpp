@@ -3,6 +3,8 @@
 #include "framework/SUGER.h"
 
 void Object3D::Initialize() {
+	// transform初期化
+	transform_.Initialize();
 	// wvp用のリソース作成
 	CreateWVPResource();
 	// データを書き込む
