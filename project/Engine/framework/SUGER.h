@@ -132,6 +132,9 @@ public: // クラスメソッド
 
 	// シーンのカメラとライトをセット
 	static void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
+
+	// シーンのカメラをセット
+	static void SetSceneCamera(Camera* camera);
 #pragma endregion
 
 #pragma region Object2DSystem

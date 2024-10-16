@@ -30,10 +30,10 @@ public:
 	void Create(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath);
 
 	void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
+	void SetSceneCamera(Camera* camera);
 
 private:
 	void SetModelManager(ModelManager* modelManager);
-	void SetSceneCamera(Camera* camera);
 	void SetScenePunctualLight(PunctualLight* punctualLight);
 
 private:

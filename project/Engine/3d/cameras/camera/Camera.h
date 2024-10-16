@@ -13,15 +13,10 @@
 class Camera {
 public:
 	// 初期化
-	void Initialize();
+	virtual void Initialize();
 
 	// 更新
-	void Update();
-
-	void CreateCameraResource();
-	void MapCameraData();
-
-	void UpdateCameraData();
+	virtual void Update();
 
 	void TransferCamera();
 
@@ -42,6 +37,15 @@ public:
 	Vector3 GetWorldPos()const {
 		return worldPos_;
 	}
+
+private:
+
+	// カメラのリソースを作成
+	void CreateCameraResource();
+	// カメラのデータを入力
+	void MapCameraData();
+	// カメラのデータを更新
+	void UpdateCameraData();
 
 private:
 	// カメラのトランスフォームを受け取る箱

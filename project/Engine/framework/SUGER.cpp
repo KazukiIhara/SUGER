@@ -298,6 +298,10 @@ void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	object3dManager_->SetRequiredObjects(camera, punctualLight);
 }
 
+void SUGER::SetSceneCamera(Camera* camera) {
+	object3dManager_->SetSceneCamera(camera);
+}
+
 void SUGER::PreDrawObject2D() {
 	object2dSystem_->PreDraw();
 }
