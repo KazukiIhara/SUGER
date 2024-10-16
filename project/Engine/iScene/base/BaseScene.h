@@ -38,12 +38,12 @@ private:
 	// シーンマネージャ
 	SceneManager* sceneManager_ = nullptr;
 
+protected:
 	// カメラ
 	std::unique_ptr<Camera> camera_;
 	// ライト
 	std::unique_ptr<PunctualLight> light_;
 
-protected:
 	// カメラの初期トランスフォーム
 	const Vector3 kDefaultCameraRotate_ = { 0.45f,0.0f,0.0f };
 	const Vector3 kDefaultCameraTranslate_ = { 0.0f,5.0f,-10.0f };

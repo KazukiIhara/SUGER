@@ -44,6 +44,27 @@ Vector3 ExtractionWorldPos(const Matrix4x4& m) {
 	return worldPos;
 }
 
+Vector3 CatmullRomSpline(const std::vector<Vector3>& controlPoints, float t) {
+	int p0, p1, p2, p3;
+	float tt = t * (controlPoints.size() - 1);
+	p1 = static_cast<int>(tt);
+	p0 = p1 > 0 ? p1 - 1 : p1;
+	p2 = p1 < controlPoints.size() - 1 ? p1 + 1 : p1;
+	p3 = p2 < controlPoints.size() - 1 ? p2 + 1 : p2;
+
+	tt = tt - p1;
+
+	float tt2 = tt * tt;
+	float tt3 = tt2 * tt;
+
+	Vector3 a = controlPoints[p0] * (-0.5f) + controlPoints[p1] * (1.5f) - controlPoints[p2] * (1.5f) + controlPoints[p3] * (0.5f);
+	Vector3 b = controlPoints[p0] - controlPoints[p1] * (2.5f) + controlPoints[p2] * (2.0f) - controlPoints[p3] * (0.5f);
+	Vector3 c = controlPoints[p0] * (-0.5f) + controlPoints[p2] * (0.5f);
+	Vector3 d = controlPoints[p1];
+
+	return a * tt3 + b * tt2 + c * tt + d;
+}
+
 /// <summary>
 /// 単位行列を作成
 /// </summary>
