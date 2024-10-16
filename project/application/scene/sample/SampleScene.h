@@ -3,12 +3,11 @@
 // C++
 #include <cstdint>
 #include <memory>
+#include <array>
 
 // MyHedder
 #include "iScene/base/BaseScene.h"
-
-#include "2d/sprite/Sprite.h"
-
+#include "worldTransform/WorldTransform.h"
 
 class SampleScene :public BaseScene {
 public: // 公開メンバ関数
@@ -23,6 +22,10 @@ public: // 公開メンバ関数
 	// 更新
 	void Update()override;
 private: // 非公開メンバ変数
+	// レールの最大数
+	static const uint32_t kRailNum_ = 10;
+	// レールのトランスフォーム
+	std::array<WorldTransform, kRailNum_> railTransform_{};
 
 };
 

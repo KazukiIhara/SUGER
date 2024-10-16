@@ -26,15 +26,29 @@ public: // 仮想関数
 	virtual void SetSceneManager(SceneManager* sceneManager) {
 		sceneManager_ = sceneManager;
 	}
+
+private:
+	// カメラのImGui
+	void ImGuiForSceneCamera();
+
+	// カメラの更新
+	void CameraUpdate();
+
 private:
 	// シーンマネージャ
 	SceneManager* sceneManager_ = nullptr;
-protected:
+
 	// カメラ
 	std::unique_ptr<Camera> camera_;
-	// カメラの初期位置
-	const Vector3 kDefaultCameraTranslate_ = { 0.0f,0.0f,-10.0f };
-
 	// ライト
 	std::unique_ptr<PunctualLight> light_;
+
+protected:
+	// カメラの初期トランスフォーム
+	const Vector3 kDefaultCameraRotate_ = { 0.45f,0.0f,0.0f };
+	const Vector3 kDefaultCameraTranslate_ = { 0.0f,5.0f,-10.0f };
+
+	// カメラ制御用のトランスフォーム
+	Vector3 cameraRotate_ = kDefaultCameraRotate_;
+	Vector3 cameraTranslate_ = kDefaultCameraTranslate_;
 };
