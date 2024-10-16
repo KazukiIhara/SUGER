@@ -15,7 +15,7 @@ void Camera::Initialize() {
 	transform_.Initialize();
 	worldMatrix_ = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	Matrix4x4 viewMatrix = Inverse(worldMatrix_);
-	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, 0.1f, 100.0f);
+	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, nearClipRange_, farClipRange_);
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
 	worldPos_ = ExtractionWorldPos(worldMatrix_);
 
