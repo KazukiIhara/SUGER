@@ -18,11 +18,6 @@ public:
 	// 更新
 	void Update();
 
-	void CreateCameraResource();
-	void MapCameraData();
-
-	void UpdateCameraData();
-
 	void TransferCamera();
 
 	// カメラのTranslateをセット
@@ -42,6 +37,15 @@ public:
 	Vector3 GetWorldPos()const {
 		return worldPos_;
 	}
+
+private:
+
+	// カメラのリソースを作成
+	void CreateCameraResource();
+	// カメラのデータを入力
+	void MapCameraData();
+	// カメラのデータを更新
+	void UpdateCameraData();
 
 private:
 	// カメラのトランスフォームを受け取る箱

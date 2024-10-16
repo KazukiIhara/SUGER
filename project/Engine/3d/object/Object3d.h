@@ -14,7 +14,7 @@
 #include "worldTransform/WorldTransform.h"
 #include "3d/model/Model.h"
 #include "3d/lights/punctualLight/PunctualLight.h"
-#include "3d/camera/Camera.h"
+#include "3d/cameras/camera/Camera.h"
 
 class Object3D {
 public:

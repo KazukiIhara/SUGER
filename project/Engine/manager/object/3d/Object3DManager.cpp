@@ -1,7 +1,7 @@
 #include "Object3DManager.h"
 
 #include "manager/model/ModelManager.h"
-#include "3d/camera/Camera.h"
+#include "3d/cameras/camera/Camera.h"
 #include "3d/lights/punctualLight/PunctualLight.h"
 
 void Object3DManager::Initialize(ModelManager* modelManager) {
