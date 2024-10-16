@@ -2,6 +2,7 @@
 // Include
 #include <cmath>
 #include <numbers>
+#include <vector>
 
 // MyHedder
 #include "math/operator/MathOperator.h"
@@ -21,6 +22,8 @@ float Length(const Vector3& a);
 Vector3 Normalize(const Vector3& a);
 
 Vector3 ExtractionWorldPos(const Matrix4x4& m);
+
+Vector3 CatmullRomSpline(const std::vector<Vector3>& controlPoints, float t);
 
 ///
 /// Vector4
