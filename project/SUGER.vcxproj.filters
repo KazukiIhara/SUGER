@@ -212,6 +212,7 @@
     <ClCompile Include="Engine\manager\object\3d\Object3DManager.cpp" />
     <ClCompile Include="Engine\iScene\base\BaseScene.cpp" />
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp" />
+    <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -322,6 +323,7 @@
     <ClInclude Include="Engine\manager\object\3d\Object3DManager.h" />
     <ClInclude Include="Engine\structs\CameraStruct.h" />
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h" />
+    <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
