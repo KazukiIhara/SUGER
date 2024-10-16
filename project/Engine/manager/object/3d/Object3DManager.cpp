@@ -56,7 +56,7 @@ void Object3DManager::Create(const WorldTransform& worldTransform, const std::st
 	}
 
 	// 3Dオブジェクトをコンテナに格納する
-	objects_.insert(std::make_pair(filePath, std::move(newObject)));
+	objects_.insert(std::make_pair(name, std::move(newObject)));
 }
 
 void Object3DManager::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {

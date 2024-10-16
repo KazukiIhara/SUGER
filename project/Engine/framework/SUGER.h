@@ -27,6 +27,7 @@ class Object2DSystem;
 class Object3DSystem;
 class AbstractSceneFactory;
 
+class WorldTransform;
 class Model;
 class Camera;
 class PunctualLight;
