@@ -16,6 +16,9 @@ void ShootingCoasterScene::Initialize() {
 	// 
 	// シーンの初期化処理ここから
 	// 
+	railCamera_ = std::make_unique<RailCamera>();
+	railCamera_->Initialize();
+	SUGER::SetSceneCamera(railCamera_.get());
 
 	// レールの生成処理
 	for (uint32_t i = 0; i < kRailNum_; i++) {
