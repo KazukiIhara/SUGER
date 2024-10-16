@@ -214,6 +214,7 @@
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp" />
     <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp" />
     <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp" />
+    <ClCompile Include="Engine\3d\particle\Particle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -326,6 +327,8 @@
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h" />
     <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h" />
     <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h" />
+    <ClInclude Include="Engine\3d\particle\Particle.h" />
+    <ClInclude Include="Engine\structs\ParticleStruct.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
@@ -336,11 +339,14 @@
     </FxCompile>
     <FxCompile Include="resources\shaders\objects\3d\object3d.VS.hlsl" />
     <FxCompile Include="resources\shaders\objects\3d\object3d.PS.hlsl" />
+    <FxCompile Include="resources\shaders\particle\particle.VS.hlsl" />
+    <FxCompile Include="resources\shaders\particle\particle.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
       <Filter>resources\shaders\objects\2d</Filter>
     </None>
     <None Include="resources\shaders\objects\3d\object3d.hlsli" />
+    <None Include="resources\shaders\particle\particle.hlsli" />
   </ItemGroup>
 </Project>

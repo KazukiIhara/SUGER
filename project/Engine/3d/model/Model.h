@@ -30,6 +30,12 @@ public: // メンバ関数
 	// 球体作成
 	void CreateSphere(const std::string& textureFilePath);
 
+	// 板ポリの頂点作成
+	void GeneratePlane(const std::string& textureFilePath);
+
+	// 板ポリ作成
+	void CreatePlane(const std::string& textureFilePath);
+
 	// UVTransformのセット
 	void SetUVTransform(const std::vector<sUVTransform>& uvTransforms) {
 		uvTransforms_ = uvTransforms;
@@ -64,6 +70,13 @@ private: // メンバ関数
 	void CreateMaterialResource();
 	/*マテリアルデータの書き込み*/
 	void MapMaterialData();
+#pragma endregion
+
+#pragma region Instancing
+	// Instancingリソースを作る
+	void CreateInstancingResource();
+	// Instancingデータを書き込む
+	void MapInstancingData();
 #pragma endregion
 
 private: // メンバ変数

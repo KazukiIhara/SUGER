@@ -120,6 +120,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
     <ClCompile Include="Engine\3d\model\Model.cpp" />
     <ClCompile Include="Engine\3d\object\Object3d.cpp" />
+    <ClCompile Include="Engine\3d\particle\Particle.cpp" />
     <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
     <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp" />
     <ClCompile Include="Engine\directX\command\DirectXCommand.cpp" />
@@ -157,6 +158,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
+    <ClInclude Include="Engine\3d\particle\Particle.h" />
     <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
     <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h" />
     <ClInclude Include="Engine\directX\command\DirectXCommand.h" />
@@ -187,6 +189,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\structs\CameraStruct.h" />
     <ClInclude Include="Engine\structs\ModelStructs.h" />
     <ClInclude Include="Engine\structs\ObjectStructs.h" />
+    <ClInclude Include="Engine\structs\ParticleStruct.h" />
     <ClInclude Include="Engine\structs\PunctualLightStruct.h" />
     <ClInclude Include="Engine\structs\TextureStruct.h" />
     <ClInclude Include="Engine\worldTransform\WorldTransform.h" />
@@ -224,6 +227,18 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="resources\shaders\particle\particle.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\particle\particle.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
@@ -231,6 +246,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="resources\shaders\objects\3d\object3d.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\shaders\particle\particle.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>

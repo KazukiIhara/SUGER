@@ -273,6 +273,61 @@ void Model::CreateSphere(const std::string& textureFilePath) {
 #pragma endregion
 }
 
+void Model::GeneratePlane(const std::string& textureFilePath) {
+	// テクスチャをロード
+	SUGER::LoadTexture(textureFilePath);
+
+	sMeshData meshData;
+	meshData.material.textureFilePath = textureFilePath;
+	meshData.material.haveUV_ = true;
+	meshData.vertices.resize(6);
+
+	meshData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {-1.0f,1.0f,0.0f,1.0f},.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {-1.0f,1.0f,0.0f,1.0f},.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f},.texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
+
+	meshData.material.color = { 1.0f,1.0f,1.0f,1.0f };
+
+	modelData.meshes.push_back(meshData);
+
+}
+
+void Model::CreatePlane(const std::string& textureFilePath) {
+
+	// 板ポリの頂点作成
+	GeneratePlane(textureFilePath);
+
+	// マテリアル初期化
+	sMaterial3D material;
+	material.color = { 1.0f,1.0f,1.0f,1.0f };
+	material.enbleLighting = true;
+	material.shininess = 40.0f;
+	material.uvTransformMatrix = MakeIdentityMatrix4x4();
+	materials_.push_back(material);
+
+	sUVTransform identity = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
+	uvTransforms_.push_back(identity);
+
+#pragma region 頂点データ
+	/*頂点リソースの作成*/
+	CreateVertexResource();
+	/*頂点バッファビューの作成*/
+	CreateVertexBufferView();
+	/*頂点データの書き込み*/
+	MapVertexData();
+#pragma endregion
+
+#pragma region マテリアルデータ
+	/*マテリアル用のリソース作成*/
+	CreateMaterialResource();
+	/*マテリアルにデータを書き込む*/
+	MapMaterialData();
+#pragma endregion
+}
+
 void Model::CreateVertexResource() {
 	for (auto& mesh : modelData.meshes) {
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
@@ -334,3 +389,7 @@ void Model::MapMaterialData() {
 		materialData_.push_back(materialData);
 	}
 }
+
+void Model::CreateInstancingResource() {}
+
+void Model::MapInstancingData() {}
