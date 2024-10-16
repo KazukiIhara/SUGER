@@ -17,8 +17,8 @@ void Object3D::Update() {
 
 	// WVPマトリックスを作る
 	transform_.Update();
-	transformationData_->WVP = transform_.worldMatrix_ * camera_->GetViewProjectionMatrix();
 	transformationData_->World = transform_.worldMatrix_;
+	transformationData_->ViewProjection = camera_->GetViewProjectionMatrix();
 	transformationData_->WorldInverseTransepose = MakeInverseTransposeMatrix(transform_.worldMatrix_);
 }
 
@@ -47,8 +47,8 @@ void Object3D::MapWVPData() {	// データを書き込む
 	// 書き込むためのアドレスを取得
 	transformationResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationData_));
 	// 単位行列を書き込んでおく
-	transformationData_->WVP = MakeIdentityMatrix4x4();
 	transformationData_->World = MakeIdentityMatrix4x4();
+	transformationData_->ViewProjection = MakeIdentityMatrix4x4();
 	transformationData_->WorldInverseTransepose = MakeIdentityMatrix4x4();
 }
 
