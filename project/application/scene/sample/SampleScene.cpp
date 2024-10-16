@@ -17,10 +17,11 @@ void SampleScene::Initialize() {
 	// シーンの初期化処理ここから
 	// 
 
-	// サンプルモデルのトランスフォーム初期化
-	sampleWorldTransform_.Initialize();
-	// オブジェクトの生成とモデル読み込み
-	SUGER::Create3DObject(sampleWorldTransform_, "sample", "teapot");
+
+	// トランスフォームの初期化
+	teapotTransform_.Initialize();
+	// オブジェクトの生成と、モデルの読み込み
+	SUGER::Create3DObject(teapotTransform_, "teapot", "teapot");
 
 }
 

@@ -9,12 +9,12 @@
 #include "iScene/base/BaseScene.h"
 #include "worldTransform/WorldTransform.h"
 
-class SampleScene :public BaseScene {
+class ShootingCoasterScene :public BaseScene {
 public: // 公開メンバ関数
 	// コンストラクタ
-	SampleScene() = default;
+	ShootingCoasterScene() = default;
 	// デストラクタ
-	~SampleScene() = default;
+	~ShootingCoasterScene() = default;
 	// 初期化
 	void Initialize()override;
 	// 終了
@@ -22,9 +22,10 @@ public: // 公開メンバ関数
 	// 更新
 	void Update()override;
 private: // 非公開メンバ変数
-
-	// ティーポットのトランスフォーム
-	WorldTransform teapotTransform_{};
+	// レールの最大数
+	static const uint32_t kRailNum_ = 10;
+	// レールのトランスフォーム
+	std::array<WorldTransform, kRailNum_> railTransform_{};
 
 };
 
