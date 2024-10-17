@@ -1,4 +1,4 @@
-#include "Particle.h"
+#include "Particle3d.h"
 #include <sstream>
 #include <fstream>
 #include <cassert>
@@ -9,7 +9,7 @@
 #include "3d/cameras/camera/Camera.h"
 
 
-void Particle::Initialize(Model* model, Camera* camera) {
+void Particle3D::Initialize(Model* model, Camera* camera) {
 	// インスタンスをセット
 	SetModel(model);
 	SetCamera(camera);
@@ -36,7 +36,7 @@ void Particle::Initialize(Model* model, Camera* camera) {
 	SUGER::CreateSrvInstancing(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
 }
 
-void Particle::Update() {
+void Particle3D::Update() {
 	// 乱数を使う準備
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
@@ -108,7 +108,7 @@ void Particle::Update() {
 	}
 }
 
-void Particle::Draw(BlendMode blendMode) {
+void Particle3D::Draw(BlendMode blendMode) {
 	// PSOを設定
 	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kParticle, blendMode));
 
@@ -121,20 +121,20 @@ void Particle::Draw(BlendMode blendMode) {
 	}
 }
 
-void Particle::SetModel(Model* model) {
+void Particle3D::SetModel(Model* model) {
 	model_ = model;
 }
 
-void Particle::SetCamera(Camera* camera) {
+void Particle3D::SetCamera(Camera* camera) {
 	camera_ = camera;
 }
 
-void Particle::CreateInstancingResource() {
+void Particle3D::CreateInstancingResource() {
 	// instancing用のリソースを作る
 	instancingResource_ = SUGER::CreateBufferResource(sizeof(ParticleForGPU) * kNumMaxInstance);
 }
 
-void Particle::MapInstancingData() {
+void Particle3D::MapInstancingData() {
 	instancingData_ = nullptr;
 	instancingResource_->Map(0, nullptr, reinterpret_cast<void**>(&instancingData_));
 
@@ -144,7 +144,7 @@ void Particle::MapInstancingData() {
 	}
 }
 
-ParticleData Particle::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate) {
+ParticleData Particle3D::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate) {
 	// 出現位置と移動量の乱数の生成
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	// 色を決める乱数の生成
@@ -172,7 +172,7 @@ ParticleData Particle::MakeNewParticle(std::mt19937& randomEngine, const Vector3
 	return particle;
 }
 
-std::list<ParticleData> Particle::Emit(const Emitter& emitter, std::mt19937& randomEngine) {
+std::list<ParticleData> Particle3D::Emit(const Emitter& emitter, std::mt19937& randomEngine) {
 	std::list<ParticleData> particles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
 		particles.push_back(MakeNewParticle(randomEngine, emitter.transform.translate));

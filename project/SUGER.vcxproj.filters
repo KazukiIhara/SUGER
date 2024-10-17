@@ -214,8 +214,10 @@
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp" />
     <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp" />
     <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp" />
-    <ClCompile Include="Engine\3d\particle\Particle.cpp" />
+    <ClCompile Include="Engine\particle\3d\Particle3d.cpp" />
     <ClCompile Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp" />
+    <ClCompile Include="Engine\particle\system\ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -328,9 +330,11 @@
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h" />
     <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h" />
     <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h" />
-    <ClInclude Include="Engine\3d\particle\Particle.h" />
+    <ClInclude Include="Engine\particle\3d\Particle3d.h" />
     <ClInclude Include="Engine\structs\ParticleStruct.h" />
     <ClInclude Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.h" />
+    <ClInclude Include="Engine\manager\particle\ParticleManager.h" />
+    <ClInclude Include="Engine\particle\system\ParticleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

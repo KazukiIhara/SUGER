@@ -4,10 +4,10 @@
 class DirectXManager;
 class GraphicsPipelineManager;
 
-class Object3DSystem {
-public: // 公開メンバ関数
-	Object3DSystem() = default;
-	~Object3DSystem() = default;
+class ParticleSystem {
+public:
+	ParticleSystem() = default;
+	~ParticleSystem() = default;
 
 	// 初期化処理
 	void Initialize(DirectXManager* directXManager, GraphicsPipelineManager* pipelineManager);

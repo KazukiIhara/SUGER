@@ -14,17 +14,24 @@
 // GraphicsPipelineManagerの初期化処理
 // DirectXManagerを使用して2D用のグラフィックスパイプラインを設定
 void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
-	// 2Dオブジェクト描画用のグラフィックスパイプラインを生成
+	// 2Dオブジェクトのグラフィックスパイプラインを生成
 	object2dGraphicsPipeline_ = std::make_unique<Object2DGraphicsPipeline>();
 
-	// 2DグラフィックスパイプラインをDirectXManagerを使って初期化
+	// 2Dオブジェクトのグラフィックスパイプラインを初期化
 	object2dGraphicsPipeline_->Initialize(directXManager);
 
-	// 3Dオブジェクト描画用のグラフィックスパイプラインを生成
+	// 3Dオブジェクトのグラフィックスパイプラインを生成
 	object3dGraphicsPipeline_ = std::make_unique<Object3DGraphicsPipeline>();
 
-	// 3DグラフィックスパイプラインをDirectXManagerを使って初期化
+	// 3Dオブジェクトのグラフィックスパイプラインを初期化
 	object3dGraphicsPipeline_->Initialize(directXManager);
+
+	// Particleグラフィックスパイプラインを生成
+	particleGraphicsPipeline_ = std::make_unique<ParticleGraphicsPipeline>();
+
+	// Particleグラフィックスパイプラインを初期化
+	particleGraphicsPipeline_->Initialize(directXManager);
+
 
 	// 2Dオブジェクト描画用のルートシグネチャを設定
 	SetRootSignature(kObject2d);
@@ -37,6 +44,12 @@ void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
 
 	// 3D描画用のグラフィックスパイプラインステートを設定
 	SetGraphicsPipelineState(kObject3d);
+
+	// Particle描画用のルートシグネイチャを設定
+	SetRootSignature(kParticle);
+
+	// Partice描画用のグラフィックスパイプラインステートを設定
+	SetGraphicsPipelineState(kParticle);
 
 }
 
@@ -56,16 +69,19 @@ ID3D12PipelineState* GraphicsPipelineManager::GetPipelineState(PipelineState pip
 void GraphicsPipelineManager::SetRootSignature(PipelineState pipelineState) {
 	// パイプラインステートごとに対応するルートシグネチャを設定
 	switch (pipelineState) {
-	case kObject2d:
-		// 2Dオブジェクト描画用のルートシグネチャを設定
-		rootSignatures_[pipelineState] = object2dGraphicsPipeline_->GetRootSignature();
-		break;
-	case kObject3d:
-		// 2Dオブジェクト描画用のルートシグネチャを設定
-		rootSignatures_[pipelineState] = object3dGraphicsPipeline_->GetRootSignature();
-		break;
-		// 他のパイプラインステートが追加された場合はここに追加
-
+		case kObject2d:
+			// 2Dオブジェクト描画用のルートシグネチャを設定
+			rootSignatures_[pipelineState] = object2dGraphicsPipeline_->GetRootSignature();
+			break;
+		case kObject3d:
+			// 3Dオブジェクト描画用のルートシグネチャを設定
+			rootSignatures_[pipelineState] = object3dGraphicsPipeline_->GetRootSignature();
+			break;
+		case kParticle:
+			// パーティクル描画用のルートシグネチャを設定
+			rootSignatures_[pipelineState] = particleGraphicsPipeline_->GetRootSignature();
+			break;
+			// 他のパイプラインステートが追加された場合はここに追加
 	}
 }
 
@@ -73,20 +89,22 @@ void GraphicsPipelineManager::SetRootSignature(PipelineState pipelineState) {
 void GraphicsPipelineManager::SetGraphicsPipelineState(PipelineState pipelineState) {
 	// パイプラインステートごとに対応するグラフィックスパイプラインを設定
 	switch (pipelineState) {
-	case kObject2d:
-		// 各ブレンドモードに対応するパイプラインステートを設定
-		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
-			graphicsPipelineStates_[pipelineState][mode] = object2dGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
-		}
-		break;
-
-	case kObject3d:
-		// 各ブレンドモードに対応するパイプラインステートを設定
-		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
-			graphicsPipelineStates_[pipelineState][mode] = object3dGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
-		}
-		break;
-		// 他のパイプラインステートが追加された場合はここに追加
+		case kObject2d:
+			for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+				graphicsPipelineStates_[pipelineState][mode] = object2dGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
+			}
+			break;
+		case kObject3d:
+			for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+				graphicsPipelineStates_[pipelineState][mode] = object3dGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
+			}
+			break;
+		case kParticle:
+			for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+				graphicsPipelineStates_[pipelineState][mode] = particleGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
+			}
+			break;
+			// 他のパイプラインステートが追加された場合はここに追加
 
 	}
 }

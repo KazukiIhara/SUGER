@@ -17,7 +17,7 @@
 class Camera;
 class Model;
 
-class Particle {
+class Particle3D {
 public:
 	void Initialize(Model* model, Camera* camera);
 	void Update();
