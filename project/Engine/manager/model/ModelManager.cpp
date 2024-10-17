@@ -24,7 +24,14 @@ void ModelManager::CreateSphere(const std::string& textureFile, const std::strin
 	std::unique_ptr<Model> model = std::make_unique<Model>();
 	model->CreateSphere(directoryPath + "/" + textureFile);
 	// モデルをmapコンテナに格納する
-	models_.insert(std::make_pair("Sphere_" + textureFile, std::move(model)));
+	models_.insert(std::make_pair("Sphere", std::move(model)));
+}
+
+void ModelManager::CreatePlane(const std::string& textureFile, const std::string& directoryPath) {
+	std::unique_ptr<Model> model = std::make_unique<Model>();
+	model->CreatePlane(directoryPath + "/" + textureFile);
+	// モデルをmapコンテナに格納する
+	models_.insert(std::make_pair("Plane", std::move(model)));
 }
 
 Model* ModelManager::Find(const std::string& filePath) {

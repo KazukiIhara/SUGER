@@ -15,7 +15,9 @@ public:
 	// モデル読み込み
 	void Load(const std::string& filePath);
 	// 球体作成
-	void CreateSphere(const std::string& textureFilePath, const std::string& directoryPath = "Resources");
+	void CreateSphere(const std::string& textureFile, const std::string& directoryPath = "resources/images");
+	// 板ポリ作成
+	void CreatePlane(const std::string& textureFile, const std::string& directoryPath = "resources/images");
 	// モデルの検索
 	Model* Find(const std::string& filePath);
 	// 終了

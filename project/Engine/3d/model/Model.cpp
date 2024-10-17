@@ -74,6 +74,23 @@ void Model::Draw() {
 	}
 }
 
+void Model::DrawParticle(const uint32_t& instanceCount) {
+	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
+		// VBVを設定
+		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		// マテリアルCBufferの場所を設定
+		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
+		if (modelData.meshes[i].material.haveUV_) {
+			// SRVセット
+			SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[modelData.meshes[i].material.textureFilePath].srvIndex);
+			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+			SUGER::GetDirectXCommandList()->DrawInstanced(UINT(modelData.meshes[i].vertices.size()), instanceCount, 0, 0);
+		} else {
+			SUGER::GetDirectXCommandList()->DrawInstanced(UINT(modelData.meshes[i].verticesUnUV.size()), instanceCount, 0, 0);
+		}
+	}
+}
+
 void Model::LoadModel(const std::string& filename, const std::string& directoryPath) {
 	std::string fileDirectoryPath = directoryPath + "/" + filename;
 
@@ -273,6 +290,60 @@ void Model::CreateSphere(const std::string& textureFilePath) {
 #pragma endregion
 }
 
+void Model::GeneratePlane(const std::string& textureFilePath) {
+	// テクスチャをロード
+	SUGER::LoadTexture(textureFilePath);
+
+	sMeshData meshData;
+	meshData.material.textureFilePath = textureFilePath;
+	meshData.material.haveUV_ = true;
+
+	meshData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {-1.0f,1.0f,0.0f,1.0f},.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {-1.0f,1.0f,0.0f,1.0f},.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
+	meshData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f},.texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
+
+	meshData.material.color = { 1.0f,1.0f,1.0f,1.0f };
+
+	modelData.meshes.push_back(meshData);
+
+}
+
+void Model::CreatePlane(const std::string& textureFilePath) {
+
+	// 板ポリの頂点作成
+	GeneratePlane(textureFilePath);
+
+	// マテリアル初期化
+	sMaterial3D material;
+	material.color = { 1.0f,1.0f,1.0f,1.0f };
+	material.enbleLighting = true;
+	material.shininess = 40.0f;
+	material.uvTransformMatrix = MakeIdentityMatrix4x4();
+	materials_.push_back(material);
+
+	sUVTransform identity = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
+	uvTransforms_.push_back(identity);
+
+#pragma region 頂点データ
+	/*頂点リソースの作成*/
+	CreateVertexResource();
+	/*頂点バッファビューの作成*/
+	CreateVertexBufferView();
+	/*頂点データの書き込み*/
+	MapVertexData();
+#pragma endregion
+
+#pragma region マテリアルデータ
+	/*マテリアル用のリソース作成*/
+	CreateMaterialResource();
+	/*マテリアルにデータを書き込む*/
+	MapMaterialData();
+#pragma endregion
+}
+
 void Model::CreateVertexResource() {
 	for (auto& mesh : modelData.meshes) {
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
@@ -334,3 +405,7 @@ void Model::MapMaterialData() {
 		materialData_.push_back(materialData);
 	}
 }
+
+void Model::CreateInstancingResource() {}
+
+void Model::MapInstancingData() {}

@@ -38,6 +38,8 @@ void MyGame::Update() {
 	SUGER::Update2DObjects();
 	// 3DObjectの更新
 	SUGER::Update3DObjects();
+	// Particleの更新
+	SUGER::UpdateParticle();
 }
 
 void MyGame::Draw() {

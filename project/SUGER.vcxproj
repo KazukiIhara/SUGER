@@ -116,10 +116,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\2d\system\Object2dSystem.cpp" />
     <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp" />
     <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp" />
-    <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
     <ClCompile Include="Engine\3d\model\Model.cpp" />
     <ClCompile Include="Engine\3d\object\Object3d.cpp" />
+    <ClCompile Include="Engine\particle\3d\Particle3d.cpp" />
     <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
     <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp" />
     <ClCompile Include="Engine\directX\command\DirectXCommand.cpp" />
@@ -131,11 +133,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\manager\model\ModelManager.cpp" />
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp" />
     <ClCompile Include="Engine\manager\object\3d\Object3DManager.cpp" />
+    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp" />
     <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp" />
     <ClCompile Include="Engine\manager\scene\SceneManager.cpp" />
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp" />
     <ClCompile Include="Engine\math\function\MathFunction.cpp" />
     <ClCompile Include="Engine\math\operator\MathOperator.cpp" />
+    <ClCompile Include="Engine\particle\system\ParticleSystem.cpp" />
     <ClCompile Include="Engine\worldTransform\WorldTransform.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp" />
@@ -153,10 +157,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\2d\system\Object2dSystem.h" />
     <ClInclude Include="Engine\3d\cameras\camera\Camera.h" />
     <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h" />
-    <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
+    <ClInclude Include="Engine\particle\3d\Particle3d.h" />
     <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
     <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h" />
     <ClInclude Include="Engine\directX\command\DirectXCommand.h" />
@@ -169,6 +175,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\model\ModelManager.h" />
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h" />
     <ClInclude Include="Engine\manager\object\3d\Object3DManager.h" />
+    <ClInclude Include="Engine\manager\particle\ParticleManager.h" />
     <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h" />
     <ClInclude Include="Engine\manager\scene\SceneManager.h" />
     <ClInclude Include="Engine\manager\srv\SRVManager.h" />
@@ -184,9 +191,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\iScene\abstractFactory\AbstractSceneFactory.h" />
     <ClInclude Include="Engine\iScene\base\BaseScene.h" />
     <ClInclude Include="Engine\enum\GraphicsPipelineEnum.h" />
+    <ClInclude Include="Engine\particle\system\ParticleSystem.h" />
     <ClInclude Include="Engine\structs\CameraStruct.h" />
     <ClInclude Include="Engine\structs\ModelStructs.h" />
     <ClInclude Include="Engine\structs\ObjectStructs.h" />
+    <ClInclude Include="Engine\structs\ParticleStruct.h" />
     <ClInclude Include="Engine\structs\PunctualLightStruct.h" />
     <ClInclude Include="Engine\structs\TextureStruct.h" />
     <ClInclude Include="Engine\worldTransform\WorldTransform.h" />
@@ -224,6 +233,18 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="resources\shaders\particle\particle.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\particle\particle.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
@@ -231,6 +252,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="resources\shaders\objects\3d\object3d.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\shaders\particle\particle.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>

@@ -22,7 +22,8 @@ void SampleScene::Initialize() {
 	teapotTransform_.Initialize();
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create3DObject(teapotTransform_, "teapot", "teapot");
-
+	SUGER::Create2DObject("nero", "nero.jpg");
+	SUGER::CreateParticle(teapotTransform_, "normal", "mashu.jpg");
 }
 
 void SampleScene::Finalize() {

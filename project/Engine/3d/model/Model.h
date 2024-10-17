@@ -21,6 +21,8 @@ public: // メンバ関数
 	void Update();
 	// 描画
 	void Draw();
+	// パーティクルの場合の描画
+	void DrawParticle(const uint32_t& instanceCount);
 	// モデルの読み込み
 	void LoadModel(const std::string& filename, const std::string& directoryPath = "resources/models");
 
@@ -29,6 +31,12 @@ public: // メンバ関数
 
 	// 球体作成
 	void CreateSphere(const std::string& textureFilePath);
+
+	// 板ポリの頂点作成
+	void GeneratePlane(const std::string& textureFilePath);
+
+	// 板ポリ作成
+	void CreatePlane(const std::string& textureFilePath);
 
 	// UVTransformのセット
 	void SetUVTransform(const std::vector<sUVTransform>& uvTransforms) {
@@ -66,6 +74,13 @@ private: // メンバ関数
 	void MapMaterialData();
 #pragma endregion
 
+#pragma region Instancing
+	// Instancingリソースを作る
+	void CreateInstancingResource();
+	// Instancingデータを書き込む
+	void MapInstancingData();
+#pragma endregion
+
 private: // メンバ変数
 #pragma region モデル
 	// モデルデータ
@@ -98,5 +113,8 @@ private: // メンバ変数
 	const uint32_t kSubdivision = 16;
 	/*球の頂点定数*/
 	const uint32_t sphereVertexNum = kSubdivision * kSubdivision * 6;
+
+	// 板ポリの頂点数
+	const uint32_t kPlaneVertexNum_ = 6;
 
 };
