@@ -9,7 +9,7 @@
 #include "3d/cameras/camera/Camera.h"
 
 
-void cParticleSystem::Initialize(Model* model, Camera* camera) {
+void Particle::Initialize(Model* model, Camera* camera) {
 	// インスタンスをセット
 	SetModel(model);
 	SetCamera(camera);
@@ -32,11 +32,11 @@ void cParticleSystem::Initialize(Model* model, Camera* camera) {
 #pragma endregion
 	// srvのインデックスを割り当て
 	srvIndex_ = SUGER::SrvAllocate();
-
+	// Srvを作成
 	SUGER::CreateSrvInstancing(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
 }
 
-void cParticleSystem::Update() {
+void Particle::Update() {
 	// 乱数を使う準備
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
@@ -56,7 +56,7 @@ void cParticleSystem::Update() {
 	// 描画すべきインスタンス数
 	instanceCount_ = 0;
 
-	for (std::list<Particle>::iterator particleIterator = particles_.begin();
+	for (std::list<ParticleData>::iterator particleIterator = particles_.begin();
 		particleIterator != particles_.end();) {
 		// 生存時間を過ぎていたら更新せず描画対象にしない
 		if ((*particleIterator).lifeTime <= (*particleIterator).currentTime) {
@@ -108,7 +108,7 @@ void cParticleSystem::Update() {
 	}
 }
 
-void cParticleSystem::Draw(BlendMode blendMode) {
+void Particle::Draw(BlendMode blendMode) {
 	// PSOを設定
 	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kParticle, blendMode));
 
@@ -121,20 +121,20 @@ void cParticleSystem::Draw(BlendMode blendMode) {
 	}
 }
 
-void cParticleSystem::SetModel(Model* model) {
+void Particle::SetModel(Model* model) {
 	model_ = model;
 }
 
-void cParticleSystem::SetCamera(Camera* camera) {
+void Particle::SetCamera(Camera* camera) {
 	camera_ = camera;
 }
 
-void cParticleSystem::CreateInstancingResource() {
+void Particle::CreateInstancingResource() {
 	// instancing用のリソースを作る
 	instancingResource_ = SUGER::CreateBufferResource(sizeof(ParticleForGPU) * kNumMaxInstance);
 }
 
-void cParticleSystem::MapInstancingData() {
+void Particle::MapInstancingData() {
 	instancingData_ = nullptr;
 	instancingResource_->Map(0, nullptr, reinterpret_cast<void**>(&instancingData_));
 
@@ -144,7 +144,7 @@ void cParticleSystem::MapInstancingData() {
 	}
 }
 
-Particle cParticleSystem::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate) {
+ParticleData Particle::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate) {
 	// 出現位置と移動量の乱数の生成
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	// 色を決める乱数の生成
@@ -152,7 +152,7 @@ Particle cParticleSystem::MakeNewParticle(std::mt19937& randomEngine, const Vect
 	// 生存時間の乱数の生成(1秒から3秒の間生存)
 	std::uniform_real_distribution<float> distTime(1.0f, 3.0f);
 
-	Particle particle;
+	ParticleData particle;
 	// トランスフォームの設定
 	particle.transform.scale = { 1.0f,1.0f,1.0f };
 	particle.transform.rotate = { 0.0f,0.0f,0.0f };
@@ -172,8 +172,8 @@ Particle cParticleSystem::MakeNewParticle(std::mt19937& randomEngine, const Vect
 	return particle;
 }
 
-std::list<Particle> cParticleSystem::Emit(const Emitter& emitter, std::mt19937& randomEngine) {
-	std::list<Particle> particles;
+std::list<ParticleData> Particle::Emit(const Emitter& emitter, std::mt19937& randomEngine) {
+	std::list<ParticleData> particles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
 		particles.push_back(MakeNewParticle(randomEngine, emitter.transform.translate));
 	}

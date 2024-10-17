@@ -1,7 +1,7 @@
 #pragma once
 #include "structs/ObjectStructs.h"
 
-struct Particle {
+struct ParticleData {
 	sTransform3D transform;
 	Vector3 velocity;
 	Vector4 color;

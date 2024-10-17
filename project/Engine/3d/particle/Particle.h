@@ -17,7 +17,7 @@
 class Camera;
 class Model;
 
-class cParticleSystem {
+class Particle {
 public:
 	void Initialize(Model* model, Camera* camera);
 	void Update();
@@ -34,7 +34,7 @@ private:
 	void MapInstancingData();
 
 	// Particleの生成
-	Particle MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate);
+	ParticleData MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate);
 
 private:/*メンバ変数*/
 
@@ -53,12 +53,12 @@ private:/*メンバ変数*/
 	ParticleForGPU* instancingData_ = nullptr;
 
 	// パーティクル
-	std::list<Particle> particles_;
+	std::list<ParticleData> particles_;
 	// デルタタイムを設定。ひとまず60fps固定
 	const float kDeltaTime = 1.0f / 60.0f;
 
 	// パーティクルの発生関数
-	std::list<Particle> Emit(const Emitter& emitter, std::mt19937& randomEngine);
+	std::list<ParticleData> Emit(const Emitter& emitter, std::mt19937& randomEngine);
 	// Emitter
 	Emitter emitter_{
 	.count = 3,
