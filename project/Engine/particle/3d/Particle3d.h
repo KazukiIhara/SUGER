@@ -61,7 +61,7 @@ private:/*メンバ変数*/
 	std::list<ParticleData> Emit(const Emitter& emitter, std::mt19937& randomEngine);
 	// Emitter
 	Emitter emitter_{
-	.count = 3,
+	.count = 10,
 	.frequency = 0.5f,		// 0.5秒ごとに発生
 	.frequencyTime = 0.0f,	// 発生頻度用の時刻、0で初期化
 	};

@@ -23,7 +23,7 @@ void SampleScene::Initialize() {
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create3DObject(teapotTransform_, "teapot", "teapot");
 	SUGER::Create2DObject("nero", "nero.jpg");
-	SUGER::CreateParticle(teapotTransform_, "normal", "mashu.jpg");
+	SUGER::CreateParticle(teapotTransform_, "normal", "circle.png");
 }
 
 void SampleScene::Finalize() {
