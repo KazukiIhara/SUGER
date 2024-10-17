@@ -5,9 +5,14 @@
 
 #include "framework/SUGER.h"
 #include "math/function/MathFunction.h"
+#include "3d/model/Model.h"
+#include "3d/cameras/camera/Camera.h"
 
 
-void cParticleSystem::Initialize(Matrix4x4* viewProjection, sUVTransform* uvTransform) {
+void cParticleSystem::Initialize(Model* model, Camera* camera) {
+	// インスタンスをセット
+	SetModel(model);
+	SetCamera(camera);
 
 	// 乱数生成器の初期化
 	std::random_device seedGenerator;
@@ -17,10 +22,6 @@ void cParticleSystem::Initialize(Matrix4x4* viewProjection, sUVTransform* uvTran
 	emitter_.transform.translate = { 0.0f,0.0f,0.0f };
 	emitter_.transform.rotate = { 0.0f,0.0f,0.0f };
 	emitter_.transform.scale = { 1.0f,1.0f,1.0f };
-
-	/*NullCheck*/
-	assert(uvTransform);
-	assert(viewProjection);
 
 #pragma region Instancing
 	// Instancingリソースを作る
@@ -35,7 +36,7 @@ void cParticleSystem::Initialize(Matrix4x4* viewProjection, sUVTransform* uvTran
 	SUGER::CreateSrvInstancing(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
 }
 
-void cParticleSystem::Update(const Matrix4x4& cameraMatrix) {
+void cParticleSystem::Update() {
 	// 乱数を使う準備
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
@@ -77,7 +78,7 @@ void cParticleSystem::Update(const Matrix4x4& cameraMatrix) {
 
 			// WVPマトリックスを求める
 			Matrix4x4 scaleMatrix = MakeScaleMatrix((*particleIterator).transform.scale);
-			Matrix4x4 billboardMatrix = backFrontMatrix * cameraMatrix;
+			Matrix4x4 billboardMatrix = backFrontMatrix * camera_->GetWorldMatrix();
 			// 平行移動成分を削除
 			billboardMatrix.m[3][0] = 0.0f;
 			billboardMatrix.m[3][1] = 0.0f;
@@ -85,13 +86,11 @@ void cParticleSystem::Update(const Matrix4x4& cameraMatrix) {
 
 			Matrix4x4 translateMatrix = MakeTranslateMatrix((*particleIterator).transform.translate);
 
-			if (!isUseBillboard) {
-				billboardMatrix = MakeIdentityMatrix4x4();
-			}
+			// billboardMatrix = MakeIdentityMatrix4x4();
 
 			Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
 
-			Matrix4x4 worldViewProjectionMatrix = worldMatrix * *viewProjection_;
+			Matrix4x4 worldViewProjectionMatrix = worldMatrix * camera_->GetViewProjectionMatrix();
 
 			instancingData_[instanceCount_].WVP = worldViewProjectionMatrix;
 			instancingData_[instanceCount_].World = worldMatrix;
@@ -109,7 +108,7 @@ void cParticleSystem::Update(const Matrix4x4& cameraMatrix) {
 	}
 }
 
-void cParticleSystem::Draw(uint32_t textureHandle, BlendMode blendMode) {
+void cParticleSystem::Draw(BlendMode blendMode) {
 	// PSOを設定
 	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kParticle, blendMode));
 
@@ -117,9 +116,17 @@ void cParticleSystem::Draw(uint32_t textureHandle, BlendMode blendMode) {
 	SUGER::GetDirectXCommandList()->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVDescriptorHandleGPU(srvIndex_));
 
 	// モデルがある場合描画
-	if (model) {
-		model->DrawParticle(instanceCount_);
+	if (model_) {
+		model_->DrawParticle(instanceCount_);
 	}
+}
+
+void cParticleSystem::SetModel(Model* model) {
+	model_ = model;
+}
+
+void cParticleSystem::SetCamera(Camera* camera) {
+	camera_ = camera;
 }
 
 void cParticleSystem::CreateInstancingResource() {

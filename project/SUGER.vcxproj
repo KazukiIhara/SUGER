@@ -116,7 +116,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\2d\system\Object2dSystem.cpp" />
     <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp" />
     <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp" />
-    <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
     <ClCompile Include="Engine\3d\model\Model.cpp" />
     <ClCompile Include="Engine\3d\object\Object3d.cpp" />
@@ -154,7 +155,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\2d\system\Object2dSystem.h" />
     <ClInclude Include="Engine\3d\cameras\camera\Camera.h" />
     <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h" />
-    <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />

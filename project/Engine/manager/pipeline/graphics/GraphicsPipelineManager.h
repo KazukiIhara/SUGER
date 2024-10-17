@@ -13,7 +13,8 @@
 #include "enum/GraphicsPipelineEnum.h"
 
 #include "2d/graphicsPipeline/Object2dGraphicsPipeline.h"
-#include "3d/graphicsPipeline/Object3dGraphicsPipeline.h"
+#include "3d/graphicsPipeline/ocject3d/Object3dGraphicsPipeline.h"
+
 
 class DirectXManager;
 

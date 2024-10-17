@@ -204,7 +204,7 @@
     </ClCompile>
     <ClCompile Include="Engine\manager\model\ModelManager.cpp" />
     <ClCompile Include="Engine\3d\model\Model.cpp" />
-    <ClCompile Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
     <ClCompile Include="Engine\3d\object\Object3d.cpp" />
     <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp" />
@@ -215,6 +215,7 @@
     <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp" />
     <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp" />
     <ClCompile Include="Engine\3d\particle\Particle.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -316,7 +317,7 @@
     <ClInclude Include="Engine\manager\model\ModelManager.h" />
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\structs\ModelStructs.h" />
-    <ClInclude Include="Engine\3d\graphicsPipeline\Object3dGraphicsPipeline.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
     <ClInclude Include="Engine\3d\cameras\camera\Camera.h" />
@@ -329,6 +330,7 @@
     <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h" />
     <ClInclude Include="Engine\3d\particle\Particle.h" />
     <ClInclude Include="Engine\structs\ParticleStruct.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
