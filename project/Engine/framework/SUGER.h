@@ -77,6 +77,11 @@ public: // クラスメソッド
 
 #pragma region SRVManager
 	// SRVManagerの機能
+	// CPUの特定のインデックスハンドルを取得
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleCPU(uint32_t index);
+	// GPUの特定のインデックスハンドルを取得
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleGPU(uint32_t index);
+
 	// ディスクリプターテーブルのセット
 	static void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 	// Allocate

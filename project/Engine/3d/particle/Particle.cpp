@@ -29,8 +29,10 @@ void cParticleSystem::Initialize(Matrix4x4* viewProjection, sUVTransform* uvTran
 	MapInstancingData();
 
 #pragma endregion
+	// srvのインデックスを割り当て
+	srvIndex_ = SUGER::SrvAllocate();
 
-	SUGER::CreateSrvInstancing(SUGER::SrvAllocate(), instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
+	SUGER::CreateSrvInstancing(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
 }
 
 void cParticleSystem::Update(const Matrix4x4& cameraMatrix) {
@@ -109,10 +111,10 @@ void cParticleSystem::Update(const Matrix4x4& cameraMatrix) {
 
 void cParticleSystem::Draw(uint32_t textureHandle, BlendMode blendMode) {
 	// PSOを設定
-	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kObject3d, blendMode));
+	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kParticle, blendMode));
 
 	// StructuredBufferのSRVを設定する
-	SUGER::GetDirectXCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
+	SUGER::GetDirectXCommandList()->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVDescriptorHandleGPU(srvIndex_));
 
 	// モデルがある場合描画
 	if (model) {

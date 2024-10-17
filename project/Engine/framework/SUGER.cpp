@@ -242,6 +242,14 @@ ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes) {
 	return directXManager_->CreateBufferResource(sizeInBytes);
 }
 
+D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleCPU(uint32_t index) {
+	return srvManager_->GetDescriptorHandleCPU(index);
+}
+
+D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleGPU(uint32_t index) {
+	return srvManager_->GetDescriptorHandleGPU(index);
+}
+
 void SUGER::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
 	srvManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
 }
@@ -251,7 +259,7 @@ uint32_t SUGER::SrvAllocate() {
 }
 
 void SUGER::CreateSrvInstancing(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
-	srvManager_->CreateSrvInstancing(srvIndex, pResource, numElements, structureByteStride);
+	srvManager_->CreateSrvStructuredBuffer(srvIndex, pResource, numElements, structureByteStride);
 }
 
 void SUGER::LoadTexture(const std::string& filePath) {
