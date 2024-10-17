@@ -31,6 +31,8 @@ public: // 公開メンバ関数
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(uint32_t index);
 	// SRV生成(テクスチャ用)
 	void CreateSrvTexture2d(uint32_t srvIndex, ID3D12Resource* pResource, DXGI_FORMAT format, UINT MipLevels);
+	// SRV生成(instancing用)
+	void CreateSrvInstancing(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 	// Srvの数が最大数を上回っているかどうか
 	bool IsLowerSrvMax();
 	// 描画前処理

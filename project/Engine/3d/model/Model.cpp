@@ -74,6 +74,23 @@ void Model::Draw() {
 	}
 }
 
+void Model::DrawParticle(const uint32_t& instanceCount) {
+	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
+		// VBVを設定
+		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		// マテリアルCBufferの場所を設定
+		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
+		if (modelData.meshes[i].material.haveUV_) {
+			// SRVセット
+			SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[modelData.meshes[i].material.textureFilePath].srvIndex);
+			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+			SUGER::GetDirectXCommandList()->DrawInstanced(UINT(modelData.meshes[i].vertices.size()), instanceCount, 0, 0);
+		} else {
+			SUGER::GetDirectXCommandList()->DrawInstanced(UINT(modelData.meshes[i].verticesUnUV.size()), instanceCount, 0, 0);
+		}
+	}
+}
+
 void Model::LoadModel(const std::string& filename, const std::string& directoryPath) {
 	std::string fileDirectoryPath = directoryPath + "/" + filename;
 

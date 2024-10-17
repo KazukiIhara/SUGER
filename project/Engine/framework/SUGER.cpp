@@ -182,6 +182,10 @@ void SUGER::Draw() {
 	// 3Dオブジェクト描画処理
 	Draw3DObjects();
 
+	// パーティクル描画前処理
+
+	// パーティクル描画処理
+
 	// 2Dオブジェクト描画前処理
 	PreDrawObject2D();
 	// 2Dオブジェクト描画処理
@@ -240,6 +244,14 @@ ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes) {
 
 void SUGER::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
 	srvManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
+}
+
+uint32_t SUGER::SrvAllocate() {
+	return srvManager_->Allocate();
+}
+
+void SUGER::CreateSrvInstancing(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
+	srvManager_->CreateSrvInstancing(srvIndex, pResource, numElements, structureByteStride);
 }
 
 void SUGER::LoadTexture(const std::string& filePath) {

@@ -30,7 +30,7 @@ void cParticleSystem::Initialize(Matrix4x4* viewProjection, sUVTransform* uvTran
 
 #pragma endregion
 
-	CreateSRV();
+	SUGER::CreateSrvInstancing(SUGER::SrvAllocate(), instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
 }
 
 void cParticleSystem::Update(const Matrix4x4& cameraMatrix) {
@@ -105,27 +105,19 @@ void cParticleSystem::Update(const Matrix4x4& cameraMatrix) {
 		// 次のイテレーターに進める
 		++particleIterator;
 	}
-
-	// 色を書き込む
-	materialData_->color = modelData_.material.color;
-
-
-
 }
 
 void cParticleSystem::Draw(uint32_t textureHandle, BlendMode blendMode) {
 	// PSOを設定
 	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kObject3d, blendMode));
-	//VBVを設定
-	SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
-	/*マテリアルCBufferの場所を設定*/
-	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+
 	// StructuredBufferのSRVを設定する
 	SUGER::GetDirectXCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
-	/*SRVのDescriptorTableの先頭を設定*/
-	SUGER::GetDirectXCommandList()->SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[].gpuDescHandleSRV);
-	//描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	SUGER::GetDirectXCommandList()->DrawInstanced(6, instanceCount_, 0, 0);
+
+	// モデルがある場合描画
+	if (model) {
+		model->DrawParticle(instanceCount_);
+	}
 }
 
 void cParticleSystem::CreateInstancingResource() {
@@ -169,20 +161,6 @@ Particle cParticleSystem::MakeNewParticle(std::mt19937& randomEngine, const Vect
 	particle.currentTime = 0;
 
 	return particle;
-}
-
-void cParticleSystem::CreateSRV() {
-	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc{};
-	instancingSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
-	instancingSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	instancingSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
-	instancingSrvDesc.Buffer.FirstElement = 0;
-	instancingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
-	instancingSrvDesc.Buffer.NumElements = kNumMaxInstance;
-	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
-	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU = cDirectXCommon::GetCPUDescriptorHandle(cDirectXCommon::GetSRVDescriptorHeap(), cDirectXCommon::GetDescriptorSizeSRV(), 1);
-	instancingSrvHandleGPU = cDirectXCommon::GetGPUDescriptorHandle(cDirectXCommon::GetSRVDescriptorHeap(), cDirectXCommon::GetDescriptorSizeSRV(), 1);
-	cDirectXCommon::GetDevice()->CreateShaderResourceView(instancingResource_.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
 }
 
 std::list<Particle> cParticleSystem::Emit(const Emitter& emitter, std::mt19937& randomEngine) {

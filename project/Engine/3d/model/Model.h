@@ -21,6 +21,8 @@ public: // メンバ関数
 	void Update();
 	// 描画
 	void Draw();
+	// パーティクルの場合の描画
+	void DrawParticle(const uint32_t& instanceCount);
 	// モデルの読み込み
 	void LoadModel(const std::string& filename, const std::string& directoryPath = "resources/models");
 

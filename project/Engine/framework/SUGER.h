@@ -79,6 +79,10 @@ public: // クラスメソッド
 	// SRVManagerの機能
 	// ディスクリプターテーブルのセット
 	static void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
+	// Allocate
+	static uint32_t SrvAllocate();
+	// instancing用のsrv作成
+	static void CreateSrvInstancing(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 
 #pragma endregion
 
