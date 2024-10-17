@@ -13,8 +13,10 @@
 #include "manager/model/ModelManager.h"
 #include "manager/object/2d/Object2DManager.h"
 #include "manager/object/3d/Object3DManager.h"
+#include "manager/particle/ParticleManager.h"
 #include "2d/system/Object2dSystem.h"
 #include "3d/system/Object3dSystem.h"
+#include "particle/system/ParticleSystem.h"
 
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
@@ -32,8 +34,10 @@ std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullp
 std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
 std::unique_ptr<Object3DManager> SUGER::object3dManager_ = nullptr;
+std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
+std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
@@ -78,6 +82,10 @@ void SUGER::Initialize() {
 	object2dManager_ = std::make_unique<Object2DManager>();
 	object2dManager_->Initialize();
 
+	// particleManagerの初期化
+	particleManager_ = std::make_unique<ParticleManager>();
+	particleManager_->Initialize(modelManager_.get());
+
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
 	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
@@ -85,12 +93,21 @@ void SUGER::Initialize() {
 	// Object3DSystemの初期化
 	object3dSystem_ = std::make_unique<Object3DSystem>();
 	object3dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+
+	// ParticleSystemの初期化
+	particleSystem_ = std::make_unique<ParticleSystem>();
+	particleSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
 }
 
 void SUGER::Finalize() {
 	Logger::Log("SUGER,Finalized\n");
 
 	// 各オブジェクトの終了処理を生成した順番とは逆に行う
+
+	// ParticleSystemの終了処理
+	if (particleSystem_) {
+		particleSystem_.reset();
+	}
 
 	// Object3DSystemの終了処理
 	if (object3dSystem_) {
@@ -100,6 +117,17 @@ void SUGER::Finalize() {
 	// Object2DSystemの終了処理
 	if (object2dSystem_) {
 		object2dSystem_.reset();
+	}
+
+	// ParticleManagerの終了処理
+	if (particleManager_) {
+		particleManager_.reset();
+	}
+
+	// Object2DManagerの終了処理
+	if (object2dManager_) {
+		object2dManager_->Finalize();
+		object2dManager_.reset();
 	}
 
 	// Object3DManagerの終了処理
@@ -182,9 +210,10 @@ void SUGER::Draw() {
 	// 3Dオブジェクト描画処理
 	Draw3DObjects();
 
-	// パーティクル描画前処理
-
-	// パーティクル描画処理
+	// 3Dパーティクル描画前処理
+	PreDrawParticle3D();
+	// 3Dパーティクル描画処理
+	DrawParticle();
 
 	// 2Dオブジェクト描画前処理
 	PreDrawObject2D();
@@ -316,10 +345,24 @@ void SUGER::Draw3DObjects() {
 
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	object3dManager_->SetRequiredObjects(camera, punctualLight);
+	particleManager_->SetSceneCamera(camera);
 }
 
 void SUGER::SetSceneCamera(Camera* camera) {
 	object3dManager_->SetSceneCamera(camera);
+	particleManager_->SetSceneCamera(camera);
+}
+
+void SUGER::CreateParticle(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath) {
+	particleManager_->Create(worldTransform, name, filePath);
+}
+
+void SUGER::UpdateParticle() {
+	particleManager_->Update();
+}
+
+void SUGER::DrawParticle() {
+	particleManager_->Draw();
 }
 
 void SUGER::PreDrawObject2D() {
@@ -328,4 +371,8 @@ void SUGER::PreDrawObject2D() {
 
 void SUGER::PreDrawObject3D() {
 	object3dSystem_->PreDraw();
+}
+
+void SUGER::PreDrawParticle3D() {
+	particleSystem_->PreDraw();
 }

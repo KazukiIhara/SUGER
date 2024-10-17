@@ -297,7 +297,6 @@ void Model::GeneratePlane(const std::string& textureFilePath) {
 	sMeshData meshData;
 	meshData.material.textureFilePath = textureFilePath;
 	meshData.material.haveUV_ = true;
-	meshData.vertices.resize(6);
 
 	meshData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
 	meshData.vertices.push_back({ .position = {-1.0f,1.0f,0.0f,1.0f},.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });

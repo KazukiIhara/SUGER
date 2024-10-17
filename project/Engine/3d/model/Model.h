@@ -114,4 +114,7 @@ private: // メンバ変数
 	/*球の頂点定数*/
 	const uint32_t sphereVertexNum = kSubdivision * kSubdivision * 6;
 
+	// 板ポリの頂点数
+	const uint32_t kPlaneVertexNum_ = 6;
+
 };
