@@ -26,7 +26,7 @@ public:
 	void Finalize();
 
 	// 板ポリパーティクル作成
-	void Create(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath);
+	void Create(const std::string& name, const std::string& filePath);
 
 	// ModelManagerのセット
 	void SetModelManager(ModelManager* modelManager);

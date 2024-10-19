@@ -59,6 +59,16 @@ void Object3DManager::Create(const WorldTransform& worldTransform, const std::st
 	objects_.insert(std::make_pair(name, std::move(newObject)));
 }
 
+Object3D* Object3DManager::Find(const std::string& name) {
+	// 作成済みオブジェクトを検索
+	if (objects_.contains(name)) {
+		// を戻り値としてreturn
+		return objects_.at(name).get();
+	}
+	// ファイル名一致なし
+	return nullptr;
+}
+
 void Object3DManager::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	SetSceneCamera(camera);
 	SetScenePunctualLight(punctualLight);

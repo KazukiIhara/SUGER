@@ -30,6 +30,7 @@ class ParticleSystem;
 class AbstractSceneFactory;
 
 class WorldTransform;
+class Object3D;
 class Model;
 class Camera;
 class PunctualLight;
@@ -141,6 +142,9 @@ public: // クラスメソッド
 	// 3Dオブジェクトの描画
 	static void Draw3DObjects();
 
+	// 3Dオブジェクト検索
+	static Object3D* FindObject3D(const std::string& name);
+
 	// シーンのカメラとライトをセット
 	static void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
 
@@ -150,7 +154,7 @@ public: // クラスメソッド
 
 #pragma region ParticleManager
 	// Particleの作成
-	static void CreateParticle(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath = "");
+	static void CreateParticle(const std::string& name, const std::string& filePath = "");
 	// Particleの更新
 	static void UpdateParticle();
 	// Particleの描画

@@ -343,6 +343,10 @@ void SUGER::Draw3DObjects() {
 	object3dManager_->Draw();
 }
 
+Object3D* SUGER::FindObject3D(const std::string& name) {
+	return object3dManager_->Find(name);
+}
+
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	object3dManager_->SetRequiredObjects(camera, punctualLight);
 	particleManager_->SetSceneCamera(camera);
@@ -353,8 +357,8 @@ void SUGER::SetSceneCamera(Camera* camera) {
 	particleManager_->SetSceneCamera(camera);
 }
 
-void SUGER::CreateParticle(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath) {
-	particleManager_->Create(worldTransform, name, filePath);
+void SUGER::CreateParticle(const std::string& name, const std::string& filePath) {
+	particleManager_->Create(name, filePath);
 }
 
 void SUGER::UpdateParticle() {
