@@ -23,6 +23,10 @@ void Object3DController::SetTranslate(const Vector3& translate) {
 	object3d_->SetTranslate(translate);
 }
 
+void Object3DController::SetModel(const std::string& filePath) {
+	object3d_->SetModel(filePath);
+}
+
 void Object3DController::SetObject3D(Object3D* object3d) {
 	object3d_ = object3d;
 }
