@@ -24,6 +24,7 @@ public: // 公開メンバ関数
 	void Update()override;
 private: // 非公開メンバ変数
 
+	// teapot用のオブジェクトコントローラ
 	Object3DController teapot_;
 
 };
