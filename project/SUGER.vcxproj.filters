@@ -133,6 +133,81 @@
     <Filter Include="engine\directX\command">
       <UniqueIdentifier>{7d3fa0f0-231e-4f02-8b22-f4d9e8962f4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\3d">
+      <UniqueIdentifier>{302a484d-5c4a-49f6-a986-16c785425026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\FixFPS">
+      <UniqueIdentifier>{3cbfb5ed-805c-41a2-961f-86d15042b7ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\model">
+      <UniqueIdentifier>{15a61917-78dd-4105-a6bf-0eec5861ad4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\model">
+      <UniqueIdentifier>{2b2aa4e5-aa0d-46d2-9f5d-0abf464a4e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\object">
+      <UniqueIdentifier>{ac52c79c-6482-4c6c-b650-98a74cfb8e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\object\2d">
+      <UniqueIdentifier>{b20cefc4-67a5-411e-9d3a-eabbdf62b348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\object\3d">
+      <UniqueIdentifier>{cb9dfece-c8fa-4f16-9513-8ea1a510efe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\object">
+      <UniqueIdentifier>{ea17c6bc-0639-4fb6-986e-1046e1729b63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders\objects\3d">
+      <UniqueIdentifier>{59417151-6d60-4f65-910b-796291775797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders\particle">
+      <UniqueIdentifier>{72f7b803-a363-4fa6-baaa-d4a32f062830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\controller">
+      <UniqueIdentifier>{a68576db-1cd2-48e1-883d-bb54afdb8c41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\controller\object3d">
+      <UniqueIdentifier>{8e7f6962-eb21-4202-881c-e68ba3a824c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\particle">
+      <UniqueIdentifier>{435c5b99-ed1c-4759-a37e-a5b6309b335b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\particle\3d">
+      <UniqueIdentifier>{6bef65cb-ba7b-4266-af8b-e183d019883b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\particle\system">
+      <UniqueIdentifier>{faa9558b-33d4-46b4-9d54-7c7bf735dbba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\graphicsPipeline">
+      <UniqueIdentifier>{0f6493f4-3d4d-49e0-8cc2-b2b4b7b6aaa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\particle">
+      <UniqueIdentifier>{958323b2-592c-4f08-81e9-4f61c42adb4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\system">
+      <UniqueIdentifier>{10dd2f57-d6b2-4123-a37b-ef2d626a705c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\particle\graphicsPipeline">
+      <UniqueIdentifier>{14de0632-5837-43b0-9e2d-501f965a3111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\lights">
+      <UniqueIdentifier>{6e6bab26-2ffd-4177-8d78-c9e37e4bfd5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\lights\punctualLight">
+      <UniqueIdentifier>{c1c0b092-c04b-41a8-ad37-111c1f473582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\scene\ShootingCoaster">
+      <UniqueIdentifier>{570a47fa-6200-445c-a56a-05cea841d4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\cameras">
+      <UniqueIdentifier>{5165f1a1-e150-42c0-90e1-081ef5570abf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\cameras\camera">
+      <UniqueIdentifier>{f8bc3d24-ef98-4982-981f-b26a95e1ec01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\cameras\railCamera">
+      <UniqueIdentifier>{c098095c-1279-4260-9c5b-54b9cc10851d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
@@ -202,24 +277,60 @@
     <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp">
       <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\model\ModelManager.cpp" />
-    <ClCompile Include="Engine\3d\model\Model.cpp" />
-    <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp" />
-    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
-    <ClCompile Include="Engine\3d\object\Object3d.cpp" />
-    <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp" />
-    <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
-    <ClCompile Include="Engine\manager\object\3d\Object3DManager.cpp" />
-    <ClCompile Include="Engine\iScene\base\BaseScene.cpp" />
-    <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp" />
-    <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp" />
-    <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp" />
-    <ClCompile Include="Engine\particle\3d\Particle3d.cpp" />
-    <ClCompile Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp" />
-    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp" />
-    <ClCompile Include="Engine\particle\system\ParticleSystem.cpp" />
-    <ClCompile Include="Engine\3d\controller\Object3dController.cpp" />
-    <ClCompile Include="Engine\FixFPS\FixFPS.cpp" />
+    <ClCompile Include="Engine\iScene\base\BaseScene.cpp">
+      <Filter>engine\iScene\baseScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\FixFPS\FixFPS.cpp">
+      <Filter>engine\FixFPS</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\model\Model.cpp">
+      <Filter>engine\3d\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\model\ModelManager.cpp">
+      <Filter>engine\manager\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp">
+      <Filter>engine\manager\object\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\object\3d\Object3DManager.cpp">
+      <Filter>engine\manager\object\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\object\Object3d.cpp">
+      <Filter>engine\3d\object</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\controller\Object3dController.cpp">
+      <Filter>engine\controller\object3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\particle\3d\Particle3d.cpp">
+      <Filter>engine\particle\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\particle\system\ParticleSystem.cpp">
+      <Filter>engine\particle\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp">
+      <Filter>engine\3d\graphicsPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp">
+      <Filter>engine\manager\particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp">
+      <Filter>engine\3d\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp">
+      <Filter>engine\particle\graphicsPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp">
+      <Filter>engine\3d\lights\punctualLight</Filter>
+    </ClCompile>
+    <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp">
+      <Filter>application\scene\ShootingCoaster</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp">
+      <Filter>engine\3d\cameras\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp">
+      <Filter>engine\3d\cameras\railCamera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -318,27 +429,69 @@
     <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h">
       <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\model\ModelManager.h" />
-    <ClInclude Include="Engine\3d\model\Model.h" />
-    <ClInclude Include="Engine\structs\ModelStructs.h" />
-    <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h" />
-    <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
-    <ClInclude Include="Engine\3d\object\Object3d.h" />
-    <ClInclude Include="Engine\3d\cameras\camera\Camera.h" />
-    <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
-    <ClInclude Include="Engine\structs\PunctualLightStruct.h" />
-    <ClInclude Include="Engine\manager\object\3d\Object3DManager.h" />
-    <ClInclude Include="Engine\structs\CameraStruct.h" />
-    <ClInclude Include="Engine\manager\object\2d\Object2DManager.h" />
-    <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h" />
-    <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h" />
-    <ClInclude Include="Engine\particle\3d\Particle3d.h" />
-    <ClInclude Include="Engine\structs\ParticleStruct.h" />
-    <ClInclude Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.h" />
-    <ClInclude Include="Engine\manager\particle\ParticleManager.h" />
-    <ClInclude Include="Engine\particle\system\ParticleSystem.h" />
-    <ClInclude Include="Engine\3d\controller\Object3dController.h" />
-    <ClInclude Include="Engine\FixFPS\FixFPS.h" />
+    <ClInclude Include="Engine\structs\CameraStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\FixFPS\FixFPS.h">
+      <Filter>engine\FixFPS</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\model\Model.h">
+      <Filter>engine\3d\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\model\ModelManager.h">
+      <Filter>engine\manager\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\ModelStructs.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\object\2d\Object2DManager.h">
+      <Filter>engine\manager\object\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\object\3d\Object3DManager.h">
+      <Filter>engine\manager\object\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\object\Object3d.h">
+      <Filter>engine\3d\object</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\controller\Object3dController.h">
+      <Filter>engine\controller\object3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\particle\3d\Particle3d.h">
+      <Filter>engine\particle\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\particle\system\ParticleSystem.h">
+      <Filter>engine\particle\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h">
+      <Filter>engine\3d\graphicsPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\particle\ParticleManager.h">
+      <Filter>engine\manager\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\ParticleStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\system\Object3dSystem.h">
+      <Filter>engine\3d\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.h">
+      <Filter>engine\particle\graphicsPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h">
+      <Filter>engine\3d\lights\punctualLight</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\PunctualLightStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h">
+      <Filter>application\scene\ShootingCoaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\cameras\camera\Camera.h">
+      <Filter>engine\3d\cameras\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h">
+      <Filter>engine\3d\cameras\railCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
@@ -347,16 +500,28 @@
     <FxCompile Include="resources\shaders\objects\2d\object2d.VS.hlsl">
       <Filter>resources\shaders\objects\2d</Filter>
     </FxCompile>
-    <FxCompile Include="resources\shaders\objects\3d\object3d.VS.hlsl" />
-    <FxCompile Include="resources\shaders\objects\3d\object3d.PS.hlsl" />
-    <FxCompile Include="resources\shaders\particle\particle.VS.hlsl" />
-    <FxCompile Include="resources\shaders\particle\particle.PS.hlsl" />
+    <FxCompile Include="resources\shaders\particle\particle.PS.hlsl">
+      <Filter>resources\shaders\particle</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\particle\particle.VS.hlsl">
+      <Filter>resources\shaders\particle</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3d\object3d.PS.hlsl">
+      <Filter>resources\shaders\objects\3d</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3d\object3d.VS.hlsl">
+      <Filter>resources\shaders\objects\3d</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
       <Filter>resources\shaders\objects\2d</Filter>
     </None>
-    <None Include="resources\shaders\objects\3d\object3d.hlsli" />
-    <None Include="resources\shaders\particle\particle.hlsli" />
+    <None Include="resources\shaders\particle\particle.hlsli">
+      <Filter>resources\shaders\particle</Filter>
+    </None>
+    <None Include="resources\shaders\objects\3d\object3d.hlsli">
+      <Filter>resources\shaders\objects\3d</Filter>
+    </None>
   </ItemGroup>
 </Project>
