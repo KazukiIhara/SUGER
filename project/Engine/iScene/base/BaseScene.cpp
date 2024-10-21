@@ -17,10 +17,9 @@ void BaseScene::Initialize() {
 }
 
 void BaseScene::Update() {
-#ifdef _DEBUG
 	// ImGuiによるデバッグカメラコントロール
 	ImGuiForSceneCamera();
-#endif // _DEBUG
+
 
 	// デバッグカメラのアップデート
 	debugCamera_->Update();
@@ -30,6 +29,7 @@ void BaseScene::Update() {
 }
 
 void BaseScene::ImGuiForSceneCamera() {
+#ifdef _DEBUG
 	// 回転と移動量を持ってくる
 	cameraRotate_ = debugCamera_->GetRotate();
 	cameraTranslate_ = debugCamera_->GetTranslate();
@@ -43,5 +43,5 @@ void BaseScene::ImGuiForSceneCamera() {
 	// 回転と移動量を返す
 	debugCamera_->SetRotate(cameraRotate_);
 	debugCamera_->SetTranslate(cameraTranslate_);
-
+#endif // _DEBUG
 }
