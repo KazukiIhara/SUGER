@@ -29,6 +29,9 @@ public:
 	// オブジェクト作成
 	void Create(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath);
 
+	// オブジェクト検索
+	Object3D* Find(const std::string& name);
+
 	void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
 	void SetSceneCamera(Camera* camera);
 

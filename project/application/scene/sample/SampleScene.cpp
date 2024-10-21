@@ -23,7 +23,10 @@ void SampleScene::Initialize() {
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create3DObject(teapotTransform_, "teapot", "teapot");
 	SUGER::Create2DObject("nero", "nero.jpg");
-	SUGER::CreateParticle(teapotTransform_, "normal", "circle.png");
+	SUGER::CreateParticle("normal", "circle.png");
+
+
+	teapot_.Initialize(SUGER::FindObject3D("teapot"));
 }
 
 void SampleScene::Finalize() {
@@ -38,7 +41,7 @@ void SampleScene::Update() {
 	// シーンの更新処理ここから
 	// 
 
-
+	teapot_.SetTranslate(Vector3(1.0f, 0.0f, 0.0f));
 
 	// 
 	// シーンの更新処理ここまで
