@@ -48,10 +48,10 @@ public: // Setter
 		this->transform_.translate_ = translate;
 	}
 	// トランスフォームのセット
-	void SetTransform(const WorldTransform& transform) {
-		this->transform_.scale_ = transform.scale_;
-		this->transform_.rotate_ = transform.rotate_;
-		this->transform_.translate_ = transform.translate_;
+	void SetTransform(const Transform3D& transform) {
+		this->transform_.scale_ = transform.scale;
+		this->transform_.rotate_ = transform.rotate;
+		this->transform_.translate_ = transform.translate;
 	}
 	// ライトのセット
 	void SetPunctualLight(PunctualLight* punctualLight) {
