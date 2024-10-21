@@ -82,7 +82,9 @@ void Object3DManager::SetModelManager(ModelManager* modelManager) {
 }
 
 void Object3DManager::SetSceneCamera(Camera* camera) {
+	// マネージャにカメラをセット
 	camera_ = camera;
+	// 既に存在するオブジェクトにもセット
 	for (auto& pair : objects_) {
 		if (pair.second) {  // unique_ptrが有効か確認
 			// カメラをセット

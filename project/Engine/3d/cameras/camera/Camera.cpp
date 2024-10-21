@@ -13,6 +13,9 @@
 void Camera::Initialize() {
 
 	transform_.Initialize();
+	transform_.rotate_ = kDefaultCameraRotate_;
+	transform_.translate_ = kDefaultCameraTranslate_;
+
 	worldMatrix_ = MakeAffineMatrix(transform_.scale_, transform_.rotate_, transform_.translate_);
 	Matrix4x4 viewMatrix = Inverse(worldMatrix_);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, nearClipRange_, farClipRange_);
@@ -58,6 +61,14 @@ void Camera::UpdateCameraData() {
 void Camera::TransferCamera() {
 	// 定数バッファを転送
 	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(3, cameraResource_->GetGPUVirtualAddress());
+}
+
+Vector3 Camera::GetTranslate() const {
+	return transform_.translate_;
+}
+
+Vector3 Camera::GetRotate() const {
+	return transform_.rotate_;
 }
 
 void Camera::SetTranslate(const Vector3& translate) {

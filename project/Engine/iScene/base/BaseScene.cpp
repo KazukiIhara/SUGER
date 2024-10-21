@@ -7,9 +7,6 @@ void BaseScene::Initialize() {
 	// カメラ作成
 	debugCamera_ = std::make_unique<Camera>();
 	debugCamera_->Initialize();
-	// カメラの初期位置を設定
-	debugCamera_->SetTranslate(kDefaultCameraTranslate_);
-	debugCamera_->SetRotate(kDefaultCameraRotate_);
 
 	// ライト作成
 	light_ = std::make_unique<PunctualLight>();
@@ -25,22 +22,26 @@ void BaseScene::Update() {
 	ImGuiForSceneCamera();
 #endif // _DEBUG
 
-	// カメラの更新処理
-	CameraUpdate();
+	// デバッグカメラのアップデート
+	debugCamera_->Update();
 
 	// ライトの更新
 	light_->Update();
 }
 
 void BaseScene::ImGuiForSceneCamera() {
+	// 回転と移動量を持ってくる
+	cameraRotate_ = debugCamera_->GetRotate();
+	cameraTranslate_ = debugCamera_->GetTranslate();
+
+	// ImGuiの処理
 	ImGui::Begin("DebugCamera");
 	ImGui::DragFloat3("Rotate", &cameraRotate_.x, 0.01f);
 	ImGui::DragFloat3("Translate", &cameraTranslate_.x, 0.01f);
 	ImGui::End();
-}
 
-void BaseScene::CameraUpdate() {
+	// 回転と移動量を返す
 	debugCamera_->SetRotate(cameraRotate_);
 	debugCamera_->SetTranslate(cameraTranslate_);
-	debugCamera_->Update();
+
 }
