@@ -163,6 +163,9 @@ private: // メンバ変数
 	uint32_t descriptorSizeRTV_ = 0u;
 	uint32_t descriptorSizeDSV_ = 0u;
 
+	// 目標FPS
+	double targetFPS_ = 60.0;
+
 private: // インスタンスコピーポインタ
 	WindowManager* windowManager_ = nullptr;
 };
