@@ -16,7 +16,7 @@ void SampleScene::Initialize() {
 	// 
 	// シーンの初期化処理ここから
 	// 
-	
+
 	// カメラの設定
 	sceneCamera_ = std::make_unique<Camera>();
 	sceneCamera_->Initialize();

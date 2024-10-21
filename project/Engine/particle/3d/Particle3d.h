@@ -11,6 +11,7 @@
 #include "structs/ObjectStructs.h"
 #include "structs/ModelStructs.h"
 #include "structs/ParticleStruct.h"
+#include "enum/ParticleEnum.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 #include "worldTransform/WorldTransform.h"
 
@@ -19,12 +20,14 @@ class Model;
 
 class Particle3D {
 public:
-	void Initialize(Model* model, Camera* camera);
+	void Initialize(Model* model, Camera* camera, const std::string& textureFileName, const Transform3D& transform);
 	void Update();
 	void Draw(BlendMode blendMode = kBlendModeAdd);
 
 	// カメラのセット
 	void SetCamera(Camera* camera);
+	// タイプのセット
+	void SetType(ParticleType type);
 private:
 	// モデルのセット
 	void SetModel(Model* model);
@@ -41,11 +44,8 @@ private:/*メンバ変数*/
 	// パーティクルの最大数
 	static const uint32_t kNumMaxInstance = 100;
 
-	// モデルを受け取る箱
-	Model* model_ = nullptr;
-
-	// カメラを受け取る箱
-	Camera* camera_ = nullptr;
+	// パーティクルのタイプ
+	ParticleType type_;
 
 	// instancing描画用のリソース
 	ComPtr<ID3D12Resource> instancingResource_ = nullptr;
@@ -70,4 +70,14 @@ private:/*メンバ変数*/
 	uint32_t instanceCount_ = kNumMaxInstance;
 	// SrvIndex
 	uint32_t srvIndex_ = 0;
+
+	// 板ポリ描画時のテクスチャファイル名
+	std::string textureFileName_;
+private:
+	// モデルを受け取る箱
+	Model* model_ = nullptr;
+
+	// カメラを受け取る箱
+	Camera* camera_ = nullptr;
+
 };

@@ -84,7 +84,7 @@ void SUGER::Initialize() {
 
 	// particleManagerの初期化
 	particleManager_ = std::make_unique<ParticleManager>();
-	particleManager_->Initialize(modelManager_.get());
+	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
 
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
@@ -355,8 +355,10 @@ void SUGER::SetSceneCamera(Camera* camera) {
 	particleManager_->SetSceneCamera(camera);
 }
 
-void SUGER::CreatePlaneParticle(const std::string& name, const std::string& filePath) {
-	particleManager_->CreatePlane(name, filePath);
+void SUGER::CreatePlaneParticle(const std::string& name, const std::string& filePath, const Transform3D& transform) {
+	// 規定のディレクトリパス
+	const std::string& directoryPath = "resources/images/";
+	particleManager_->CreatePlane(name, directoryPath + filePath, transform);
 }
 
 void SUGER::UpdateParticle() {

@@ -492,6 +492,9 @@
     <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h">
       <Filter>engine\3d\cameras\railCamera</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\enum\ParticleEnum.h">
+      <Filter>engine\enums</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
