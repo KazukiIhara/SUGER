@@ -1,10 +1,5 @@
 #pragma once
 
-// C++
-#include <cstdint>
-#include <memory>
-#include <array>
-
 // MyHedder
 #include "iScene/base/BaseScene.h"
 #include "structs/ObjectStructs.h"
