@@ -90,7 +90,7 @@ private:/*メンバ変数*/
 	/*WVP用のリソース*/
 	ComPtr<ID3D12Resource> transformationResource_ = nullptr;
 	// シェーダーに送るトランスフォームデータ
-	sTransformationMatrix* transformationData_ = nullptr;
+	TransformationMatrix* transformationData_ = nullptr;
 	/*トランスフォーム*/
 	WorldTransform transform_;
 

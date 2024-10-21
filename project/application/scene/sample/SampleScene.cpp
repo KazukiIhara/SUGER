@@ -17,11 +17,8 @@ void SampleScene::Initialize() {
 	// シーンの初期化処理ここから
 	// 
 
-
-	// トランスフォームの初期化
-	teapotTransform_.Initialize();
 	// オブジェクトの生成と、モデルの読み込み
-	SUGER::Create3DObject(teapotTransform_, "teapot", "teapot");
+	SUGER::Create3DObject("teapot", "teapot");
 	SUGER::Create2DObject("nero", "nero.jpg");
 	SUGER::CreateParticle("normal", "circle.png");
 

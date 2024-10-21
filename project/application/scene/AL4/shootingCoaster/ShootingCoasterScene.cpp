@@ -23,15 +23,14 @@ void ShootingCoasterScene::Initialize() {
 	// レールの生成処理
 	for (uint32_t i = 0; i < kRailNum_; i++) {
 		// レールのトランスフォームを初期化
-		railTransform_[i].Initialize();
-		railTransform_[i].translate_.z = static_cast<float>(i);
-		railCamera_->PushBackControlPoint(railTransform_[i].translate_);
+		railTransform_[i].translate.z = static_cast<float>(i);
+		railCamera_->PushBackControlPoint(railTransform_[i].translate);
 		// 文字列 "rail" の末尾に i を追加
 		std::string railName = "rail" + std::to_string(i);
 		// レールの生成
-		SUGER::Create3DObject(railTransform_[i], railName.c_str(), "rail");
+		SUGER::Create3DObject(railName.c_str(), "rail", railTransform_[i]);
 	}
-
+	SUGER::SetSceneCamera(camera_.get());
 }
 
 void ShootingCoasterScene::Finalize() {

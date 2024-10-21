@@ -135,7 +135,7 @@ void Sprite::Draw(BlendMode blendMode) {
 }
 
 void Sprite::CreateVertexResource() {
-	vertexResource_ = SUGER::CreateBufferResource(sizeof(sVertexData2D) * 6);
+	vertexResource_ = SUGER::CreateBufferResource(sizeof(VertexData2D) * 6);
 }
 
 void Sprite::CreateVretexBufferView() {
@@ -143,9 +143,9 @@ void Sprite::CreateVretexBufferView() {
 	//リソースの先頭アドレスから使う
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
 	//使用するリソースのサイズは頂点4つ分のサイズ
-	vertexBufferView_.SizeInBytes = sizeof(sVertexData2D) * 4;
+	vertexBufferView_.SizeInBytes = sizeof(VertexData2D) * 4;
 	//1頂点あたりのサイズ
-	vertexBufferView_.StrideInBytes = sizeof(sVertexData2D);
+	vertexBufferView_.StrideInBytes = sizeof(VertexData2D);
 }
 
 void Sprite::MapVertexData() {
@@ -189,7 +189,7 @@ void Sprite::MapIndexResource() {
 
 void Sprite::CreateMaterialResource() {
 	/*マテリアル用のリソースを作る*/
-	materialResource_ = SUGER::CreateBufferResource(sizeof(sMaterial2D));
+	materialResource_ = SUGER::CreateBufferResource(sizeof(Material2D));
 }
 
 void Sprite::MapMaterialData() {

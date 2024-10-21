@@ -41,7 +41,7 @@ void Object3D::Draw(BlendMode blendMode) {
 
 void Object3D::CreateWVPResource() {
 	// WVP用のリソースを作る
-	transformationResource_ = SUGER::CreateBufferResource(sizeof(sTransformationMatrix));
+	transformationResource_ = SUGER::CreateBufferResource(sizeof(TransformationMatrix));
 }
 
 void Object3D::MapWVPData() {	// データを書き込む

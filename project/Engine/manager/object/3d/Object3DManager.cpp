@@ -34,15 +34,15 @@ void Object3DManager::Finalize() {
 	objects_.clear();
 }
 
-void Object3DManager::Create(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath) {
+void Object3DManager::Create(const std::string& name, const std::string& filePath, const Transform3D& transform) {
 	// オブジェクトの生成と初期化
 	std::unique_ptr<Object3D> newObject = std::make_unique<Object3D>();
 	newObject->Initialize();
 
 	// トランスフォームのセット
-	newObject->SetScale(worldTransform.scale_);
-	newObject->SetRotate(worldTransform.rotate_);
-	newObject->SetTranslate(worldTransform.translate_);
+	newObject->SetScale(transform.scale);
+	newObject->SetRotate(transform.rotate);
+	newObject->SetTranslate(transform.translate);
 
 	// カメラのセット
 	newObject->SetCamera(camera_);
@@ -80,6 +80,12 @@ void Object3DManager::SetModelManager(ModelManager* modelManager) {
 
 void Object3DManager::SetSceneCamera(Camera* camera) {
 	camera_ = camera;
+	for (auto& pair : objects_) {
+		if (pair.second) {  // unique_ptrが有効か確認
+			// カメラをセット
+			pair.second->SetCamera(camera_);
+		}
+	}
 }
 
 void Object3DManager::SetScenePunctualLight(PunctualLight* punctualLight) {
