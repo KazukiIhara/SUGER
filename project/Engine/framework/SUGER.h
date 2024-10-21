@@ -9,6 +9,7 @@
 #include "directX/includes/ComPtr.h"
 #include "externals/DirectXTex/DirectXTex.h"
 
+#include "structs/ObjectStructs.h"
 #include "structs/TextureStruct.h"
 #include "enum/GraphicsPipelineEnum.h"
 
@@ -23,11 +24,14 @@ class GraphicsPipelineManager;
 class ModelManager;
 class Object2DManager;
 class Object3DManager;
+class ParticleManager;
 class Object2DSystem;
 class Object3DSystem;
+class ParticleSystem;
 class AbstractSceneFactory;
 
 class WorldTransform;
+class Object3D;
 class Model;
 class Camera;
 class PunctualLight;
@@ -77,8 +81,17 @@ public: // クラスメソッド
 
 #pragma region SRVManager
 	// SRVManagerの機能
+	// CPUの特定のインデックスハンドルを取得
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleCPU(uint32_t index);
+	// GPUの特定のインデックスハンドルを取得
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleGPU(uint32_t index);
+
 	// ディスクリプターテーブルのセット
 	static void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
+	// Allocate
+	static uint32_t SrvAllocate();
+	// instancing用のsrv作成
+	static void CreateSrvInstancing(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 
 #pragma endregion
 
@@ -124,17 +137,30 @@ public: // クラスメソッド
 
 #pragma region Object3DManager
 	// 3Dオブジェクトの作成
-	static void Create3DObject(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath = "");
+	static void Create3DObject(const std::string& name, const std::string& filePath = "", const Transform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
 	// 3Dオブジェクトの更新
 	static void Update3DObjects();
 	// 3Dオブジェクトの描画
 	static void Draw3DObjects();
+
+	// 3Dオブジェクト検索
+	static Object3D* FindObject3D(const std::string& name);
 
 	// シーンのカメラとライトをセット
 	static void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
 
 	// シーンのカメラをセット
 	static void SetSceneCamera(Camera* camera);
+#pragma endregion
+
+#pragma region ParticleManager
+	// Particleの作成
+	static void CreateParticle(const std::string& name, const std::string& filePath = "");
+	// Particleの更新
+	static void UpdateParticle();
+	// Particleの描画
+	static void DrawParticle();
+
 #pragma endregion
 
 #pragma region Object2DSystem
@@ -147,6 +173,13 @@ public: // クラスメソッド
 	// Object3DSystemの機能
 	// 3dオブジェクト描画前処理
 	static void PreDrawObject3D();
+#pragma endregion
+
+#pragma region ParticleSystem
+	// ParticleSystemの機能
+	// Particleの描画前処理
+	static void PreDrawParticle3D();
+
 #pragma endregion
 
 private: // メンバ変数
@@ -164,6 +197,8 @@ private: // クラスのポインタ
 	static std::unique_ptr<ModelManager> modelManager_;
 	static std::unique_ptr<Object2DManager> object2dManager_;
 	static std::unique_ptr<Object3DManager> object3dManager_;
+	static std::unique_ptr<ParticleManager> particleManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
+	static std::unique_ptr<ParticleSystem> particleSystem_;
 };

@@ -18,7 +18,13 @@ public:
 	// 更新
 	virtual void Update();
 
+	// 定数バッファに転送
 	void TransferCamera();
+
+	// translateのゲッター
+	Vector3 GetTranslate()const;
+	// rotateのゲッター
+	Vector3 GetRotate()const;
 
 	// カメラのTranslateをセット
 	void SetTranslate(const Vector3& translate);
@@ -64,6 +70,10 @@ protected:
 	float nearClipRange_ = 0.1f;
 	// ファークリップ距離
 	float farClipRange_ = 100.0f;
+
+	// カメラの初期トランスフォーム
+	const Vector3 kDefaultCameraRotate_ = { 0.45f,0.0f,0.0f };
+	const Vector3 kDefaultCameraTranslate_ = { 0.0f,5.0f,-10.0f };
 
 	// Camera用リソース
 	ComPtr<ID3D12Resource> cameraResource_ = nullptr;

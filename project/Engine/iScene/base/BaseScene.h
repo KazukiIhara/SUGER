@@ -31,24 +31,17 @@ private:
 	// カメラのImGui
 	void ImGuiForSceneCamera();
 
-	// カメラの更新
-	void CameraUpdate();
-
 private:
 	// シーンマネージャ
 	SceneManager* sceneManager_ = nullptr;
 
 protected:
 	// カメラ
-	std::unique_ptr<Camera> camera_;
+	std::unique_ptr<Camera> debugCamera_;
 	// ライト
 	std::unique_ptr<PunctualLight> light_;
 
-	// カメラの初期トランスフォーム
-	const Vector3 kDefaultCameraRotate_ = { 0.45f,0.0f,0.0f };
-	const Vector3 kDefaultCameraTranslate_ = { 0.0f,5.0f,-10.0f };
-
 	// カメラ制御用のトランスフォーム
-	Vector3 cameraRotate_ = kDefaultCameraRotate_;
-	Vector3 cameraTranslate_ = kDefaultCameraTranslate_;
+	Vector3 cameraRotate_;
+	Vector3 cameraTranslate_;
 };

@@ -1,13 +1,8 @@
 #pragma once
 
-// C++
-#include <cstdint>
-#include <memory>
-#include <array>
-
 // MyHedder
 #include "iScene/base/BaseScene.h"
-#include "worldTransform/WorldTransform.h"
+#include "3d/controller/Object3dController.h"
 
 class SampleScene :public BaseScene {
 public: // 公開メンバ関数
@@ -22,9 +17,11 @@ public: // 公開メンバ関数
 	// 更新
 	void Update()override;
 private: // 非公開メンバ変数
+	// シーンのカメラ
+	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 
-	// ティーポットのトランスフォーム
-	WorldTransform teapotTransform_{};
+	// teapot用のオブジェクトコントローラ
+	Object3DController teapot_;
 
 };
 

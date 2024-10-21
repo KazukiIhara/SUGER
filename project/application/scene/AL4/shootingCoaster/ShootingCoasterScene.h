@@ -7,7 +7,7 @@
 
 // MyHedder
 #include "iScene/base/BaseScene.h"
-#include "worldTransform/WorldTransform.h"
+#include "structs/ObjectStructs.h"
 #include "3d/cameras/railCamera/RailCamera.h"
 
 class ShootingCoasterScene :public BaseScene {
@@ -28,8 +28,7 @@ private: // 非公開メンバ変数
 	// レールの最大数
 	static const uint32_t kRailNum_ = 10;
 	// レールのトランスフォーム
-	std::array<WorldTransform, kRailNum_> railTransform_{};
-
+	std::array<Transform3D, kRailNum_> railTransform_{};
 
 };
 

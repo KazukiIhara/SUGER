@@ -15,8 +15,8 @@ struct sMaterialData {
 
 // メッシュデータ
 struct sMeshData {
-	std::vector<sVertexData3D> vertices;
-	std::vector<sVertexData3DUnUV> verticesUnUV;
+	std::vector<VertexData3D> vertices;
+	std::vector<VertexData3DUnUV> verticesUnUV;
 	sMaterialData material;
 };
 

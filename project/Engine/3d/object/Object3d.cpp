@@ -41,7 +41,7 @@ void Object3D::Draw(BlendMode blendMode) {
 
 void Object3D::CreateWVPResource() {
 	// WVP用のリソースを作る
-	transformationResource_ = SUGER::CreateBufferResource(sizeof(sTransformationMatrix));
+	transformationResource_ = SUGER::CreateBufferResource(sizeof(TransformationMatrix));
 }
 
 void Object3D::MapWVPData() {	// データを書き込む
@@ -54,7 +54,10 @@ void Object3D::MapWVPData() {	// データを書き込む
 	transformationData_->WorldInverseTransepose = MakeIdentityMatrix4x4();
 }
 
+void Object3D::SetName(const std::string& name) {
+	name_ = name;
+}
+
 void Object3D::SetModel(const std::string& filePath) {
-	objectname_ = filePath;
 	model = SUGER::FindModel(filePath);
 }

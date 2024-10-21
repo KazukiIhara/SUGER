@@ -16,13 +16,21 @@ void SampleScene::Initialize() {
 	// 
 	// シーンの初期化処理ここから
 	// 
+	
+	// カメラの設定
+	sceneCamera_ = std::make_unique<Camera>();
+	sceneCamera_->Initialize();
 
+	// シーンにカメラをセット
+	SUGER::SetSceneCamera(sceneCamera_.get());
 
-	// トランスフォームの初期化
-	teapotTransform_.Initialize();
 	// オブジェクトの生成と、モデルの読み込み
-	SUGER::Create3DObject(teapotTransform_, "teapot", "teapot");
+	SUGER::Create3DObject("teapot", "teapot");
+	SUGER::Create2DObject("nero", "nero.jpg");
+	SUGER::CreateParticle("normal", "circle.png");
 
+	// オブジェクト3Dコントローラの初期化
+	teapot_.Initialize(SUGER::FindObject3D("teapot"));
 }
 
 void SampleScene::Finalize() {
@@ -37,7 +45,8 @@ void SampleScene::Update() {
 	// シーンの更新処理ここから
 	// 
 
-
+	// オブジェクトコントローラを使ってトランスレートをセット
+	teapot_.SetTranslate(Vector3(1.0f, 0.0f, 0.0f));
 
 	// 
 	// シーンの更新処理ここまで

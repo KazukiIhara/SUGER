@@ -34,15 +34,18 @@ void Object3DManager::Finalize() {
 	objects_.clear();
 }
 
-void Object3DManager::Create(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath) {
+void Object3DManager::Create(const std::string& name, const std::string& filePath, const Transform3D& transform) {
 	// オブジェクトの生成と初期化
 	std::unique_ptr<Object3D> newObject = std::make_unique<Object3D>();
 	newObject->Initialize();
 
+	// 名前のセット
+	newObject->SetName(name);
+
 	// トランスフォームのセット
-	newObject->SetScale(worldTransform.scale_);
-	newObject->SetRotate(worldTransform.rotate_);
-	newObject->SetTranslate(worldTransform.translate_);
+	newObject->SetScale(transform.scale);
+	newObject->SetRotate(transform.rotate);
+	newObject->SetTranslate(transform.translate);
 
 	// カメラのセット
 	newObject->SetCamera(camera_);
@@ -59,6 +62,16 @@ void Object3DManager::Create(const WorldTransform& worldTransform, const std::st
 	objects_.insert(std::make_pair(name, std::move(newObject)));
 }
 
+Object3D* Object3DManager::Find(const std::string& name) {
+	// 作成済みオブジェクトを検索
+	if (objects_.contains(name)) {
+		// を戻り値としてreturn
+		return objects_.at(name).get();
+	}
+	// ファイル名一致なし
+	return nullptr;
+}
+
 void Object3DManager::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	SetSceneCamera(camera);
 	SetScenePunctualLight(punctualLight);
@@ -69,7 +82,15 @@ void Object3DManager::SetModelManager(ModelManager* modelManager) {
 }
 
 void Object3DManager::SetSceneCamera(Camera* camera) {
+	// マネージャにカメラをセット
 	camera_ = camera;
+	// 既に存在するオブジェクトにもセット
+	for (auto& pair : objects_) {
+		if (pair.second) {  // unique_ptrが有効か確認
+			// カメラをセット
+			pair.second->SetCamera(camera_);
+		}
+	}
 }
 
 void Object3DManager::SetScenePunctualLight(PunctualLight* punctualLight) {

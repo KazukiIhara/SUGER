@@ -32,7 +32,7 @@ public: // メンバ関数
 		return transform.rotate;
 	}
 	// Transform
-	const sTransform2D& GetTransform()const {
+	const Transform2D& GetTransform()const {
 		return transform;
 	}
 	// 色
@@ -43,7 +43,7 @@ public: // メンバ関数
 	const Vector2& GetSize()const {
 		return transform.size;
 	}
-	const sUVTransform& GetUVTransform()const {
+	const UVTransform& GetUVTransform()const {
 		return uvTransform;
 	}
 	// アンカーポイント
@@ -89,7 +89,7 @@ public: // メンバ関数
 		this->transform.size = size;
 	}
 	// uvTransform
-	void SetUVTransform(const sUVTransform& uvTransform) {
+	void SetUVTransform(const UVTransform& uvTransform) {
 		this->uvTransform = uvTransform;
 	}
 	// アンカーポイント
@@ -155,7 +155,7 @@ private:/*メンバ変数*/
 	// TextureHandle
 	std::string textureFilePath_;
 
-	sTransform2D transform{
+	Transform2D transform{
 		{1.0f,1.0f},
 		0.0f,
 		{0.0f,0.0f}
@@ -173,7 +173,7 @@ private:/*メンバ変数*/
 	// テクスチャ切り出しサイズ
 	Vector2	textureSize = { 100.0f,100.0f };
 	// uvTransform
-	sUVTransform uvTransform = { {1.0f,1.0f},0.0f,{1.0f,1.0f} };
+	UVTransform uvTransform = { {1.0f,1.0f},0.0f,{1.0f,1.0f} };
 
 #pragma region 頂点
 	/*頂点リソース*/
@@ -181,7 +181,7 @@ private:/*メンバ変数*/
 	/*VBV*/
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 	/*頂点データ*/
-	sVertexData2D* vertexData_;
+	VertexData2D* vertexData_;
 #pragma endregion
 
 #pragma region インデックス
@@ -197,9 +197,9 @@ private:/*メンバ変数*/
 	/*マテリアルリソース*/
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_ = nullptr;
 	/*マテリアルデータ*/
-	sMaterial2D* materialData_ = nullptr;
+	Material2D* materialData_ = nullptr;
 	/*マテリアル情報を受け取る箱*/
-	sMaterial2D material_;
+	Material2D material_;
 #pragma endregion
 
 #pragma region 変換
