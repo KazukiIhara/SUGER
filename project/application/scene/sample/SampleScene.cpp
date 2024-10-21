@@ -26,7 +26,7 @@ void SampleScene::Initialize() {
 
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create3DObject("teapot", "teapot");
-	SUGER::Create2DObject("nero", "nero.jpg");
+	SUGER::Create2DObject("jeanne", "jeanne.jpg");
 	SUGER::CreateParticle("normal", "circle.png");
 
 	// オブジェクト3Dコントローラの初期化
