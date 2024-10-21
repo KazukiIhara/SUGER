@@ -33,7 +33,7 @@ void ParticleManager::Finalize() {
 	objects_.clear();
 }
 
-void ParticleManager::Create(const std::string& name, const std::string& filePath) {
+void ParticleManager::CreatePlane(const std::string& name, const std::string& filePath) {
 	// 板ポリ生成
 	modelManager_->CreatePlane(filePath);
 	// パーティクルエミッタの生成と初期化

@@ -155,7 +155,7 @@ public: // クラスメソッド
 
 #pragma region ParticleManager
 	// Particleの作成
-	static void CreateParticle(const std::string& name, const std::string& filePath = "");
+	static void CreatePlaneParticle(const std::string& name, const std::string& filePath = "");
 	// Particleの更新
 	static void UpdateParticle();
 	// Particleの描画

@@ -355,8 +355,8 @@ void SUGER::SetSceneCamera(Camera* camera) {
 	particleManager_->SetSceneCamera(camera);
 }
 
-void SUGER::CreateParticle(const std::string& name, const std::string& filePath) {
-	particleManager_->Create(name, filePath);
+void SUGER::CreatePlaneParticle(const std::string& name, const std::string& filePath) {
+	particleManager_->CreatePlane(name, filePath);
 }
 
 void SUGER::UpdateParticle() {
