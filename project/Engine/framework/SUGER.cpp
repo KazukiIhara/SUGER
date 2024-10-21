@@ -396,7 +396,6 @@ void SUGER::ShowFPS() {
 	ImGui::Text("FPS: %.1f", io.Framerate);
 	ImGui::PopStyleColor();
 
-
 	ImGui::End();
 #endif // _DEBUG
 }

@@ -39,6 +39,9 @@ public: // 公開メンバ関数
 	// ImGuiの終了処理
 	void Finalize();
 
+	// ImGuiの配色をダークテーマにする
+	static void SetImGuiDarkTheme();
+
 private:
 	void SetWindowManager(WindowManager* windowManager);
 	void SetDirectXManager(DirectXManager* directXManager);
