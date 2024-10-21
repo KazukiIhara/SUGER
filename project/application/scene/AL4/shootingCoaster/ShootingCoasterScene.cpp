@@ -30,7 +30,7 @@ void ShootingCoasterScene::Initialize() {
 		// レールの生成
 		SUGER::Create3DObject(railName.c_str(), "rail", railTransform_[i]);
 	}
-	SUGER::SetSceneCamera(camera_.get());
+	SUGER::SetSceneCamera(debugCamera_.get());
 }
 
 void ShootingCoasterScene::Finalize() {
