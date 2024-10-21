@@ -11,6 +11,14 @@ void Object3DController::Initialize(Object3D* object3d) {
 	SetObject3D(object3d);
 }
 
+void Object3DController::SetScale(const Vector3& scale) {
+	object3d_->SetTranslate(scale);
+}
+
+void Object3DController::SetRotate(const Vector3& rotate) {
+	object3d_->SetTranslate(rotate);
+}
+
 void Object3DController::SetTranslate(const Vector3& translate) {
 	object3d_->SetTranslate(translate);
 }
