@@ -9,6 +9,7 @@
 #include "directX/includes/ComPtr.h"
 #include "externals/DirectXTex/DirectXTex.h"
 
+#include "structs/ObjectStructs.h"
 #include "structs/TextureStruct.h"
 #include "enum/GraphicsPipelineEnum.h"
 
@@ -136,7 +137,7 @@ public: // クラスメソッド
 
 #pragma region Object3DManager
 	// 3Dオブジェクトの作成
-	static void Create3DObject(const WorldTransform& worldTransform, const std::string& name, const std::string& filePath = "");
+	static void Create3DObject(const std::string& name, const std::string& filePath = "", const Transform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
 	// 3Dオブジェクトの更新
 	static void Update3DObjects();
 	// 3Dオブジェクトの描画

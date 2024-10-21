@@ -40,7 +40,7 @@ private:
 
 protected:
 	// カメラ
-	std::unique_ptr<Camera> camera_;
+	std::unique_ptr<Camera> debugCamera_;
 	// ライト
 	std::unique_ptr<PunctualLight> light_;
 

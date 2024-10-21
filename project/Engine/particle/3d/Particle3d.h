@@ -23,11 +23,11 @@ public:
 	void Update();
 	void Draw(BlendMode blendMode = kBlendModeAdd);
 
+	// カメラのセット
+	void SetCamera(Camera* camera);
 private:
 	// モデルのセット
 	void SetModel(Model* model);
-	// カメラのセット
-	void SetCamera(Camera* camera);
 
 	// instancingリソース作成
 	void CreateInstancingResource();

@@ -18,13 +18,13 @@ void Model::Initialize(const std::string& filename) {
 
 	// マテリアル初期化
 	for (auto& mesh : modelData.meshes) {
-		sMaterial3D material;
+		Material3D material;
 		material.color = mesh.material.color;
 		material.enbleLighting = true;
 		material.shininess = 40.0f;
 		material.uvTransformMatrix = MakeIdentityMatrix4x4();
 		materials_.push_back(material);
-		sUVTransform identity = { {1.0f,1.0},0.0f,{0.0f,0.0f} };
+		UVTransform identity = { {1.0f,1.0},0.0f,{0.0f,0.0f} };
 		uvTransforms_.push_back(identity);
 	}
 
@@ -134,7 +134,7 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 					aiVector3D& position = mesh->mVertices[vertexIndex];
 					aiVector3D& normal = mesh->mNormals[vertexIndex];
 					aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
-					sVertexData3D vertex;
+					VertexData3D vertex;
 					vertex.position = { position.x, position.y, position.z, 1.0f };
 					vertex.normal = { normal.x, normal.y, normal.z };
 					vertex.texcoord = { texcoord.x, texcoord.y };
@@ -152,7 +152,7 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 					uint32_t vertexIndex = face.mIndices[element];
 					aiVector3D& position = mesh->mVertices[vertexIndex];
 					aiVector3D& normal = mesh->mNormals[vertexIndex];
-					sVertexData3DUnUV vertex;
+					VertexData3DUnUV vertex;
 					vertex.position = { position.x, position.y, position.z, 1.0f };
 					vertex.normal = { normal.x, normal.y, normal.z };
 					vertex.position.x *= -1.0f;
@@ -263,14 +263,14 @@ void Model::CreateSphere(const std::string& textureFilePath) {
 	GenerateSphere(textureFilePath);
 
 	// マテリアル初期化
-	sMaterial3D material;
+	Material3D material;
 	material.color = { 1.0f,1.0f,1.0f,1.0f };
 	material.enbleLighting = true;
 	material.shininess = 40.0f;
 	material.uvTransformMatrix = MakeIdentityMatrix4x4();
 	materials_.push_back(material);
 
-	sUVTransform identity = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
+	UVTransform identity = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
 	uvTransforms_.push_back(identity);
 
 #pragma region 頂点データ
@@ -317,14 +317,14 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	GeneratePlane(textureFilePath);
 
 	// マテリアル初期化
-	sMaterial3D material;
+	Material3D material;
 	material.color = { 1.0f,1.0f,1.0f,1.0f };
 	material.enbleLighting = true;
 	material.shininess = 40.0f;
 	material.uvTransformMatrix = MakeIdentityMatrix4x4();
 	materials_.push_back(material);
 
-	sUVTransform identity = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
+	UVTransform identity = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
 	uvTransforms_.push_back(identity);
 
 #pragma region 頂点データ
@@ -348,9 +348,9 @@ void Model::CreateVertexResource() {
 	for (auto& mesh : modelData.meshes) {
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
 		if (mesh.material.haveUV_) {
-			vertexResource = SUGER::CreateBufferResource(sizeof(sVertexData3D) * mesh.vertices.size());
+			vertexResource = SUGER::CreateBufferResource(sizeof(VertexData3D) * mesh.vertices.size());
 		} else {
-			vertexResource = SUGER::CreateBufferResource(sizeof(sVertexData3DUnUV) * mesh.verticesUnUV.size());
+			vertexResource = SUGER::CreateBufferResource(sizeof(VertexData3DUnUV) * mesh.verticesUnUV.size());
 		}
 		vertexResources_.push_back(vertexResource);
 	}
@@ -361,11 +361,11 @@ void Model::CreateVertexBufferView() {
 		D3D12_VERTEX_BUFFER_VIEW vertexBufferView;
 		vertexBufferView.BufferLocation = vertexResources_[i]->GetGPUVirtualAddress();
 		if (modelData.meshes[i].material.haveUV_) {
-			vertexBufferView.SizeInBytes = UINT(sizeof(sVertexData3D) * modelData.meshes[i].vertices.size());
-			vertexBufferView.StrideInBytes = sizeof(sVertexData3D);
+			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3D) * modelData.meshes[i].vertices.size());
+			vertexBufferView.StrideInBytes = sizeof(VertexData3D);
 		} else {
-			vertexBufferView.SizeInBytes = UINT(sizeof(sVertexData3DUnUV) * modelData.meshes[i].verticesUnUV.size());
-			vertexBufferView.StrideInBytes = sizeof(sVertexData3DUnUV);
+			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3DUnUV) * modelData.meshes[i].verticesUnUV.size());
+			vertexBufferView.StrideInBytes = sizeof(VertexData3DUnUV);
 		}
 		vertexBufferViews_.push_back(vertexBufferView);
 	}
@@ -374,14 +374,14 @@ void Model::CreateVertexBufferView() {
 void Model::MapVertexData() {
 	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
 		if (modelData.meshes[i].material.haveUV_) {
-			sVertexData3D* vertexData = nullptr;
+			VertexData3D* vertexData = nullptr;
 			vertexResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-			std::memcpy(vertexData, modelData.meshes[i].vertices.data(), sizeof(sVertexData3D) * modelData.meshes[i].vertices.size());
+			std::memcpy(vertexData, modelData.meshes[i].vertices.data(), sizeof(VertexData3D) * modelData.meshes[i].vertices.size());
 			vertexData_.push_back(vertexData);
 		} else {
-			sVertexData3DUnUV* vertexDataUnUV = nullptr;
+			VertexData3DUnUV* vertexDataUnUV = nullptr;
 			vertexResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataUnUV));
-			std::memcpy(vertexDataUnUV, modelData.meshes[i].verticesUnUV.data(), sizeof(sVertexData3DUnUV) * modelData.meshes[i].verticesUnUV.size());
+			std::memcpy(vertexDataUnUV, modelData.meshes[i].verticesUnUV.data(), sizeof(VertexData3DUnUV) * modelData.meshes[i].verticesUnUV.size());
 			vertexDataUnUV_.push_back(vertexDataUnUV);
 		}
 	}
@@ -389,14 +389,14 @@ void Model::MapVertexData() {
 
 void Model::CreateMaterialResource() {
 	for (size_t i = 0; i < materials_.size(); ++i) {
-		Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = SUGER::CreateBufferResource(sizeof(sMaterial3D));
+		Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = SUGER::CreateBufferResource(sizeof(Material3D));
 		materialResources_.push_back(materialResource);
 	}
 }
 
 void Model::MapMaterialData() {
 	for (size_t i = 0; i < materials_.size(); ++i) {
-		sMaterial3D* materialData = nullptr;
+		Material3D* materialData = nullptr;
 		materialResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 		materialData->color = materials_[i].color;
 		materialData->enbleLighting = materials_[i].enbleLighting;

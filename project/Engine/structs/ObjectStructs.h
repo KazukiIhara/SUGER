@@ -10,7 +10,7 @@
 /// 
 
 // UVTransform
-struct sUVTransform {
+struct UVTransform {
 	Vector2 scale;
 	float rotateZ;
 	Vector2 translate;
@@ -22,21 +22,21 @@ struct sUVTransform {
 /// 
 
 // 3DTrasform
-struct sTransform3D {
-	Vector3 scale;
-	Vector3 rotate;
-	Vector3 translate;
+struct Transform3D {
+	Vector3 scale = { 1.0f,1.0f,1.0f };
+	Vector3 rotate = { 0.0f,0.0f,0.0f };
+	Vector3 translate = { 0.0f,0.0f,0.0f };
 };
 
 // 3D頂点データ用構造体
-struct sVertexData3D {
+struct VertexData3D {
 	Vector4 position;
 	Vector2 texcoord;
 	Vector3 normal;
 };
 
 // 3D用マテリアル構造体
-struct sMaterial3D {
+struct Material3D {
 	Vector4 color;
 	int32_t enbleLighting;
 	float padding[3];
@@ -45,13 +45,13 @@ struct sMaterial3D {
 };
 
 // UVなし3D頂点データ用構造体
-struct sVertexData3DUnUV {
+struct VertexData3DUnUV {
 	Vector4 position;
 	Vector3 normal;
 };
 
 // トランスフォーメーション構造体
-struct sTransformationMatrix {
+struct TransformationMatrix {
 	Matrix4x4 World;
 	Matrix4x4 ViewProjection;
 	Matrix4x4 WorldInverseTransepose;
@@ -63,20 +63,20 @@ struct sTransformationMatrix {
 /// 
 
 // 2DTransform
-struct sTransform2D {
+struct Transform2D {
 	Vector2 size;
 	float rotate;
 	Vector2 position;
 };
 
 // 頂点データ用構造体
-struct sVertexData2D {
+struct VertexData2D {
 	Vector4 position;
 	Vector2 texcoord;
 };
 
 // 2D用のマテリアル構造体
-struct sMaterial2D {
+struct Material2D {
 	Vector4 color;
 	Matrix4x4 uvTransformMatrix;
 };

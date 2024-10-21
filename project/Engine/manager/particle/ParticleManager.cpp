@@ -50,4 +50,10 @@ void ParticleManager::SetModelManager(ModelManager* modelManager) {
 
 void ParticleManager::SetSceneCamera(Camera* camera) {
 	camera_ = camera;
+	for (auto& pair : objects_) {
+		if (pair.second) {  // unique_ptrが有効か確認
+			// カメラをセット
+			pair.second->SetCamera(camera_);
+		}
+	}
 }

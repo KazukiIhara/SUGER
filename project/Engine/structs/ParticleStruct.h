@@ -2,7 +2,7 @@
 #include "structs/ObjectStructs.h"
 
 struct ParticleData {
-	sTransform3D transform;
+	Transform3D transform;
 	Vector3 velocity;
 	Vector4 color;
 	float lifeTime;
@@ -16,7 +16,7 @@ struct ParticleForGPU {
 };
 
 struct Emitter {
-	sTransform3D transform;	// エミッターのTransform
+	Transform3D transform;	// エミッターのTransform
 	uint32_t count;			// 発生数
 	float frequency;		// 発生頻度
 	float frequencyTime;	// 頻度用時刻

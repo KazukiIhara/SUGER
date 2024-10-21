@@ -39,21 +39,21 @@ public: // メンバ関数
 	void CreatePlane(const std::string& textureFilePath);
 
 	// UVTransformのセット
-	void SetUVTransform(const std::vector<sUVTransform>& uvTransforms) {
+	void SetUVTransform(const std::vector<UVTransform>& uvTransforms) {
 		uvTransforms_ = uvTransforms;
 	}
 
 	// マテリアルのセット
-	void SetMaterials(const std::vector<sMaterial3D>& materials) {
+	void SetMaterials(const std::vector<Material3D>& materials) {
 		materials_ = materials;
 	}
 	// マテリアルのゲッター
-	std::vector<sMaterial3D> GetMaterials() {
+	std::vector<Material3D> GetMaterials() {
 		return materials_;
 	}
 
 	// UVTransformのゲッター
-	std::vector<sUVTransform> GetUVTransforms() {
+	std::vector<UVTransform> GetUVTransforms() {
 		return uvTransforms_;
 	}
 
@@ -91,9 +91,9 @@ private: // メンバ変数
 	/*頂点リソース*/
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> vertexResources_;
 	// UVあり頂点データ
-	std::vector<sVertexData3D*> vertexData_;
+	std::vector<VertexData3D*> vertexData_;
 	// UVなし頂点データ
-	std::vector<sVertexData3DUnUV*> vertexDataUnUV_;
+	std::vector<VertexData3DUnUV*> vertexDataUnUV_;
 	/*VBV*/
 	std::vector<D3D12_VERTEX_BUFFER_VIEW> vertexBufferViews_;
 #pragma endregion
@@ -102,11 +102,11 @@ private: // メンバ変数
 	/*マテリアルリソース*/
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> materialResources_;
 	/*マテリアルデータ*/
-	std::vector<sMaterial3D*> materialData_;
+	std::vector<Material3D*> materialData_;
 	// マテリアル
-	std::vector<sMaterial3D> materials_;
+	std::vector<Material3D> materials_;
 	/*uvTransform*/
-	std::vector<sUVTransform> uvTransforms_;
+	std::vector<UVTransform> uvTransforms_;
 #pragma endregion
 
 	/*球の分割数*/

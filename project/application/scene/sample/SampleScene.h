@@ -7,7 +7,7 @@
 
 // MyHedder
 #include "iScene/base/BaseScene.h"
-#include "worldTransform/WorldTransform.h"
+#include "structs/ObjectStructs.h"
 #include "3d/controller/Object3dController.h"
 
 class SampleScene :public BaseScene {
@@ -23,9 +23,6 @@ public: // 公開メンバ関数
 	// 更新
 	void Update()override;
 private: // 非公開メンバ変数
-
-	// ティーポットのトランスフォーム
-	WorldTransform teapotTransform_{};
 
 	Object3DController teapot_;
 
