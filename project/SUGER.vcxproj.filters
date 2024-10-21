@@ -219,6 +219,7 @@
     <ClCompile Include="Engine\manager\particle\ParticleManager.cpp" />
     <ClCompile Include="Engine\particle\system\ParticleSystem.cpp" />
     <ClCompile Include="Engine\3d\controller\Object3dController.cpp" />
+    <ClCompile Include="Engine\FixFPS\FixFPS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -337,6 +338,7 @@
     <ClInclude Include="Engine\manager\particle\ParticleManager.h" />
     <ClInclude Include="Engine\particle\system\ParticleSystem.h" />
     <ClInclude Include="Engine\3d\controller\Object3dController.h" />
+    <ClInclude Include="Engine\FixFPS\FixFPS.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

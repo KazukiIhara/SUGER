@@ -10,8 +10,6 @@
 void DirectXManager::Initialize(WindowManager* windowManager, bool enableDebugLayer) {
 	// WindowManagerのインスタンスをセット
 	SetWindowManager(windowManager);
-	// FPS固定処理初期化
-	InitializeFixFPS();
 
 	// DXGIデバイスの初期化
 	dxgi_ = std::make_unique<DXGIManager>();
@@ -20,6 +18,10 @@ void DirectXManager::Initialize(WindowManager* windowManager, bool enableDebugLa
 	// コマンドの初期化
 	dxCommand_ = std::make_unique<DirectXCommand>();
 	dxCommand_->Initialize(dxgi_.get());
+
+	// FPS固定処理の初期化
+	fixFPS_ = std::make_unique<FixFPS>();
+	fixFPS_->Initialize();
 
 	// スワップチェーンの生成
 	CreateSwapChain();
@@ -82,11 +84,11 @@ void DirectXManager::PostDraw() {
 	// GPUを待機
 	WaitGPU();
 
-	// FPS固定更新処理
-	UpdateFixFPS();
-
 	// 次フレーム用のコマンドリストを準備
 	ResetCommandList();
+
+	// FPS固定更新処理
+	fixFPS_->Update();
 }
 
 void DirectXManager::KickCommand() {
@@ -300,31 +302,6 @@ void DirectXManager::SettingScissorRect() {
 
 	// シザー矩形を設定
 	dxCommand_->GetList()->RSSetScissorRects(1, &scissorRect);
-}
-
-void DirectXManager::InitializeFixFPS() {
-	// 現在時間を記録する
-	reference_ = std::chrono::steady_clock::now();
-}
-
-void DirectXManager::UpdateFixFPS() {
-	static std::chrono::microseconds accumulatedError(0);
-	const std::chrono::microseconds targetFrameTime(uint64_t(1000000.0 / targetFPS_));
-
-	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-	std::chrono::microseconds elapsed = std::chrono::duration_cast<std::chrono::microseconds>(now - reference_);
-
-	std::chrono::microseconds sleepTime = targetFrameTime - elapsed + accumulatedError;
-
-	if (sleepTime.count() > 0) {
-		std::this_thread::sleep_for(sleepTime);
-	}
-
-	now = std::chrono::steady_clock::now();
-	elapsed = std::chrono::duration_cast<std::chrono::microseconds>(now - reference_);
-
-	accumulatedError += targetFrameTime - elapsed;
-	reference_ = now;
 }
 
 Microsoft::WRL::ComPtr<ID3D12Resource> DirectXManager::CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height) {

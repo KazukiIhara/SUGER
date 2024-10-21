@@ -197,11 +197,9 @@ void SUGER::Update() {
 	// ImGui開始処理
 	imguiManager_->BeginFrame();
 
-#ifdef _DEBUG
-	ImGui::Begin("SUGER Update");
-	ImGui::Text("framelate %f", ImGui::GetIO().Framerate);
-	ImGui::End();
-#endif // _DEBUG
+	// FPS表示
+	ShowFPS();
+
 }
 
 void SUGER::Draw() {
@@ -379,4 +377,26 @@ void SUGER::PreDrawObject3D() {
 
 void SUGER::PreDrawParticle3D() {
 	particleSystem_->PreDraw();
+}
+
+void SUGER::ShowFPS() {
+#ifdef _DEBUG
+	// フレームレート表示の設定
+	ImGuiIO& io = ImGui::GetIO();
+
+	// 左上に固定
+	ImGui::SetNextWindowPos(ImVec2(0, 0));
+	ImGui::SetNextWindowBgAlpha(0.0f); // 背景を透明にする
+
+	// ウィンドウを作成せずに、文字だけを描画
+	ImGui::Begin("FPS Overlay", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar);
+
+	// 文字色を緑に変更
+	ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255)); // 緑色
+	ImGui::Text("FPS: %.1f", io.Framerate);
+	ImGui::PopStyleColor();
+
+
+	ImGui::End();
+#endif // _DEBUG
 }
