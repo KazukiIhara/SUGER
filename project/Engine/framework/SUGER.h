@@ -182,6 +182,11 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region ImGuiDebug
+	void ShowFPS();
+#pragma endregion
+
+
 private: // メンバ変数
 	// 終了リクエスト
 	bool endRequest_ = false;

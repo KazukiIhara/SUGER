@@ -8,13 +8,13 @@
 #include "manager/srv/SRVManager.h"
 
 void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVManager* srvManager) {
-	
+
 	// インスタンスのセット
 	SetWindowManager(windowManager);
 	SetDirectXManager(directXManager);
 	SetSrvManager(srvManager);
-	
-	/*ImGuiの初期化*/
+
+	// ImGuiの初期化
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
@@ -27,15 +27,30 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 		srvManager_->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart()
 	);
 	srvManager_->Allocate();
+
+	// ImGuiIOの取得
+	ImGuiIO& io = ImGui::GetIO();
+
+	// デフォルトフォントを明示的に追加
+	io.Fonts->AddFontDefault();
+	// 赤ずきんポップフォントを追加
+	ImFont* loadFont = io.Fonts->AddFontFromFileTTF("resources/fonts/AkazukiPOP.otf", 24.0f);
 }
 
 void ImGuiManager::BeginFrame() {
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+
+	// フォントを赤ずきんフォントに変更
+	ImGuiIO& io = ImGui::GetIO();
+	ImFont* akazukinFont = io.Fonts->Fonts[1];
+	ImGui::PushFont(akazukinFont);
 }
 
 void ImGuiManager::EndFrame() {
+	// フォントを元に戻す
+	ImGui::PopFont();
 	// ImGui内部コマンドの生成
 	ImGui::Render();
 }

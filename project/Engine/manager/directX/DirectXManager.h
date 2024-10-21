@@ -16,6 +16,7 @@
 #include "directX/includes/ComPtr.h"
 #include "manager/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
+#include "FixFPS/FixFPS.h"
 
 // 前方宣言
 class WindowManager;
@@ -100,22 +101,18 @@ private: // プライベートメンバ関数
 	// シザー矩形の設定
 	void SettingScissorRect();
 
-	// FPS固定処理
-
-	// FPS固定処理初期化
-	void InitializeFixFPS();
-	// FPS固定処理更新
-	void UpdateFixFPS();
-
 	// デプスステンシルリソースの作成
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
 
 private: // メンバ変数
 
 	// DXGI
-	std::unique_ptr<DXGIManager> dxgi_;
+	std::unique_ptr<DXGIManager> dxgi_ = nullptr;
 	// DirectXCommand
-	std::unique_ptr<DirectXCommand> dxCommand_;
+	std::unique_ptr<DirectXCommand> dxCommand_ = nullptr;
+
+	// FPS固定
+	std::unique_ptr<FixFPS> fixFPS_ = nullptr;
 
 	// SUCCEEDEDでエラー判別君
 	HRESULT hr_ = S_FALSE;
@@ -156,15 +153,10 @@ private: // メンバ変数
 	// フェンスバリュー
 	UINT64 fenceValue_ = 0;
 
-	// 記録時間(FPS固定用)
-	std::chrono::steady_clock::time_point reference_;
-
 	// DescriptorSize取得
 	uint32_t descriptorSizeRTV_ = 0u;
 	uint32_t descriptorSizeDSV_ = 0u;
 
-	// 目標FPS
-	double targetFPS_ = 60.0;
 
 private: // インスタンスコピーポインタ
 	WindowManager* windowManager_ = nullptr;
