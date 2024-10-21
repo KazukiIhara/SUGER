@@ -1,5 +1,8 @@
 #pragma once
 
+// C++
+#include <string>
+
 // 数学関数ヘッダー
 #include "math/function/MathFunction.h"
 
@@ -20,6 +23,8 @@ public:
 	// トランスレートのセット
 	void SetTranslate(const Vector3& translate);
 
+	// モデルのセット
+	void SetModel(const std::string& filePath);
 
 private:
 	// オブジェクトをセットする関数

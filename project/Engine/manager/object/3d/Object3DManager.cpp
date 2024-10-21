@@ -39,6 +39,9 @@ void Object3DManager::Create(const std::string& name, const std::string& filePat
 	std::unique_ptr<Object3D> newObject = std::make_unique<Object3D>();
 	newObject->Initialize();
 
+	// 名前のセット
+	newObject->SetName(name);
+
 	// トランスフォームのセット
 	newObject->SetScale(transform.scale);
 	newObject->SetRotate(transform.rotate);

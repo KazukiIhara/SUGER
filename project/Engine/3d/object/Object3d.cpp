@@ -54,7 +54,10 @@ void Object3D::MapWVPData() {	// データを書き込む
 	transformationData_->WorldInverseTransepose = MakeIdentityMatrix4x4();
 }
 
+void Object3D::SetName(const std::string& name) {
+	name_ = name;
+}
+
 void Object3D::SetModel(const std::string& filePath) {
-	objectname_ = filePath;
 	model = SUGER::FindModel(filePath);
 }

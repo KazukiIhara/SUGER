@@ -33,6 +33,8 @@ private:
 	/*データを書き込む*/
 	void MapWVPData();
 public: // Setter
+	// nameのセット
+	void SetName(const std::string& name);
 	// modelのセット
 	void SetModel(const std::string& filePath);
 	// 拡縮のセット
@@ -76,7 +78,7 @@ public: // Getter
 	}
 	// オブジェクトの名前のゲッター
 	const std::string& GetName()const {
-		return objectname_;
+		return name_;
 	}
 	Model* GetModel() {
 		return model;
@@ -100,7 +102,6 @@ private:/*メンバ変数*/
 	// ライトを受け取る箱
 	PunctualLight* punctualLight_ = nullptr;
 
-	// オブジェクトの名前
-	std::string objectname_{};
-
+	// 名前
+	std::string name_;
 };
