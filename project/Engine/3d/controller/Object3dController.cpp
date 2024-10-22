@@ -8,7 +8,7 @@ void Object3DController::Initialize(Object3D* object3d) {
 	// nullptrだった場合assert
 	assert(object3d);
 	// オブジェクトをセット
-	SetObject3D(object3d);
+	SetObject(object3d);
 }
 
 void Object3DController::SetScale(const Vector3& scale) {
@@ -27,6 +27,6 @@ void Object3DController::SetModel(const std::string& filePath) {
 	object3d_->SetModel(filePath);
 }
 
-void Object3DController::SetObject3D(Object3D* object3d) {
+void Object3DController::SetObject(Object3D* object3d) {
 	object3d_ = object3d;
 }

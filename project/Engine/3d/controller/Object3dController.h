@@ -28,8 +28,8 @@ public:
 
 private:
 	// オブジェクトをセットする関数
-	void SetObject3D(Object3D* object3d);
-
+	void SetObject(Object3D* object3d);
+private:
 	// コントロールする3Dオブジェクト
 	Object3D* object3d_ = nullptr;
 };

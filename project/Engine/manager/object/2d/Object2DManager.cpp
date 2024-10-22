@@ -34,5 +34,15 @@ void Object2DManager::Create(const std::string& name, const std::string& filePat
 	newObject->Initialize(filePath);
 
 	// 2Dオブジェクトをコンテナに格納する
-	objects_.insert(std::make_pair(filePath, std::move(newObject)));
+	objects_.insert(std::make_pair(name, std::move(newObject)));
+}
+
+Sprite* Object2DManager::Find(const std::string& name) {
+	// 作成済みオブジェクトを検索
+	if (objects_.contains(name)) {
+		// オブジェクトを戻り値としてreturn
+		return objects_.at(name).get();
+	}
+	// ファイル名一致なし
+	return nullptr;
 }

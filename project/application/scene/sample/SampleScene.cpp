@@ -16,7 +16,7 @@ void SampleScene::Initialize() {
 	// 
 	// シーンの初期化処理ここから
 	// 
-	
+
 	// カメラの設定
 	sceneCamera_ = std::make_unique<Camera>();
 	sceneCamera_->Initialize();
@@ -27,10 +27,12 @@ void SampleScene::Initialize() {
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create3DObject("teapot", "teapot");
 	SUGER::Create2DObject("jeanne", "jeanne.jpg");
-	SUGER::CreateParticle("normal", "circle.png");
+	SUGER::CreatePlaneParticle("normal", "circle.png");
 
 	// オブジェクト3Dコントローラの初期化
 	teapot_.Initialize(SUGER::FindObject3D("teapot"));
+	// オブジェクト2Dコントローラの初期化
+	jeanne_.Initialize(SUGER::FindObject2D("jeanne"));
 }
 
 void SampleScene::Finalize() {

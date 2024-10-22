@@ -3,6 +3,7 @@
 // MyHedder
 #include "iScene/base/BaseScene.h"
 #include "3d/controller/Object3dController.h"
+#include "2d/controller/Object2dController.h"
 
 class SampleScene :public BaseScene {
 public: // 公開メンバ関数
@@ -20,8 +21,9 @@ private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 
-	// teapot用のオブジェクトコントローラ
+	// teapot用のオブジェクト3Dコントローラ
 	Object3DController teapot_;
-
+	// jeanne用のオブジェクト2Dコントローラ
+	Object2DController jeanne_;
 };
 

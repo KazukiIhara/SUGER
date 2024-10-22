@@ -65,7 +65,7 @@ void Object3DManager::Create(const std::string& name, const std::string& filePat
 Object3D* Object3DManager::Find(const std::string& name) {
 	// 作成済みオブジェクトを検索
 	if (objects_.contains(name)) {
-		// を戻り値としてreturn
+		// オブジェクトを戻り値としてreturn
 		return objects_.at(name).get();
 	}
 	// ファイル名一致なし
