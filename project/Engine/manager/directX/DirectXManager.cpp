@@ -84,11 +84,12 @@ void DirectXManager::PostDraw() {
 	// GPUを待機
 	WaitGPU();
 
+	// FPS固定更新処理
+	fixFPS_->Update();
+
 	// 次フレーム用のコマンドリストを準備
 	ResetCommandList();
 
-	// FPS固定更新処理
-	fixFPS_->Update();
 }
 
 void DirectXManager::KickCommand() {

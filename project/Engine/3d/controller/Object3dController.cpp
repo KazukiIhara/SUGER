@@ -27,6 +27,10 @@ void Object3DController::SetModel(const std::string& filePath) {
 	object3d_->SetModel(filePath);
 }
 
+void Object3DController::SetIsActive(const bool& isActive) {
+	object3d_->SetIsActive(isActive);
+}
+
 void Object3DController::SetObject(Object3D* object3d) {
 	object3d_ = object3d;
 }
