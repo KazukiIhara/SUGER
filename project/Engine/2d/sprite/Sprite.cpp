@@ -6,6 +6,8 @@
 #include "manager/window/WindowManager.h"
 #include "externals/DirectXTex/DirectXTex.h"
 
+#include "imgui.h"
+
 void Sprite::Initialize(const std::string& texturename, const std::string& directoryPath) {
 
 	// パスを連結
@@ -19,7 +21,7 @@ void Sprite::Initialize(const std::string& texturename, const std::string& direc
 	// テクスチャ左上座標
 	textureLeftTop = { 0.0f,0.0f };
 	// テクスチャ切り出しサイズ
-	textureSize = { 512.0f,512.0f };
+	cutOutSize = { 512.0f,512.0f };
 
 	SetTextureHandle(textureFilePath);
 	SUGER::LoadTexture(textureFilePath);
@@ -88,9 +90,9 @@ void Sprite::Update() {
 	const DirectX::TexMetadata& metaData =
 		SUGER::GetTextureMetaData(textureFilePath_);
 	float texLeft = textureLeftTop.x / metaData.width;
-	float texRight = (textureLeftTop.x + textureSize.x) / metaData.width;
+	float texRight = (textureLeftTop.x + cutOutSize.x) / metaData.width;
 	float texTop = textureLeftTop.y / metaData.height;
-	float texBottom = (textureLeftTop.y + textureSize.y) / metaData.height;
+	float texBottom = (textureLeftTop.y + cutOutSize.y) / metaData.height;
 
 	// データを書き込む
 	vertexData_[0].texcoord = { texLeft,texBottom };
@@ -219,8 +221,8 @@ void Sprite::AdjustTextureSize() {
 	// テクスチャデータ取得
 	const DirectX::TexMetadata& metaData = SUGER::GetTextureMetaData(textureFilePath_);
 
-	textureSize.x = static_cast<float>(metaData.width);
-	textureSize.y = static_cast<float>(metaData.height);
+	cutOutSize.x = static_cast<float>(metaData.width);
+	cutOutSize.y = static_cast<float>(metaData.height);
 	// 画面サイズをテクスチャサイズに合わせる
-	transform.size = textureSize;
+	transform.size = cutOutSize;
 }
