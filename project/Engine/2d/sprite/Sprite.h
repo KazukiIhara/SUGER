@@ -63,8 +63,8 @@ public: // メンバ関数
 		return textureLeftTop;
 	}
 	// テクスチャ切り出し
-	const Vector2& GetTextureSize()const {
-		return textureSize;
+	const Vector2& GetCutOutSize()const {
+		return cutOutSize;
 	}
 
 	// セッター
@@ -109,8 +109,8 @@ public: // メンバ関数
 		this->textureLeftTop = textureLeftTop;
 	}
 	// テクスチャ切り出しサイズ
-	void SetTextureSize(const Vector2& textureSize) {
-		this->textureSize = textureSize;
+	void SetCutOutSize(const Vector2& cutOutSize) {
+		this->cutOutSize = cutOutSize;
 	}
 
 private: // メンバ関数
@@ -171,9 +171,9 @@ private:/*メンバ変数*/
 	// テクスチャ左上座標
 	Vector2 textureLeftTop = { 0.0f,0.0f };
 	// テクスチャ切り出しサイズ
-	Vector2	textureSize = { 100.0f,100.0f };
+	Vector2	cutOutSize = { 100.0f,100.0f };
 	// uvTransform
-	UVTransform uvTransform = { {1.0f,1.0f},0.0f,{1.0f,1.0f} };
+	UVTransform uvTransform = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
 
 #pragma region 頂点
 	/*頂点リソース*/
