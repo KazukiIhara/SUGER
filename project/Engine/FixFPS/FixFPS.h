@@ -18,4 +18,6 @@ private:
 	std::chrono::steady_clock::time_point reference_;
 	// 目標FPS
 	double targetFPS_ = 60.0;
+	// 最初のフレームかどうか
+	bool isFirstFrame_ = true;
 };

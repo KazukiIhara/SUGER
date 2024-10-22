@@ -41,6 +41,9 @@ void SampleScene::Initialize() {
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
 	jeanne_.SetPosition(jeanne_.GetSize() / 2.0f);
 	jeanne_.SetAnchorPoint(Vector2(0.5f, 0.5f));
+
+	// オブジェクトを非アクティブ化
+	teapot_.SetIsActive(false);
 }
 
 void SampleScene::Finalize() {
@@ -57,6 +60,7 @@ void SampleScene::Update() {
 
 	// スプライトを回転
 	jeanne_.SetRotation(jeanne_.GetRotation() + 0.01f);
+
 
 	// 
 	// シーンの更新処理ここまで

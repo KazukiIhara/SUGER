@@ -26,6 +26,9 @@ public:
 	// モデルのセット
 	void SetModel(const std::string& filePath);
 
+	// 有効フラグのセッター
+	void SetIsActive(const bool& isActive);
+
 private:
 	// オブジェクトをセットする関数
 	void SetObject(Object3D* object3d);
