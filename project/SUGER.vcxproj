@@ -111,6 +111,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp" />
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\sample\SampleScene.cpp" />
+    <ClCompile Include="Engine\2d\controller\Object2dController.cpp" />
     <ClCompile Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\2d\sprite\Sprite.cpp" />
     <ClCompile Include="Engine\2d\system\Object2dSystem.cpp" />
@@ -154,6 +155,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h" />
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\sample\SampleScene.h" />
+    <ClInclude Include="Engine\2d\controller\Object2dController.h" />
     <ClInclude Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.h" />
     <ClInclude Include="Engine\2d\sprite\Sprite.h" />
     <ClInclude Include="Engine\2d\system\Object2dSystem.h" />
@@ -165,6 +167,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
+    <ClInclude Include="Engine\enum\ParticleEnum.h" />
     <ClInclude Include="Engine\FixFPS\FixFPS.h" />
     <ClInclude Include="Engine\particle\3d\Particle3d.h" />
     <ClInclude Include="Engine\3d\system\Object3dSystem.h" />

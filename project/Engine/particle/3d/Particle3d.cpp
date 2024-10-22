@@ -9,7 +9,7 @@
 #include "3d/cameras/camera/Camera.h"
 
 
-void Particle3D::Initialize(Model* model, Camera* camera) {
+void Particle3D::Initialize(Model* model, Camera* camera, const std::string& textureFileName, const Transform3D& transform) {
 	// インスタンスをセット
 	SetModel(model);
 	SetCamera(camera);
@@ -18,10 +18,13 @@ void Particle3D::Initialize(Model* model, Camera* camera) {
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
 
+	// テクスチャファイル名をセット
+	textureFileName_ = textureFileName;
+
 	// エミッターのトランフォーム設定
-	emitter_.transform.translate = { 0.0f,0.0f,0.0f };
-	emitter_.transform.rotate = { 0.0f,0.0f,0.0f };
-	emitter_.transform.scale = { 1.0f,1.0f,1.0f };
+	emitter_.transform.scale = transform.scale;
+	emitter_.transform.rotate = transform.rotate;
+	emitter_.transform.translate = transform.translate;
 
 #pragma region Instancing
 	// Instancingリソースを作る
@@ -117,7 +120,11 @@ void Particle3D::Draw(BlendMode blendMode) {
 
 	// モデルがある場合描画
 	if (model_) {
-		model_->DrawParticle(instanceCount_);
+		switch (type_) {
+		case kPlane:
+			model_->DrawPlaneParticle(instanceCount_, textureFileName_);
+			break;
+		}
 	}
 }
 
@@ -127,6 +134,10 @@ void Particle3D::SetModel(Model* model) {
 
 void Particle3D::SetCamera(Camera* camera) {
 	camera_ = camera;
+}
+
+void Particle3D::SetType(ParticleType type) {
+	type_ = type;
 }
 
 void Particle3D::CreateInstancingResource() {

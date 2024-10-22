@@ -25,9 +25,11 @@ public:
 	// オブジェクト作成
 	void Create(const std::string& name, const std::string& filePath);
 
+	// オブジェクト検索
+	Sprite* Find(const std::string& name);
+
 private:
 	// 2Dオブジェクトデータコンテナ
 	std::map<std::string, std::unique_ptr<Sprite>> objects_;
-
 
 };

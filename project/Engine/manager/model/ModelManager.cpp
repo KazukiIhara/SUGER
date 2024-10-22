@@ -4,6 +4,8 @@
 void ModelManager::Initialize() {
 	// 配列をクリア
 	models_.clear();
+	// 板ポリを作成
+	CreatePlane("uvChecker.png");
 }
 
 void ModelManager::Load(const std::string& filePath) {
