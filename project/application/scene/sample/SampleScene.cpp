@@ -31,6 +31,8 @@ void SampleScene::Initialize() {
 
 	// オブジェクト3Dコントローラの初期化
 	teapot_.Initialize(SUGER::FindObject3D("teapot"));
+	// オブジェクト2Dコントローラの初期化
+	jeanne_.Initialize(SUGER::FindObject2D("jeanne"));
 }
 
 void SampleScene::Finalize() {

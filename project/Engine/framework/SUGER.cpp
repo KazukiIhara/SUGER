@@ -329,6 +329,10 @@ void SUGER::Draw2DObjects() {
 	object2dManager_->Draw();
 }
 
+Sprite* SUGER::FindObject2D(const std::string& name) {
+	return object2dManager_->Find(name);
+}
+
 void SUGER::Create3DObject(const std::string& name, const std::string& filePath, const Transform3D& transform) {
 	object3dManager_->Create(name, filePath, transform);
 }
