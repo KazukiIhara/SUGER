@@ -12,7 +12,7 @@ public:
 	~JsonLevelData() = default;
 
 	// データの読み込み
-	void Load(const std::string& fullPath);
+	void Load(const std::string& fullpath);
 
 private:
 	// このレベルに存在するobject3dのデータコンテナ
