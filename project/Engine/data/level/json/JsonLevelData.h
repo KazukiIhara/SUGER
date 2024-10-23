@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include <memory>
+#include <vector>
 
 #include "3d/object/Object3d.h"
 
@@ -14,8 +15,11 @@ public:
 	// データの読み込み
 	void Load(const std::string& fullpath);
 
+	// 3Dオブジェクトコンテナのゲッター
+	std::vector<ObjectData3D> Get3DObjects()const;
+
 private:
 	// このレベルに存在するobject3dのデータコンテナ
-	std::map<std::string, std::unique_ptr<Object3D>> objects_;
+	std::vector<ObjectData3D> objects_;
 
 };

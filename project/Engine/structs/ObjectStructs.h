@@ -2,6 +2,9 @@
 #pragma once
 // Include
 
+// C++
+#include <string>
+
 // MyHedder
 #include "math/function/MathFunction.h"
 
@@ -26,6 +29,13 @@ struct Transform3D {
 	Vector3 scale = { 1.0f,1.0f,1.0f };
 	Vector3 rotate = { 0.0f,0.0f,0.0f };
 	Vector3 translate = { 0.0f,0.0f,0.0f };
+};
+
+// 3DObjectData
+struct ObjectData3D {
+	Transform3D transform;
+	std::string objectName;
+	std::string modelName;
 };
 
 // 3D頂点データ用構造体

@@ -18,9 +18,13 @@ void ShootingCoasterScene::Initialize() {
 	// 
 	railCamera_ = std::make_unique<RailCamera>();
 	railCamera_->Initialize();
-	//SUGER::SetSceneCamera(railCamera_.get());
 
+	// SUGER::SetSceneCamera(railCamera_.get());
+
+	// JsonDataの読み込み
 	SUGER::LoadJsonLevelData("level1");
+	// JsonDataをシーンにインポート
+	jsonImporter_.Import(SUGER::FindJsonLevelData("level1"));
 
 }
 
