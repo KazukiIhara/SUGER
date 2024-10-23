@@ -34,7 +34,7 @@ void Object3DManager::Finalize() {
 	objects_.clear();
 }
 
-void Object3DManager::Create(const std::string& name, const std::string& filePath, const Transform3D& transform) {
+void Object3DManager::Create(const std::string& name, const std::string& fileName, const Transform3D& transform) {
 	// オブジェクトの生成と初期化
 	std::unique_ptr<Object3D> newObject = std::make_unique<Object3D>();
 	newObject->Initialize();
@@ -53,9 +53,9 @@ void Object3DManager::Create(const std::string& name, const std::string& filePat
 	newObject->SetPunctualLight(light_);
 
 	// filePathの指定がある場合、モデル読み込み
-	if (!filePath.empty()) {
-		modelManager_->Load(filePath);
-		newObject->SetModel(filePath);
+	if (!fileName.empty()) {
+		modelManager_->Load(fileName);
+		newObject->SetModel(fileName);
 	}
 
 	// 3Dオブジェクトをコンテナに格納する

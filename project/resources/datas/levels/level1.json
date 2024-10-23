@@ -1,0 +1,143 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "rail",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "rail",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.001",
+            "transform": {
+                "translation": [
+                    0.4129224717617035,
+                    1.459557056427002,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -0.6664191484451294
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "object_name": "rail",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.002",
+            "transform": {
+                "translation": [
+                    1.5153721570968628,
+                    2.45453143119812,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -0.959568977355957
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "rail",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.003",
+            "transform": {
+                "translation": [
+                    2.8935985565185547,
+                    2.8319029808044434,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -1.573553204536438
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "rail",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.004",
+            "transform": {
+                "translation": [
+                    4.3078155517578125,
+                    2.5756356716156006,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -2.0798516273498535
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "rail",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.005",
+            "transform": {
+                "translation": [
+                    5.275937557220459,
+                    1.6075139045715332,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -2.656219244003296
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "rail",
+            "model_name": "rail"
+        }
+    ]
+}
