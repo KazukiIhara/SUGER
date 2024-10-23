@@ -29,7 +29,7 @@ void RailCamera::RunRail() {
 	transform_.translate_ = CatmullRomSpline(controlPoints_, t_) + translateOffset_;
 
 	// target 座標を求める
-	Vector3 target = CatmullRomSpline(controlPoints_, t_ + 0.001f) + translateOffset_; // 少し先の位置をターゲットに設定
+	Vector3 target = CatmullRomSpline(controlPoints_, t_ +targetT_) + translateOffset_; // 少し先の位置をターゲットに設定
 
 	// 差分ベクトルを計算
 	Vector3 direction = Normalize(target - worldPos_);
