@@ -21,7 +21,8 @@
                     1.0
                 ]
             },
-            "file_name": "rail"
+            "object_name": "rail",
+            "model_name": "rail"
         }
     ]
 }

@@ -19,7 +19,7 @@ public:
 	void Finalize();
 
 	// レベルデータのロード
-	void Load(const std::string& fileName, const std::string& directoryPath = "resoueces/datas/levels/");
+	void Load(const std::string& fileName, const std::string& directoryPath = "resources/datas/levels/");
 	// レベルデータ検索
 	JsonLevelData* Find(const std::string& levelDataName);
 
