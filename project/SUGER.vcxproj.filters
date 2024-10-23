@@ -208,6 +208,9 @@
     <Filter Include="engine\3d\cameras\railCamera">
       <UniqueIdentifier>{c098095c-1279-4260-9c5b-54b9cc10851d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\controller\object2d">
+      <UniqueIdentifier>{261100fa-9421-492e-985b-8bb8452026c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
@@ -331,7 +334,9 @@
     <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp">
       <Filter>engine\3d\cameras\railCamera</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2d\controller\Object2dController.cpp" />
+    <ClCompile Include="Engine\2d\controller\Object2dController.cpp">
+      <Filter>engine\controller\object2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -496,7 +501,9 @@
     <ClInclude Include="Engine\enum\ParticleEnum.h">
       <Filter>engine\enums</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2d\controller\Object2dController.h" />
+    <ClInclude Include="Engine\2d\controller\Object2dController.h">
+      <Filter>engine\controller\object2d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
