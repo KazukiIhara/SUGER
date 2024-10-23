@@ -123,7 +123,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
     <ClCompile Include="Engine\3d\model\Model.cpp" />
     <ClCompile Include="Engine\3d\object\Object3d.cpp" />
+    <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp" />
     <ClCompile Include="Engine\FixFPS\FixFPS.cpp" />
+    <ClCompile Include="Engine\manager\data\level\json\JsonLevelDataManager.cpp" />
     <ClCompile Include="Engine\particle\3d\Particle3d.cpp" />
     <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
     <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp" />
@@ -167,8 +169,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
+    <ClInclude Include="Engine\data\level\json\JsonLevelData.h" />
     <ClInclude Include="Engine\enum\ParticleEnum.h" />
     <ClInclude Include="Engine\FixFPS\FixFPS.h" />
+    <ClInclude Include="Engine\manager\data\level\json\JsonLevelDataManager.h" />
     <ClInclude Include="Engine\particle\3d\Particle3d.h" />
     <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
     <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h" />
