@@ -20,6 +20,8 @@ public:
 
 	// レベルデータのロード
 	void Load(const std::string& fileName, const std::string& directoryPath = "resoueces/datas/levels/");
+	// レベルデータ検索
+	JsonLevelData* Find(const std::string& levelDataName);
 
 private:
 	// レベルデータコンテナ

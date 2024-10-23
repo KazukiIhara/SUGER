@@ -18,7 +18,7 @@ void ShootingCoasterScene::Initialize() {
 	// 
 	railCamera_ = std::make_unique<RailCamera>();
 	railCamera_->Initialize();
-	SUGER::SetSceneCamera(railCamera_.get());
+	//SUGER::SetSceneCamera(railCamera_.get());
 
 	railTransform_[0].translate = { 0.0f,0.0f,0.0f };
 	railTransform_[1].translate = { 0.3f,0.0f,1.5f };
@@ -33,12 +33,8 @@ void ShootingCoasterScene::Initialize() {
 	railTransform_[3].rotate = { 0.0f,0.9f,0.0f };
 	railTransform_[4].rotate = { 0.0f,1.6f,0.0f };
 
-
-
 	// レールの生成処理
 	for (uint32_t i = 0; i < kRailNum_; i++) {
-		// レールのトランスフォームを初期化
-
 		railCamera_->PushBackControlPoint(railTransform_[i].translate);
 		// 文字列 "rail" の末尾に i を追加
 		std::string railName = "rail" + std::to_string(i);
