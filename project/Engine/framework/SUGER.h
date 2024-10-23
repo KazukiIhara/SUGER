@@ -25,6 +25,7 @@ class ModelManager;
 class Object2DManager;
 class Object3DManager;
 class ParticleManager;
+class JsonLevelDataManager;
 class Object2DSystem;
 class Object3DSystem;
 class ParticleSystem;
@@ -36,6 +37,7 @@ class Object3D;
 class Model;
 class Camera;
 class PunctualLight;
+class JsonLevelData;
 
 class SUGER {
 public:
@@ -167,6 +169,14 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region JsonLevelDataManager
+	// JsonLevelDataManagerの機能
+	// Json形式のlevelデータの読み込み
+	static void LoadJsonLevelData(const std::string& fileName);
+	// Json形式のLevelDataの検索
+	static JsonLevelData* FindJsonLevelData(const std::string& levelDataName);
+#pragma endregion
+
 #pragma region Object2DSystem
 	// Object2DSystemの機能
 	// 2dオブジェクト描画前処理
@@ -187,6 +197,7 @@ public: // クラスメソッド
 #pragma endregion
 
 #pragma region ImGuiDebug
+	// FPSの表示
 	void ShowFPS();
 #pragma endregion
 
@@ -207,6 +218,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<Object2DManager> object2dManager_;
 	static std::unique_ptr<Object3DManager> object3dManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
+	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
 	static std::unique_ptr<ParticleSystem> particleSystem_;

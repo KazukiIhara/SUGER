@@ -9,6 +9,7 @@
 #include "iScene/base/BaseScene.h"
 #include "structs/ObjectStructs.h"
 #include "3d/cameras/railCamera/RailCamera.h"
+#include "importer/level/json/JsonLevelDataImporter.h"
 
 class ShootingCoasterScene :public BaseScene {
 public: // 公開メンバ関数
@@ -23,6 +24,9 @@ public: // 公開メンバ関数
 	// 更新
 	void Update()override;
 private: // 非公開メンバ変数
+	// jsonデータインポーター
+	JsonLevelDataImporter jsonImporter_;
+
 	// レールカメラ
 	std::unique_ptr<RailCamera> railCamera_ = nullptr;
 	// レールの最大数
