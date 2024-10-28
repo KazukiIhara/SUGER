@@ -7,20 +7,21 @@
 #include "Structs/ObjectStructs.h"
 
 // マテリアルデータ
-struct sMaterialData {
+struct MaterialData {
 	std::string textureFilePath;
 	Vector4 color;
 	bool haveUV_;
 };
 
 // メッシュデータ
-struct sMeshData {
+struct MeshData {
 	std::vector<VertexData3D> vertices;
+	std::vector<uint32_t> indices;
 	std::vector<VertexData3DUnUV> verticesUnUV;
-	sMaterialData material;
+	MaterialData material;
 };
 
 // モデルデータ
-struct sModelData {
-	std::vector<sMeshData> meshes;
+struct ModelData {
+	std::vector<MeshData> meshes;
 };
