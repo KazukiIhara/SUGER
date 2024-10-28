@@ -18,7 +18,7 @@
 class Camera;
 class Model;
 
-class Particle3D {
+class RandomParticle {
 public:
 	void Initialize(Model* model, Camera* camera, const std::string& textureFileName, const Transform3D& transform);
 	void Update();

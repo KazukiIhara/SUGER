@@ -35,7 +35,7 @@ class WorldTransform;
 class Sprite;
 class Object3D;
 class Model;
-class Particle3D;
+class RandomParticle;
 class Camera;
 class PunctualLight;
 class JsonLevelData;
@@ -169,7 +169,7 @@ public: // クラスメソッド
 	static void DrawParticle();
 
 	// パーティクル検索
-	static Particle3D* FindParticle(const std::string& name);
+	static RandomParticle* FindParticle(const std::string& name);
 
 #pragma endregion
 

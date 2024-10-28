@@ -385,7 +385,7 @@ void SUGER::DrawParticle() {
 	particleManager_->Draw();
 }
 
-Particle3D* SUGER::FindParticle(const std::string& name) {
+RandomParticle* SUGER::FindParticle(const std::string& name) {
 	return particleManager_->Find(name);
 }
 

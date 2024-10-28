@@ -36,7 +36,7 @@ void ParticleManager::Finalize() {
 	objects_.clear();
 }
 
-Particle3D* ParticleManager::Find(const std::string& name) {
+RandomParticle* ParticleManager::Find(const std::string& name) {
 	// 作成済みオブジェクトを検索
 	if (objects_.contains(name)) {
 		// オブジェクトを戻り値としてreturn
@@ -50,7 +50,7 @@ void ParticleManager::CreatePlane(const std::string& name, const std::string& fi
 	// 板ポリ生成
 	textureManager_->Load(filePath);
 	// パーティクルエミッタの生成と初期化
-	std::unique_ptr<Particle3D> newObject = std::make_unique<Particle3D>();
+	std::unique_ptr<RandomParticle> newObject = std::make_unique<RandomParticle>();
 	newObject->Initialize(modelManager_->Find("Plane"), camera_, filePath, transform);
 	// 板ポリタイプ
 	newObject->SetType(kPlane);

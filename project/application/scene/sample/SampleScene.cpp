@@ -22,7 +22,7 @@ void SampleScene::Initialize() {
 	sceneCamera_->Initialize();
 
 	// シーンにカメラをセット
-	SUGER::SetSceneCamera(sceneCamera_.get());
+	//SUGER::SetSceneCamera(sceneCamera_.get());
 
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create3DObject("teapot", "teapot");
@@ -49,9 +49,6 @@ void SampleScene::Initialize() {
 	// jeanneを非アクティブ化
 	jeanne_.SetIsActive(false);
 
-	// パーティクルを非アクティブ化
-	plane_.SetIsActive(false);
-	 
 }
 
 void SampleScene::Finalize() {
@@ -69,6 +66,8 @@ void SampleScene::Update() {
 	// スプライトを回転
 	jeanne_.SetRotation(jeanne_.GetRotation() + 0.01f);
 
+	// パーティクルを移動
+	plane_.SetTranslate(Vector3(1.0f, 1.0f, 0.0f));
 
 	// 
 	// シーンの更新処理ここまで
