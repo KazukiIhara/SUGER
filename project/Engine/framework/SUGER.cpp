@@ -385,6 +385,10 @@ void SUGER::DrawParticle() {
 	particleManager_->Draw();
 }
 
+Particle3D* SUGER::FindParticle(const std::string& name) {
+	return particleManager_->Find(name);
+}
+
 void SUGER::PreDrawObject2D() {
 	object2dSystem_->PreDraw();
 }

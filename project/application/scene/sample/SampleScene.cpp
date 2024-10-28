@@ -27,13 +27,14 @@ void SampleScene::Initialize() {
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create3DObject("teapot", "teapot");
 	SUGER::Create2DObject("jeanne", "jeanne.jpg");
-	SUGER::CreatePlaneParticle("normal", "circle.png");
+	SUGER::CreatePlaneParticle("plane", "circle.png");
 
 	// オブジェクト3Dコントローラの初期化
 	teapot_.Initialize(SUGER::FindObject3D("teapot"));
 	// オブジェクト2Dコントローラの初期化
 	jeanne_.Initialize(SUGER::FindObject2D("jeanne"));
-
+	// パーティクルコントローラの初期化
+	plane_.Initialize(SUGER::FindParticle("plane"));
 
 	// オブジェクト3Dコントローラを使ってトランスレートをセット
 	teapot_.SetTranslate(Vector3(1.0f, 0.0f, 0.0f));
@@ -47,6 +48,10 @@ void SampleScene::Initialize() {
 
 	// jeanneを非アクティブ化
 	jeanne_.SetIsActive(false);
+
+	// パーティクルを非アクティブ化
+	plane_.SetIsActive(false);
+	 
 }
 
 void SampleScene::Finalize() {

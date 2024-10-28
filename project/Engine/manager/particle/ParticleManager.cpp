@@ -36,6 +36,16 @@ void ParticleManager::Finalize() {
 	objects_.clear();
 }
 
+Particle3D* ParticleManager::Find(const std::string& name) {
+	// 作成済みオブジェクトを検索
+	if (objects_.contains(name)) {
+		// オブジェクトを戻り値としてreturn
+		return objects_.at(name).get();
+	}
+	// ファイル名一致なし
+	return nullptr;
+}
+
 void ParticleManager::CreatePlane(const std::string& name, const std::string& filePath, const Transform3D& transform) {
 	// 板ポリ生成
 	textureManager_->Load(filePath);

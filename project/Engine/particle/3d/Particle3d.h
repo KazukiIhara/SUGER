@@ -29,6 +29,14 @@ public:
 	// タイプのセット
 	void SetType(ParticleType type);
 
+	// 回転量のセット
+	void SetRotate(const Vector3& rotate);
+	// 移動量のセット
+	void SetTranslate(const Vector3& translate);
+
+	// 発生数のセット
+	void SetCount(const uint32_t& count);
+
 	// 有効フラグのセッター
 	void SetIsActive(const bool& isActive);
 

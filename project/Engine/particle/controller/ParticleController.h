@@ -15,7 +15,7 @@ public:
 	ParticleController() = default;
 	~ParticleController() = default;
 
-private:
+public:
 
 	// 初期化
 	void Initialize(Particle3D* particle3d);

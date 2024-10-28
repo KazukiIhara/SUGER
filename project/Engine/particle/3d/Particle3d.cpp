@@ -144,6 +144,18 @@ void Particle3D::SetType(ParticleType type) {
 	type_ = type;
 }
 
+void Particle3D::SetRotate(const Vector3& rotate) {
+	emitter_.transform.rotate = rotate;
+}
+
+void Particle3D::SetTranslate(const Vector3& translate) {
+	emitter_.transform.translate;
+}
+
+void Particle3D::SetCount(const uint32_t& count) {
+	emitter_.count = count;
+}
+
 void Particle3D::SetIsActive(const bool& isActive) {
 	isActive_ = isActive;
 }

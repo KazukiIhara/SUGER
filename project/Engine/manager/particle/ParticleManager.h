@@ -26,6 +26,9 @@ public:
 	// 終了処理
 	void Finalize();
 
+	// 作成済みのパーティクル検索
+	Particle3D* Find(const std::string& name);
+
 	// 板ポリパーティクル作成
 	void CreatePlane(const std::string& name, const std::string& filePath, const Transform3D& transform);
 
