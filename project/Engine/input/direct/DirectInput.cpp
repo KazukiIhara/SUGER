@@ -63,6 +63,14 @@ bool DirectInput::TriggerKey(BYTE keyNumber) {
 	return false;
 }
 
+bool DirectInput::HoldKey(BYTE keyNumber) {
+	// 1フレーム前に指定キーを入力しており、現在フレームも入力していればtrueを返す
+	if (preKey[keyNumber] && key[keyNumber]) {
+		return true;
+	}
+	return false;
+}
+
 bool DirectInput::ReleaseKey(BYTE keyNumber) {
 	// 1フレーム前に指定キーを入力しており、現在フレームで入力していなければtrueを返す
 	if (preKey[keyNumber] && !key[keyNumber]) {
