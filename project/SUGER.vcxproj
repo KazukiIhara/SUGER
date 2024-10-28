@@ -145,6 +145,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp" />
     <ClCompile Include="Engine\math\function\MathFunction.cpp" />
     <ClCompile Include="Engine\math\operator\MathOperator.cpp" />
+    <ClCompile Include="Engine\particle\controller\ParticleController.cpp" />
     <ClCompile Include="Engine\particle\system\ParticleSystem.cpp" />
     <ClCompile Include="Engine\worldTransform\WorldTransform.cpp" />
     <ClCompile Include="main.cpp" />
@@ -204,6 +205,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\iScene\abstractFactory\AbstractSceneFactory.h" />
     <ClInclude Include="Engine\iScene\base\BaseScene.h" />
     <ClInclude Include="Engine\enum\GraphicsPipelineEnum.h" />
+    <ClInclude Include="Engine\particle\controller\ParticleController.h" />
     <ClInclude Include="Engine\particle\system\ParticleSystem.h" />
     <ClInclude Include="Engine\structs\CameraStruct.h" />
     <ClInclude Include="Engine\structs\ModelStructs.h" />

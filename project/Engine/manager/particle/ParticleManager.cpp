@@ -15,7 +15,7 @@ void ParticleManager::Initialize(ModelManager* modelManager, TextureManager* tex
 
 void ParticleManager::Update() {
 	for (auto& pair : objects_) {
-		if (pair.second) {  // unique_ptrが有効か確認
+		if (pair.second && pair.second->GetIsActive()) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
 			pair.second->Update();
 		}
@@ -24,7 +24,7 @@ void ParticleManager::Update() {
 
 void ParticleManager::Draw() {
 	for (auto& pair : objects_) {
-		if (pair.second) {  // unique_ptrが有効か確認
+		if (pair.second && pair.second->GetIsActive()) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
 			pair.second->Draw();
 		}

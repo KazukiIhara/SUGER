@@ -340,6 +340,7 @@
     <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp" />
     <ClCompile Include="Engine\manager\data\level\json\JsonLevelDataManager.cpp" />
     <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp" />
+    <ClCompile Include="Engine\particle\controller\ParticleController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -510,6 +511,7 @@
     <ClInclude Include="Engine\data\level\json\JsonLevelData.h" />
     <ClInclude Include="Engine\manager\data\level\json\JsonLevelDataManager.h" />
     <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h" />
+    <ClInclude Include="Engine\particle\controller\ParticleController.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
