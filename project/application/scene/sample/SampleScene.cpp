@@ -42,8 +42,11 @@ void SampleScene::Initialize() {
 	jeanne_.SetPosition(jeanne_.GetSize() / 2.0f);
 	jeanne_.SetAnchorPoint(Vector2(0.5f, 0.5f));
 
-	// オブジェクトを非アクティブ化
+	// teapotを非アクティブ化
 	teapot_.SetIsActive(false);
+
+	// jeanneを非アクティブ化
+	jeanne_.SetIsActive(false);
 }
 
 void SampleScene::Finalize() {

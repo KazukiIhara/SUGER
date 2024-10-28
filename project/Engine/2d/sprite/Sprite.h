@@ -66,6 +66,10 @@ public: // メンバ関数
 	const Vector2& GetCutOutSize()const {
 		return cutOutSize;
 	}
+	// 有効フラグ
+	const bool& GetIsActive()const {
+		return isActive_;
+	}
 
 	// セッター
 	// textureHandle_
@@ -111,6 +115,10 @@ public: // メンバ関数
 	// テクスチャ切り出しサイズ
 	void SetCutOutSize(const Vector2& cutOutSize) {
 		this->cutOutSize = cutOutSize;
+	}
+	// 有効フラグのセッター
+	void SetIsActive(const bool& isActive) {
+		this->isActive_ = isActive;
 	}
 
 private: // メンバ関数
@@ -167,6 +175,9 @@ private:/*メンバ変数*/
 	bool isFlipX_ = false;
 	// 上下フリップ
 	bool isFlipY_ = false;
+
+	// 有効かどうか
+	bool isActive_ = true;
 
 	// テクスチャ左上座標
 	Vector2 textureLeftTop = { 0.0f,0.0f };
