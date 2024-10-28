@@ -13,8 +13,8 @@ void Object3D::Initialize() {
 
 void Object3D::Update() {
 	// モデル読み込み済みなら更新
-	if (model) {
-		model->Update();
+	if (model_) {
+		model_->Update();
 	}
 
 	// WVPマトリックスを作る
@@ -34,8 +34,8 @@ void Object3D::Draw(BlendMode blendMode) {
 	// カメラ情報を転送
 	camera_->TransferCamera();
 	// 3Dモデルが割り当てられていれば描画する
-	if (model) {
-		model->Draw();
+	if (model_) {
+		model_->Draw();
 	}
 }
 
@@ -59,5 +59,5 @@ void Object3D::SetName(const std::string& name) {
 }
 
 void Object3D::SetModel(const std::string& filePath) {
-	model = SUGER::FindModel(filePath);
+	model_ = SUGER::FindModel(filePath);
 }

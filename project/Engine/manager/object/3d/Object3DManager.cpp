@@ -13,7 +13,7 @@ void Object3DManager::Initialize(ModelManager* modelManager) {
 
 void Object3DManager::Update() {
 	for (auto& pair : objects_) {
-		if (pair.second) {  // unique_ptrが有効か確認
+		if (pair.second && pair.second->GetIsActive()) {  // unique_ptrが有効かつオブジェクトが有効状態
 			// 全オブジェクトを更新
 			pair.second->Update();
 		}
@@ -22,7 +22,7 @@ void Object3DManager::Update() {
 
 void Object3DManager::Draw() {
 	for (auto& pair : objects_) {
-		if (pair.second) {  // unique_ptrが有効か確認
+		if (pair.second && pair.second->GetIsActive()) {  // unique_ptrが有効かつオブジェクトが有効状態
 			// 全オブジェクトを描画
 			pair.second->Draw();
 		}

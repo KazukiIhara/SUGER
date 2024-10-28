@@ -63,6 +63,10 @@ public: // Setter
 	void SetCamera(Camera* camera) {
 		camera_ = camera;
 	}
+	// 有効フラグのセット
+	void SetIsActive(const bool& isActive) {
+		isActive_ = isActive;
+	}
 public: // Getter
 	// 拡縮のゲッター
 	const Vector3& GetScale() const {
@@ -80,14 +84,19 @@ public: // Getter
 	const std::string& GetName()const {
 		return name_;
 	}
-	Model* GetModel() {
-		return model;
+	// モデルのゲッター
+	Model* GetModel() const {
+		return model_;
+	}
+	// 有効フラグのゲッター
+	bool GetIsActive() const {
+		return isActive_;
 	}
 
 private:/*メンバ変数*/
 
 	// モデルを受け取る箱
-	Model* model = nullptr;
+	Model* model_ = nullptr;
 
 	/*WVP用のリソース*/
 	ComPtr<ID3D12Resource> transformationResource_ = nullptr;
@@ -104,4 +113,7 @@ private:/*メンバ変数*/
 
 	// 名前
 	std::string name_;
+
+	// 有効かどうか
+	bool isActive_ = true;
 };

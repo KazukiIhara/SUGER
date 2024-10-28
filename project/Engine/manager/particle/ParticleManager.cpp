@@ -15,7 +15,7 @@ void ParticleManager::Initialize(ModelManager* modelManager, TextureManager* tex
 
 void ParticleManager::Update() {
 	for (auto& pair : objects_) {
-		if (pair.second) {  // unique_ptrが有効か確認
+		if (pair.second && pair.second->GetIsActive()) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
 			pair.second->Update();
 		}
@@ -24,7 +24,7 @@ void ParticleManager::Update() {
 
 void ParticleManager::Draw() {
 	for (auto& pair : objects_) {
-		if (pair.second) {  // unique_ptrが有効か確認
+		if (pair.second && pair.second->GetIsActive()) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
 			pair.second->Draw();
 		}
@@ -36,11 +36,21 @@ void ParticleManager::Finalize() {
 	objects_.clear();
 }
 
+RandomParticle* ParticleManager::Find(const std::string& name) {
+	// 作成済みオブジェクトを検索
+	if (objects_.contains(name)) {
+		// オブジェクトを戻り値としてreturn
+		return objects_.at(name).get();
+	}
+	// ファイル名一致なし
+	return nullptr;
+}
+
 void ParticleManager::CreatePlane(const std::string& name, const std::string& filePath, const Transform3D& transform) {
 	// 板ポリ生成
 	textureManager_->Load(filePath);
 	// パーティクルエミッタの生成と初期化
-	std::unique_ptr<Particle3D> newObject = std::make_unique<Particle3D>();
+	std::unique_ptr<RandomParticle> newObject = std::make_unique<RandomParticle>();
 	newObject->Initialize(modelManager_->Find("Plane"), camera_, filePath, transform);
 	// 板ポリタイプ
 	newObject->SetType(kPlane);

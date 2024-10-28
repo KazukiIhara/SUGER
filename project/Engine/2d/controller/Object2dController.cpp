@@ -54,6 +54,9 @@ void Object2DController::SetCutOutSize(const Vector2& cutOutSize) {
 void Object2DController::SetColor(const Vector4& color) {
 	object2d_->SetColor(color);
 }
+void Object2DController::SetIsActive(const bool& isActive) {
+	object2d_->SetIsActive(isActive);
+}
 void Object2DController::SetObject(Sprite* object2d) {
 	object2d_ = object2d;
 }

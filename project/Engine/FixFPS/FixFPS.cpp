@@ -3,11 +3,14 @@
 #include <thread>
 
 void FixFPS::Initialize() {
-	// 現在時間を記録する
-	reference_ = std::chrono::steady_clock::now();
+	isFirstFrame_ = true;
 }
 
 void FixFPS::Update() {
+	if (isFirstFrame_) {
+		reference_ = std::chrono::steady_clock::now();
+		isFirstFrame_ = false;
+	}
 	static std::chrono::microseconds accumulatedError(0);
 	const std::chrono::microseconds targetFrameTime(uint64_t(1000000.0 / targetFPS_));
 

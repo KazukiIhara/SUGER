@@ -26,6 +26,16 @@ public:
 	// モデルのセット
 	void SetModel(const std::string& filePath);
 
+	// 有効フラグのセッター
+	void SetIsActive(const bool& isActive);
+
+	// スケールをゲット
+	const Vector3& GetScale();
+	// 回転のゲット
+	const Vector3& GetRotate();
+	// トランスレートをゲット
+	const Vector3& GetTranslate();
+
 private:
 	// オブジェクトをセットする関数
 	void SetObject(Object3D* object3d);
