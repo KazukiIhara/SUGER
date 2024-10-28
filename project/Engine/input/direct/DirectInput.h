@@ -1,6 +1,7 @@
 #pragma once
-// Include
+
 #define DIRECTINPUT_VERSION	0x0800 // DirectInputのバージョン設定
+// Include
 #include <dinput.h>
 #include "directX/includes/ComPtr.h"
 
@@ -20,6 +21,8 @@ public:
 	bool PushKey(BYTE keyNumber);
 	// 押されたとき
 	bool TriggerKey(BYTE keyNumber);
+	// 押し続けているとき
+	bool HoldKey(BYTE keyNumber);
 	// 離したとき
 	bool ReleaseKey(BYTE keyNumber);
 
@@ -27,7 +30,6 @@ private:
 	void SetWindowManager(WindowManager* windowManager);
 
 private:
-
 	// WindowManagerのポインタ
 	WindowManager* windowManager_ = nullptr;
 	// インスタンス

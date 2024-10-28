@@ -1,26 +1,8 @@
 #include "SUGER.h"
 
 #include "debugTools/logger/Logger.h"
-#include "input/direct/DirectInput.h"
-
-#include "manager/window/WindowManager.h"
-#include "manager/directX/DirectXManager.h"
-#include "manager/srv/SRVManager.h"
-#include "manager/imgui/ImGuiManager.h"
-#include "manager/texture/TextureManager.h"
-#include "manager/pipeline/graphics/GraphicsPipelineManager.h"
-#include "iScene/abstractFactory/AbstractSceneFactory.h"
-#include "manager/model/ModelManager.h"
-#include "manager/object/2d/Object2DManager.h"
-#include "manager/object/3d/Object3DManager.h"
-#include "manager/particle/ParticleManager.h"
-#include "manager/data/level/json/JsonLevelDataManager.h"
-#include "2d/system/Object2dSystem.h"
-#include "3d/system/Object3dSystem.h"
-#include "particle/system/ParticleSystem.h"
 
 #ifdef _DEBUG
-#include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
 std::unique_ptr<D3DResourceLeakChecker> SUGER::leakCheck_ = nullptr;
 #endif // _DEBUG
 
@@ -267,6 +249,22 @@ void SUGER::PostDraw() {
 	imguiManager_->Draw();
 	// DirectX描画後処理
 	directXManager_->PostDraw();
+}
+
+bool SUGER::PushKey(BYTE keyNumber) {
+	return directInput_->PushKey(keyNumber);
+}
+
+bool SUGER::TrrigerKey(BYTE keyNumber) {
+	return directInput_->TriggerKey(keyNumber);
+}
+
+bool SUGER::HoldKey(BYTE keyNumber) {
+	return directInput_->HoldKey(keyNumber);
+}
+
+bool SUGER::ReleaseKey(BYTE keyNumber) {
+	return directInput_->ReleaseKey(keyNumber);
 }
 
 ID3D12Device* SUGER::GetDirectXDevice() {

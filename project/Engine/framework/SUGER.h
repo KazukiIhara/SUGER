@@ -6,30 +6,27 @@
 
 #include "d3d12.h"
 
-#include "directX/includes/ComPtr.h"
-#include "externals/DirectXTex/DirectXTex.h"
+#include "manager/window/WindowManager.h"
+#include "input/direct/DirectInput.h"
+#include "manager/directX/DirectXManager.h"
+#include "manager/srv/SRVManager.h"
+#include "manager/imgui/ImGuiManager.h"
+#include "manager/texture/TextureManager.h"
+#include "manager/pipeline/graphics/GraphicsPipelineManager.h"
+#include "iScene/abstractFactory/AbstractSceneFactory.h"
+#include "manager/model/ModelManager.h"
+#include "manager/object/2d/Object2DManager.h"
+#include "manager/object/3d/Object3DManager.h"
+#include "manager/particle/ParticleManager.h"
+#include "manager/data/level/json/JsonLevelDataManager.h"
+#include "2d/system/Object2dSystem.h"
+#include "3d/system/Object3dSystem.h"
+#include "particle/system/ParticleSystem.h"
 
-#include "structs/ObjectStructs.h"
-#include "structs/TextureStruct.h"
-#include "enum/GraphicsPipelineEnum.h"
+#ifdef _DEBUG
+#include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
+#endif // _DEBUG
 
-class D3DResourceLeakChecker;
-class WindowManager;
-class DirectInput;
-class DirectXManager;
-class SRVManager;
-class ImGuiManager;
-class TextureManager;
-class GraphicsPipelineManager;
-class ModelManager;
-class Object2DManager;
-class Object3DManager;
-class ParticleManager;
-class JsonLevelDataManager;
-class Object2DSystem;
-class Object3DSystem;
-class ParticleSystem;
-class AbstractSceneFactory;
 
 class WorldTransform;
 class Sprite;
@@ -71,6 +68,14 @@ public: // クラスメソッド
 
 #pragma region DirectInput
 	// DirectInputの機能
+	// キーを押している
+	static bool PushKey(BYTE keyNumber);
+	// キーを押した
+	static bool TrrigerKey(BYTE keyNumber);
+	// キーを押し続けている
+	static bool HoldKey(BYTE keyNumber);
+	// キーを離した
+	static bool ReleaseKey(BYTE keyNumber);
 #pragma endregion
 
 #pragma region DirectXManager

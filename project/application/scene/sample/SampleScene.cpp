@@ -53,11 +53,19 @@ void SampleScene::Update() {
 	// シーンの更新処理ここから
 	// 
 
-	// スプライトを回転
-	jeanne_.SetRotation(jeanne_.GetRotation() + 0.01f);
+	if (SUGER::PushKey(DIK_D)) {
+		// スプライトを回転
+		jeanne_.SetRotation(jeanne_.GetRotation() + 0.01f);
+		// モデルをy軸+方向に回転
+		teapot_.SetRotate(Vector3(teapot_.GetRotate().x, teapot_.GetRotate().y + 0.01f, teapot_.GetRotate().z));
 
-	// モデルをy軸+方向に回転
-	teapot_.SetRotate(Vector3(teapot_.GetRotate().x, teapot_.GetRotate().y + 0.01f, teapot_.GetRotate().z));
+	} else if (SUGER::PushKey(DIK_A)) {
+		// スプライトを回転
+		jeanne_.SetRotation(jeanne_.GetRotation() - 0.01f);
+		// モデルをy軸+方向に回転
+		teapot_.SetRotate(Vector3(teapot_.GetRotate().x, teapot_.GetRotate().y - 0.01f, teapot_.GetRotate().z));
+	}
+
 
 	// 
 	// シーンの更新処理ここまで
