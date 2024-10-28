@@ -211,6 +211,36 @@
     <Filter Include="engine\controller\object2d">
       <UniqueIdentifier>{261100fa-9421-492e-985b-8bb8452026c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\particle\controller">
+      <UniqueIdentifier>{bb5676cc-c1b6-4610-925b-7975d63b80c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\data">
+      <UniqueIdentifier>{3bd826ce-22a8-41ca-84c2-af58328effcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\data\level">
+      <UniqueIdentifier>{62d1fe39-7b85-485e-b616-37c7b7876d28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\data\level\json">
+      <UniqueIdentifier>{1c4676d1-cafa-4438-bcb8-2e3602456e10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\data">
+      <UniqueIdentifier>{9e98e5fc-be96-4953-9557-df6d30fb23dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\data\level">
+      <UniqueIdentifier>{4a8e483d-c733-42d7-b9ff-0df7822dbae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\data\level\json">
+      <UniqueIdentifier>{afb1e85d-7cc3-4dba-b028-1779c83c50cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\importer">
+      <UniqueIdentifier>{59a8baed-9906-4a63-ba27-f278405e3f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\importer\level">
+      <UniqueIdentifier>{171a0d60-af8a-4767-97cd-c521d6885bd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\importer\level\json">
+      <UniqueIdentifier>{8b4abbd6-bf4a-4ac4-97dd-a63186648d22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
@@ -337,10 +367,18 @@
     <ClCompile Include="Engine\2d\controller\Object2dController.cpp">
       <Filter>engine\controller\object2d</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp" />
-    <ClCompile Include="Engine\manager\data\level\json\JsonLevelDataManager.cpp" />
-    <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp" />
-    <ClCompile Include="Engine\particle\controller\ParticleController.cpp" />
+    <ClCompile Include="Engine\particle\controller\ParticleController.cpp">
+      <Filter>engine\particle\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp">
+      <Filter>engine\data\level\json</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\data\level\json\JsonLevelDataManager.cpp">
+      <Filter>engine\manager\data\level\json</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp">
+      <Filter>engine\importer\level\json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -508,10 +546,18 @@
     <ClInclude Include="Engine\2d\controller\Object2dController.h">
       <Filter>engine\controller\object2d</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\data\level\json\JsonLevelData.h" />
-    <ClInclude Include="Engine\manager\data\level\json\JsonLevelDataManager.h" />
-    <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h" />
-    <ClInclude Include="Engine\particle\controller\ParticleController.h" />
+    <ClInclude Include="Engine\particle\controller\ParticleController.h">
+      <Filter>engine\particle\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\data\level\json\JsonLevelData.h">
+      <Filter>engine\data\level\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\data\level\json\JsonLevelDataManager.h">
+      <Filter>engine\manager\data\level\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h">
+      <Filter>engine\importer\level\json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
