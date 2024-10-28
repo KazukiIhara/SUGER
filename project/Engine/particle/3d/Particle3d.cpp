@@ -21,10 +21,14 @@ void Particle3D::Initialize(Model* model, Camera* camera, const std::string& tex
 	// テクスチャファイル名をセット
 	textureFileName_ = textureFileName;
 
-	// エミッターのトランフォーム設定
+	// エミッターの設定
 	emitter_.transform.scale = transform.scale;
 	emitter_.transform.rotate = transform.rotate;
 	emitter_.transform.translate = transform.translate;
+
+	emitter_.count = 10;		// 一度に発生する数
+	emitter_.frequency = 0.5f;	// 発生頻度
+	emitter_.frequencyTime = 0.0f;	// 発生頻度用の時刻、0で初期化
 
 #pragma region Instancing
 	// Instancingリソースを作る
@@ -138,6 +142,14 @@ void Particle3D::SetCamera(Camera* camera) {
 
 void Particle3D::SetType(ParticleType type) {
 	type_ = type;
+}
+
+void Particle3D::SetIsActive(const bool& isActive) {
+	isActive_ = isActive;
+}
+
+const bool& Particle3D::GetIsActive() {
+	return isActive_;
 }
 
 void Particle3D::CreateInstancingResource() {
