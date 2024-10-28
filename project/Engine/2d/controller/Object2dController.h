@@ -51,6 +51,10 @@ public:
 	// 色のセット(R,G,B,A)
 	void SetColor(const Vector4& color);
 
+	// 有効フラグのセッター
+	void SetIsActive(const bool& isActive);
+
+
 	// 
 	// ゲッター
 	// 

@@ -29,7 +29,7 @@ public: // 仮想関数
 
 private:
 	// カメラのImGui
-	void ImGuiForSceneCamera();
+	void ImGuiForDebugCamera();
 
 private:
 	// シーンマネージャ

@@ -26,6 +26,8 @@ private:
 	std::vector<Vector3> controlPoints_;
 	// レールカメラ補間変数
 	float t_ = 0.0f;
+	// カメラが向くtの値
+	float targetT_ = 0.18f;
 	// レールカメラの速度
 	float speed_ = 0.001f;
 	// translateのオフセット

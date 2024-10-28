@@ -12,11 +12,11 @@ void Object3DController::Initialize(Object3D* object3d) {
 }
 
 void Object3DController::SetScale(const Vector3& scale) {
-	object3d_->SetTranslate(scale);
+	object3d_->SetScale(scale);
 }
 
 void Object3DController::SetRotate(const Vector3& rotate) {
-	object3d_->SetTranslate(rotate);
+	object3d_->SetRotate(rotate);
 }
 
 void Object3DController::SetTranslate(const Vector3& translate) {
@@ -25,6 +25,22 @@ void Object3DController::SetTranslate(const Vector3& translate) {
 
 void Object3DController::SetModel(const std::string& filePath) {
 	object3d_->SetModel(filePath);
+}
+
+void Object3DController::SetIsActive(const bool& isActive) {
+	object3d_->SetIsActive(isActive);
+}
+
+const Vector3& Object3DController::GetScale() {
+	return object3d_->GetScale();
+}
+
+const Vector3& Object3DController::GetRotate() {
+	return object3d_->GetRotate();
+}
+
+const Vector3& Object3DController::GetTranslate() {
+	return object3d_->GetTranslate();
 }
 
 void Object3DController::SetObject(Object3D* object3d) {

@@ -4,6 +4,7 @@
 #include "iScene/base/BaseScene.h"
 #include "3d/controller/Object3dController.h"
 #include "2d/controller/Object2dController.h"
+#include "particle/controller/ParticleController.h"
 
 class SampleScene :public BaseScene {
 public: // 公開メンバ関数
@@ -25,5 +26,7 @@ private: // 非公開メンバ変数
 	Object3DController teapot_;
 	// jeanne用のオブジェクト2Dコントローラ
 	Object2DController jeanne_;
+	// plane用パーティクルコントローラ
+	ParticleController plane_;
 };
 

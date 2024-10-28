@@ -14,6 +14,7 @@
 #include "manager/object/2d/Object2DManager.h"
 #include "manager/object/3d/Object3DManager.h"
 #include "manager/particle/ParticleManager.h"
+#include "manager/data/level/json/JsonLevelDataManager.h"
 #include "2d/system/Object2dSystem.h"
 #include "3d/system/Object3dSystem.h"
 #include "particle/system/ParticleSystem.h"
@@ -35,6 +36,7 @@ std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
 std::unique_ptr<Object3DManager> SUGER::object3dManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
+std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
@@ -86,6 +88,10 @@ void SUGER::Initialize() {
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
 
+	// JsonLevelDataManagerの初期化
+	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
+	jsonLevelDataManager_->Initialize();
+
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
 	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
@@ -117,6 +123,12 @@ void SUGER::Finalize() {
 	// Object2DSystemの終了処理
 	if (object2dSystem_) {
 		object2dSystem_.reset();
+	}
+
+	// JsonLevelDataManagerの終了処理
+	if (jsonLevelDataManager_) {
+		jsonLevelDataManager_->Finalize();
+		jsonLevelDataManager_.reset();
 	}
 
 	// ParticleManagerの終了処理
@@ -373,6 +385,10 @@ void SUGER::DrawParticle() {
 	particleManager_->Draw();
 }
 
+RandomParticle* SUGER::FindParticle(const std::string& name) {
+	return particleManager_->Find(name);
+}
+
 void SUGER::PreDrawObject2D() {
 	object2dSystem_->PreDraw();
 }
@@ -383,6 +399,14 @@ void SUGER::PreDrawObject3D() {
 
 void SUGER::PreDrawParticle3D() {
 	particleSystem_->PreDraw();
+}
+
+void SUGER::LoadJsonLevelData(const std::string& fileName) {
+	jsonLevelDataManager_->Load(fileName);
+}
+
+JsonLevelData* SUGER::FindJsonLevelData(const std::string& levelDataName) {
+	return jsonLevelDataManager_->Find(levelDataName);
 }
 
 void SUGER::ShowFPS() {

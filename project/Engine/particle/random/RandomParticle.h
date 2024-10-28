@@ -18,7 +18,7 @@
 class Camera;
 class Model;
 
-class Particle3D {
+class RandomParticle {
 public:
 	void Initialize(Model* model, Camera* camera, const std::string& textureFileName, const Transform3D& transform);
 	void Update();
@@ -28,6 +28,21 @@ public:
 	void SetCamera(Camera* camera);
 	// タイプのセット
 	void SetType(ParticleType type);
+
+	// 回転量のセット
+	void SetRotate(const Vector3& rotate);
+	// 移動量のセット
+	void SetTranslate(const Vector3& translate);
+
+	// 発生数のセット
+	void SetCount(const uint32_t& count);
+
+	// 有効フラグのセッター
+	void SetIsActive(const bool& isActive);
+
+	// 有効フラグのゲッター
+	const bool& GetIsActive();
+
 private:
 	// モデルのセット
 	void SetModel(Model* model);
@@ -47,6 +62,9 @@ private:/*メンバ変数*/
 	// パーティクルのタイプ
 	ParticleType type_;
 
+	// Emitter
+	Emitter emitter_{};
+
 	// instancing描画用のリソース
 	ComPtr<ID3D12Resource> instancingResource_ = nullptr;
 	// instancing描画用のデータ
@@ -59,12 +77,6 @@ private:/*メンバ変数*/
 
 	// パーティクルの発生関数
 	std::list<ParticleData> Emit(const Emitter& emitter, std::mt19937& randomEngine);
-	// Emitter
-	Emitter emitter_{
-	.count = 10,
-	.frequency = 0.5f,		// 0.5秒ごとに発生
-	.frequencyTime = 0.0f,	// 発生頻度用の時刻、0で初期化
-	};
 
 	// instance描画する際に使う変数
 	uint32_t instanceCount_ = kNumMaxInstance;
@@ -73,6 +85,10 @@ private:/*メンバ変数*/
 
 	// 板ポリ描画時のテクスチャファイル名
 	std::string textureFileName_;
+
+	// 有効フラグ
+	bool isActive_ = true;
+
 private:
 	// モデルを受け取る箱
 	Model* model_ = nullptr;

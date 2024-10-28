@@ -22,21 +22,19 @@ void SampleScene::Initialize() {
 	sceneCamera_->Initialize();
 
 	// シーンにカメラをセット
-	SUGER::SetSceneCamera(sceneCamera_.get());
+	//SUGER::SetSceneCamera(sceneCamera_.get());
 
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create3DObject("teapot", "teapot");
 	SUGER::Create2DObject("jeanne", "jeanne.jpg");
-	SUGER::CreatePlaneParticle("normal", "circle.png");
+	SUGER::CreatePlaneParticle("plane", "circle.png");
 
 	// オブジェクト3Dコントローラの初期化
 	teapot_.Initialize(SUGER::FindObject3D("teapot"));
 	// オブジェクト2Dコントローラの初期化
 	jeanne_.Initialize(SUGER::FindObject2D("jeanne"));
-
-
-	// オブジェクト3Dコントローラを使ってトランスレートをセット
-	teapot_.SetTranslate(Vector3(1.0f, 0.0f, 0.0f));
+	// パーティクルコントローラの初期化
+	plane_.Initialize(SUGER::FindParticle("plane"));
 
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
 	jeanne_.SetPosition(jeanne_.GetSize() / 2.0f);
@@ -57,6 +55,9 @@ void SampleScene::Update() {
 
 	// スプライトを回転
 	jeanne_.SetRotation(jeanne_.GetRotation() + 0.01f);
+
+	// モデルをy軸+方向に回転
+	teapot_.SetRotate(Vector3(teapot_.GetRotate().x, teapot_.GetRotate().y + 0.01f, teapot_.GetRotate().z));
 
 	// 
 	// シーンの更新処理ここまで
