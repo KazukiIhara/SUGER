@@ -36,19 +36,9 @@ void SampleScene::Initialize() {
 	// パーティクルコントローラの初期化
 	plane_.Initialize(SUGER::FindParticle("plane"));
 
-	// オブジェクト3Dコントローラを使ってトランスレートをセット
-	teapot_.SetTranslate(Vector3(1.0f, 0.0f, 0.0f));
-
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
 	jeanne_.SetPosition(jeanne_.GetSize() / 2.0f);
 	jeanne_.SetAnchorPoint(Vector2(0.5f, 0.5f));
-
-	// teapotを非アクティブ化
-	teapot_.SetIsActive(false);
-
-	// jeanneを非アクティブ化
-	jeanne_.SetIsActive(false);
-
 }
 
 void SampleScene::Finalize() {
@@ -66,8 +56,8 @@ void SampleScene::Update() {
 	// スプライトを回転
 	jeanne_.SetRotation(jeanne_.GetRotation() + 0.01f);
 
-	// パーティクルを移動
-	plane_.SetTranslate(Vector3(1.0f, 1.0f, 0.0f));
+	// モデルをy軸+方向に回転
+	teapot_.SetRotate(Vector3(teapot_.GetRotate().x, teapot_.GetRotate().y + 0.01f, teapot_.GetRotate().z));
 
 	// 
 	// シーンの更新処理ここまで
