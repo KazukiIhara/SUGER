@@ -18,7 +18,7 @@
 class Camera;
 class Model;
 
-class Particle3D {
+class RandomParticle {
 public:
 	void Initialize(Model* model, Camera* camera, const std::string& textureFileName, const Transform3D& transform);
 	void Update();
@@ -28,6 +28,14 @@ public:
 	void SetCamera(Camera* camera);
 	// タイプのセット
 	void SetType(ParticleType type);
+
+	// 回転量のセット
+	void SetRotate(const Vector3& rotate);
+	// 移動量のセット
+	void SetTranslate(const Vector3& translate);
+
+	// 発生数のセット
+	void SetCount(const uint32_t& count);
 
 	// 有効フラグのセッター
 	void SetIsActive(const bool& isActive);

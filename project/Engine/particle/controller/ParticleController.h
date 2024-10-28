@@ -6,7 +6,7 @@
 // 数学関数ヘッダー
 #include "math/function/MathFunction.h"
 
-class Particle3D;
+class RandomParticle;
 
 // TODO:マネージャもコントローラも、パーティクルというよりはエミッターを制御しているので、一括で命名を変える
 
@@ -15,19 +15,25 @@ public:
 	ParticleController() = default;
 	~ParticleController() = default;
 
-private:
+public:
 
 	// 初期化
-	void Initialize(Particle3D* particle3d);
+	void Initialize(RandomParticle* particle3d);
+
+	// 回転のセット
+	void SetRotate(const Vector3& rotate);
+
+	// 移動量のセット
+	void SetTranslate(const Vector3& translate);
 
 	// 有効フラグのセッター
 	void SetIsActive(const bool& isActive);
 
 private:
 	// パーティクルをセットする関数
-	void SetParticle(Particle3D* particle3d);
+	void SetParticle(RandomParticle* particle3d);
 
 private:
 	// コントロールするパーティクル
-	Particle3D* particle3d_ = nullptr;
+	RandomParticle* particle3d_ = nullptr;
 };

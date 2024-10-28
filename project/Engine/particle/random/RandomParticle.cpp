@@ -1,4 +1,4 @@
-#include "Particle3d.h"
+#include "RandomParticle.h"
 #include <sstream>
 #include <fstream>
 #include <cassert>
@@ -9,7 +9,7 @@
 #include "3d/cameras/camera/Camera.h"
 
 
-void Particle3D::Initialize(Model* model, Camera* camera, const std::string& textureFileName, const Transform3D& transform) {
+void RandomParticle::Initialize(Model* model, Camera* camera, const std::string& textureFileName, const Transform3D& transform) {
 	// インスタンスをセット
 	SetModel(model);
 	SetCamera(camera);
@@ -43,7 +43,7 @@ void Particle3D::Initialize(Model* model, Camera* camera, const std::string& tex
 	SUGER::CreateSrvInstancing(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
 }
 
-void Particle3D::Update() {
+void RandomParticle::Update() {
 	// 乱数を使う準備
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
@@ -115,7 +115,7 @@ void Particle3D::Update() {
 	}
 }
 
-void Particle3D::Draw(BlendMode blendMode) {
+void RandomParticle::Draw(BlendMode blendMode) {
 	// PSOを設定
 	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kParticle, blendMode));
 
@@ -132,32 +132,44 @@ void Particle3D::Draw(BlendMode blendMode) {
 	}
 }
 
-void Particle3D::SetModel(Model* model) {
+void RandomParticle::SetModel(Model* model) {
 	model_ = model;
 }
 
-void Particle3D::SetCamera(Camera* camera) {
+void RandomParticle::SetCamera(Camera* camera) {
 	camera_ = camera;
 }
 
-void Particle3D::SetType(ParticleType type) {
+void RandomParticle::SetType(ParticleType type) {
 	type_ = type;
 }
 
-void Particle3D::SetIsActive(const bool& isActive) {
+void RandomParticle::SetRotate(const Vector3& rotate) {
+	emitter_.transform.rotate = rotate;
+}
+
+void RandomParticle::SetTranslate(const Vector3& translate) {
+	emitter_.transform.translate = translate;
+}
+
+void RandomParticle::SetCount(const uint32_t& count) {
+	emitter_.count = count;
+}
+
+void RandomParticle::SetIsActive(const bool& isActive) {
 	isActive_ = isActive;
 }
 
-const bool& Particle3D::GetIsActive() {
+const bool& RandomParticle::GetIsActive() {
 	return isActive_;
 }
 
-void Particle3D::CreateInstancingResource() {
+void RandomParticle::CreateInstancingResource() {
 	// instancing用のリソースを作る
 	instancingResource_ = SUGER::CreateBufferResource(sizeof(ParticleForGPU) * kNumMaxInstance);
 }
 
-void Particle3D::MapInstancingData() {
+void RandomParticle::MapInstancingData() {
 	instancingData_ = nullptr;
 	instancingResource_->Map(0, nullptr, reinterpret_cast<void**>(&instancingData_));
 
@@ -167,7 +179,7 @@ void Particle3D::MapInstancingData() {
 	}
 }
 
-ParticleData Particle3D::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate) {
+ParticleData RandomParticle::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate) {
 	// 出現位置と移動量の乱数の生成
 	std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	// 色を決める乱数の生成
@@ -195,7 +207,7 @@ ParticleData Particle3D::MakeNewParticle(std::mt19937& randomEngine, const Vecto
 	return particle;
 }
 
-std::list<ParticleData> Particle3D::Emit(const Emitter& emitter, std::mt19937& randomEngine) {
+std::list<ParticleData> RandomParticle::Emit(const Emitter& emitter, std::mt19937& randomEngine) {
 	std::list<ParticleData> particles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
 		particles.push_back(MakeNewParticle(randomEngine, emitter.transform.translate));
