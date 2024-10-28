@@ -96,7 +96,7 @@ void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& 
 		// SRVセット
 		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[textureFileName].srvIndex);
 		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData.meshes[i].vertices.size()), instanceCount, 0, 0, 0);
+		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData.meshes[i].indices.size()), instanceCount, 0, 0, 0);
 	}
 }
 
@@ -315,17 +315,24 @@ void Model::GeneratePlane(const std::string& textureFilePath) {
 	meshData.material.textureFilePath = textureFilePath;
 	meshData.material.haveUV_ = true;
 
-	meshData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {-1.0f,1.0f,0.0f,1.0f},.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {-1.0f,1.0f,0.0f,1.0f},.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f},.texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
+	// 頂点データの設定
+	meshData.vertices.push_back({ .position = { 1.0f,  1.0f, 0.0f, 1.0f }, .texcoord = { 0.0f, 0.0f }, .normal = { 0.0f, 0.0f, 1.0f } });
+	meshData.vertices.push_back({ .position = { -1.0f,  1.0f, 0.0f, 1.0f }, .texcoord = { 1.0f, 0.0f }, .normal = { 0.0f, 0.0f, 1.0f } });
+	meshData.vertices.push_back({ .position = { 1.0f, -1.0f, 0.0f, 1.0f }, .texcoord = { 0.0f, 1.0f }, .normal = { 0.0f, 0.0f, 1.0f } });
+	meshData.vertices.push_back({ .position = { -1.0f, -1.0f, 0.0f, 1.0f }, .texcoord = { 1.0f, 1.0f }, .normal = { 0.0f, 0.0f, 1.0f } });
 
-	meshData.material.color = { 1.0f,1.0f,1.0f,1.0f };
+	// インデックスデータの設定
+	meshData.indices.push_back(0);
+	meshData.indices.push_back(1);
+	meshData.indices.push_back(2);
+	meshData.indices.push_back(2);
+	meshData.indices.push_back(1);
+	meshData.indices.push_back(3);
 
+	meshData.material.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	// モデルにメッシュを追加
 	modelData.meshes.push_back(meshData);
-
 }
 
 void Model::CreatePlane(const std::string& textureFilePath) {
@@ -351,6 +358,15 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	CreateVertexBufferView();
 	/*頂点データの書き込み*/
 	MapVertexData();
+#pragma endregion
+
+#pragma region インデックスデータ
+	/*描画用のインデックスリソースを作成*/
+	CreateIndexResource();
+	/*インデックスバッファビューの作成*/
+	CreateIndexBufferView();
+	/*インデックスリソースにデータを書き込む*/
+	MapIndexData();
 #pragma endregion
 
 #pragma region マテリアルデータ

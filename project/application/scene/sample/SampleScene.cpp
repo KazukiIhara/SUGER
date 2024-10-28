@@ -41,7 +41,7 @@ void SampleScene::Initialize() {
 	jeanne_.SetAnchorPoint(Vector2(0.5f, 0.5f));
 
 	// パーティクルを非アクティブ化
-	plane_.SetIsActive(false);
+	//plane_.SetIsActive(false);
 }
 
 void SampleScene::Finalize() {
