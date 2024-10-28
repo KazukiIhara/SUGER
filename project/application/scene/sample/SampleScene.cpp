@@ -39,6 +39,9 @@ void SampleScene::Initialize() {
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
 	jeanne_.SetPosition(jeanne_.GetSize() / 2.0f);
 	jeanne_.SetAnchorPoint(Vector2(0.5f, 0.5f));
+
+	// パーティクルを非アクティブ化
+	//plane_.SetIsActive(false);
 }
 
 void SampleScene::Finalize() {
