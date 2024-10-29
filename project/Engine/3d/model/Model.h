@@ -85,8 +85,6 @@ private: // メンバ関数
 	void MapMaterialData();
 #pragma endregion
 
-	const std::string& GetModelExtension(const std::string& filePath);
-
 private: // メンバ変数
 #pragma region モデル
 	// モデルデータ
