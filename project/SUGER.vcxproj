@@ -172,10 +172,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
     <ClInclude Include="Engine\data\level\json\JsonLevelData.h" />
+    <ClInclude Include="Engine\enum\ModelEnum.h" />
     <ClInclude Include="Engine\enum\ParticleEnum.h" />
     <ClInclude Include="Engine\FixFPS\FixFPS.h" />
     <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h" />
     <ClInclude Include="Engine\manager\data\level\json\JsonLevelDataManager.h" />
+    <ClInclude Include="Engine\math\types\Quaternion.h" />
     <ClInclude Include="Engine\particle\random\RandomParticle.h" />
     <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
     <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h" />

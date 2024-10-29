@@ -30,7 +30,7 @@ public:
 	RandomParticle* Find(const std::string& name);
 
 	// 板ポリパーティクル作成
-	void CreatePlane(const std::string& name, const std::string& filePath, const Transform3D& transform);
+	void CreatePlane(const std::string& name, const std::string& filePath, const EulerTransform3D& transform);
 
 	// ModelManagerのセット
 	void SetModelManager(ModelManager* modelManager);

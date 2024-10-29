@@ -50,7 +50,7 @@ public: // Setter
 		this->transform_.translate_ = translate;
 	}
 	// トランスフォームのセット
-	void SetTransform(const Transform3D& transform) {
+	void SetTransform(const EulerTransform3D& transform) {
 		this->transform_.scale_ = transform.scale;
 		this->transform_.rotate_ = transform.rotate;
 		this->transform_.translate_ = transform.translate;

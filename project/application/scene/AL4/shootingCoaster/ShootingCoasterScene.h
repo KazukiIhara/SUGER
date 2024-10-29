@@ -32,7 +32,7 @@ private: // 非公開メンバ変数
 	// レールの最大数
 	static const uint32_t kRailNum_ = 5;
 	// レールのトランスフォーム
-	std::array<Transform3D, kRailNum_> railTransform_{};
+	std::array<EulerTransform3D, kRailNum_> railTransform_{};
 
 };
 

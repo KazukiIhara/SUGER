@@ -27,7 +27,7 @@ public:
 	void Finalize();
 
 	// オブジェクト作成
-	void Create(const std::string& name, const std::string& filePath, const Transform3D& transform);
+	void Create(const std::string& name, const std::string& filePath, const EulerTransform3D& transform);
 
 	// オブジェクト検索
 	Object3D* Find(const std::string& name);

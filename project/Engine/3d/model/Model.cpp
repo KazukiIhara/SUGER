@@ -3,6 +3,7 @@
 
 // C++ 
 #include <cassert>
+#include <filesystem>
 
 // Assimp
 #include <assimp/Importer.hpp>
@@ -101,12 +102,39 @@ void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& 
 }
 
 void Model::LoadModel(const std::string& filename, const std::string& directoryPath) {
+	// 対応する拡張子のリスト
+	std::vector<std::string> supportedExtensions = { ".obj", ".gltf" };
+
+	// ディレクトリ内のファイルを検索
+	// モデルファイルが入っているディレクトリ
 	std::string fileDirectoryPath = directoryPath + "/" + filename;
+	// filesystem用
+	std::filesystem::path modelDirectoryPath(fileDirectoryPath);
+
+	std::string modelFilePath;
+
+	for (const auto& entry : std::filesystem::directory_iterator(modelDirectoryPath)) {
+		if (entry.is_regular_file()) {
+			std::string ext = entry.path().extension().string();
+			// 対応する拡張子かチェック
+			if (std::find(supportedExtensions.begin(), supportedExtensions.end(), ext) != supportedExtensions.end()) {
+				if (entry.path().stem().string() == filename) {
+					modelFilePath = entry.path().string();
+					break;
+				}
+			}
+		}
+	}
+
+	// ファイルが見つからなかった場合はエラー
+	if (modelFilePath.empty()) {
+		std::cerr << "Error: Model file not found or unsupported format." << std::endl;
+		return;
+	}
 
 	Assimp::Importer importer;
-	std::string filePath = fileDirectoryPath + "/" + filename + ".obj";
-	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_Triangulate);
-	assert(scene->HasMeshes());
+	const aiScene* scene = importer.ReadFile(modelFilePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_Triangulate);
+	assert(scene && scene->HasMeshes());
 
 	std::vector<MaterialData> materials(scene->mNumMaterials);
 
@@ -375,6 +403,7 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	/*マテリアルにデータを書き込む*/
 	MapMaterialData();
 #pragma endregion
+
 }
 
 void Model::CreateVertexResource() {

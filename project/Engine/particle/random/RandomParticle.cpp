@@ -9,7 +9,7 @@
 #include "3d/cameras/camera/Camera.h"
 
 
-void RandomParticle::Initialize(Model* model, Camera* camera, const std::string& textureFileName, const Transform3D& transform) {
+void RandomParticle::Initialize(Model* model, Camera* camera, const std::string& textureFileName, const EulerTransform3D& transform) {
 	// インスタンスをセット
 	SetModel(model);
 	SetCamera(camera);

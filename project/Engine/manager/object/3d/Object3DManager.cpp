@@ -34,7 +34,7 @@ void Object3DManager::Finalize() {
 	objects_.clear();
 }
 
-void Object3DManager::Create(const std::string& name, const std::string& fileName, const Transform3D& transform) {
+void Object3DManager::Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform) {
 	// オブジェクトの生成と初期化
 	std::unique_ptr<Object3D> newObject = std::make_unique<Object3D>();
 	newObject->Initialize();

@@ -29,4 +29,3 @@ private: // 非公開メンバ変数
 	// plane用パーティクルコントローラ
 	ParticleController plane_;
 };
-
