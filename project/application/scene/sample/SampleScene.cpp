@@ -25,7 +25,7 @@ void SampleScene::Initialize() {
 	//SUGER::SetSceneCamera(sceneCamera_.get());
 
 	// オブジェクトの生成と、モデルの読み込み
-	SUGER::Create3DObject("teapot", "pronama_chan");
+	SUGER::Create3DObject("teapot", "teapot");
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 
