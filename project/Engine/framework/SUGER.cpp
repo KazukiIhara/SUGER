@@ -343,7 +343,7 @@ Sprite* SUGER::FindObject2D(const std::string& name) {
 	return object2dManager_->Find(name);
 }
 
-void SUGER::Create3DObject(const std::string& name, const std::string& filePath, const Transform3D& transform) {
+void SUGER::Create3DObject(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
 	object3dManager_->Create(name, filePath, transform);
 }
 
@@ -369,7 +369,7 @@ void SUGER::SetSceneCamera(Camera* camera) {
 	particleManager_->SetSceneCamera(camera);
 }
 
-void SUGER::CreatePlaneParticle(const std::string& name, const std::string& filePath, const Transform3D& transform) {
+void SUGER::CreatePlaneParticle(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
 	// 規定のディレクトリパス
 	const std::string& directoryPath = "resources/images/";
 	particleManager_->CreatePlane(name, directoryPath + filePath, transform);

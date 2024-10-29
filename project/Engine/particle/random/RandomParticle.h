@@ -20,7 +20,7 @@ class Model;
 
 class RandomParticle {
 public:
-	void Initialize(Model* model, Camera* camera, const std::string& textureFileName, const Transform3D& transform);
+	void Initialize(Model* model, Camera* camera, const std::string& textureFileName, const EulerTransform3D& transform);
 	void Update();
 	void Draw(BlendMode blendMode = kBlendModeAdd);
 

@@ -12,6 +12,8 @@
 #include "structs/ObjectStructs.h"
 #include "structs/ModelStructs.h"
 
+#include "enum/ModelEnum.h"
+
 // 3Dモデル
 class Model {
 public: // メンバ関数
@@ -82,6 +84,8 @@ private: // メンバ関数
 	/*マテリアルデータの書き込み*/
 	void MapMaterialData();
 #pragma endregion
+
+	const std::string& GetModelExtension(const std::string& filePath);
 
 private: // メンバ変数
 #pragma region モデル

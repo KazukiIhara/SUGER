@@ -50,7 +50,7 @@ void JsonLevelData::Load(const std::string& fullpath) {
 			nlohmann::json& transform = object["transform"];
 
 			// 平行移動
-			Transform3D objectData{};
+			EulerTransform3D objectData{};
 			objectData.translate.x = static_cast<float>(transform["translation"][0]);
 			objectData.translate.y = static_cast<float>(transform["translation"][2]);
 			objectData.translate.z = static_cast<float>(transform["translation"][1]);

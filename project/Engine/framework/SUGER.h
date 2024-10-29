@@ -149,7 +149,7 @@ public: // クラスメソッド
 
 #pragma region Object3DManager
 	// 3Dオブジェクトの作成
-	static void Create3DObject(const std::string& name, const std::string& filePath = "", const Transform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	static void Create3DObject(const std::string& name, const std::string& filePath = "", const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
 	// 3Dオブジェクトの更新
 	static void Update3DObjects();
 	// 3Dオブジェクトの描画
@@ -167,7 +167,7 @@ public: // クラスメソッド
 
 #pragma region ParticleManager
 	// Particleの作成
-	static void CreatePlaneParticle(const std::string& name, const std::string& filePath = "", const Transform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	static void CreatePlaneParticle(const std::string& name, const std::string& filePath = "", const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
 	// Particleの更新
 	static void UpdateParticle();
 	// Particleの描画
