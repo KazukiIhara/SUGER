@@ -25,12 +25,12 @@ void SampleScene::Initialize() {
 	//SUGER::SetSceneCamera(sceneCamera_.get());
 
 	// オブジェクトの生成と、モデルの読み込み
-	SUGER::Create3DObject("teapot", "walk");
+	SUGER::Create3DObject("sample", "AnimatedCube");
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 
 	// オブジェクト3Dコントローラの初期化
-	teapot_.Initialize(SUGER::FindObject3D("teapot"));
+	teapot_.Initialize(SUGER::FindObject3D("sample"));
 	// オブジェクト2Dコントローラの初期化
 	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
 	// パーティクルコントローラの初期化
