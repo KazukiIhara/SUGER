@@ -120,6 +120,10 @@ private: // メンバ変数
 #pragma region アニメーション
 	// アニメーションデータ
 	Animation animation_;
+	// スケルトン
+	Skeleton skeleton_;
+	// スキン
+
 
 #pragma endregion
 
@@ -154,4 +158,7 @@ private: // メンバ変数
 	std::vector<UVTransform> uvTransforms_;
 #pragma endregion
 
+#pragma region Animation
+	float animationTime = 0.0f;
+#pragma endregion
 };

@@ -25,12 +25,12 @@ void SampleScene::Initialize() {
 	//SUGER::SetSceneCamera(sceneCamera_.get());
 
 	// オブジェクトの生成と、モデルの読み込み
-	SUGER::Create3DObject("sample", "AnimatedCube");
+	SUGER::Create3DObject("sample", "walk");
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 
 	// オブジェクト3Dコントローラの初期化
-	teapot_.Initialize(SUGER::FindObject3D("sample"));
+	sample_.Initialize(SUGER::FindObject3D("sample"));
 	// オブジェクト2Dコントローラの初期化
 	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
 	// パーティクルコントローラの初期化
@@ -61,13 +61,13 @@ void SampleScene::Update() {
 		// スプライトを回転
 		pronama_chan.SetRotation(pronama_chan.GetRotation() + 0.01f);
 		// モデルをy軸+方向に回転
-		teapot_.SetRotate(Vector3(teapot_.GetRotate().x, teapot_.GetRotate().y + 0.01f, teapot_.GetRotate().z));
+		sample_.SetRotate(Vector3(sample_.GetRotate().x, sample_.GetRotate().y + 0.01f, sample_.GetRotate().z));
 
 	} else if (SUGER::PushKey(DIK_A)) {
 		// スプライトを回転
 		pronama_chan.SetRotation(pronama_chan.GetRotation() - 0.01f);
 		// モデルをy軸+方向に回転
-		teapot_.SetRotate(Vector3(teapot_.GetRotate().x, teapot_.GetRotate().y - 0.01f, teapot_.GetRotate().z));
+		sample_.SetRotate(Vector3(sample_.GetRotate().x, sample_.GetRotate().y - 0.01f, sample_.GetRotate().z));
 	}
 
 

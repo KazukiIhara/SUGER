@@ -22,8 +22,8 @@ private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 
-	// teapot用のオブジェクト3Dコントローラ
-	Object3DController teapot_;
+	// sample用のオブジェクト3Dコントローラ
+	Object3DController sample_;
 	// jeanne用のオブジェクト2Dコントローラ
 	Object2DController pronama_chan;
 	// plane用パーティクルコントローラ

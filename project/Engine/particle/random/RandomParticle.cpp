@@ -26,7 +26,7 @@ void RandomParticle::Initialize(Model* model, Camera* camera, const std::string&
 	emitter_.transform.rotate = transform.rotate;
 	emitter_.transform.translate = transform.translate;
 
-	emitter_.count = 10;		// 一度に発生する数
+	emitter_.count = 5;		// 一度に発生する数
 	emitter_.frequency = 0.5f;	// 発生頻度
 	emitter_.frequencyTime = 0.0f;	// 発生頻度用の時刻、0で初期化
 
