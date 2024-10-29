@@ -12,8 +12,11 @@ public: // 公開メンバ関数
 	// 初期化処理
 	void Initialize(DirectXManager* directXManager, GraphicsPipelineManager* pipelineManager);
 
-	// 描画前処理
+	// 3dオブジェクト描画前処理
 	void PreDraw();
+
+	// スキニングあり描画前処理
+	void PreDrawSkinning();
 private:
 	// DirectXCommon
 	void SetDirectXManager(DirectXManager* directX) {

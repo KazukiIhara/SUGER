@@ -118,6 +118,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp" />
     <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp" />
     <ClCompile Include="Engine\3d\controller\Object3dController.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
@@ -166,13 +167,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\cameras\camera\Camera.h" />
     <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h" />
     <ClInclude Include="Engine\3d\controller\Object3dController.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
     <ClInclude Include="Engine\data\level\json\JsonLevelData.h" />
-    <ClInclude Include="Engine\enum\ModelEnum.h" />
     <ClInclude Include="Engine\enum\ParticleEnum.h" />
     <ClInclude Include="Engine\FixFPS\FixFPS.h" />
     <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h" />
@@ -238,6 +239,18 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="resources\shaders\objects\3d\object3d.PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -265,6 +278,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\shaders\objects\3dSkinning\object3dSkinning.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
