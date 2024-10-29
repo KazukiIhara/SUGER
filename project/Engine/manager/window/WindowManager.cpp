@@ -84,6 +84,39 @@ void WindowManager::Finalize() {
 	TerminateGameWindow();
 }
 
+void WindowManager::ToggleFullScreen() {
+	// 現在のフルスクリーン状態を確認
+	if (!isFullScreen_) {
+		// ウィンドウモードからフルスクリーンに変更
+
+		// 現在のウィンドウの位置とサイズを保存
+		GetWindowRect(hwnd_, &windowRect_);
+
+		// ディスプレイの解像度を取得
+		int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+		int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+
+		// フルスクリーンに設定
+		SetWindowLongPtr(hwnd_, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+		SetWindowPos(hwnd_, HWND_TOP, 0, 0, screenWidth, screenHeight, SWP_FRAMECHANGED | SWP_NOZORDER | SWP_NOOWNERZORDER);
+		ShowWindow(hwnd_, SW_MAXIMIZE);
+
+		// フルスクリーンフラグを設定
+		isFullScreen_ = true;
+	} else {
+		// フルスクリーンからウィンドウモードに変更
+
+		// ウィンドウスタイルを元に戻す
+		SetWindowLongPtr(hwnd_, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
+		SetWindowPos(hwnd_, HWND_TOP, windowRect_.left, windowRect_.top,
+			windowRect_.right - windowRect_.left, windowRect_.bottom - windowRect_.top, SWP_FRAMECHANGED | SWP_NOZORDER | SWP_NOOWNERZORDER);
+		ShowWindow(hwnd_, SW_RESTORE);
+
+		// フルスクリーンフラグを解除
+		isFullScreen_ = false;
+	}
+}
+
 LRESULT WindowManager::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	/*ImGuiでもマウス操作ができるようになるやつ*/
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {

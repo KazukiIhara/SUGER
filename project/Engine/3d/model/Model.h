@@ -12,6 +12,8 @@
 #include "structs/ObjectStructs.h"
 #include "structs/ModelStructs.h"
 
+#include "enum/ModelEnum.h"
+
 // 3Dモデル
 class Model {
 public: // メンバ関数
@@ -66,6 +68,15 @@ private: // メンバ関数
 	// 頂点データの書き込み
 	void MapVertexData();
 #pragma endregion
+#pragma region Index
+	// インデックスリソースの作成
+	void CreateIndexResource();
+	// インデックスバッファビューの作成
+	void CreateIndexBufferView();
+	// インデックスデータの書き込み
+	void MapIndexData();
+#pragma endregion
+
 
 #pragma region Material
 	/*マテリアルリソースの作成*/
@@ -74,17 +85,12 @@ private: // メンバ関数
 	void MapMaterialData();
 #pragma endregion
 
-#pragma region Instancing
-	// Instancingリソースを作る
-	void CreateInstancingResource();
-	// Instancingデータを書き込む
-	void MapInstancingData();
-#pragma endregion
+	const std::string& GetModelExtension(const std::string& filePath);
 
 private: // メンバ変数
 #pragma region モデル
 	// モデルデータ
-	sModelData modelData;
+	ModelData modelData;
 #pragma endregion
 
 #pragma region 頂点
@@ -96,6 +102,15 @@ private: // メンバ変数
 	std::vector<VertexData3DUnUV*> vertexDataUnUV_;
 	/*VBV*/
 	std::vector<D3D12_VERTEX_BUFFER_VIEW> vertexBufferViews_;
+#pragma endregion
+
+#pragma region インデックス
+	/*インデックスリソース*/
+	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> indexResources_;
+	/*インデックスデータ*/
+	std::vector<uint32_t*> indexData_;
+	/*インデックスバッファビュー*/
+	std::vector<D3D12_INDEX_BUFFER_VIEW> indexBufferViews_{};
 #pragma endregion
 
 #pragma region マテリアル

@@ -6,8 +6,8 @@
 class WindowManager {
 public: // 静的メンバ変数
 	// クライアント領域
-	static const uint32_t kClientWidth = 1280; // クライアント領域の横幅
-	static const uint32_t kClientHeight = 720; // クライアント領域の縦幅
+	static const uint32_t kClientWidth = 1920; // クライアント領域の横幅
+	static const uint32_t kClientHeight = 1080; // クライアント領域の縦幅
 
 public: // 公開メンバ関数
 	WindowManager() = default;
@@ -19,6 +19,9 @@ public: // 公開メンバ関数
 	bool ProcessMessage();
 	// 終了処理
 	void Finalize();
+
+	// フルスクリーンとウィンドウモードを切り替える
+	void ToggleFullScreen();
 
 	// ウィンドウハンドルの取得
 	HWND GetHwnd() const {
@@ -43,5 +46,9 @@ private: // メンバ変数
 	// Window関連
 	HWND hwnd_ = nullptr; // ウィンドウハンドル
 	WNDCLASS wc_{};	// ウィンドウクラス
+	// フルスクリーンかどうかを保持するフラグ
+	bool isFullScreen_ = false;
+	// ウィンドウモードの復元用の矩形
+	RECT windowRect_ = { 0, 0, kClientWidth, kClientHeight };
 
 };

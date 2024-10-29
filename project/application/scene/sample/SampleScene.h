@@ -25,8 +25,7 @@ private: // 非公開メンバ変数
 	// teapot用のオブジェクト3Dコントローラ
 	Object3DController teapot_;
 	// jeanne用のオブジェクト2Dコントローラ
-	Object2DController jeanne_;
+	Object2DController pronama_chan;
 	// plane用パーティクルコントローラ
 	ParticleController plane_;
 };
-

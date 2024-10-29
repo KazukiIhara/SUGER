@@ -3,6 +3,7 @@
 
 // C++ 
 #include <cassert>
+#include <filesystem>
 
 // Assimp
 #include <assimp/Importer.hpp>
@@ -37,6 +38,15 @@ void Model::Initialize(const std::string& filename) {
 	MapVertexData();
 #pragma endregion
 
+#pragma region インデックスデータ
+	/*描画用のインデックスリソースを作成*/
+	CreateIndexResource();
+	/*インデックスバッファビューの作成*/
+	CreateIndexBufferView();
+	/*インデックスリソースにデータを書き込む*/
+	MapIndexData();
+#pragma endregion
+
 #pragma region マテリアルデータ
 	/*マテリアル用のリソース作成*/
 	CreateMaterialResource();
@@ -61,15 +71,17 @@ void Model::Draw() {
 	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
 		// VBVを設定
 		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		// IBVを設定
+		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
 		// マテリアルCBufferの場所を設定
 		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
 		if (modelData.meshes[i].material.haveUV_) {
 			// SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData.meshes[i].material.textureFilePath].srvIndex);
 			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-			SUGER::GetDirectXCommandList()->DrawInstanced(UINT(modelData.meshes[i].vertices.size()), 1, 0, 0);
+			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData.meshes[i].indices.size()), 1, 0, 0, 0);
 		} else {
-			SUGER::GetDirectXCommandList()->DrawInstanced(UINT(modelData.meshes[i].verticesUnUV.size()), 1, 0, 0);
+			// TODO:UVなしの時の処理
 		}
 	}
 }
@@ -78,32 +90,57 @@ void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& 
 	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
 		// VBVを設定
 		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		// IBVを設定
+		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
 		// マテリアルCBufferの場所を設定
 		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
-		if (modelData.meshes[i].material.haveUV_) {
-			// SRVセット
-			SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[textureFileName].srvIndex);
-			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-			SUGER::GetDirectXCommandList()->DrawInstanced(UINT(modelData.meshes[i].vertices.size()), instanceCount, 0, 0);
-		} else {
-			SUGER::GetDirectXCommandList()->DrawInstanced(UINT(modelData.meshes[i].verticesUnUV.size()), instanceCount, 0, 0);
-		}
+		// SRVセット
+		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[textureFileName].srvIndex);
+		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData.meshes[i].indices.size()), instanceCount, 0, 0, 0);
 	}
 }
 
 void Model::LoadModel(const std::string& filename, const std::string& directoryPath) {
+	// 対応する拡張子のリスト
+	std::vector<std::string> supportedExtensions = { ".obj", ".fbx", ".dae", ".3ds" };
+
+	// ディレクトリ内のファイルを検索
+	// モデルファイルが入っているディレクトリ
 	std::string fileDirectoryPath = directoryPath + "/" + filename;
+	// filesystem用
+	std::filesystem::path modelDirectoryPath(fileDirectoryPath);
+
+	std::string modelFilePath;
+
+	for (const auto& entry : std::filesystem::directory_iterator(modelDirectoryPath)) {
+		if (entry.is_regular_file()) {
+			std::string ext = entry.path().extension().string();
+			// 対応する拡張子かチェック
+			if (std::find(supportedExtensions.begin(), supportedExtensions.end(), ext) != supportedExtensions.end()) {
+				if (entry.path().stem().string() == filename) {
+					modelFilePath = entry.path().string();
+					break;
+				}
+			}
+		}
+	}
+
+	// ファイルが見つからなかった場合はエラー
+	if (modelFilePath.empty()) {
+		std::cerr << "Error: Model file not found or unsupported format." << std::endl;
+		return;
+	}
 
 	Assimp::Importer importer;
-	std::string filePath = fileDirectoryPath + "/" + filename + ".obj";
-	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_Triangulate);
-	assert(scene->HasMeshes());
+	const aiScene* scene = importer.ReadFile(modelFilePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_Triangulate);
+	assert(scene && scene->HasMeshes());
 
-	std::vector<sMaterialData> materials(scene->mNumMaterials);
+	std::vector<MaterialData> materials(scene->mNumMaterials);
 
 	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
 		aiMaterial* material = scene->mMaterials[materialIndex];
-		sMaterialData materialData;
+		MaterialData materialData;
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
 			aiString textureFilePath;
 			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
@@ -121,29 +158,37 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 		aiMesh* mesh = scene->mMeshes[meshIndex];
 		assert(mesh->HasNormals());
 
-		sMeshData meshData;
+		MeshData meshData;
 		meshData.material = materials[mesh->mMaterialIndex];
 
-		if (mesh->HasTextureCoords(0)) {
+
+		if (mesh->HasTextureCoords(0)) { // UVあり
+
+			// 最初に頂点数分のメモリを確保
+			meshData.vertices.resize(mesh->mNumVertices);
+
+			// 頂点解析
+			for (uint32_t vertexIndex = 0; vertexIndex < mesh->mNumVertices; ++vertexIndex) {
+				aiVector3D& position = mesh->mVertices[vertexIndex];
+				aiVector3D& normal = mesh->mNormals[vertexIndex];
+				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
+
+				meshData.vertices[vertexIndex].position = { -position.x,position.y,position.z,1.0f };
+				meshData.vertices[vertexIndex].normal = { -normal.x,normal.y,normal.z };
+				meshData.vertices[vertexIndex].texcoord = { texcoord.x,texcoord.y };
+			}
+			// index解析
 			for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
 				aiFace& face = mesh->mFaces[faceIndex];
 				assert(face.mNumIndices == 3);
 
 				for (uint32_t element = 0; element < face.mNumIndices; ++element) {
 					uint32_t vertexIndex = face.mIndices[element];
-					aiVector3D& position = mesh->mVertices[vertexIndex];
-					aiVector3D& normal = mesh->mNormals[vertexIndex];
-					aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
-					VertexData3D vertex;
-					vertex.position = { position.x, position.y, position.z, 1.0f };
-					vertex.normal = { normal.x, normal.y, normal.z };
-					vertex.texcoord = { texcoord.x, texcoord.y };
-					vertex.position.x *= -1.0f;
-					vertex.normal.x *= -1.0f;
-					meshData.vertices.push_back(vertex);
+					meshData.indices.push_back(vertexIndex);
 				}
 			}
-		} else {
+
+		} else { // UVなし
 			for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
 				aiFace& face = mesh->mFaces[faceIndex];
 				assert(face.mNumIndices == 3);
@@ -175,7 +220,7 @@ void Model::GenerateSphere(const std::string& textureFilePath) {
 	const float kLonEvery = std::numbers::pi_v<float> *2.0f / float(kSubdivision);
 	const float kLatEvery = std::numbers::pi_v<float> / float(kSubdivision);
 
-	sMeshData meshData;
+	MeshData meshData;
 	meshData.material.textureFilePath = textureFilePath;
 	meshData.material.haveUV_ = true;
 	meshData.vertices.resize(kSubdivision * kSubdivision * 6);
@@ -294,21 +339,28 @@ void Model::GeneratePlane(const std::string& textureFilePath) {
 	// テクスチャをロード
 	SUGER::LoadTexture(textureFilePath);
 
-	sMeshData meshData;
+	MeshData meshData;
 	meshData.material.textureFilePath = textureFilePath;
 	meshData.material.haveUV_ = true;
 
-	meshData.vertices.push_back({ .position = {1.0f,1.0f,0.0f,1.0f},.texcoord = {0.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {-1.0f,1.0f,0.0f,1.0f},.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {1.0f,-1.0f,0.0f,1.0f},.texcoord = {0.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {-1.0f,1.0f,0.0f,1.0f},.texcoord = {1.0f,0.0f},.normal = {0.0f,0.0f,1.0f} });
-	meshData.vertices.push_back({ .position = {-1.0f,-1.0f,0.0f,1.0f},.texcoord = {1.0f,1.0f},.normal = {0.0f,0.0f,1.0f} });
+	// 頂点データの設定
+	meshData.vertices.push_back({ .position = { 1.0f,  1.0f, 0.0f, 1.0f }, .texcoord = { 0.0f, 0.0f }, .normal = { 0.0f, 0.0f, 1.0f } });
+	meshData.vertices.push_back({ .position = { -1.0f,  1.0f, 0.0f, 1.0f }, .texcoord = { 1.0f, 0.0f }, .normal = { 0.0f, 0.0f, 1.0f } });
+	meshData.vertices.push_back({ .position = { 1.0f, -1.0f, 0.0f, 1.0f }, .texcoord = { 0.0f, 1.0f }, .normal = { 0.0f, 0.0f, 1.0f } });
+	meshData.vertices.push_back({ .position = { -1.0f, -1.0f, 0.0f, 1.0f }, .texcoord = { 1.0f, 1.0f }, .normal = { 0.0f, 0.0f, 1.0f } });
 
-	meshData.material.color = { 1.0f,1.0f,1.0f,1.0f };
+	// インデックスデータの設定
+	meshData.indices.push_back(0);
+	meshData.indices.push_back(1);
+	meshData.indices.push_back(2);
+	meshData.indices.push_back(2);
+	meshData.indices.push_back(1);
+	meshData.indices.push_back(3);
 
+	meshData.material.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	// モデルにメッシュを追加
 	modelData.meshes.push_back(meshData);
-
 }
 
 void Model::CreatePlane(const std::string& textureFilePath) {
@@ -336,12 +388,22 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	MapVertexData();
 #pragma endregion
 
+#pragma region インデックスデータ
+	/*描画用のインデックスリソースを作成*/
+	CreateIndexResource();
+	/*インデックスバッファビューの作成*/
+	CreateIndexBufferView();
+	/*インデックスリソースにデータを書き込む*/
+	MapIndexData();
+#pragma endregion
+
 #pragma region マテリアルデータ
 	/*マテリアル用のリソース作成*/
 	CreateMaterialResource();
 	/*マテリアルにデータを書き込む*/
 	MapMaterialData();
 #pragma endregion
+
 }
 
 void Model::CreateVertexResource() {
@@ -387,6 +449,46 @@ void Model::MapVertexData() {
 	}
 }
 
+void Model::CreateIndexResource() {
+	for (auto& mesh : modelData.meshes) {
+		Microsoft::WRL::ComPtr<ID3D12Resource> indexResource;
+		if (mesh.material.haveUV_) {
+			indexResource = SUGER::CreateBufferResource(sizeof(uint32_t) * mesh.indices.size());
+		} else {
+			// TODO::UVなしの処理
+		}
+		indexResources_.push_back(indexResource);
+	}
+}
+
+void Model::CreateIndexBufferView() {
+	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
+		D3D12_INDEX_BUFFER_VIEW indexBufferView;
+		indexBufferView.BufferLocation = indexResources_[i]->GetGPUVirtualAddress();
+		if (modelData.meshes[i].material.haveUV_) {
+			indexBufferView.SizeInBytes = UINT(sizeof(uint32_t) * modelData.meshes[i].indices.size());
+			indexBufferView.Format = DXGI_FORMAT_R32_UINT;
+		} else {
+			// TODO::UVなしの処理
+		}
+		indexBufferViews_.push_back(indexBufferView);
+	}
+}
+
+void Model::MapIndexData() {
+	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
+		if (modelData.meshes[i].material.haveUV_) {
+			uint32_t* indexData = nullptr;
+			indexResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
+			std::memcpy(indexData, modelData.meshes[i].indices.data(), sizeof(uint32_t) * modelData.meshes[i].indices.size());
+			indexData_.push_back(indexData);
+		} else {
+			// TODO::UVなしの処理
+		}
+	}
+
+}
+
 void Model::CreateMaterialResource() {
 	for (size_t i = 0; i < materials_.size(); ++i) {
 		Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = SUGER::CreateBufferResource(sizeof(Material3D));
@@ -405,7 +507,3 @@ void Model::MapMaterialData() {
 		materialData_.push_back(materialData);
 	}
 }
-
-void Model::CreateInstancingResource() {}
-
-void Model::MapInstancingData() {}
