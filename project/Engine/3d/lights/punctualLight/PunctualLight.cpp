@@ -40,7 +40,7 @@ void PunctualLight::InitializeLightSetting() {
 	punctualLight.spotLight.color = { 1.0f,1.0f,1.0f,1.0f };
 	punctualLight.spotLight.position = { 0.0f,2.0f,10.0f };
 	punctualLight.spotLight.distance = 7.0f;
-	punctualLight.spotLight.direction = Normalize({ 0.0f,-1.0f,0.0f });
+	punctualLight.spotLight.direction = Normalize(Vector3(0.0f, -1.0f, 0.0f));
 	punctualLight.spotLight.intensity = 0.0f;
 	punctualLight.spotLight.decay = 2.0f;
 	punctualLight.spotLight.cosFalloffStart = 0.1f;
