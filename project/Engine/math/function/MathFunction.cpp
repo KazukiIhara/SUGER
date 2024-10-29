@@ -263,6 +263,42 @@ Matrix4x4 MakeUVMatrix(const Vector2& scale, const float& rotateZ, const Vector2
 	return scaleMatrix * rotateZMatrix * translateMatrix;
 }
 
+Matrix4x4 QuaternionToMatrix4x4(const Quaternion& q) {
+	Matrix4x4 mat;
+
+	float xx = q.x * q.x;
+	float yy = q.y * q.y;
+	float zz = q.z * q.z;
+	float xy = q.x * q.y;
+	float xz = q.x * q.z;
+	float yz = q.y * q.z;
+	float wx = q.w * q.x;
+	float wy = q.w * q.y;
+	float wz = q.w * q.z;
+
+	mat.m[0][0] = 1.0f - 2.0f * (yy + zz);
+	mat.m[0][1] = 2.0f * (xy - wz);
+	mat.m[0][2] = 2.0f * (xz + wy);
+	mat.m[0][3] = 0.0f;
+
+	mat.m[1][0] = 2.0f * (xy + wz);
+	mat.m[1][1] = 1.0f - 2.0f * (xx + zz);
+	mat.m[1][2] = 2.0f * (yz - wx);
+	mat.m[1][3] = 0.0f;
+
+	mat.m[2][0] = 2.0f * (xz - wy);
+	mat.m[2][1] = 2.0f * (yz + wx);
+	mat.m[2][2] = 1.0f - 2.0f * (xx + yy);
+	mat.m[2][3] = 0.0f;
+
+	mat.m[3][0] = 0.0f;
+	mat.m[3][1] = 0.0f;
+	mat.m[3][2] = 0.0f;
+	mat.m[3][3] = 1.0f;
+
+	return mat;
+}
+
 Quaternion Normalize(const Quaternion& q) {
 	// クォータニオンの長さを計算
 	float length = std::sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);

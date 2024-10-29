@@ -73,7 +73,12 @@ Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRaito, float nearClip
 
 Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip);
 
+// UV用行列作成
 Matrix4x4 MakeUVMatrix(const Vector2& scale, const float& rotateZ, const Vector2& translate);
+
+// クオータニオンから回転行列への変換
+Matrix4x4 QuaternionToMatrix4x4(const Quaternion& q);
+
 
 ///
 /// Quaternion
@@ -83,4 +88,4 @@ Matrix4x4 MakeUVMatrix(const Vector2& scale, const float& rotateZ, const Vector2
 Quaternion Normalize(const Quaternion& q);
 
 // 球面線形補完
-Quaternion Slerp(const Quaternion& q1, const Quaternion& q2, float t);
+Quaternion Slerp(Quaternion q1, Quaternion q2, float t);
