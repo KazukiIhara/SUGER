@@ -79,7 +79,7 @@ void Model::Update() {
 	}
 }
 
-void Model::Draw() {
+void Model::DrawSkinning() {
 
 	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 

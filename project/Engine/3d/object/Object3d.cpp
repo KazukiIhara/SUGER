@@ -35,7 +35,7 @@ void Object3D::Draw(BlendMode blendMode) {
 	camera_->TransferCamera();
 	// 3Dモデルが割り当てられていれば描画する
 	if (model_) {
-		model_->Draw();
+		model_->DrawSkinning();
 	}
 }
 

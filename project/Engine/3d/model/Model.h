@@ -32,8 +32,8 @@ public: // メンバ関数
 	void Initialize(const std::string& filename);
 	// 更新
 	void Update();
-	// 描画
-	void Draw();
+	// スキニング描画
+	void DrawSkinning();
 	// パーティクルの場合の描画
 	void DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName);
 	// モデルの読み込み
