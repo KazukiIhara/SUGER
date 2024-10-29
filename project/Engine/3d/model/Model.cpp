@@ -555,13 +555,17 @@ void Model::MapMaterialData() {
 
 Node Model::ReadNode(aiNode* node) {
 	Node result;
-	aiMatrix4x4 aiLocalmatrix = node->mTransformation; //nodeのlocalMatrixを取得
-	aiLocalmatrix.Transpose(); // 列ベクトル形式を行ベクトル形式に転置
-	for (int i = 0; i < 4; ++i) {
-		for (int j = 0; j < 4; ++j) {
-			result.localMatrix.m[i][j] = aiLocalmatrix[i][j];
-		}
-	}
+
+	aiVector3D scale, translate;
+	aiQuaternion rotate;
+
+	node->mTransformation.Decompose(scale, rotate, translate);
+	result.transform.scale = { scale.x,scale.y,scale.z };
+	result.transform.rotate = { rotate.x,-rotate.y,-rotate.z,rotate.w };
+	result.transform.translate = { -translate.x,translate.y,translate.z };
+
+	result.localMatrix = MakeAffineMatrix(result.transform.scale, result.transform.rotate, result.transform.translate);
+
 	result.name = node->mName.C_Str(); // node名を格納
 	result.children.resize(node->mNumChildren);// 子供の数だけ確保
 	for (uint32_t childIndex = 0; childIndex < node->mNumChildren; childIndex++) {
@@ -804,7 +808,7 @@ SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& 
 }
 
 void Model::SkinClusterUpdate(SkinCluster& skinCluster, const Skeleton& skeleton) {
-	for (size_t jointIndex = 0; jointIndex < skeleton.joints.size(); jointIndex++) {
+	for (size_t jointIndex = 0; jointIndex < skeleton.joints.size(); ++jointIndex) {
 		assert(jointIndex < skinCluster.inverseBindPoseMatrices.size());
 		skinCluster.mappedPalette[jointIndex].skeletonSpaceMatrix =
 			skinCluster.inverseBindPoseMatrices[jointIndex] * skeleton.joints[jointIndex].skeletonSpaceMatrix;

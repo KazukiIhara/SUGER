@@ -29,9 +29,9 @@ VertexShaderOutput main(VertexShaderInput input)
     Skinned skinned = Skinning(input);
     
     output.position = mul(skinned.position, mul(gTransformationMatrix.World, gTransformationMatrix.ViewProjection));
-    output.texcoord = input.texcoord;
-    output.normal = normalize(mul(input.normal, (float32_t3x3) gTransformationMatrix.WorldInverseTranspose));
     output.worldPosition = mul(skinned.position, gTransformationMatrix.World).xyz;
+    output.texcoord = input.texcoord;
+    output.normal = normalize(mul(skinned.normal, (float32_t3x3) gTransformationMatrix.WorldInverseTranspose));
     
     return output;
 }
