@@ -8,9 +8,22 @@
 // DirectX
 #include <d3d12.h>
 
+// Assimp
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 // MyHedder
 #include "structs/ObjectStructs.h"
 #include "structs/ModelStructs.h"
+
+/*球の分割数*/
+static const uint32_t kSubdivision = 16;
+/*球の頂点定数*/
+static const uint32_t sphereVertexNum = kSubdivision * kSubdivision * 6;
+
+// 板ポリの頂点数
+static const uint32_t kPlaneVertexNum_ = 6;
 
 // 3Dモデル
 class Model {
@@ -66,6 +79,7 @@ private: // メンバ関数
 	// 頂点データの書き込み
 	void MapVertexData();
 #pragma endregion
+
 #pragma region Index
 	// インデックスリソースの作成
 	void CreateIndexResource();
@@ -75,7 +89,6 @@ private: // メンバ関数
 	void MapIndexData();
 #pragma endregion
 
-
 #pragma region Material
 	/*マテリアルリソースの作成*/
 	void CreateMaterialResource();
@@ -83,10 +96,31 @@ private: // メンバ関数
 	void MapMaterialData();
 #pragma endregion
 
+#pragma region Node
+	// ノードの読み込み
+	Node ReadNode(aiNode* node);
+#pragma endregion
+
+#pragma region Animation
+	// アニメーションの読みこみ
+	Animation LoadAnimationFile(const std::string& filename, const std::string& directoryPath = "resources/models");
+	// Vector3のキーフレーム補間
+	Vector3 CalculateVelue(const std::vector<KeyframeVector3>& keyframes, float time);
+	// Quaternionのキーフレーム補間
+	Quaternion CalculateValue(const std::vector<KeyframeQuaternion>& keyframes, float time);
+#pragma endregion
+
+
 private: // メンバ変数
 #pragma region モデル
 	// モデルデータ
-	ModelData modelData;
+	ModelData modelData_;
+#pragma endregion
+
+#pragma region アニメーション
+	// アニメーションデータ
+	Animation animation_;
+
 #pragma endregion
 
 #pragma region 頂点
@@ -119,13 +153,5 @@ private: // メンバ変数
 	/*uvTransform*/
 	std::vector<UVTransform> uvTransforms_;
 #pragma endregion
-
-	/*球の分割数*/
-	const uint32_t kSubdivision = 16;
-	/*球の頂点定数*/
-	const uint32_t sphereVertexNum = kSubdivision * kSubdivision * 6;
-
-	// 板ポリの頂点数
-	const uint32_t kPlaneVertexNum_ = 6;
 
 };

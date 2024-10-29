@@ -29,11 +29,11 @@ struct MeshData {
 	std::vector<uint32_t> indices;
 	std::vector<VertexData3DUnUV> verticesUnUV;
 	MaterialData material;
-	Node rootNode;
 };
 
 // モデルデータ
 struct ModelData {
+	Node rootNode;
 	std::vector<MeshData> meshes;
 };
 
