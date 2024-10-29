@@ -103,7 +103,7 @@ void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& 
 
 void Model::LoadModel(const std::string& filename, const std::string& directoryPath) {
 	// 対応する拡張子のリスト
-	std::vector<std::string> supportedExtensions = { ".obj", ".fbx", ".dae", ".3ds" };
+	std::vector<std::string> supportedExtensions = { ".obj", ".gltf" };
 
 	// ディレクトリ内のファイルを検索
 	// モデルファイルが入っているディレクトリ
