@@ -204,6 +204,9 @@ void SUGER::Update() {
 void SUGER::Draw() {
 	// 3Dオブジェクト描画前処理
 	PreDrawObject3D();
+
+	// Skinningあり3Dオブジェクト描画前処理
+	PreDrawObject3DSkinning();
 	// 3Dオブジェクト描画処理
 	Draw3DObjects();
 
@@ -300,7 +303,7 @@ uint32_t SUGER::SrvAllocate() {
 	return srvManager_->Allocate();
 }
 
-void SUGER::CreateSrvInstancing(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
+void SUGER::CreateSrvStructured(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
 	srvManager_->CreateSrvStructuredBuffer(srvIndex, pResource, numElements, structureByteStride);
 }
 
@@ -398,6 +401,10 @@ void SUGER::PreDrawObject2D() {
 
 void SUGER::PreDrawObject3D() {
 	object3dSystem_->PreDraw();
+}
+
+void SUGER::PreDrawObject3DSkinning() {
+	object3dSystem_->PreDrawSkinning();
 }
 
 void SUGER::PreDrawParticle3D() {

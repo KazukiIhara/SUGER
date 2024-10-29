@@ -26,7 +26,7 @@ void Object3D::Update() {
 
 void Object3D::Draw(BlendMode blendMode) {
 	// PSOを設定
-	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kObject3d, blendMode));
+	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kObject3dSkinning, blendMode));
 	// wvp用のCBufferの場所を設定
 	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(1, transformationResource_->GetGPUVirtualAddress());
 	// ライトを転送

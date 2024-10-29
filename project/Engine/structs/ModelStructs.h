@@ -38,8 +38,19 @@ struct MeshData {
 	MaterialData material;
 };
 
+struct VertexWeightData {
+	float weight;
+	uint32_t vertexIndex;
+};
+
+struct JointWeightData {
+	Matrix4x4 inverseBindPoseMatrix;
+	std::vector<VertexWeightData> vertexWeights;
+};
+
 // モデルデータ
 struct ModelData {
+	std::map<std::string, JointWeightData> skinClusterData;
 	Node rootNode;
 	std::vector<MeshData> meshes;
 };
@@ -105,7 +116,7 @@ struct SkinCluster {
 	Microsoft::WRL::ComPtr<ID3D12Resource> influenceResource;
 	D3D12_VERTEX_BUFFER_VIEW influenceBufferView;
 	std::span<VertexInfluence> mappedInfluence;
-	Microsoft::WRL::ComPtr<ID3D12Resource> paletteResource;
+	Microsoft::WRL::ComPtr<ID3D12Resource> paletteResources;
 	std::span<WellForGPU> mappedPalette;
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> paletteSrvHandle;
 };

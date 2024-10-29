@@ -225,6 +225,11 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Ve
 	return result;
 }
 
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate) {
+	Matrix4x4 result = MakeScaleMatrix(scale) * (QuaternionToMatrix4x4(rotate) * MakeTranslateMatrix(translate));
+	return result;
+}
+
 /// <summary>
 /// パースペクティブ行列を作成
 /// </summary>

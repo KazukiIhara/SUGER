@@ -14,5 +14,6 @@
 	enum PipelineState {
 		kObject2d,
 		kObject3d,
+		kObject3dSkinning,
 		kParticle,
 	};

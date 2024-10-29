@@ -40,7 +40,7 @@ void RandomParticle::Initialize(Model* model, Camera* camera, const std::string&
 	// srvのインデックスを割り当て
 	srvIndex_ = SUGER::SrvAllocate();
 	// Srvを作成
-	SUGER::CreateSrvInstancing(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
+	SUGER::CreateSrvStructured(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
 }
 
 void RandomParticle::Update() {

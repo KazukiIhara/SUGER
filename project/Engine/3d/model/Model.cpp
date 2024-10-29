@@ -52,6 +52,16 @@ void Model::Initialize(const std::string& filename) {
 
 
 void Model::Update() {
+
+#pragma region Animation
+	animationTime += 1.0f / 60.0f;
+	animationTime = std::fmod(animationTime, animation_.duration);
+
+	ApplyAnimation(skeleton_, animation_, animationTime);
+	SkeletonUpdate(skeleton_);
+	SkinClusterUpdate(skinCluster_, skeleton_);
+#pragma endregion
+
 	// マテリアルの更新
 	for (size_t i = 0; i < materials_.size(); ++i) {
 		materialData_[i]->color = materials_[i].color;
@@ -63,9 +73,16 @@ void Model::Update() {
 }
 
 void Model::Draw() {
+
 	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+
+		D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
+			vertexBufferViews_[i],
+			skinCluster_.influenceBufferView,
+		};
+
 		// VBVを設定
-		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 2, vbvs);
 		// IBVを設定
 		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
 		// マテリアルCBufferの場所を設定
@@ -73,6 +90,8 @@ void Model::Draw() {
 		if (modelData_.meshes[i].material.haveUV_) {
 			// SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
+			// Skinning用SRVセット
+			SUGER::SetGraphicsRootDescriptorTable(5, skinClusterSrvIndex_);
 			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
 		} else {
@@ -207,8 +226,12 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 
 		modelData_.meshes.push_back(meshData);
 	}
-
+	// アニメーション読み込み
 	animation_ = LoadAnimationFile(filename);
+	// スケルトン作成
+	skeleton_ = CreateSkeleton(modelData_.rootNode);
+	// スキンクラスター作成
+	skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
 }
 
 // 球体の頂点データを生成する関数
@@ -539,8 +562,10 @@ Animation Model::LoadAnimationFile(const std::string& filename, const std::strin
 	// filesystem用
 	std::filesystem::path modelDirectoryPath(fileDirectoryPath);
 
+	// アニメーションのファイルパス
 	std::string animationlFilePath;
 
+	// ファイルの中身を検索
 	for (const auto& entry : std::filesystem::directory_iterator(modelDirectoryPath)) {
 		if (entry.is_regular_file()) {
 			std::string ext = entry.path().extension().string();
@@ -640,4 +665,128 @@ Quaternion Model::CalculateValue(const std::vector<KeyframeQuaternion>& keyframe
 	}
 
 	return (*keyframes.rbegin()).value;
+}
+
+void Model::ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime) {
+	for (Joint& joint : skeleton.joints) {
+		if (auto it = animation.nodeAnimations.find(joint.name); it != animation.nodeAnimations.end()) {
+			const NodeAnimation& rootNodeAnimation = (*it).second;
+			joint.transform.translate = CalculateVelue(rootNodeAnimation.translate, animationTime);
+			joint.transform.rotate = CalculateValue(rootNodeAnimation.rotate, animationTime);
+			joint.transform.scale = CalculateVelue(rootNodeAnimation.scale, animationTime);
+		}
+	}
+}
+
+Skeleton Model::CreateSkeleton(const Node& rootNode) {
+	Skeleton skeleton;
+	skeleton.root = CreateJoint(rootNode, {}, skeleton.joints);
+
+	for (const Joint& joint : skeleton.joints) {
+		skeleton.jointMap.emplace(joint.name, joint.index);
+	}
+
+	return skeleton;
+}
+
+void Model::SkeletonUpdate(Skeleton& skeleton) {
+	for (Joint& joint : skeleton.joints) {
+		joint.loclMatrix = MakeAffineMatrix(joint.transform.scale, joint.transform.rotate, joint.transform.translate);
+		if (joint.parent) {
+			joint.skeletonSpaceMatrix = joint.loclMatrix * skeleton.joints[*joint.parent].skeletonSpaceMatrix;
+		} else {
+			joint.skeletonSpaceMatrix = joint.loclMatrix;
+		}
+	}
+}
+
+int32_t Model::CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints) {
+	Joint joint;
+	joint.name = node.name;
+	joint.loclMatrix = node.localMatrix;
+	joint.skeletonSpaceMatrix = MakeIdentityMatrix4x4();
+	joint.transform = node.transform;
+	joint.index = int32_t(joints.size());
+	joint.parent = parent;
+	joints.push_back(joint);
+	for (const Node& child : node.children) {
+		int32_t childIndex = CreateJoint(child, joint.index, joints);
+		joints[joint.index].children.push_back(childIndex);
+	}
+	return joint.index;
+}
+
+SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData) {
+	SkinCluster skinCluster;
+	// palette用のリソースを確保
+	skinCluster.paletteResources = SUGER::CreateBufferResource(sizeof(WellForGPU) * skeleton.jointMap.size());
+	WellForGPU* mappedPalette = nullptr;
+	skinCluster.paletteResources->Map(0, nullptr, reinterpret_cast<void**>(&mappedPalette));
+	skinCluster.mappedPalette = { mappedPalette, skeleton.joints.size() };
+
+	// srvのインデックスを割り当て
+	skinClusterSrvIndex_ = SUGER::SrvAllocate();
+
+	// Srvを作成
+	SUGER::CreateSrvStructured(skinClusterSrvIndex_, skinCluster.paletteResources.Get(), UINT(skeleton.joints.size()), sizeof(WellForGPU));
+
+	// 合計頂点数を取得
+	size_t totalVertexCount = 0;
+	for (const auto& mesh : modelData.meshes) {
+		totalVertexCount += mesh.vertices.size();
+	}
+
+	// influence用のリソースを確保
+	skinCluster.influenceResource = SUGER::CreateBufferResource(sizeof(VertexInfluence) * totalVertexCount);
+	VertexInfluence* mappedInfluence = nullptr;
+	skinCluster.influenceResource->Map(0, nullptr, reinterpret_cast<void**>(&mappedInfluence));
+	std::memset(mappedInfluence, 0, sizeof(VertexInfluence) * totalVertexCount);
+	skinCluster.mappedInfluence = { mappedInfluence,totalVertexCount };
+
+	// Influence用のVBVを作成
+	skinCluster.influenceBufferView.BufferLocation = skinCluster.influenceResource->GetGPUVirtualAddress();
+	skinCluster.influenceBufferView.SizeInBytes = UINT(sizeof(VertexInfluence) * totalVertexCount);
+	skinCluster.influenceBufferView.StrideInBytes = sizeof(VertexInfluence);
+
+	// InverseBindPoseMatrixの保存領域を作成
+	skinCluster.inverseBindPoseMatrices.resize(skeleton.joints.size());
+	for (size_t i = 0; i < skeleton.joints.size(); ++i) {
+		skinCluster.inverseBindPoseMatrices[i] = MakeIdentityMatrix4x4();
+	}
+
+
+	// ModelDataのskinCluster情報を解析してInfluenceの中身を埋める
+	for (const auto& jointWeight : modelData.skinClusterData) {
+		auto it = skeleton.jointMap.find(jointWeight.first);
+		if (it == skeleton.jointMap.end()) {
+			continue;
+		}
+
+		skinCluster.inverseBindPoseMatrices[(*it).second] = jointWeight.second.inverseBindPoseMatrix;
+		for (const auto& vertexWeight : jointWeight.second.vertexWeights) {
+			auto& currentInfluence = skinCluster.mappedInfluence[vertexWeight.vertexIndex];
+			for (uint32_t index = 0; index < kNumMaxInfluence; index++) {
+				if (currentInfluence.weights[index] == 0.0f) {
+					currentInfluence.weights[index] = vertexWeight.weight;
+					currentInfluence.jointindices[index] = (*it).second;
+					break;
+				}
+			}
+		}
+
+	}
+
+
+	return skinCluster;
+
+}
+
+void Model::SkinClusterUpdate(SkinCluster& skinCluster, const Skeleton& skeleton) {
+	for (size_t jointIndex = 0; jointIndex < skeleton.joints.size(); jointIndex++) {
+		assert(jointIndex < skinCluster.inverseBindPoseMatrices.size());
+		skinCluster.mappedPalette[jointIndex].skeletonSpaceMatrix =
+			skinCluster.inverseBindPoseMatrices[jointIndex] * skeleton.joints[jointIndex].skeletonSpaceMatrix;
+		skinCluster.mappedPalette[jointIndex].skeletonSpaceInverseTransposeMatrix =
+			Transpose(Inverse(skinCluster.mappedPalette[jointIndex].skeletonSpaceMatrix));
+	}
 }

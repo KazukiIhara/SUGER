@@ -108,6 +108,27 @@ private: // メンバ関数
 	Vector3 CalculateVelue(const std::vector<KeyframeVector3>& keyframes, float time);
 	// Quaternionのキーフレーム補間
 	Quaternion CalculateValue(const std::vector<KeyframeQuaternion>& keyframes, float time);
+	// アニメーション適用
+	void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime);
+#pragma endregion
+
+#pragma region Skelton
+	// スケルトンの作成
+	Skeleton CreateSkeleton(const Node& rootNode);
+	// スケルトンのアップデート
+	void SkeletonUpdate(Skeleton& skeleton);
+#pragma endregion
+
+#pragma region Joint
+	// ジョイント作成
+	int32_t CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints);
+#pragma endregion
+
+#pragma region SkinCluster
+	// スキンクラスター作成
+	SkinCluster CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData);
+	// スキンクラスターアップデート
+	void SkinClusterUpdate(SkinCluster& skinCluster, const Skeleton& skeleton);
 #pragma endregion
 
 
@@ -123,8 +144,9 @@ private: // メンバ変数
 	// スケルトン
 	Skeleton skeleton_;
 	// スキン
-
-
+	SkinCluster skinCluster_;
+	// スキン用のSrvIndex
+	uint32_t skinClusterSrvIndex_ = 0;
 #pragma endregion
 
 #pragma region 頂点
@@ -161,4 +183,5 @@ private: // メンバ変数
 #pragma region Animation
 	float animationTime = 0.0f;
 #pragma endregion
+
 };
