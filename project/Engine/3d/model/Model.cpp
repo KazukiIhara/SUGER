@@ -12,6 +12,13 @@ void Model::Initialize(const std::string& filename) {
 	// モデルデータ読み込み
 	LoadModel(filename);
 
+	// アニメーション読み込み
+	animation_ = LoadAnimationFile(filename);
+	// スケルトン作成
+	skeleton_ = CreateSkeleton(modelData_.rootNode);
+	// スキンクラスター作成
+	skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
+
 	// マテリアル初期化
 	for (auto& mesh : modelData_.meshes) {
 		Material3D material;
@@ -248,12 +255,6 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 
 		modelData_.meshes.push_back(meshData);
 	}
-	// アニメーション読み込み
-	animation_ = LoadAnimationFile(filename);
-	// スケルトン作成
-	skeleton_ = CreateSkeleton(modelData_.rootNode);
-	// スキンクラスター作成
-	skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
 }
 
 // 球体の頂点データを生成する関数
