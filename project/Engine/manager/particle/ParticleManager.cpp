@@ -46,7 +46,7 @@ RandomParticle* ParticleManager::Find(const std::string& name) {
 	return nullptr;
 }
 
-void ParticleManager::CreatePlane(const std::string& name, const std::string& filePath, const Transform3D& transform) {
+void ParticleManager::CreatePlane(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
 	// 板ポリ生成
 	textureManager_->Load(filePath);
 	// パーティクルエミッタの生成と初期化

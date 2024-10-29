@@ -558,6 +558,8 @@
     <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h">
       <Filter>engine\importer\level\json</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\enum\ModelEnum.h" />
+    <ClInclude Include="Engine\math\types\Quaternion.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

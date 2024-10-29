@@ -24,16 +24,23 @@ struct UVTransform {
 /// 3D
 /// 
 
-// 3DTrasform
-struct Transform3D {
+// オイラー角3DTrasform
+struct EulerTransform3D {
 	Vector3 scale = { 1.0f,1.0f,1.0f };
 	Vector3 rotate = { 0.0f,0.0f,0.0f };
 	Vector3 translate = { 0.0f,0.0f,0.0f };
 };
 
+// クオータニオン角3DTransform
+struct QuaterionTransform3D {
+	Vector3 scale = { 1.0f,1.0f,1.0f };
+	Quaternion rotate = { 0.0f,0.0f,0.0f,0.0f };
+	Vector3 translate = { 0.0f,0.0f,0.0f };
+};
+
 // 3DObjectData
 struct ObjectData3D {
-	Transform3D transform;
+	EulerTransform3D transform;
 	std::string objectName;
 	std::string modelName;
 };

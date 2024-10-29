@@ -3,6 +3,7 @@
 #include "math/types/Vector3.h"
 #include "math/types/Vector4.h"
 #include "math/types/Matrix4x4.h"
+#include "math/types/Quaternion.h"
 
 ///
 /// Vector2
