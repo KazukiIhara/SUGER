@@ -180,11 +180,8 @@ void SUGER::Update() {
 		endRequest_ = true;
 	}
 
-<<<<<<< HEAD
+
 	// F11キーでフルスクリーン切り替え処理
-=======
-	// フルスクリーン切り替え処理
->>>>>>> 0cb129e675361309029f82b6136d6017d74d723b
 	if (directInput_->TriggerKey(DIK_F11)) {
 		windowManager_->ToggleFullScreen();
 	}
