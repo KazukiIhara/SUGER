@@ -180,6 +180,11 @@ void SUGER::Update() {
 		endRequest_ = true;
 	}
 
+	// フルスクリーン切り替え処理
+	if (directInput_->TriggerKey(DIK_F11)) {
+		windowManager_->ToggleFullScreen();
+	}
+
 	// 入力の更新
 	directInput_->Update();
 
