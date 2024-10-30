@@ -33,5 +33,5 @@ private:
 	// translateのオフセット
 	Vector3 translateOffset_ = { 0.0f,0.5f,0.0f };
 	// x回転角のオフセット
-	float rotateXOffset_ = 0.05f;
+	float rotateXOffset_ = 0.04f;
 };
