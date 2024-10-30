@@ -12,7 +12,7 @@ public:
 	void Import(JsonLevelData* jsonLevelData);
 
 	// railDataをシーンにインポート
-	void ImportRailControllPoint(JsonLevelData* jsonRailData, RailCamera* railCamera);
+	void ImportLevelwithRailControllPoint(JsonLevelData* jsonRailData, RailCamera* railCamera);
 
 private:
 

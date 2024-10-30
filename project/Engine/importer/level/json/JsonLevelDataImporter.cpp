@@ -11,9 +11,13 @@ void JsonLevelDataImporter::Import(JsonLevelData* jsonLevelData) {
 	}
 }
 
-void JsonLevelDataImporter::ImportRailControllPoint(JsonLevelData* jsonRailData, RailCamera* railCamera) {
-	// 配置されている3Dオブジェクトから座標を取得して配置
+void JsonLevelDataImporter::ImportLevelwithRailControllPoint(JsonLevelData* jsonRailData, RailCamera* railCamera) {
+	// データ受け取り
 	for (ObjectData3D object : jsonRailData->Get3DObjects()) {
-		railCamera->PushBackControlPoint(object.transform.translate);
+		SUGER::Create3DObject(object.objectName, object.modelName, object.transform);
+	}
+	// データをシーンのカメラに挿入
+	for (Vector3 controlPoint : jsonRailData->GetControlPoints()) {
+		railCamera->PushBackControlPoint(controlPoint);
 	}
 }
