@@ -1,6 +1,7 @@
 #pragma once
 
 class JsonLevelData;
+class RailCamera;
 
 class JsonLevelDataImporter {
 public:
@@ -9,6 +10,9 @@ public:
 
 	// LevelDataをシーンにインポート
 	void Import(JsonLevelData* jsonLevelData);
+
+	// railDataをシーンにインポート
+	void ImportRailControllPoint(JsonLevelData* jsonRailData, RailCamera* railCamera);
 
 private:
 
