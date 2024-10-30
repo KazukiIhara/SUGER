@@ -19,7 +19,7 @@ void MyGame::Initialize() {
 	// シーンマネージャにシーンファクトリをセット
 	sceneManager_->SetSceneFactory(sceneFactory_.get());
 	// 初期シーンのセット
-	sceneManager_->ChangeScene("SAMPLE");
+	sceneManager_->ChangeScene("SHOOTINGCOASTER");
 }
 
 void MyGame::Finalize() {
