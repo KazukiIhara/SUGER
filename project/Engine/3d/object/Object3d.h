@@ -116,4 +116,7 @@ private:/*メンバ変数*/
 
 	// 有効かどうか
 	bool isActive_ = true;
+
+	// スキニングアニメーション付きのモデルかどうか
+	bool haveSkinningAnimation_ = false;
 };

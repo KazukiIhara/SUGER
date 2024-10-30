@@ -59,15 +59,14 @@ void Model::Initialize(const std::string& filename) {
 
 
 void Model::Update() {
-
-#pragma region Animation
-	animationTime += 1.0f / 60.0f;
-	animationTime = std::fmod(animationTime, animation_.duration);
-
-	ApplyAnimation(skeleton_, animation_, animationTime);
-	SkeletonUpdate(skeleton_);
-	SkinClusterUpdate(skinCluster_, skeleton_);
-#pragma endregion
+	// スキニングアニメーションがある場合アニメーション更新
+	if (haveSkinningAnimation_) {
+		animationTime += 1.0f / 60.0f;
+		animationTime = std::fmod(animationTime, animation_.duration);
+		ApplyAnimation(skeleton_, animation_, animationTime);
+		SkeletonUpdate(skeleton_);
+		SkinClusterUpdate(skinCluster_, skeleton_);
+	}
 
 	// マテリアルの更新
 	for (size_t i = 0; i < materials_.size(); ++i) {
@@ -452,6 +451,10 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 
 }
 
+const bool& Model::GetHaveAnimation() const {
+	return haveSkinningAnimation_;
+}
+
 void Model::CreateVertexResource() {
 	for (auto& mesh : modelData_.meshes) {
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
@@ -606,16 +609,26 @@ Animation Model::LoadAnimationFile(const std::string& filename, const std::strin
 		}
 	}
 
-	// ファイルが見つからなかった場合はエラー
+	// アニメーションファイルが見つからなかった場合
 	if (animationlFilePath.empty()) {
-		std::cerr << "Error: Model file not found or unsupported format." << std::endl;
+		haveSkinningAnimation_ = false;
 		return Animation();
 	}
 
 	// Assimpインポータ
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(animationlFilePath.c_str(), 0);
-	assert(scene->mNumAnimations != 0);
+
+	// アニメーションがない場合
+	if (scene->mNumAnimations == 0) {
+		haveSkinningAnimation_ = false;
+		return Animation();
+	} else {
+		// アニメーションあり
+		haveSkinningAnimation_ = true;
+	}
+
+	// キーフレームアニメーション読み込み
 	aiAnimation* animationAssimp = scene->mAnimations[0];
 	animation.duration = float(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);
 
@@ -650,6 +663,7 @@ Animation Model::LoadAnimationFile(const std::string& filename, const std::strin
 			nodeAnimation.scale.push_back(keyframe);
 		}
 	}
+
 
 	return animation;
 }
