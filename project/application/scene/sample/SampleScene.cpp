@@ -26,7 +26,7 @@ void SampleScene::Initialize() {
 
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create3DObject("sample", "teapot");
-	SUGER::Create3DObject("skinningSample", "Run");
+	SUGER::Create3DObject("skinningSample", "boxMan");
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 
