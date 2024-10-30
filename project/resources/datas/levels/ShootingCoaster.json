@@ -21,7 +21,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -44,7 +44,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -67,7 +67,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -90,7 +90,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -113,7 +113,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -136,7 +136,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -159,7 +159,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -182,7 +182,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -205,7 +205,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -228,7 +228,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -251,7 +251,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -274,7 +274,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -297,7 +297,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -320,7 +320,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -343,7 +343,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -366,7 +366,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -389,7 +389,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -412,7 +412,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -435,7 +435,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -458,7 +458,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -481,7 +481,7 @@
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         },
         {
@@ -494,17 +494,40 @@
                     5.282347679138184
                 ],
                 "rotation": [
-                    -0.3476216495037079,
-                    0.027200773358345032,
-                    -1.0181128978729248
+                    -0.34693488478660583,
+                    0.018597664311528206,
+                    -0.9391752481460571
                 ],
                 "scaling": [
                     1.0,
-                    0.9999999403953552,
+                    1.0,
+                    0.9999999403953552
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.022",
+            "transform": {
+                "translation": [
+                    2.9054336547851562,
+                    20.935596466064453,
+                    4.848345756530762
+                ],
+                "rotation": [
+                    -0.4274676442146301,
+                    0.07618827372789383,
+                    -1.1618379354476929
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
                     1.0
                 ]
             },
-            "object_name": "rail",
+            "object_name": "object3d",
             "model_name": "rail"
         }
     ]
