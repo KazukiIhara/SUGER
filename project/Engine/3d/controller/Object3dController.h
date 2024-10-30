@@ -29,6 +29,9 @@ public:
 	// 有効フラグのセッター
 	void SetIsActive(const bool& isActive);
 
+	// ライトのオンオフ
+	void SetEnableLightning(const bool& enableLightning);
+
 	// スケールをゲット
 	const Vector3& GetScale();
 	// 回転のゲット

@@ -25,7 +25,7 @@ void SampleScene::Initialize() {
 	//SUGER::SetSceneCamera(sceneCamera_.get());
 
 	// オブジェクトの生成と、モデルの読み込み
-	SUGER::Create3DObject("skinningSample", "BoxMan");
+	SUGER::Create3DObject("skinningSample", "kei");
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 
@@ -40,6 +40,11 @@ void SampleScene::Initialize() {
 	pronama_chan.SetSize(Vector2(400.0f, 400.0f));
 	pronama_chan.SetPosition(pronama_chan.GetSize() / 2.0f);
 	pronama_chan.SetAnchorPoint(Vector2(0.5f, 0.5f));
+
+
+	// スキニングサンプルモデルのトランスフォーム設定
+	skinningSample_.SetRotate(Vector3(0.0f, 3.14f, 0.0f));
+	skinningSample_.SetEnableLightning(false);
 
 	// パーティクル無効化
 	plane_.SetIsActive(false);

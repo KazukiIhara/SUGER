@@ -78,3 +78,9 @@ void Object3D::SetModel(const std::string& filePath) {
 	// スキニングアニメーションがあるかどうか
 	haveSkinningModel_ = model_->GetHaveAnimation();
 }
+
+void Object3D::SetEnableLightning(const bool& enableLighitning) {
+	if (model_) {
+		model_->SetEnableLight(enableLighitning);
+	}
+}
