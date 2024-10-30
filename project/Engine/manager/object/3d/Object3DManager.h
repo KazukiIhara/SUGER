@@ -23,6 +23,8 @@ public:
 	void Update();
 	// 描画処理
 	void Draw();
+	// スキニングモデル描画処理
+	void DrawSkinning();
 	// 終了処理
 	void Finalize();
 

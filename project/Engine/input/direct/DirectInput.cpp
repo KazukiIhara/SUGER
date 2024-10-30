@@ -45,6 +45,7 @@ void DirectInput::Update() {
 
 	// キーボードの入力状態を取得
 	keybord->GetDeviceState(sizeof(key), key);
+
 }
 
 bool DirectInput::PushKey(BYTE keyNumber) {

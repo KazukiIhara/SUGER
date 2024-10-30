@@ -25,24 +25,33 @@ void SampleScene::Initialize() {
 	//SUGER::SetSceneCamera(sceneCamera_.get());
 
 	// オブジェクトの生成と、モデルの読み込み
-	SUGER::Create3DObject("teapot", "teapot");
+	SUGER::Create3DObject("sample", "teapot");
+	SUGER::Create3DObject("skinningSample", "walk");
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 
 	// オブジェクト3Dコントローラの初期化
-	teapot_.Initialize(SUGER::FindObject3D("teapot"));
+	sample_.Initialize(SUGER::FindObject3D("sample"));
+	// スキニング用オブジェクト3Dコントローラの初期化
+	skinningSample_.Initialize(SUGER::FindObject3D("skinningSample"));
 	// オブジェクト2Dコントローラの初期化
 	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
 	// パーティクルコントローラの初期化
 	plane_.Initialize(SUGER::FindParticle("plane"));
+
+	// humanをちょっと右にずらす
+	skinningSample_.SetTranslate(Vector3(1.0f, 0.0f, 0.0f));
+	// humanを少しこっちに向ける
+	skinningSample_.SetRotate(Vector3(0.0f, 3.14f, 0.0f));
+
+	// teapotをちょっと左にずらす
+	sample_.SetTranslate(Vector3(-1.0f, 0.0f, 0.0f));
 
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
 	pronama_chan.SetSize(Vector2(400.0f, 400.0f));
 	pronama_chan.SetPosition(pronama_chan.GetSize() / 2.0f);
 	pronama_chan.SetAnchorPoint(Vector2(0.5f, 0.5f));
 
-	// パーティクルを非アクティブ化
-	//plane_.SetIsActive(false);
 }
 
 void SampleScene::Finalize() {
@@ -61,13 +70,13 @@ void SampleScene::Update() {
 		// スプライトを回転
 		pronama_chan.SetRotation(pronama_chan.GetRotation() + 0.01f);
 		// モデルをy軸+方向に回転
-		teapot_.SetRotate(Vector3(teapot_.GetRotate().x, teapot_.GetRotate().y + 0.01f, teapot_.GetRotate().z));
+		sample_.SetRotate(Vector3(sample_.GetRotate().x, sample_.GetRotate().y + 0.01f, sample_.GetRotate().z));
 
 	} else if (SUGER::PushKey(DIK_A)) {
 		// スプライトを回転
 		pronama_chan.SetRotation(pronama_chan.GetRotation() - 0.01f);
 		// モデルをy軸+方向に回転
-		teapot_.SetRotate(Vector3(teapot_.GetRotate().x, teapot_.GetRotate().y - 0.01f, teapot_.GetRotate().z));
+		sample_.SetRotate(Vector3(sample_.GetRotate().x, sample_.GetRotate().y - 0.01f, sample_.GetRotate().z));
 	}
 
 

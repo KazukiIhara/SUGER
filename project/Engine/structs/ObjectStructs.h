@@ -32,7 +32,7 @@ struct EulerTransform3D {
 };
 
 // クオータニオン角3DTransform
-struct QuaterionTransform3D {
+struct QuaternionTransform3D {
 	Vector3 scale = { 1.0f,1.0f,1.0f };
 	Quaternion rotate = { 0.0f,0.0f,0.0f,0.0f };
 	Vector3 translate = { 0.0f,0.0f,0.0f };

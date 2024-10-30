@@ -23,8 +23,21 @@ void Object3DManager::Update() {
 void Object3DManager::Draw() {
 	for (auto& pair : objects_) {
 		if (pair.second && pair.second->GetIsActive()) {  // unique_ptrが有効かつオブジェクトが有効状態
-			// 全オブジェクトを描画
-			pair.second->Draw();
+			// スキニングなし全オブジェクトを描画
+			if (!pair.second->GetHaveSkinningModel()) {
+				pair.second->Draw();
+			}
+		}
+	}
+}
+
+void Object3DManager::DrawSkinning() {
+	for (auto& pair : objects_) {
+		if (pair.second && pair.second->GetIsActive()) {  // unique_ptrが有効かつオブジェクトが有効状態
+			// スキニングあり全オブジェクトを描画
+			if (pair.second->GetHaveSkinningModel()) {
+				pair.second->DrawSkinning();
+			}
 		}
 	}
 }
