@@ -29,10 +29,6 @@ private: // 非公開メンバ変数
 
 	// レールカメラ
 	std::unique_ptr<RailCamera> railCamera_ = nullptr;
-	// レールの最大数
-	static const uint32_t kRailNum_ = 5;
-	// レールのトランスフォーム
-	std::array<EulerTransform3D, kRailNum_> railTransform_{};
 
 };
 
