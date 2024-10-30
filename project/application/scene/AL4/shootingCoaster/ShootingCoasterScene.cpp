@@ -22,12 +22,12 @@ void ShootingCoasterScene::Initialize() {
 	SUGER::SetSceneCamera(railCamera_.get());
 
 	// JsonDataの読み込み
-	SUGER::LoadJsonLevelData("level1");
+	SUGER::LoadJsonLevelData("ShootingCoaster");
 
 	// JsonDataをシーンにインポート
-	jsonImporter_.Import(SUGER::FindJsonLevelData("level1"));
+	jsonImporter_.Import(SUGER::FindJsonLevelData("ShootingCoaster"));
 	// レールカメラのコントロールポイントをインポート
-	jsonImporter_.ImportRailControllPoint(SUGER::FindJsonLevelData("level1"), railCamera_.get());
+	jsonImporter_.ImportRailControllPoint(SUGER::FindJsonLevelData("ShootingCoaster"), railCamera_.get());
 
 }
 
