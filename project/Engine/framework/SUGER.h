@@ -154,7 +154,8 @@ public: // クラスメソッド
 	static void Update3DObjects();
 	// 3Dオブジェクトの描画
 	static void Draw3DObjects();
-
+	// スキニングありモデルを持っている3Dオブジェクトの描画
+	static void DrawSkinning3DObjects();
 	// 3Dオブジェクト検索
 	static Object3D* FindObject3D(const std::string& name);
 

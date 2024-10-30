@@ -34,6 +34,8 @@ public: // メンバ関数
 	void Update();
 	// 描画
 	void Draw();
+	// スキニング描画
+	void DrawSkinning();
 	// パーティクルの場合の描画
 	void DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName);
 	// モデルの読み込み
@@ -69,6 +71,8 @@ public: // メンバ関数
 	std::vector<UVTransform> GetUVTransforms() {
 		return uvTransforms_;
 	}
+	// スキニングアニメーションがあるかどうかのゲッター
+	const bool& GetHaveAnimation() const;
 
 private: // メンバ関数
 #pragma region Vertex
@@ -182,6 +186,13 @@ private: // メンバ変数
 
 #pragma region Animation
 	float animationTime = 0.0f;
+#pragma endregion
+
+#pragma region 各種フラグ
+	// UVを持っているかどうか
+	bool haveUV_ = true;
+	// アニメーションを持っているかどうか
+	bool haveSkinningAnimation_ = false;
 #pragma endregion
 
 };

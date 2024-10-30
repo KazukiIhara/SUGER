@@ -12,6 +12,16 @@ void Model::Initialize(const std::string& filename) {
 	// モデルデータ読み込み
 	LoadModel(filename);
 
+	// アニメーション読み込み
+	animation_ = LoadAnimationFile(filename);
+
+	if (haveSkinningAnimation_) {
+		// スケルトン作成
+		skeleton_ = CreateSkeleton(modelData_.rootNode);
+		// スキンクラスター作成
+		skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
+	}
+
 	// マテリアル初期化
 	for (auto& mesh : modelData_.meshes) {
 		Material3D material;
@@ -52,15 +62,14 @@ void Model::Initialize(const std::string& filename) {
 
 
 void Model::Update() {
-
-#pragma region Animation
-	animationTime += 1.0f / 60.0f;
-	animationTime = std::fmod(animationTime, animation_.duration);
-
-	ApplyAnimation(skeleton_, animation_, animationTime);
-	SkeletonUpdate(skeleton_);
-	SkinClusterUpdate(skinCluster_, skeleton_);
-#pragma endregion
+	// スキニングアニメーションがある場合アニメーション更新
+	if (haveSkinningAnimation_) {
+		animationTime += 1.0f / 60.0f;
+		animationTime = std::fmod(animationTime, animation_.duration);
+		ApplyAnimation(skeleton_, animation_, animationTime);
+		SkeletonUpdate(skeleton_);
+		SkinClusterUpdate(skinCluster_, skeleton_);
+	}
 
 	// マテリアルの更新
 	for (size_t i = 0; i < materials_.size(); ++i) {
@@ -73,7 +82,26 @@ void Model::Update() {
 }
 
 void Model::Draw() {
+	// メッシュの個数分ループ
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		// VBVを設定
+		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		// IBVを設定
+		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
+		// マテリアルCBufferの場所を設定
+		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
+		if (modelData_.meshes[i].material.haveUV_) {
+			// SRVセット
+			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
+			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
+		} else {
+			// TODO:UVなしの時の処理
+		}
+	}
+}
 
+void Model::DrawSkinning() {
 	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 
 		D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
@@ -248,12 +276,6 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 
 		modelData_.meshes.push_back(meshData);
 	}
-	// アニメーション読み込み
-	animation_ = LoadAnimationFile(filename);
-	// スケルトン作成
-	skeleton_ = CreateSkeleton(modelData_.rootNode);
-	// スキンクラスター作成
-	skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
 }
 
 // 球体の頂点データを生成する関数
@@ -451,6 +473,10 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 
 }
 
+const bool& Model::GetHaveAnimation() const {
+	return haveSkinningAnimation_;
+}
+
 void Model::CreateVertexResource() {
 	for (auto& mesh : modelData_.meshes) {
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
@@ -605,18 +631,29 @@ Animation Model::LoadAnimationFile(const std::string& filename, const std::strin
 		}
 	}
 
-	// ファイルが見つからなかった場合はエラー
+	// アニメーションファイルが見つからなかった場合
 	if (animationlFilePath.empty()) {
-		std::cerr << "Error: Model file not found or unsupported format." << std::endl;
+		haveSkinningAnimation_ = false;
 		return Animation();
 	}
 
 	// Assimpインポータ
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(animationlFilePath.c_str(), 0);
-	assert(scene->mNumAnimations != 0);
+
+	// アニメーションがない場合
+	if (scene->mNumAnimations == 0) {
+		haveSkinningAnimation_ = false;
+		return Animation();
+	} else {
+		// アニメーションあり
+		haveSkinningAnimation_ = true;
+	}
+
+	// キーフレームアニメーション読み込み
 	aiAnimation* animationAssimp = scene->mAnimations[0];
 	animation.duration = float(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);
+
 
 	for (uint32_t channelIndex = 0; channelIndex < animationAssimp->mNumChannels; channelIndex++) {
 		aiNodeAnim* nodeAnimationAssimp = animationAssimp->mChannels[channelIndex];
@@ -649,6 +686,7 @@ Animation Model::LoadAnimationFile(const std::string& filename, const std::strin
 			nodeAnimation.scale.push_back(keyframe);
 		}
 	}
+
 
 	return animation;
 }

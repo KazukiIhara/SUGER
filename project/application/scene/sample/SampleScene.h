@@ -24,6 +24,8 @@ private: // 非公開メンバ変数
 
 	// sample用のオブジェクト3Dコントローラ
 	Object3DController sample_;
+	// skinningSample用のオブジェクトコントローラ
+	Object3DController skinningSample_;// 
 	// jeanne用のオブジェクト2Dコントローラ
 	Object2DController pronama_chan;
 	// plane用パーティクルコントローラ
