@@ -39,6 +39,20 @@ void Object3D::Draw(BlendMode blendMode) {
 	}
 }
 
+void Object3D::DrawSkinning(BlendMode blendMode) {
+	// PSOを設定
+	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kObject3dSkinning, blendMode));
+	// wvp用のCBufferの場所を設定
+	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(1, transformationResource_->GetGPUVirtualAddress());
+	// ライトを転送
+	punctualLight_->TransferLight();
+	// カメラ情報を転送
+	camera_->TransferCamera();
+	// スキニング付きモデル描画
+	model_->DrawSkinning();
+
+}
+
 void Object3D::CreateWVPResource() {
 	// WVP用のリソースを作る
 	transformationResource_ = SUGER::CreateBufferResource(sizeof(TransformationMatrix));
@@ -59,5 +73,8 @@ void Object3D::SetName(const std::string& name) {
 }
 
 void Object3D::SetModel(const std::string& filePath) {
+	// モデルをセット
 	model_ = SUGER::FindModel(filePath);
+	// スキニングアニメーションがあるかどうか
+	haveSkinningModel_ = model_->GetHaveAnimation();
 }

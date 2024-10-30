@@ -5,11 +5,6 @@
 #include <cassert>
 #include <filesystem>
 
-// Assimp
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
 // MyHedder
 #include "framework/SUGER.h"
 
@@ -17,8 +12,18 @@ void Model::Initialize(const std::string& filename) {
 	// モデルデータ読み込み
 	LoadModel(filename);
 
+	// アニメーション読み込み
+	animation_ = LoadAnimationFile(filename);
+
+	if (haveSkinningAnimation_) {
+		// スケルトン作成
+		skeleton_ = CreateSkeleton(modelData_.rootNode);
+		// スキンクラスター作成
+		skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
+	}
+
 	// マテリアル初期化
-	for (auto& mesh : modelData.meshes) {
+	for (auto& mesh : modelData_.meshes) {
 		Material3D material;
 		material.color = mesh.material.color;
 		material.enbleLighting = true;
@@ -57,6 +62,15 @@ void Model::Initialize(const std::string& filename) {
 
 
 void Model::Update() {
+	// スキニングアニメーションがある場合アニメーション更新
+	if (haveSkinningAnimation_) {
+		animationTime += 1.0f / 60.0f;
+		animationTime = std::fmod(animationTime, animation_.duration);
+		ApplyAnimation(skeleton_, animation_, animationTime);
+		SkeletonUpdate(skeleton_);
+		SkinClusterUpdate(skinCluster_, skeleton_);
+	}
+
 	// マテリアルの更新
 	for (size_t i = 0; i < materials_.size(); ++i) {
 		materialData_[i]->color = materials_[i].color;
@@ -68,18 +82,46 @@ void Model::Update() {
 }
 
 void Model::Draw() {
-	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
+	// メッシュの個数分ループ
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 		// VBVを設定
 		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
 		// IBVを設定
 		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
 		// マテリアルCBufferの場所を設定
 		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
-		if (modelData.meshes[i].material.haveUV_) {
+		if (modelData_.meshes[i].material.haveUV_) {
 			// SRVセット
-			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData.meshes[i].material.textureFilePath].srvIndex);
+			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
 			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData.meshes[i].indices.size()), 1, 0, 0, 0);
+			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
+		} else {
+			// TODO:UVなしの時の処理
+		}
+	}
+}
+
+void Model::DrawSkinning() {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+
+		D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
+			vertexBufferViews_[i],
+			skinCluster_.influenceBufferView,
+		};
+
+		// VBVを設定
+		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 2, vbvs);
+		// IBVを設定
+		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
+		// マテリアルCBufferの場所を設定
+		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
+		if (modelData_.meshes[i].material.haveUV_) {
+			// SRVセット
+			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
+			// Skinning用SRVセット
+			SUGER::SetGraphicsRootDescriptorTable(5, skinClusterSrvIndex_);
+			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
 		} else {
 			// TODO:UVなしの時の処理
 		}
@@ -87,7 +129,7 @@ void Model::Draw() {
 }
 
 void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName) {
-	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 		// VBVを設定
 		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
 		// IBVを設定
@@ -97,13 +139,13 @@ void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& 
 		// SRVセット
 		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[textureFileName].srvIndex);
 		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData.meshes[i].indices.size()), instanceCount, 0, 0, 0);
+		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), instanceCount, 0, 0, 0);
 	}
 }
 
 void Model::LoadModel(const std::string& filename, const std::string& directoryPath) {
 	// 対応する拡張子のリスト
-	std::vector<std::string> supportedExtensions = { ".obj", ".fbx", ".dae", ".3ds" };
+	std::vector<std::string> supportedExtensions = { ".obj", ".gltf" };
 
 	// ディレクトリ内のファイルを検索
 	// モデルファイルが入っているディレクトリ
@@ -135,6 +177,9 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(modelFilePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_Triangulate);
 	assert(scene && scene->HasMeshes());
+
+	// ノード読み込み
+	modelData_.rootNode = ReadNode(scene->mRootNode);
 
 	std::vector<MaterialData> materials(scene->mNumMaterials);
 
@@ -188,6 +233,28 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 				}
 			}
 
+			for (uint32_t boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex) {
+				aiBone* bone = mesh->mBones[boneIndex];
+				std::string jointName = bone->mName.C_Str();
+				JointWeightData& jointWeightData = modelData_.skinClusterData[jointName];
+
+				aiMatrix4x4 bindPoseMatrixAssimp = bone->mOffsetMatrix.Inverse();
+				aiVector3D scale, translate;
+				aiQuaternion rotate;
+				bindPoseMatrixAssimp.Decompose(scale, rotate, translate);
+				Matrix4x4 bindPoseMatrix = MakeAffineMatrix(
+					{ scale.x,scale.y,scale.z },
+					{ rotate.x,-rotate.y,-rotate.z,rotate.w },
+					{ -translate.x,translate.y,translate.z }
+				);
+				jointWeightData.inverseBindPoseMatrix = Inverse(bindPoseMatrix);
+
+				for (uint32_t weightIndex = 0; weightIndex < bone->mNumWeights; weightIndex++) {
+					jointWeightData.vertexWeights.push_back({ bone->mWeights[weightIndex].mWeight,bone->mWeights[weightIndex].mVertexId });
+				}
+
+			}
+
 		} else { // UVなし
 			for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
 				aiFace& face = mesh->mFaces[faceIndex];
@@ -207,7 +274,7 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 			}
 		}
 
-		modelData.meshes.push_back(meshData);
+		modelData_.meshes.push_back(meshData);
 	}
 }
 
@@ -298,7 +365,7 @@ void Model::GenerateSphere(const std::string& textureFilePath) {
 		}
 	}
 
-	modelData.meshes.push_back(meshData);
+	modelData_.meshes.push_back(meshData);
 }
 
 
@@ -360,7 +427,7 @@ void Model::GeneratePlane(const std::string& textureFilePath) {
 	meshData.material.color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// モデルにメッシュを追加
-	modelData.meshes.push_back(meshData);
+	modelData_.meshes.push_back(meshData);
 }
 
 void Model::CreatePlane(const std::string& textureFilePath) {
@@ -406,8 +473,12 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 
 }
 
+const bool& Model::GetHaveAnimation() const {
+	return haveSkinningAnimation_;
+}
+
 void Model::CreateVertexResource() {
-	for (auto& mesh : modelData.meshes) {
+	for (auto& mesh : modelData_.meshes) {
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
 		if (mesh.material.haveUV_) {
 			vertexResource = SUGER::CreateBufferResource(sizeof(VertexData3D) * mesh.vertices.size());
@@ -419,14 +490,14 @@ void Model::CreateVertexResource() {
 }
 
 void Model::CreateVertexBufferView() {
-	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 		D3D12_VERTEX_BUFFER_VIEW vertexBufferView;
 		vertexBufferView.BufferLocation = vertexResources_[i]->GetGPUVirtualAddress();
-		if (modelData.meshes[i].material.haveUV_) {
-			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3D) * modelData.meshes[i].vertices.size());
+		if (modelData_.meshes[i].material.haveUV_) {
+			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
 			vertexBufferView.StrideInBytes = sizeof(VertexData3D);
 		} else {
-			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3DUnUV) * modelData.meshes[i].verticesUnUV.size());
+			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3DUnUV) * modelData_.meshes[i].verticesUnUV.size());
 			vertexBufferView.StrideInBytes = sizeof(VertexData3DUnUV);
 		}
 		vertexBufferViews_.push_back(vertexBufferView);
@@ -434,23 +505,23 @@ void Model::CreateVertexBufferView() {
 }
 
 void Model::MapVertexData() {
-	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
-		if (modelData.meshes[i].material.haveUV_) {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		if (modelData_.meshes[i].material.haveUV_) {
 			VertexData3D* vertexData = nullptr;
 			vertexResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-			std::memcpy(vertexData, modelData.meshes[i].vertices.data(), sizeof(VertexData3D) * modelData.meshes[i].vertices.size());
+			std::memcpy(vertexData, modelData_.meshes[i].vertices.data(), sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
 			vertexData_.push_back(vertexData);
 		} else {
 			VertexData3DUnUV* vertexDataUnUV = nullptr;
 			vertexResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataUnUV));
-			std::memcpy(vertexDataUnUV, modelData.meshes[i].verticesUnUV.data(), sizeof(VertexData3DUnUV) * modelData.meshes[i].verticesUnUV.size());
+			std::memcpy(vertexDataUnUV, modelData_.meshes[i].verticesUnUV.data(), sizeof(VertexData3DUnUV) * modelData_.meshes[i].verticesUnUV.size());
 			vertexDataUnUV_.push_back(vertexDataUnUV);
 		}
 	}
 }
 
 void Model::CreateIndexResource() {
-	for (auto& mesh : modelData.meshes) {
+	for (auto& mesh : modelData_.meshes) {
 		Microsoft::WRL::ComPtr<ID3D12Resource> indexResource;
 		if (mesh.material.haveUV_) {
 			indexResource = SUGER::CreateBufferResource(sizeof(uint32_t) * mesh.indices.size());
@@ -462,11 +533,11 @@ void Model::CreateIndexResource() {
 }
 
 void Model::CreateIndexBufferView() {
-	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 		D3D12_INDEX_BUFFER_VIEW indexBufferView;
 		indexBufferView.BufferLocation = indexResources_[i]->GetGPUVirtualAddress();
-		if (modelData.meshes[i].material.haveUV_) {
-			indexBufferView.SizeInBytes = UINT(sizeof(uint32_t) * modelData.meshes[i].indices.size());
+		if (modelData_.meshes[i].material.haveUV_) {
+			indexBufferView.SizeInBytes = UINT(sizeof(uint32_t) * modelData_.meshes[i].indices.size());
 			indexBufferView.Format = DXGI_FORMAT_R32_UINT;
 		} else {
 			// TODO::UVなしの処理
@@ -476,11 +547,11 @@ void Model::CreateIndexBufferView() {
 }
 
 void Model::MapIndexData() {
-	for (size_t i = 0; i < modelData.meshes.size(); ++i) {
-		if (modelData.meshes[i].material.haveUV_) {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		if (modelData_.meshes[i].material.haveUV_) {
 			uint32_t* indexData = nullptr;
 			indexResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
-			std::memcpy(indexData, modelData.meshes[i].indices.data(), sizeof(uint32_t) * modelData.meshes[i].indices.size());
+			std::memcpy(indexData, modelData_.meshes[i].indices.data(), sizeof(uint32_t) * modelData_.meshes[i].indices.size());
 			indexData_.push_back(indexData);
 		} else {
 			// TODO::UVなしの処理
@@ -505,5 +576,281 @@ void Model::MapMaterialData() {
 		materialData->shininess = materials_[i].shininess;
 		materialData->uvTransformMatrix = materials_[i].uvTransformMatrix;
 		materialData_.push_back(materialData);
+	}
+}
+
+Node Model::ReadNode(aiNode* node) {
+	Node result;
+
+	aiVector3D scale, translate;
+	aiQuaternion rotate;
+
+	node->mTransformation.Decompose(scale, rotate, translate);
+	result.transform.scale = { scale.x,scale.y,scale.z };
+	result.transform.rotate = { rotate.x,-rotate.y,-rotate.z,rotate.w };
+	result.transform.translate = { -translate.x,translate.y,translate.z };
+
+	result.localMatrix = MakeAffineMatrix(result.transform.scale, result.transform.rotate, result.transform.translate);
+
+	result.name = node->mName.C_Str(); // node名を格納
+	result.children.resize(node->mNumChildren);// 子供の数だけ確保
+	for (uint32_t childIndex = 0; childIndex < node->mNumChildren; childIndex++) {
+		// 再帰的に読んで階層構造を作っていく
+		result.children[childIndex] = ReadNode(node->mChildren[childIndex]);
+	}
+	return result;
+}
+
+Animation Model::LoadAnimationFile(const std::string& filename, const std::string& directoryPath) {
+	// アニメーションを入れる箱
+	Animation animation;
+
+	// 対応する拡張子のリスト
+	std::vector<std::string> supportedExtensions = { ".gltf" };
+
+	// ディレクトリ内のファイルを検索
+	// モデルファイルが入っているディレクトリ
+	std::string fileDirectoryPath = directoryPath + "/" + filename;
+	// filesystem用
+	std::filesystem::path modelDirectoryPath(fileDirectoryPath);
+
+	// アニメーションのファイルパス
+	std::string animationlFilePath;
+
+	// ファイルの中身を検索
+	for (const auto& entry : std::filesystem::directory_iterator(modelDirectoryPath)) {
+		if (entry.is_regular_file()) {
+			std::string ext = entry.path().extension().string();
+			// 対応する拡張子かチェック
+			if (std::find(supportedExtensions.begin(), supportedExtensions.end(), ext) != supportedExtensions.end()) {
+				if (entry.path().stem().string() == filename) {
+					animationlFilePath = entry.path().string();
+					break;
+				}
+			}
+		}
+	}
+
+	// アニメーションファイルが見つからなかった場合
+	if (animationlFilePath.empty()) {
+		haveSkinningAnimation_ = false;
+		return Animation();
+	}
+
+	// Assimpインポータ
+	Assimp::Importer importer;
+	const aiScene* scene = importer.ReadFile(animationlFilePath.c_str(), 0);
+
+	// アニメーションがない場合
+	if (scene->mNumAnimations == 0) {
+		haveSkinningAnimation_ = false;
+		return Animation();
+	} else {
+		// アニメーションあり
+		haveSkinningAnimation_ = true;
+	}
+
+	// キーフレームアニメーション読み込み
+	aiAnimation* animationAssimp = scene->mAnimations[0];
+	animation.duration = float(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);
+
+
+	for (uint32_t channelIndex = 0; channelIndex < animationAssimp->mNumChannels; channelIndex++) {
+		aiNodeAnim* nodeAnimationAssimp = animationAssimp->mChannels[channelIndex];
+		NodeAnimation& nodeAnimation = animation.nodeAnimations[nodeAnimationAssimp->mNodeName.C_Str()];
+
+		// Translation keys
+		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumPositionKeys; keyIndex++) {
+			aiVectorKey& keyAssimp = nodeAnimationAssimp->mPositionKeys[keyIndex];
+			KeyframeVector3 keyframe;
+			keyframe.time = float(keyAssimp.mTime / animationAssimp->mTicksPerSecond);
+			keyframe.value = { -keyAssimp.mValue.x, keyAssimp.mValue.y, keyAssimp.mValue.z };
+			nodeAnimation.translate.push_back(keyframe);
+		}
+
+		// Rotation keys
+		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumRotationKeys; keyIndex++) {
+			aiQuatKey& keyAssimp = nodeAnimationAssimp->mRotationKeys[keyIndex];
+			KeyframeQuaternion keyframe;
+			keyframe.time = float(keyAssimp.mTime / animationAssimp->mTicksPerSecond);
+			keyframe.value = { keyAssimp.mValue.x, -keyAssimp.mValue.y, -keyAssimp.mValue.z, keyAssimp.mValue.w };
+			nodeAnimation.rotate.push_back(keyframe);
+		}
+
+		// Scaling keys
+		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumScalingKeys; keyIndex++) {
+			aiVectorKey& keyAssimp = nodeAnimationAssimp->mScalingKeys[keyIndex];
+			KeyframeVector3 keyframe;
+			keyframe.time = float(keyAssimp.mTime / animationAssimp->mTicksPerSecond);
+			keyframe.value = { keyAssimp.mValue.x, keyAssimp.mValue.y, keyAssimp.mValue.z };
+			nodeAnimation.scale.push_back(keyframe);
+		}
+	}
+
+
+	return animation;
+}
+
+Vector3 Model::CalculateVelue(const std::vector<KeyframeVector3>& keyframes, float time) {
+	assert(!keyframes.empty());
+
+	if (keyframes.size() == 1 || time <= keyframes[0].time) {
+		return keyframes[0].value;
+	}
+
+	for (size_t index = 0; index < keyframes.size() - 1; ++index) {
+		size_t nextIndex = index + 1;
+		// indexとnextIndexの2つのKeyframeを取得して範囲内に時刻があるかを判定
+		if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
+			// 範囲内を補完する
+			float t = (time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time);
+			return Lerp(keyframes[index].value, keyframes[nextIndex].value, t);
+		}
+	}
+
+	return (*keyframes.rbegin()).value;
+}
+
+Quaternion Model::CalculateValue(const std::vector<KeyframeQuaternion>& keyframes, float time) {
+	assert(!keyframes.empty());
+
+	if (keyframes.size() == 1 || time <= keyframes[0].time) {
+		return keyframes[0].value;
+	}
+
+	for (size_t index = 0; index < keyframes.size() - 1; ++index) {
+		size_t nextIndex = index + 1;
+		// indexとnextIndexの2つのKeyframeを取得して範囲内に時刻があるかを判定
+		if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
+			// 範囲内を補完する
+			float t = (time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time);
+			return Slerp(keyframes[index].value, keyframes[nextIndex].value, t);
+		}
+	}
+
+	return (*keyframes.rbegin()).value;
+}
+
+void Model::ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animationTime) {
+	for (Joint& joint : skeleton.joints) {
+		if (auto it = animation.nodeAnimations.find(joint.name); it != animation.nodeAnimations.end()) {
+			const NodeAnimation& rootNodeAnimation = (*it).second;
+			joint.transform.translate = CalculateVelue(rootNodeAnimation.translate, animationTime);
+			joint.transform.rotate = CalculateValue(rootNodeAnimation.rotate, animationTime);
+			joint.transform.scale = CalculateVelue(rootNodeAnimation.scale, animationTime);
+		}
+	}
+}
+
+Skeleton Model::CreateSkeleton(const Node& rootNode) {
+	Skeleton skeleton;
+	skeleton.root = CreateJoint(rootNode, {}, skeleton.joints);
+
+	for (const Joint& joint : skeleton.joints) {
+		skeleton.jointMap.emplace(joint.name, joint.index);
+	}
+
+	return skeleton;
+}
+
+void Model::SkeletonUpdate(Skeleton& skeleton) {
+	for (Joint& joint : skeleton.joints) {
+		joint.loclMatrix = MakeAffineMatrix(joint.transform.scale, joint.transform.rotate, joint.transform.translate);
+		if (joint.parent) {
+			joint.skeletonSpaceMatrix = joint.loclMatrix * skeleton.joints[*joint.parent].skeletonSpaceMatrix;
+		} else {
+			joint.skeletonSpaceMatrix = joint.loclMatrix;
+		}
+	}
+}
+
+int32_t Model::CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints) {
+	Joint joint;
+	joint.name = node.name;
+	joint.loclMatrix = node.localMatrix;
+	joint.skeletonSpaceMatrix = MakeIdentityMatrix4x4();
+	joint.transform = node.transform;
+	joint.index = int32_t(joints.size());
+	joint.parent = parent;
+	joints.push_back(joint);
+	for (const Node& child : node.children) {
+		int32_t childIndex = CreateJoint(child, joint.index, joints);
+		joints[joint.index].children.push_back(childIndex);
+	}
+	return joint.index;
+}
+
+SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& modelData) {
+	SkinCluster skinCluster;
+	// palette用のリソースを確保
+	skinCluster.paletteResources = SUGER::CreateBufferResource(sizeof(WellForGPU) * skeleton.jointMap.size());
+	WellForGPU* mappedPalette = nullptr;
+	skinCluster.paletteResources->Map(0, nullptr, reinterpret_cast<void**>(&mappedPalette));
+	skinCluster.mappedPalette = { mappedPalette, skeleton.joints.size() };
+
+	// srvのインデックスを割り当て
+	skinClusterSrvIndex_ = SUGER::SrvAllocate();
+
+	// Srvを作成
+	SUGER::CreateSrvStructured(skinClusterSrvIndex_, skinCluster.paletteResources.Get(), UINT(skeleton.joints.size()), sizeof(WellForGPU));
+
+	// 合計頂点数を取得
+	size_t totalVertexCount = 0;
+	for (const auto& mesh : modelData.meshes) {
+		totalVertexCount += mesh.vertices.size();
+	}
+
+	// influence用のリソースを確保
+	skinCluster.influenceResource = SUGER::CreateBufferResource(sizeof(VertexInfluence) * totalVertexCount);
+	VertexInfluence* mappedInfluence = nullptr;
+	skinCluster.influenceResource->Map(0, nullptr, reinterpret_cast<void**>(&mappedInfluence));
+	std::memset(mappedInfluence, 0, sizeof(VertexInfluence) * totalVertexCount);
+	skinCluster.mappedInfluence = { mappedInfluence,totalVertexCount };
+
+	// Influence用のVBVを作成
+	skinCluster.influenceBufferView.BufferLocation = skinCluster.influenceResource->GetGPUVirtualAddress();
+	skinCluster.influenceBufferView.SizeInBytes = UINT(sizeof(VertexInfluence) * totalVertexCount);
+	skinCluster.influenceBufferView.StrideInBytes = sizeof(VertexInfluence);
+
+	// InverseBindPoseMatrixの保存領域を作成
+	skinCluster.inverseBindPoseMatrices.resize(skeleton.joints.size());
+	for (size_t i = 0; i < skeleton.joints.size(); ++i) {
+		skinCluster.inverseBindPoseMatrices[i] = MakeIdentityMatrix4x4();
+	}
+
+
+	// ModelDataのskinCluster情報を解析してInfluenceの中身を埋める
+	for (const auto& jointWeight : modelData.skinClusterData) {
+		auto it = skeleton.jointMap.find(jointWeight.first);
+		if (it == skeleton.jointMap.end()) {
+			continue;
+		}
+
+		skinCluster.inverseBindPoseMatrices[(*it).second] = jointWeight.second.inverseBindPoseMatrix;
+		for (const auto& vertexWeight : jointWeight.second.vertexWeights) {
+			auto& currentInfluence = skinCluster.mappedInfluence[vertexWeight.vertexIndex];
+			for (uint32_t index = 0; index < kNumMaxInfluence; index++) {
+				if (currentInfluence.weights[index] == 0.0f) {
+					currentInfluence.weights[index] = vertexWeight.weight;
+					currentInfluence.jointindices[index] = (*it).second;
+					break;
+				}
+			}
+		}
+
+	}
+
+
+	return skinCluster;
+
+}
+
+void Model::SkinClusterUpdate(SkinCluster& skinCluster, const Skeleton& skeleton) {
+	for (size_t jointIndex = 0; jointIndex < skeleton.joints.size(); ++jointIndex) {
+		assert(jointIndex < skinCluster.inverseBindPoseMatrices.size());
+		skinCluster.mappedPalette[jointIndex].skeletonSpaceMatrix =
+			skinCluster.inverseBindPoseMatrices[jointIndex] * skeleton.joints[jointIndex].skeletonSpaceMatrix;
+		skinCluster.mappedPalette[jointIndex].skeletonSpaceInverseTransposeMatrix =
+			Transpose(Inverse(skinCluster.mappedPalette[jointIndex].skeletonSpaceMatrix));
 	}
 }

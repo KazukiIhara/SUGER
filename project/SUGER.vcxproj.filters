@@ -379,6 +379,7 @@
     <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp">
       <Filter>engine\importer\level\json</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -558,8 +559,8 @@
     <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h">
       <Filter>engine\importer\level\json</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\enum\ModelEnum.h" />
     <ClInclude Include="Engine\math\types\Quaternion.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
@@ -580,6 +581,8 @@
     <FxCompile Include="resources\shaders\objects\3d\object3d.VS.hlsl">
       <Filter>resources\shaders\objects\3d</Filter>
     </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.PS.hlsl" />
+    <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
@@ -591,5 +594,6 @@
     <None Include="resources\shaders\objects\3d\object3d.hlsli">
       <Filter>resources\shaders\objects\3d</Filter>
     </None>
+    <None Include="resources\shaders\objects\3dSkinning\object3dSkinning.hlsli" />
   </ItemGroup>
 </Project>

@@ -100,7 +100,7 @@ public: // クラスメソッド
 	// Allocate
 	static uint32_t SrvAllocate();
 	// instancing用のsrv作成
-	static void CreateSrvInstancing(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
+	static void CreateSrvStructured(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 
 #pragma endregion
 
@@ -154,7 +154,8 @@ public: // クラスメソッド
 	static void Update3DObjects();
 	// 3Dオブジェクトの描画
 	static void Draw3DObjects();
-
+	// スキニングありモデルを持っている3Dオブジェクトの描画
+	static void DrawSkinning3DObjects();
 	// 3Dオブジェクト検索
 	static Object3D* FindObject3D(const std::string& name);
 
@@ -196,6 +197,9 @@ public: // クラスメソッド
 	// Object3DSystemの機能
 	// 3dオブジェクト描画前処理
 	static void PreDrawObject3D();
+	// Skinningあり3dオブジェクト描画前処理
+	static void PreDrawObject3DSkinning();
+
 #pragma endregion
 
 #pragma region ParticleSystem

@@ -1,5 +1,6 @@
 #pragma once
 
+// クオータニオン
 struct Quaternion {
 	float x;
 	float y;

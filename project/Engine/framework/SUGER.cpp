@@ -180,7 +180,8 @@ void SUGER::Update() {
 		endRequest_ = true;
 	}
 
-	// フルスクリーン切り替え処理
+
+	// F11キーでフルスクリーン切り替え処理
 	if (directInput_->TriggerKey(DIK_F11)) {
 		windowManager_->ToggleFullScreen();
 	}
@@ -206,6 +207,11 @@ void SUGER::Draw() {
 	PreDrawObject3D();
 	// 3Dオブジェクト描画処理
 	Draw3DObjects();
+
+	// Skinningあり3Dオブジェクト描画前処理
+	PreDrawObject3DSkinning();
+	// Skinningあり3Dオブジェクト描画処理
+	DrawSkinning3DObjects();
 
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
@@ -300,7 +306,7 @@ uint32_t SUGER::SrvAllocate() {
 	return srvManager_->Allocate();
 }
 
-void SUGER::CreateSrvInstancing(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
+void SUGER::CreateSrvStructured(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
 	srvManager_->CreateSrvStructuredBuffer(srvIndex, pResource, numElements, structureByteStride);
 }
 
@@ -360,6 +366,10 @@ void SUGER::Draw3DObjects() {
 	object3dManager_->Draw();
 }
 
+void SUGER::DrawSkinning3DObjects() {
+	object3dManager_->DrawSkinning();
+}
+
 Object3D* SUGER::FindObject3D(const std::string& name) {
 	return object3dManager_->Find(name);
 }
@@ -398,6 +408,10 @@ void SUGER::PreDrawObject2D() {
 
 void SUGER::PreDrawObject3D() {
 	object3dSystem_->PreDraw();
+}
+
+void SUGER::PreDrawObject3DSkinning() {
+	object3dSystem_->PreDrawSkinning();
 }
 
 void SUGER::PreDrawParticle3D() {
