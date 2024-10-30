@@ -26,6 +26,8 @@ public:
 	void Update();
 	// 描画
 	void Draw(BlendMode blendMode = kBlendModeNormal);
+	// スキニングアニメーションありの描画
+	void DrawSkinning(BlendMode blendMode = kBlendModeNormal);
 
 private:
 	/*wvp用のリソース作成*/
@@ -92,7 +94,10 @@ public: // Getter
 	bool GetIsActive() const {
 		return isActive_;
 	}
-
+	// スキニング付きモデルを持っているかどうかのゲッター
+	bool GetHaveSkinningModel()const {
+		return haveSkinningModel_;
+	}
 private:/*メンバ変数*/
 
 	// モデルを受け取る箱
@@ -118,5 +123,5 @@ private:/*メンバ変数*/
 	bool isActive_ = true;
 
 	// スキニングアニメーション付きのモデルかどうか
-	bool haveSkinningAnimation_ = false;
+	bool haveSkinningModel_ = false;
 };

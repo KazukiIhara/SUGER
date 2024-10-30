@@ -205,11 +205,13 @@ void SUGER::Update() {
 void SUGER::Draw() {
 	// 3Dオブジェクト描画前処理
 	PreDrawObject3D();
+	// 3Dオブジェクト描画処理
+	Draw3DObjects();
 
 	// Skinningあり3Dオブジェクト描画前処理
 	PreDrawObject3DSkinning();
-	// 3Dオブジェクト描画処理
-	Draw3DObjects();
+	// Skinningあり3Dオブジェクト描画処理
+	DrawSkinning3DObjects();
 
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
@@ -362,6 +364,10 @@ void SUGER::Update3DObjects() {
 
 void SUGER::Draw3DObjects() {
 	object3dManager_->Draw();
+}
+
+void SUGER::DrawSkinning3DObjects() {
+	object3dManager_->DrawSkinning();
 }
 
 Object3D* SUGER::FindObject3D(const std::string& name) {

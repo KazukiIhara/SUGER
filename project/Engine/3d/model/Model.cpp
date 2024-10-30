@@ -14,10 +14,13 @@ void Model::Initialize(const std::string& filename) {
 
 	// アニメーション読み込み
 	animation_ = LoadAnimationFile(filename);
-	// スケルトン作成
-	skeleton_ = CreateSkeleton(modelData_.rootNode);
-	// スキンクラスター作成
-	skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
+
+	if (haveSkinningAnimation_) {
+		// スケルトン作成
+		skeleton_ = CreateSkeleton(modelData_.rootNode);
+		// スキンクラスター作成
+		skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
+	}
 
 	// マテリアル初期化
 	for (auto& mesh : modelData_.meshes) {
@@ -78,8 +81,27 @@ void Model::Update() {
 	}
 }
 
-void Model::DrawSkinning() {
+void Model::Draw() {
+	// メッシュの個数分ループ
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		// VBVを設定
+		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		// IBVを設定
+		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
+		// マテリアルCBufferの場所を設定
+		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
+		if (modelData_.meshes[i].material.haveUV_) {
+			// SRVセット
+			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
+			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
+		} else {
+			// TODO:UVなしの時の処理
+		}
+	}
+}
 
+void Model::DrawSkinning() {
 	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 
 		D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
@@ -631,6 +653,7 @@ Animation Model::LoadAnimationFile(const std::string& filename, const std::strin
 	// キーフレームアニメーション読み込み
 	aiAnimation* animationAssimp = scene->mAnimations[0];
 	animation.duration = float(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);
+
 
 	for (uint32_t channelIndex = 0; channelIndex < animationAssimp->mNumChannels; channelIndex++) {
 		aiNodeAnim* nodeAnimationAssimp = animationAssimp->mChannels[channelIndex];
