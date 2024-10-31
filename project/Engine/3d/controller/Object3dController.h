@@ -7,6 +7,7 @@
 #include "math/function/MathFunction.h"
 
 class Object3D;
+class WorldTransform;
 
 class Object3DController {
 public:
