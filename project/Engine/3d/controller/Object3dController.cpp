@@ -31,6 +31,10 @@ void Object3DController::SetIsActive(const bool& isActive) {
 	object3d_->SetIsActive(isActive);
 }
 
+void Object3DController::SetEnableLightning(const bool& enableLightning) {
+	object3d_->SetEnableLightning(enableLightning);
+}
+
 const Vector3& Object3DController::GetScale() {
 	return object3d_->GetScale();
 }
@@ -41,6 +45,10 @@ const Vector3& Object3DController::GetRotate() {
 
 const Vector3& Object3DController::GetTranslate() {
 	return object3d_->GetTranslate();
+}
+
+WorldTransform* Object3DController::GetWorldTransform() {
+	return object3d_->GetWorldTransform();
 }
 
 void Object3DController::SetObject(Object3D* object3d) {

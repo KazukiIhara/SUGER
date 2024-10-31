@@ -69,6 +69,8 @@ public: // Setter
 	void SetIsActive(const bool& isActive) {
 		isActive_ = isActive;
 	}
+	// ライトオンオフ
+	void SetEnableLightning(const bool& enableLighitning);
 public: // Getter
 	// 拡縮のゲッター
 	const Vector3& GetScale() const {
@@ -98,6 +100,9 @@ public: // Getter
 	bool GetHaveSkinningModel()const {
 		return haveSkinningModel_;
 	}
+	// ワールドトランスフォームのゲッター
+	WorldTransform* GetWorldTransform();
+
 private:/*メンバ変数*/
 
 	// モデルを受け取る箱

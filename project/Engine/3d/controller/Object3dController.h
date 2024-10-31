@@ -29,12 +29,18 @@ public:
 	// 有効フラグのセッター
 	void SetIsActive(const bool& isActive);
 
+	// ライトのオンオフ
+	void SetEnableLightning(const bool& enableLightning);
+
 	// スケールをゲット
 	const Vector3& GetScale();
 	// 回転のゲット
 	const Vector3& GetRotate();
 	// トランスレートをゲット
 	const Vector3& GetTranslate();
+
+	// ワールドタンスフォームのゲット
+	WorldTransform* GetWorldTransform();
 
 private:
 	// オブジェクトをセットする関数

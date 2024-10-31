@@ -22,8 +22,6 @@ private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 
-	// sample用のオブジェクト3Dコントローラ
-	Object3DController sample_;
 	// skinningSample用のオブジェクトコントローラ
 	Object3DController skinningSample_;// 
 	// jeanne用のオブジェクト2Dコントローラ
