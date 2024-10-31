@@ -100,6 +100,9 @@ public: // Getter
 	bool GetHaveSkinningModel()const {
 		return haveSkinningModel_;
 	}
+	// ワールドトランスフォームのゲッター
+	WorldTransform* GetWorldTransform();
+
 private:/*メンバ変数*/
 
 	// モデルを受け取る箱

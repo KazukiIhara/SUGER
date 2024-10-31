@@ -84,3 +84,7 @@ void Object3D::SetEnableLightning(const bool& enableLighitning) {
 		model_->SetEnableLight(enableLighitning);
 	}
 }
+
+WorldTransform* Object3D::GetWorldTransform() {
+	return &transform_;
+}

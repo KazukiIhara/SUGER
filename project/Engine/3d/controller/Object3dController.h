@@ -39,6 +39,9 @@ public:
 	// トランスレートをゲット
 	const Vector3& GetTranslate();
 
+	// ワールドタンスフォームのゲット
+	WorldTransform* GetWorldTransform();
+
 private:
 	// オブジェクトをセットする関数
 	void SetObject(Object3D* object3d);

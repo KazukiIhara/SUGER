@@ -47,6 +47,10 @@ const Vector3& Object3DController::GetTranslate() {
 	return object3d_->GetTranslate();
 }
 
+WorldTransform* Object3DController::GetWorldTransform() {
+	return object3d_->GetWorldTransform();
+}
+
 void Object3DController::SetObject(Object3D* object3d) {
 	object3d_ = object3d;
 }
