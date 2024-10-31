@@ -8,5 +8,10 @@ void WorldTransform::Initialize() {
 }
 
 void WorldTransform::Update() {
+	// アフィン行列更新
 	worldMatrix_ = MakeAffineMatrix(scale_, rotate_, translate_);
+	// 親がいれば
+	if (parent_) {
+		worldMatrix_ = worldMatrix_ * parent_->worldMatrix_;
+	}
 }

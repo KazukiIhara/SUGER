@@ -32,7 +32,7 @@ void RailCamera::RunRail() {
 	}
 
 	// 現在座標を求める
-	transform_.translate_ = CatmullRomSpline(controlPoints_, t_) + translateOffset_;
+	transform_.translate_ = CatmullRomSpline(controlPoints_, t_);
 
 	// 目標のtの値を求める
 	float targetT = t_ + targetOffset_;
@@ -42,7 +42,7 @@ void RailCamera::RunRail() {
 	}
 
 	// target 座標を求める
-	Vector3 target = CatmullRomSpline(controlPoints_, targetT) + translateOffset_; // 少し先の位置をターゲットに設定
+	Vector3 target = CatmullRomSpline(controlPoints_, targetT); // 少し先の位置をターゲットに設定
 
 	// 差分ベクトルを計算
 	Vector3 direction = Normalize(target - worldPos_);

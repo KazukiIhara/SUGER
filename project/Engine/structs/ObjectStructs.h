@@ -55,7 +55,7 @@ struct VertexData3D {
 // 3D用マテリアル構造体
 struct Material3D {
 	Vector4 color;
-	int32_t enbleLighting;
+	int32_t enableLighting;
 	float padding[3];
 	Matrix4x4 uvTransformMatrix;
 	float shininess;

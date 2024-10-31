@@ -62,6 +62,10 @@ public: // メンバ関数
 	void SetMaterials(const std::vector<Material3D>& materials) {
 		materials_ = materials;
 	}
+
+	// ライトオンオフ
+	void SetEnableLight(const bool& enbleLightning);
+
 	// マテリアルのゲッター
 	std::vector<Material3D> GetMaterials() {
 		return materials_;

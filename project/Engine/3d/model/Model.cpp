@@ -26,7 +26,7 @@ void Model::Initialize(const std::string& filename) {
 	for (auto& mesh : modelData_.meshes) {
 		Material3D material;
 		material.color = mesh.material.color;
-		material.enbleLighting = true;
+		material.enableLighting = true;
 		material.shininess = 40.0f;
 		material.uvTransformMatrix = MakeIdentityMatrix4x4();
 		materials_.push_back(material);
@@ -74,7 +74,7 @@ void Model::Update() {
 	// マテリアルの更新
 	for (size_t i = 0; i < materials_.size(); ++i) {
 		materialData_[i]->color = materials_[i].color;
-		materialData_[i]->enbleLighting = materials_[i].enbleLighting;
+		materialData_[i]->enableLighting = materials_[i].enableLighting;
 		materialData_[i]->shininess = materials_[i].shininess;
 		materials_[i].uvTransformMatrix = MakeUVMatrix(uvTransforms_[i].scale, uvTransforms_[i].rotateZ, uvTransforms_[i].translate);
 		materialData_[i]->uvTransformMatrix = materials_[i].uvTransformMatrix;
@@ -377,7 +377,7 @@ void Model::CreateSphere(const std::string& textureFilePath) {
 	// マテリアル初期化
 	Material3D material;
 	material.color = { 1.0f,1.0f,1.0f,1.0f };
-	material.enbleLighting = true;
+	material.enableLighting = true;
 	material.shininess = 40.0f;
 	material.uvTransformMatrix = MakeIdentityMatrix4x4();
 	materials_.push_back(material);
@@ -438,7 +438,7 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	// マテリアル初期化
 	Material3D material;
 	material.color = { 1.0f,1.0f,1.0f,1.0f };
-	material.enbleLighting = true;
+	material.enableLighting = true;
 	material.shininess = 40.0f;
 	material.uvTransformMatrix = MakeIdentityMatrix4x4();
 	materials_.push_back(material);
@@ -471,6 +471,12 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	MapMaterialData();
 #pragma endregion
 
+}
+
+void Model::SetEnableLight(const bool& enableLightning) {
+	for (size_t i = 0; i < materials_.size(); ++i) {
+		materials_[i].enableLighting = enableLightning;
+	}
 }
 
 const bool& Model::GetHaveAnimation() const {
@@ -572,7 +578,7 @@ void Model::MapMaterialData() {
 		Material3D* materialData = nullptr;
 		materialResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 		materialData->color = materials_[i].color;
-		materialData->enbleLighting = materials_[i].enbleLighting;
+		materialData->enableLighting = materials_[i].enableLighting;
 		materialData->shininess = materials_[i].shininess;
 		materialData->uvTransformMatrix = materials_[i].uvTransformMatrix;
 		materialData_.push_back(materialData);

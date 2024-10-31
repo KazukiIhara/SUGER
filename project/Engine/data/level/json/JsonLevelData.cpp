@@ -46,45 +46,62 @@ void JsonLevelData::Load(const std::string& fullpath) {
 		// MESHの読み込み
 		if (type.compare("MESH") == 0) {
 
-			// トランスフォームのパラメータ読み込み
-			nlohmann::json& transform = object["transform"];
+			// object3Dの場合
+			if (object["object_name"] == "object3d") {
+				// トランスフォームのパラメータ読み込み
+				nlohmann::json& transform = object["transform"];
 
-			// 平行移動
-			EulerTransform3D objectData{};
-			objectData.translate.x = static_cast<float>(transform["translation"][0]);
-			objectData.translate.y = static_cast<float>(transform["translation"][2]);
-			objectData.translate.z = static_cast<float>(transform["translation"][1]);
+				// 平行移動
+				EulerTransform3D objectData{};
+				objectData.translate.x = static_cast<float>(transform["translation"][0]);
+				objectData.translate.y = static_cast<float>(transform["translation"][2]);
+				objectData.translate.z = static_cast<float>(transform["translation"][1]);
 
-			// 回転角
-			objectData.rotate.x = -static_cast<float>(transform["rotation"][0]);
-			objectData.rotate.y = -static_cast<float>(transform["rotation"][2]);
-			objectData.rotate.z = -static_cast<float>(transform["rotation"][1]);
+				// 回転角
+				objectData.rotate.x = -static_cast<float>(transform["rotation"][0]);
+				objectData.rotate.y = -static_cast<float>(transform["rotation"][2]);
+				objectData.rotate.z = -static_cast<float>(transform["rotation"][1]);
 
-			// スケーリング
-			objectData.scale.x = static_cast<float>(transform["scaling"][0]);
-			objectData.scale.y = static_cast<float>(transform["scaling"][2]);
-			objectData.scale.z = static_cast<float>(transform["scaling"][1]);
+				// スケーリング
+				objectData.scale.x = static_cast<float>(transform["scaling"][0]);
+				objectData.scale.y = static_cast<float>(transform["scaling"][2]);
+				objectData.scale.z = static_cast<float>(transform["scaling"][1]);
 
-			ObjectData3D newObject;
+				ObjectData3D newObject;
 
-			// トランスフォームのセット
-			newObject.transform.scale = objectData.scale;
-			newObject.transform.rotate = objectData.rotate;
-			newObject.transform.translate = objectData.translate;
+				// トランスフォームのセット
+				newObject.transform.scale = objectData.scale;
+				newObject.transform.rotate = objectData.rotate;
+				newObject.transform.translate = objectData.translate;
 
-			// 名前のセット
-			newObject.objectName = object["name"];
+				// 名前のセット
+				newObject.objectName = object["name"];
 
-			// モデル名がある場合
-			if (object.contains("model_name")) {
-				// モデル読み込み,セット
-				SUGER::LoadModel(object["model_name"]);
-				newObject.modelName = object["model_name"];
+				// モデル名がある場合
+				if (object.contains("model_name")) {
+					// モデル読み込み,セット
+					SUGER::LoadModel(object["model_name"]);
+					newObject.modelName = object["model_name"];
+				}
+
+				// 3Dオブジェクトをコンテナに格納する
+				objects_.push_back(newObject);
+
+			} else if (object["object_name"] == "controlPoint") {
+				// トランスフォームのパラメータ読み込み
+				nlohmann::json& transform = object["transform"];
+
+				// 追加するコントロールポイント
+				Vector3 newControlPoint_;
+				// データ受け取り
+				newControlPoint_.x = static_cast<float>(transform["translation"][0]);
+				newControlPoint_.y = static_cast<float>(transform["translation"][2]);
+				newControlPoint_.z = static_cast<float>(transform["translation"][1]);
+
+				// コントロールポイントコンテナに格納
+				controlPoints_.push_back(newControlPoint_);
+
 			}
-
-			// 3Dオブジェクトをコンテナに格納する
-			objects_.push_back(newObject);
-
 		}
 
 	}
@@ -93,4 +110,8 @@ void JsonLevelData::Load(const std::string& fullpath) {
 
 std::vector<ObjectData3D> JsonLevelData::Get3DObjects()const {
 	return objects_;
+}
+
+std::vector<Vector3> JsonLevelData::GetControlPoints() const {
+	return controlPoints_;
 }
