@@ -7,6 +7,7 @@
 #include "math/function/MathFunction.h"
 
 class Object3D;
+class WorldTransform;
 
 class Object3DController {
 public:
@@ -38,6 +39,9 @@ public:
 	const Vector3& GetRotate();
 	// トランスレートをゲット
 	const Vector3& GetTranslate();
+
+	// ワールドタンスフォームのゲット
+	WorldTransform* GetWorldTransform();
 
 private:
 	// オブジェクトをセットする関数
