@@ -76,6 +76,32 @@ public: // クラスメソッド
 	static bool HoldKey(BYTE keyNumber);
 	// キーを離した
 	static bool ReleaseKey(BYTE keyNumber);
+
+	// ボタンを押している
+	static bool PushButton(int buttonNumber);
+	// ボタンを押した
+	static bool TriggerButton(int buttonNumber);
+	// ボタンを押し続けている
+	static bool HoldButton(int buttonNumber);
+	// ボタンを離した
+	static bool ReleaseButton(int buttonNumber);
+
+	// 左スティックのX軸位置を取得（-1000～1000の範囲にスケーリング）
+	static int GetLeftStickX();
+	// 左スティックのY軸位置を取得（-1000～1000の範囲にスケーリング）
+	static int GetLeftStickY();
+
+	// 右スティックのX軸位置を取得（-1000～1000の範囲にスケーリング）
+	static int GetRightStickX();
+	// 右スティックのY軸位置を取得（-1000～1000の範囲にスケーリング）
+	static int GetRightStickY();
+
+	// 方向キーの取得
+	static bool IsPadUp();
+	static bool IsPadRight();
+	static bool IsPadDown();
+	static bool IsPadLeft();
+
 #pragma endregion
 
 #pragma region DirectXManager
