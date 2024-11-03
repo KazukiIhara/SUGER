@@ -195,9 +195,9 @@ class MYADDON_OT_export_scene(bpy.types.Operator,bpy_extras.io_utils.ExportHelpe
         #回転をQuaternionからEulerに変換
         rot = rot.to_euler()
         #ラジアンから度数法に変換
-        rot.x = math.degrees(rot.x)
-        rot.y = math.degrees(rot.y)
-        rot.z = math.degrees(rot.z)
+        # rot.x = math.degrees(rot.x)
+        # rot.y = math.degrees(rot.y)
+        # rot.z = math.degrees(rot.z)
         #トランスフォーム情報を表示
         self.write_and_print(file, indent + "T %f %f %f" % (trans.x,trans.y,trans.z))
         self.write_and_print(file, indent + "R %f %f %f" % (rot.x,rot.y,rot.z))
