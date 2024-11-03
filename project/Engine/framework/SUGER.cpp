@@ -278,6 +278,55 @@ bool SUGER::ReleaseKey(BYTE keyNumber) {
 	return directInput_->ReleaseKey(keyNumber);
 }
 
+bool SUGER::PushButton(int buttonNumber) {
+	return directInput_->PushButton(buttonNumber);
+}
+
+bool SUGER::TriggerButton(int buttonNumber) {
+	return directInput_->TriggerButton(buttonNumber);
+}
+
+bool SUGER::HoldButton(int buttonNumber) {
+	return directInput_->HoldButton(buttonNumber);
+}
+
+bool SUGER::ReleaseButton(int buttonNumber) {
+	return directInput_->ReleaseButton(buttonNumber);
+}
+
+int SUGER::GetLeftStickX() {
+	return directInput_->GetLeftStickX();
+}
+
+int SUGER::GetLeftStickY() {
+	return directInput_->GetLeftStickY();
+}
+
+int SUGER::GetRightStickX() {
+	return directInput_->GetRightStickX();
+}
+
+int SUGER::GetRightStickY() {
+	return directInput_->GetRightStickY();
+}
+
+bool SUGER::IsPadUp() {
+	return directInput_->IsPadUp();
+}
+
+bool SUGER::IsPadRight() {
+	return directInput_->IsPadRight();
+}
+
+bool SUGER::IsPadDown() {
+	return directInput_->IsPadDown();
+}
+
+bool SUGER::IsPadLeft() {
+	return directInput_->IsPadLeft();
+}
+
+
 ID3D12Device* SUGER::GetDirectXDevice() {
 	return directXManager_->GetDevice();
 }
