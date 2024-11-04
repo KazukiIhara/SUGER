@@ -29,7 +29,7 @@ private:
 	// カメラが向くtの値
 	float targetOffset_ = 0.03f;
 	// レールカメラの速度
-	float speed_ = 0.001f;
+	float speed_ = 0.0005f;
 	// translateのオフセット
 	Vector3 translateOffset_ = { 0.0f,0.5f,0.0f };
 	// x回転角のオフセット

@@ -60,7 +60,7 @@ void RailCamera::RunRail() {
     angleDifferenceX = std::fabs(angleDifferenceX * (180.0f / std::numbers::pi_v<float>)); // ラジアンを度に変換して絶対値を取る
 
     // 角度差に基づく補正
-    if (angleDifferenceX < 50.0f) { // 10度未満の場合、世界の上方向を考慮して補正
+    if (angleDifferenceX < 55.0f) { // 10度未満の場合、世界の上方向を考慮して補正
         currentUp_ = Lerp(currentUp_, worldUp, 0.1f); // 世界の上方向に補正（補間率は0.1）
     } else { // 10度以上の場合は現在の上方向を維持
         currentUp_ = calculatedUp;
