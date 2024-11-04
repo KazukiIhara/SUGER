@@ -7,6 +7,17 @@
 // MyHedder
 #include "math/operator/MathOperator.h"
 
+// 
+// float
+// 
+
+// 線形補完
+float Lerp(float a, float b, float t);
+
+// 内積
+float Dot(const Vector3& a, const Vector3& b);
+
+
 ///
 /// Vector2
 /// 
@@ -32,6 +43,8 @@ Vector3 CatmullRomSpline(const std::vector<Vector3>& controlPoints, float t);
 // 線形補完
 Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
 
+// クロス積
+Vector3 Cross(const Vector3& a, const Vector3& b);
 
 ///
 /// Vector4
@@ -81,6 +94,10 @@ Matrix4x4 MakeUVMatrix(const Vector2& scale, const float& rotateZ, const Vector2
 // クオータニオンから回転行列への変換
 Matrix4x4 QuaternionToMatrix4x4(const Quaternion& q);
 
+void DecomposeUVMatrix(const Matrix4x4& matrix, Vector3& scale, float& rotateZ, Vector2& translate);
+
+Matrix4x4 ComposeUVMatrix(const Vector3& scale, float rotateZ, const Vector2& translate);
+
 
 ///
 /// Quaternion
@@ -91,3 +108,12 @@ Quaternion Normalize(const Quaternion& q);
 
 // 球面線形補完
 Quaternion Slerp(Quaternion q1, Quaternion q2, float t);
+
+// 指定した軸と角度からクォータニオンを生成する関数
+Quaternion QuaternionFromAxisAngle(const Vector3& axis, float angle);
+
+// 指定した進行方向と上方向に基づいてクォータニオンを生成する関数
+Quaternion QuaternionLookRotation(const Vector3& forward, const Vector3& up);
+
+// クォータニオンをオイラー角に変換する関数
+Vector3 QuaternionToEulerAngles(const Quaternion& q);

@@ -63,13 +63,13 @@ protected:
 	// ビュープロジェクションマトリックス
 	Matrix4x4 viewProjectionMatrix_{};
 	// 水平方向視野角
-	float fovY_ = 0.45f;
+	float fovY_ = 0.7f;
 	// アスペクト比
 	float aspectRaito_ = 16.0f / 9.0f;
 	// ニアクリップ距離
 	float nearClipRange_ = 0.1f;
 	// ファークリップ距離
-	float farClipRange_ = 100.0f;
+	float farClipRange_ = 1000.0f;
 
 	// カメラの初期トランスフォーム
 	const Vector3 kDefaultCameraRotate_ = { 0.45f,0.0f,0.0f };
