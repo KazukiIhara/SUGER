@@ -27,11 +27,13 @@ private:
 	// レールカメラ補間変数
 	float t_ = 0.0f;
 	// カメラが向くtの値
-	float targetOffset_ = 0.01f;
+	float targetOffset_ = 0.03f;
 	// レールカメラの速度
-	float speed_ = 0.001f;
+	float speed_ = 0.0005f;
 	// translateのオフセット
 	Vector3 translateOffset_ = { 0.0f,0.5f,0.0f };
 	// x回転角のオフセット
 	float rotateXOffset_ = 0.04f;
+	// カメラの上方向
+	Vector3 currentUp_{ 0.0f,1.0f,0.0f };
 };

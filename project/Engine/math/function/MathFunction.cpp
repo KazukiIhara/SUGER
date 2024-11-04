@@ -1,10 +1,16 @@
 #pragma once
 
 #include "MathFunction.h"
+#include <algorithm>
 
-///
-/// ベクトルの関数
-///
+
+float Lerp(float a, float b, float t) {
+	return a + t * (b - a);
+}
+
+float Dot(const Vector3& a, const Vector3& b) {
+	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
 
 /// <summary>
 /// 3次元ベクトルの長さを計算
@@ -45,25 +51,34 @@ Vector3 ExtractionWorldPos(const Matrix4x4& m) {
 }
 
 Vector3 CatmullRomSpline(const std::vector<Vector3>& controlPoints, float t) {
-	int p0, p1, p2, p3;
-	float tt = t * (controlPoints.size() - 1);
-	p1 = static_cast<int>(tt);
-	p0 = p1 > 0 ? p1 - 1 : p1;
-	p2 = p1 < controlPoints.size() - 1 ? p1 + 1 : p1;
-	p3 = p2 < controlPoints.size() - 1 ? p2 + 1 : p2;
+	int numPoints = static_cast<int>(controlPoints.size());
+	if (numPoints < 4) {
+		// 4つ未満のポイントではCatmull-Romスプラインが機能しないため、直接返す
+		return controlPoints[0];
+	}
 
-	tt = tt - p1;
+	// ttの計算
+	float tt = t * (numPoints - 1);
+	int p1 = static_cast<int>(tt);
+	p1 = std::clamp(p1, 1, numPoints - 3); // p1を範囲内に制限
+	int p0 = p1 - 1;
+	int p2 = p1 + 1;
+	int p3 = p2 + 1;
 
+	tt = tt - p1; // 局所的なtを取得
+
+	// Catmull-Romスプラインの計算式に基づく補間
 	float tt2 = tt * tt;
 	float tt3 = tt2 * tt;
 
 	Vector3 a = controlPoints[p0] * (-0.5f) + controlPoints[p1] * (1.5f) - controlPoints[p2] * (1.5f) + controlPoints[p3] * (0.5f);
 	Vector3 b = controlPoints[p0] - controlPoints[p1] * (2.5f) + controlPoints[p2] * (2.0f) - controlPoints[p3] * (0.5f);
-	Vector3 c = controlPoints[p0] * (-0.5f) + controlPoints[p2] * (0.5f);
+	Vector3 c = controlPoints[p2] * 0.5f - controlPoints[p0] * 0.5f;
 	Vector3 d = controlPoints[p1];
 
 	return a * tt3 + b * tt2 + c * tt + d;
 }
+
 
 Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t) {
 	return Vector3(
@@ -71,6 +86,14 @@ Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t) {
 		v1.y + t * (v2.y - v1.y),
 		v1.z + t * (v2.z - v1.z)
 	);
+}
+
+Vector3 Cross(const Vector3& a, const Vector3& b) {
+	return {
+		a.y * b.z - a.z * b.y,
+		a.z * b.x - a.x * b.z,
+		a.x * b.y - a.y * b.x
+	};
 }
 
 /// <summary>
@@ -306,6 +329,52 @@ Matrix4x4 QuaternionToMatrix4x4(const Quaternion& q) {
 	return mat;
 }
 
+/// <summary>
+/// UVマトリックスを分解
+/// </summary>
+void DecomposeUVMatrix(const Matrix4x4& matrix, Vector3& scale, float& rotateZ, Vector2& translate) {
+	// 平行移動成分を抽出
+	translate.x = matrix.m[3][0];
+	translate.y = matrix.m[3][1];
+
+	// 回転成分を抽出
+	rotateZ = std::atan2(matrix.m[1][0], matrix.m[0][0]);
+
+	// スケール成分を抽出
+	scale.x = matrix.m[0][0] / std::cos(rotateZ);
+	scale.y = matrix.m[1][1] / std::cos(rotateZ);
+	scale.z = 1.0f; // UV マトリックスは 2D なので z スケールは 1.0 と仮定
+}
+
+/// <summary>
+/// UVマトリックスを合成
+/// </summary>
+Matrix4x4 ComposeUVMatrix(const Vector3& scale, float rotateZ, const Vector2& translate) {
+	Matrix4x4 matrix;
+
+	float cosZ = std::cos(rotateZ);
+	float sinZ = std::sin(rotateZ);
+
+	// スケールと回転を適用
+	matrix.m[0][0] = scale.x * cosZ;
+	matrix.m[0][1] = scale.x * -sinZ;
+	matrix.m[1][0] = scale.y * sinZ;
+	matrix.m[1][1] = scale.y * cosZ;
+
+	// 平行移動を適用
+	matrix.m[3][0] = translate.x;
+	matrix.m[3][1] = translate.y;
+
+	// 他の要素を単位行列の値に設定
+	matrix.m[0][2] = matrix.m[0][3] = 0.0f;
+	matrix.m[1][2] = matrix.m[1][3] = 0.0f;
+	matrix.m[2][0] = matrix.m[2][1] = matrix.m[2][2] = matrix.m[2][3] = 0.0f;
+	matrix.m[3][2] = 0.0f;
+	matrix.m[3][3] = 1.0f;
+
+	return matrix;
+}
+
 Quaternion Normalize(const Quaternion& q) {
 	// クォータニオンの長さを計算
 	float length = std::sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
@@ -367,49 +436,45 @@ Quaternion Slerp(Quaternion q1, Quaternion q2, float t) {
 	return result;
 }
 
-
-/// <summary>
-/// UVマトリックスを分解
-/// </summary>
-void DecomposeUVMatrix(const Matrix4x4& matrix, Vector3& scale, float& rotateZ, Vector2& translate) {
-	// 平行移動成分を抽出
-	translate.x = matrix.m[3][0];
-	translate.y = matrix.m[3][1];
-
-	// 回転成分を抽出
-	rotateZ = std::atan2(matrix.m[1][0], matrix.m[0][0]);
-
-	// スケール成分を抽出
-	scale.x = matrix.m[0][0] / std::cos(rotateZ);
-	scale.y = matrix.m[1][1] / std::cos(rotateZ);
-	scale.z = 1.0f; // UV マトリックスは 2D なので z スケールは 1.0 と仮定
+Quaternion QuaternionFromAxisAngle(const Vector3& axis, float angle) {
+	float halfAngle = angle * 0.5f;
+	float s = std::sinf(halfAngle);
+	return { axis.x * s, axis.y * s, axis.z * s, std::cosf(halfAngle) };
 }
 
-/// <summary>
-/// UVマトリックスを合成
-/// </summary>
-Matrix4x4 ComposeUVMatrix(const Vector3& scale, float rotateZ, const Vector2& translate) {
-	Matrix4x4 matrix;
+Quaternion QuaternionLookRotation(const Vector3& forward, const Vector3& up) {
+	Vector3 z = Normalize(forward);
+	Vector3 x = Normalize(Cross(up, z));
+	Vector3 y = Cross(z, x);
 
-	float cosZ = std::cos(rotateZ);
-	float sinZ = std::sin(rotateZ);
+	Quaternion q;
+	q.w = std::sqrtf(1.0f + x.x + y.y + z.z) * 0.5f;
+	float w4 = 4.0f * q.w;
+	q.x = (y.z - z.y) / w4;
+	q.y = (z.x - x.z) / w4;
+	q.z = (x.y - y.x) / w4;
+	return q;
+}
 
-	// スケールと回転を適用
-	matrix.m[0][0] = scale.x * cosZ;
-	matrix.m[0][1] = scale.x * -sinZ;
-	matrix.m[1][0] = scale.y * sinZ;
-	matrix.m[1][1] = scale.y * cosZ;
+Vector3 QuaternionToEulerAngles(const Quaternion& q) {
+	Vector3 angles;
 
-	// 平行移動を適用
-	matrix.m[3][0] = translate.x;
-	matrix.m[3][1] = translate.y;
+	// Roll (x-axis rotation)
+	float sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
+	float cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+	angles.x = std::atan2(sinr_cosp, cosr_cosp);
 
-	// 他の要素を単位行列の値に設定
-	matrix.m[0][2] = matrix.m[0][3] = 0.0f;
-	matrix.m[1][2] = matrix.m[1][3] = 0.0f;
-	matrix.m[2][0] = matrix.m[2][1] = matrix.m[2][2] = matrix.m[2][3] = 0.0f;
-	matrix.m[3][2] = 0.0f;
-	matrix.m[3][3] = 1.0f;
+	// Pitch (y-axis rotation)
+	float sinp = 2 * (q.w * q.y - q.z * q.x);
+	if (std::abs(sinp) >= 1)
+		angles.y = std::copysign(std::numbers::pi_v<float> / 2, sinp); // 90度に制限
+	else
+		angles.y = std::asin(sinp);
 
-	return matrix;
+	// Yaw (z-axis rotation)
+	float siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+	float cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+	angles.z = std::atan2(siny_cosp, cosy_cosp);
+
+	return angles;
 }
