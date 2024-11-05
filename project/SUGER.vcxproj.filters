@@ -380,6 +380,7 @@
       <Filter>engine\importer\level\json</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
+    <ClCompile Include="application\objects\player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -562,6 +563,7 @@
     <ClInclude Include="Engine\math\types\Quaternion.h" />
     <ClInclude Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
     <ClInclude Include="Engine\enum\DirectInputEnum.h" />
+    <ClInclude Include="application\objects\player\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

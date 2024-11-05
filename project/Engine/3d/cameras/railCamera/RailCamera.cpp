@@ -1,3 +1,5 @@
+#define NOMINMAX
+
 #include "RailCamera.h"
 
 #include "imgui.h"
@@ -19,6 +21,15 @@ void RailCamera::Initialize() {
 }
 
 void RailCamera::Update() {
+#ifdef _DEBUG
+	ImGui::Begin("RailCamera");
+	ImGui::DragFloat("t_ ", &t_, 0.001f, 0.0f, 1.0f);
+	ImGui::Text("AngleDifferenceX: %f", angleDifferenceX_);
+	ImGui::DragFloat3("rotate ", &transform_.rotate_.x);
+	ImGui::End();
+#endif // _DEBUG
+
+
 	// レールを走らせる
 	RunRail();
 
@@ -27,54 +38,30 @@ void RailCamera::Update() {
 }
 
 void RailCamera::RunRail() {
-    // 世界の上方向ベクトルを設定
-    Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
-
-    // 初期のカメラ上方向を世界の上方向と同じに設定
+    // 世界の上方向ベクトル
+    constexpr Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
     static Vector3 currentUp_ = worldUp;
 
-    // t_の更新処理
-    if (t_ < 1.0f) {
-        t_ += speed_;
-    }
-    if (t_ > 1.0f) {
-        t_ = 1.0f;
-    }
+    // t_の更新
+    t_ = std::min(t_ + speed_, 1.0f);
 
-    // 現在位置の計算
+    // 現在位置と次の位置を計算して進行方向ベクトルを取得
     transform_.translate_ = CatmullRomSpline(controlPoints_, t_);
+    Vector3 nextPosition = CatmullRomSpline(controlPoints_, std::min(t_ + targetOffset_, 1.0f));
+    Vector3 forward = Normalize(nextPosition - transform_.translate_);
 
-    // わずかに先の位置を取得して進行方向ベクトルを計算
-    float nextT = t_ + 0.01f;
-    if (nextT > 1.0f) nextT = 1.0f;
-
-    Vector3 nextPosition = CatmullRomSpline(controlPoints_, nextT);
-    Vector3 forward = Normalize(nextPosition - transform_.translate_); // 接線ベクトル（進行方向）
-
-    // 前回のカメラ上方向に基づき、進行方向から右方向を計算
+    // 進行方向に基づく右方向と上方向を計算
     Vector3 right = Normalize(Cross(currentUp_, forward));
-    Vector3 calculatedUp = Cross(forward, right); // 進行方向に基づく上方向を計算
+    Vector3 calculatedUp = Cross(forward, right);
 
-    // X軸のみに基づいて角度差を計算
-    float angleDifferenceX = std::atan2(calculatedUp.y, calculatedUp.z) - std::atan2(worldUp.y, worldUp.z);
-    angleDifferenceX = std::fabs(angleDifferenceX * (180.0f / std::numbers::pi_v<float>)); // ラジアンを度に変換して絶対値を取る
+    // X軸の角度差を計算して補正
+    float angleDifferenceX = std::fabs(std::atan2(calculatedUp.y, calculatedUp.z) - std::atan2(worldUp.y, worldUp.z)) * (180.0f / std::numbers::pi_v<float>);
+    currentUp_ = (angleDifferenceX < 60.0f) ? Lerp(currentUp_, worldUp, 0.1f) : calculatedUp;
 
-    // 角度差に基づく補正
-    if (angleDifferenceX < 55.0f) { // 10度未満の場合、世界の上方向を考慮して補正
-        currentUp_ = Lerp(currentUp_, worldUp, 0.1f); // 世界の上方向に補正（補間率は0.1）
-    } else { // 10度以上の場合は現在の上方向を維持
-        currentUp_ = calculatedUp;
-    }
-
-    // ImGuiでデバッグ用に角度を出力
-    ImGui::Text("X-Axis Angle Difference: %f", angleDifferenceX);
-
-    // クォータニオンで回転を設定
-    Quaternion rotationQuat = QuaternionLookRotation(forward, currentUp_);
-
-    // クォータニオンをオイラー角に変換して設定
-    transform_.rotate_ = QuaternionToEulerAngles(rotationQuat);
+    // クォータニオンで回転を設定し、オイラー角に変換
+    transform_.rotate_ = QuaternionToEulerAngles(QuaternionLookRotation(forward, currentUp_));
 }
+
 
 void RailCamera::PushBackControlPoint(const Vector3& point) {
 	controlPoints_.push_back(point);
