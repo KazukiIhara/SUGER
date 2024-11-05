@@ -38,28 +38,28 @@ void RailCamera::Update() {
 }
 
 void RailCamera::RunRail() {
-    // 世界の上方向ベクトル
-    constexpr Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
-    static Vector3 currentUp_ = worldUp;
+	// 世界の上方向ベクトル
+	constexpr Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
+	static Vector3 currentUp_ = worldUp;
 
-    // t_の更新
-    t_ = std::min(t_ + speed_, 1.0f);
+	// t_の更新
+	t_ = std::min(t_ + speed_, 1.0f);
 
-    // 現在位置と次の位置を計算して進行方向ベクトルを取得
-    transform_.translate_ = CatmullRomSpline(controlPoints_, t_);
-    Vector3 nextPosition = CatmullRomSpline(controlPoints_, std::min(t_ + targetOffset_, 1.0f));
-    Vector3 forward = Normalize(nextPosition - transform_.translate_);
+	// 現在位置と次の位置を計算して進行方向ベクトルを取得
+	transform_.translate_ = CatmullRomSpline(controlPoints_, t_);
+	Vector3 nextPosition = CatmullRomSpline(controlPoints_, std::min(t_ + targetOffset_, 1.0f));
+	Vector3 forward = Normalize(nextPosition - transform_.translate_);
 
-    // 進行方向に基づく右方向と上方向を計算
-    Vector3 right = Normalize(Cross(currentUp_, forward));
-    Vector3 calculatedUp = Cross(forward, right);
+	// 進行方向に基づく右方向と上方向を計算
+	Vector3 right = Normalize(Cross(currentUp_, forward));
+	Vector3 calculatedUp = Cross(forward, right);
 
-    // X軸の角度差を計算して補正
-    float angleDifferenceX = std::fabs(std::atan2(calculatedUp.y, calculatedUp.z) - std::atan2(worldUp.y, worldUp.z)) * (180.0f / std::numbers::pi_v<float>);
-    currentUp_ = (angleDifferenceX < 60.0f) ? Lerp(currentUp_, worldUp, 0.1f) : calculatedUp;
+	// X軸の角度差を計算して補正
+	angleDifferenceX_ = std::fabs(std::atan2(calculatedUp.y, calculatedUp.z) - std::atan2(worldUp.y, worldUp.z)) * (180.0f / std::numbers::pi_v<float>);
+	currentUp_ = (angleDifferenceX_ < 60.0f) ? Lerp(currentUp_, worldUp, 0.1f) : calculatedUp;
 
-    // クォータニオンで回転を設定し、オイラー角に変換
-    transform_.rotate_ = QuaternionToEulerAngles(QuaternionLookRotation(forward, currentUp_));
+	// クォータニオンで回転を設定し、オイラー角に変換
+	transform_.rotate_ = QuaternionToEulerAngles(QuaternionLookRotation(forward, currentUp_));
 }
 
 
