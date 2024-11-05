@@ -57,6 +57,8 @@ public: // Setter
 		this->transform_.rotate_ = transform.rotate;
 		this->transform_.translate_ = transform.translate;
 	}
+	// 親トランスフォームをセット
+	void SetParent(WorldTransform* parent);
 	// ライトのセット
 	void SetPunctualLight(PunctualLight* punctualLight) {
 		punctualLight_ = punctualLight;

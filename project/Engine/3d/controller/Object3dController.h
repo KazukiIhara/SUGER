@@ -24,6 +24,9 @@ public:
 	// トランスレートのセット
 	void SetTranslate(const Vector3& translate);
 
+	// 親のセット
+	void SetParent(WorldTransform* parent);
+
 	// モデルのセット
 	void SetModel(const std::string& filePath);
 

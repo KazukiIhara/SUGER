@@ -16,22 +16,22 @@ void Camera::Initialize() {
 	transform_.rotate_ = kDefaultCameraRotate_;
 	transform_.translate_ = kDefaultCameraTranslate_;
 
-	worldMatrix_ = MakeAffineMatrix(transform_.scale_, transform_.rotate_, transform_.translate_);
-	Matrix4x4 viewMatrix = Inverse(worldMatrix_);
+	transform_.Update();
+	Matrix4x4 viewMatrix = Inverse(transform_.worldMatrix_);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, nearClipRange_, farClipRange_);
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
-	worldPos_ = ExtractionWorldPos(worldMatrix_);
+	worldPos_ = ExtractionWorldPos(transform_.worldMatrix_);
 
 	CreateCameraResource();
 	MapCameraData();
 }
 
 void Camera::Update() {
-	worldMatrix_ = MakeAffineMatrix(transform_.scale_, transform_.rotate_, transform_.translate_);
-	Matrix4x4 viewMatrix = Inverse(worldMatrix_);
+	transform_.Update();
+	Matrix4x4 viewMatrix = Inverse(transform_.worldMatrix_);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, nearClipRange_, farClipRange_);
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
-	worldPos_ = ExtractionWorldPos(worldMatrix_);
+	worldPos_ = ExtractionWorldPos(transform_.worldMatrix_);
 
 	UpdateCameraData();
 }
@@ -77,5 +77,9 @@ void Camera::SetTranslate(const Vector3& translate) {
 
 void Camera::SetRotate(const Vector3& rotate) {
 	this->transform_.rotate_ = rotate;
+}
+
+WorldTransform* Camera::GetWorldTransform() {
+	return &transform_;
 }
 

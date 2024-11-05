@@ -11,6 +11,9 @@
 #include "3d/cameras/railCamera/RailCamera.h"
 #include "importer/level/json/JsonLevelDataImporter.h"
 
+// Player
+#include "objects/player/Player.h"
+
 class ShootingCoasterScene :public BaseScene {
 public: // 公開メンバ関数
 	// コンストラクタ
@@ -29,6 +32,9 @@ private: // 非公開メンバ変数
 
 	// レールカメラ
 	std::unique_ptr<RailCamera> railCamera_ = nullptr;
+
+	// プレイヤー
+	std::unique_ptr<Player> player_ = nullptr;
 
 };
 

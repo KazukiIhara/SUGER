@@ -1,6 +1,7 @@
 #pragma once
 
 #include "3d/controller/Object3dController.h"
+#include "2d/controller/Object2dController.h"
 
 class Player {
 public:
@@ -12,8 +13,12 @@ public:
 	// 更新
 	void Update();
 
+	// レールカメラのトランスフォームセット
+	void SetRailTransform(WorldTransform* railTransform);
+
 private:
 	// プレイヤーオブジェクトのコントローラ
 	Object3DController player_;
-
+	// レティクルのコントローラ
+	Object2DController reticle_;
 };

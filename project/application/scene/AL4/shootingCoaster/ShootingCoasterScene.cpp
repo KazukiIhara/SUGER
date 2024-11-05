@@ -27,6 +27,11 @@ void ShootingCoasterScene::Initialize() {
 	// JsonDataをシーンにインポート
 	jsonImporter_.ImportLevelwithRailControllPoint(SUGER::FindJsonLevelData("ShootingCoaster"), railCamera_.get());
 
+	// プレイヤーの生成と初期化
+	player_ = std::make_unique<Player>();
+	player_->Initialize();
+	player_->SetRailTransform(railCamera_->GetWorldTransform());
+
 }
 
 void ShootingCoasterScene::Finalize() {
@@ -43,6 +48,9 @@ void ShootingCoasterScene::Update() {
 
 	// レールカメラの更新
 	railCamera_->Update();
+
+	// プレイヤーの更新
+	player_->Update();
 
 	// 
 	// シーンの更新処理ここまで
