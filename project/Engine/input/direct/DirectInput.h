@@ -1,81 +1,65 @@
 #pragma once
 
-#define DIRECTINPUT_VERSION	0x0800 // DirectInputのバージョン設定
-// Include
+#define DIRECTINPUT_VERSION	0x0800
 #include <dinput.h>
+#include <XInput.h>
 #include "directX/includes/ComPtr.h"
 #include "enum/DirectInputEnum.h"
 
-// 前方宣言
+#pragma comment(lib, "xinput.lib")
+
 class WindowManager;
 
-// DirectInputクラス
 class DirectInput {
 public:
-	// 初期化
 	void Initialize(WindowManager* windowManager);
-	// 更新
 	void Update();
 
-	// キーの押下をチェック
-	// 押しているとき
+	// キー入力
 	bool PushKey(BYTE keyNumber);
-	// 押されたとき
 	bool TriggerKey(BYTE keyNumber);
-	// 押し続けているとき
 	bool HoldKey(BYTE keyNumber);
-	// 離したとき
 	bool ReleaseKey(BYTE keyNumber);
-	
-	// ボタンを押している
-	bool PushButton(int buttonNumber);
-	// ボタンが押された
-	bool TriggerButton(int buttonNumber);
-	// ボタンを押し続けている
-	bool HoldButton(int buttonNumber);
-	// ボタンを離した
-	bool ReleaseButton(int buttonNumber);
 
-	// 左スティックのX軸位置を取得（-1000～1000の範囲にスケーリング）
-	int GetLeftStickX() const;
-	// 左スティックのY軸位置を取得（-1000～1000の範囲にスケーリング）
-	int GetLeftStickY() const;
+	// コントローラのボタン入力
+	bool PushButton(int controllerID, int buttonNumber);
+	bool TriggerButton(int controllerID, int buttonNumber);
+	bool HoldButton(int controllerID, int buttonNumber);
+	bool ReleaseButton(int controllerID, int buttonNumber);
 
-	// 右スティックのX軸位置を取得（-1000～1000の範囲にスケーリング）
-	int GetRightStickX() const;
-	// 右スティックのY軸位置を取得（-1000～1000の範囲にスケーリング）
-	int GetRightStickY() const;
+	// デッドゾーンの設定
+	void SetDeadZone(int deadZone);
+	int GetDeadZone() const;
+	int ProcessDeadZone(int value) const;
 
-	// 左トリガーの位置を取得（0～1000の範囲）
-	int GetLeftTrigger() const;
-	// 右トリガーの位置を取得（0～1000の範囲）
-	int GetRightTrigger() const;
+	// スティックやトリガーの位置取得
+	int GetLeftStickX(int controllerID) const;
+	int GetLeftStickY(int controllerID) const;
+	int GetRightStickX(int controllerID) const;
+	int GetRightStickY(int controllerID) const;
+	int GetLeftTrigger(int controllerID) const;
+	int GetRightTrigger(int controllerID) const;
 
-	// 方向キーの取得
-	bool IsPadUp() const;
-	bool IsPadRight() const;
-	bool IsPadDown() const;
-	bool IsPadLeft() const;
+	// 方向キー
+	bool IsPadUp(int controllerID) const;
+	bool IsPadRight(int controllerID) const;
+	bool IsPadDown(int controllerID) const;
+	bool IsPadLeft(int controllerID) const;
 
 private:
 	void SetWindowManager(WindowManager* windowManager);
 
 private:
-	// WindowManagerのポインタ
 	WindowManager* windowManager_ = nullptr;
-	// インスタンス
 	ComPtr <IDirectInput8> directInput = nullptr;
-	// キーボード
 	ComPtr <IDirectInputDevice8> keybord = nullptr;
-	// 現在フレームのキー入力
-	BYTE key[256];
-	// 1フレーム前のキー入力
-	BYTE preKey[256];
-	// ゲームパッド
-	ComPtr<IDirectInputDevice8> gamepad = nullptr;
-	// 現在フレームのパッド入力
-	DIJOYSTATE gamepadState;
-	// 1フレーム前のパッド入力
-	DIJOYSTATE preGamepadState;
 
+	BYTE key[256];
+	BYTE preKey[256];
+
+	// 最大4つのコントローラの状態を管理
+	XINPUT_STATE gamepadStates[4]{};
+	XINPUT_STATE preGamepadStates[4]{};
+
+	int deadZone_ = 25;
 };

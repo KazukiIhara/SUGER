@@ -13,6 +13,12 @@ public:
 	// 更新
 	void Update();
 
+	// 照準の操作
+	void MoveReticle();
+
+	// 照準の座標変換
+	void ScreenToWorld();
+
 	// レールカメラのトランスフォームセット
 	void SetRailTransform(WorldTransform* railTransform);
 

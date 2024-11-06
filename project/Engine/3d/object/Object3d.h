@@ -63,7 +63,7 @@ public: // Setter
 	void SetPunctualLight(PunctualLight* punctualLight) {
 		punctualLight_ = punctualLight;
 	}
-	// ビュープロジェクションのセット
+	// カメラのセット
 	void SetCamera(Camera* camera) {
 		camera_ = camera;
 	}
@@ -104,6 +104,8 @@ public: // Getter
 	}
 	// ワールドトランスフォームのゲッター
 	WorldTransform* GetWorldTransform();
+	// カメラのゲッター
+	Camera* GetCamera();
 
 private:/*メンバ変数*/
 

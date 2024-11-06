@@ -55,6 +55,10 @@ WorldTransform* Object3DController::GetWorldTransform() {
 	return object3d_->GetWorldTransform();
 }
 
+Camera* Object3DController::GetCamera() {
+	return object3d_->GetCamera();
+}
+
 void Object3DController::SetObject(Object3D* object3d) {
 	object3d_ = object3d;
 }

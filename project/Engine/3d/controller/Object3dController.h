@@ -8,6 +8,7 @@
 
 class Object3D;
 class WorldTransform;
+class Camera;
 
 class Object3DController {
 public:
@@ -45,6 +46,9 @@ public:
 
 	// ワールドタンスフォームのゲット
 	WorldTransform* GetWorldTransform();
+
+	// カメラのゲット
+	Camera* GetCamera();
 
 private:
 	// オブジェクトをセットする関数

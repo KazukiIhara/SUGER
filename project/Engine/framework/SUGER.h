@@ -78,29 +78,29 @@ public: // クラスメソッド
 	static bool ReleaseKey(BYTE keyNumber);
 
 	// ボタンを押している
-	static bool PushButton(int buttonNumber);
+	static bool PushButton(int buttonNumber,int controllerID);
 	// ボタンを押した
-	static bool TriggerButton(int buttonNumber);
+	static bool TriggerButton(int buttonNumber,int controllerID);
 	// ボタンを押し続けている
-	static bool HoldButton(int buttonNumber);
+	static bool HoldButton(int buttonNumber,int controllerID);
 	// ボタンを離した
-	static bool ReleaseButton(int buttonNumber);
+	static bool ReleaseButton(int buttonNumber,int controllerID);
 
 	// 左スティックのX軸位置を取得（-1000～1000の範囲にスケーリング）
-	static int GetLeftStickX();
+	static int GetLeftStickX(int controllerID);
 	// 左スティックのY軸位置を取得（-1000～1000の範囲にスケーリング）
-	static int GetLeftStickY();
+	static int GetLeftStickY(int controllerID);
 
 	// 右スティックのX軸位置を取得（-1000～1000の範囲にスケーリング）
-	static int GetRightStickX();
+	static int GetRightStickX(int controllerID);
 	// 右スティックのY軸位置を取得（-1000～1000の範囲にスケーリング）
-	static int GetRightStickY();
+	static int GetRightStickY(int controllerID);
 
 	// 方向キーの取得
-	static bool IsPadUp();
-	static bool IsPadRight();
-	static bool IsPadDown();
-	static bool IsPadLeft();
+	static bool IsPadUp(int controllerID);
+	static bool IsPadRight(int controllerID);
+	static bool IsPadDown(int controllerID);
+	static bool IsPadLeft(int controllerID);
 
 #pragma endregion
 
