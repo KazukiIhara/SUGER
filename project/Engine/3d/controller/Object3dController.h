@@ -8,6 +8,7 @@
 
 class Object3D;
 class WorldTransform;
+class Camera;
 
 class Object3DController {
 public:
@@ -23,6 +24,9 @@ public:
 	void SetRotate(const Vector3& rotate);
 	// トランスレートのセット
 	void SetTranslate(const Vector3& translate);
+
+	// 親のセット
+	void SetParent(WorldTransform* parent);
 
 	// モデルのセット
 	void SetModel(const std::string& filePath);
@@ -42,6 +46,9 @@ public:
 
 	// ワールドタンスフォームのゲット
 	WorldTransform* GetWorldTransform();
+
+	// カメラのゲット
+	Camera* GetCamera();
 
 private:
 	// オブジェクトをセットする関数

@@ -23,6 +23,10 @@ void Object3DController::SetTranslate(const Vector3& translate) {
 	object3d_->SetTranslate(translate);
 }
 
+void Object3DController::SetParent(WorldTransform* parent) {
+	object3d_->SetParent(parent);
+}
+
 void Object3DController::SetModel(const std::string& filePath) {
 	object3d_->SetModel(filePath);
 }
@@ -49,6 +53,10 @@ const Vector3& Object3DController::GetTranslate() {
 
 WorldTransform* Object3DController::GetWorldTransform() {
 	return object3d_->GetWorldTransform();
+}
+
+Camera* Object3DController::GetCamera() {
+	return object3d_->GetCamera();
 }
 
 void Object3DController::SetObject(Object3D* object3d) {

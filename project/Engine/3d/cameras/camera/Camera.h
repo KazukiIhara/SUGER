@@ -31,13 +31,16 @@ public:
 	// カメラのrotateをセット
 	void SetRotate(const Vector3& rotate);
 
+	// ワールドトランスフォームを送る
+	WorldTransform* GetWorldTransform();
+
 	// ビュープロジェクションマトリックスを送る関数
 	Matrix4x4 GetViewProjectionMatrix()const {
 		return viewProjectionMatrix_;
 	}
 	// ワールド行列を送る関数
 	Matrix4x4 GetWorldMatrix()const {
-		return worldMatrix_;
+		return transform_.worldMatrix_;
 	}
 	// ワールド座標を送る関数
 	Vector3 GetWorldPos()const {
@@ -56,8 +59,6 @@ private:
 protected:
 	// カメラのトランスフォームを受け取る箱
 	WorldTransform transform_{};
-	// カメラのワールドマトリックス
-	Matrix4x4 worldMatrix_{};
 	// カメラのワールドポジション
 	Vector3 worldPos_{};
 	// ビュープロジェクションマトリックス

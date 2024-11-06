@@ -278,52 +278,52 @@ bool SUGER::ReleaseKey(BYTE keyNumber) {
 	return directInput_->ReleaseKey(keyNumber);
 }
 
-bool SUGER::PushButton(int buttonNumber) {
-	return directInput_->PushButton(buttonNumber);
+bool SUGER::PushButton(int buttonNumber, int controllerID) {
+	return directInput_->PushButton(buttonNumber, controllerID);
 }
 
-bool SUGER::TriggerButton(int buttonNumber) {
-	return directInput_->TriggerButton(buttonNumber);
+bool SUGER::TriggerButton(int buttonNumber, int controllerID) {
+	return directInput_->TriggerButton(buttonNumber, controllerID);
 }
 
-bool SUGER::HoldButton(int buttonNumber) {
-	return directInput_->HoldButton(buttonNumber);
+bool SUGER::HoldButton(int buttonNumber, int controllerID) {
+	return directInput_->HoldButton(buttonNumber, controllerID);
 }
 
-bool SUGER::ReleaseButton(int buttonNumber) {
-	return directInput_->ReleaseButton(buttonNumber);
+bool SUGER::ReleaseButton(int buttonNumber, int controllerID) {
+	return directInput_->ReleaseButton(buttonNumber, controllerID);
 }
 
-int SUGER::GetLeftStickX() {
-	return directInput_->GetLeftStickX();
+int SUGER::GetLeftStickX(int controllerID) {
+	return directInput_->GetLeftStickX(controllerID);
 }
 
-int SUGER::GetLeftStickY() {
-	return directInput_->GetLeftStickY();
+int SUGER::GetLeftStickY(int controllerID) {
+	return directInput_->GetLeftStickY(controllerID);
 }
 
-int SUGER::GetRightStickX() {
-	return directInput_->GetRightStickX();
+int SUGER::GetRightStickX(int controllerID) {
+	return directInput_->GetRightStickX(controllerID);
 }
 
-int SUGER::GetRightStickY() {
-	return directInput_->GetRightStickY();
+int SUGER::GetRightStickY(int controllerID) {
+	return directInput_->GetRightStickY(controllerID);
 }
 
-bool SUGER::IsPadUp() {
-	return directInput_->IsPadUp();
+bool SUGER::IsPadUp(int controllerID) {
+	return directInput_->IsPadUp(controllerID);
 }
 
-bool SUGER::IsPadRight() {
-	return directInput_->IsPadRight();
+bool SUGER::IsPadRight(int controllerID) {
+	return directInput_->IsPadRight(controllerID);
 }
 
-bool SUGER::IsPadDown() {
-	return directInput_->IsPadDown();
+bool SUGER::IsPadDown(int controllerID) {
+	return directInput_->IsPadDown(controllerID);
 }
 
-bool SUGER::IsPadLeft() {
-	return directInput_->IsPadLeft();
+bool SUGER::IsPadLeft(int controllerID) {
+	return directInput_->IsPadLeft(controllerID);
 }
 
 

@@ -1,17 +1,11 @@
-// Include
 #include <cassert>
-
-// MyHedder
 #include "DirectInput.h"
 #include "manager/window/WindowManager.h"
 #include "debugTools/logger/Logger.h"
 
 void DirectInput::Initialize(WindowManager* windowManager) {
-
-	// WindowManagerのインスタンスのセット
 	SetWindowManager(windowManager);
 
-	// DirectInputの初期化
 	HRESULT result = S_FALSE;
 	directInput = nullptr;
 	result = DirectInput8Create(
@@ -22,152 +16,133 @@ void DirectInput::Initialize(WindowManager* windowManager) {
 	);
 	assert(SUCCEEDED(result));
 
-	// キーボードデバイスの生成
 	keybord = nullptr;
 	result = directInput->CreateDevice(GUID_SysKeyboard, &keybord, NULL);
 	assert(SUCCEEDED(result));
 
-	// 入力データ形式のセット
-	result = keybord->SetDataFormat(&c_dfDIKeyboard); // 標準形式
+	result = keybord->SetDataFormat(&c_dfDIKeyboard);
 	assert(SUCCEEDED(result));
-
-	// 排他制御レベルのセット
 	result = keybord->SetCooperativeLevel(windowManager_->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
-
-	// ゲームパッドデバイスの生成
-	result = directInput->CreateDevice(GUID_Joystick, &gamepad, NULL);
-	if (SUCCEEDED(result)) {
-		// 入力データ形式のセット
-		gamepad->SetDataFormat(&c_dfDIJoystick); // 標準形式
-		// 排他制御レベルのセット
-		gamepad->SetCooperativeLevel(windowManager_->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
-	}
 }
 
 void DirectInput::Update() {
-	// キーボード情報の取得開始
 	keybord->Acquire();
-
-	// 前フレームのキーの入力状態を取得する
 	memcpy(preKey, key, sizeof(key));
-
-	// キーボードの入力状態を取得
 	keybord->GetDeviceState(sizeof(key), key);
 
-	// ゲームパッド情報の取得開始
-	if (gamepad) {
-		gamepad->Acquire();
-		preGamepadState = gamepadState; // 前フレームの状態をコピー
-		gamepad->GetDeviceState(sizeof(DIJOYSTATE), &gamepadState); // 現在の状態を取得
+	for (int i = 0; i < 4; ++i) {
+		preGamepadStates[i] = gamepadStates[i];
+		DWORD dwResult = XInputGetState(i, &gamepadStates[i]);
+		if (dwResult != ERROR_SUCCESS) {
+			ZeroMemory(&gamepadStates[i], sizeof(XINPUT_STATE));
+		}
 	}
 }
 
+// キーボードの押下状態の確認
 bool DirectInput::PushKey(BYTE keyNumber) {
-	// 指定キーを押して入ればtrueを返す
-	if (key[keyNumber]) {
-		return true;
-	}
-	return false;
+	return key[keyNumber] != 0;
 }
 
+// キーボードのトリガー状態の確認（前フレームでは押されておらず、現在フレームで押された場合）
 bool DirectInput::TriggerKey(BYTE keyNumber) {
-	// 1フレーム前に指定キーを入力しておらず、現在フレームで入力していればtrueを返す
-	if (!preKey[keyNumber] && key[keyNumber]) {
-		return true;
-	}
-	return false;
+	return !preKey[keyNumber] && key[keyNumber];
 }
 
+// キーボードのホールド状態の確認（前フレームと現在フレームで押され続けている場合）
 bool DirectInput::HoldKey(BYTE keyNumber) {
-	// 1フレーム前に指定キーを入力しており、現在フレームも入力していればtrueを返す
-	if (preKey[keyNumber] && key[keyNumber]) {
-		return true;
-	}
-	return false;
+	return preKey[keyNumber] && key[keyNumber];
 }
 
+// キーボードのリリース状態の確認（前フレームで押されており、現在フレームで離された場合）
 bool DirectInput::ReleaseKey(BYTE keyNumber) {
-	// 1フレーム前に指定キーを入力しており、現在フレームで入力していなければtrueを返す
-	if (preKey[keyNumber] && !key[keyNumber]) {
-		return true;
+	return preKey[keyNumber] && !key[keyNumber];
+}
+
+
+bool DirectInput::PushButton(int controllerID, int buttonNumber) {
+	return (gamepadStates[controllerID].Gamepad.wButtons & buttonNumber) != 0;
+}
+
+bool DirectInput::TriggerButton(int controllerID, int buttonNumber) {
+	return !(preGamepadStates[controllerID].Gamepad.wButtons & buttonNumber) &&
+		(gamepadStates[controllerID].Gamepad.wButtons & buttonNumber);
+}
+
+bool DirectInput::HoldButton(int controllerID, int buttonNumber) {
+	return (preGamepadStates[controllerID].Gamepad.wButtons & buttonNumber) &&
+		(gamepadStates[controllerID].Gamepad.wButtons & buttonNumber);
+}
+
+bool DirectInput::ReleaseButton(int controllerID, int buttonNumber) {
+	return (preGamepadStates[controllerID].Gamepad.wButtons & buttonNumber) &&
+		!(gamepadStates[controllerID].Gamepad.wButtons & buttonNumber);
+}
+
+// デッドゾーンの設定
+void DirectInput::SetDeadZone(int deadZone) {
+	deadZone_ = (deadZone < 0) ? 0 : (deadZone > 100) ? 100 : deadZone;
+}
+
+int DirectInput::GetDeadZone() const {
+	return deadZone_;
+}
+
+// スティック入力のデッドゾーン処理
+int DirectInput::ProcessDeadZone(int value) const {
+	int maxValue = 32767; // XInputのスティックの最大値
+	int threshold = maxValue * deadZone_ / 100;
+
+	if (abs(value) < threshold) {
+		return 0;
+	} else {
+		return (value > 0) ? (value - threshold) * maxValue / (maxValue - threshold)
+			: (value + threshold) * maxValue / (maxValue - threshold);
 	}
-	return false;
 }
 
-bool DirectInput::PushButton(int buttonNumber) {
-	return (gamepadState.rgbButtons[buttonNumber] & 0x80) != 0;
+
+int DirectInput::GetLeftStickX(int controllerID) const {
+	return ProcessDeadZone(gamepadStates[controllerID].Gamepad.sThumbLX);
 }
 
-bool DirectInput::TriggerButton(int buttonNumber) {
-	return (!(preGamepadState.rgbButtons[buttonNumber] & 0x80) && (gamepadState.rgbButtons[buttonNumber] & 0x80));
+int DirectInput::GetLeftStickY(int controllerID) const {
+	return ProcessDeadZone(gamepadStates[controllerID].Gamepad.sThumbLY);
 }
 
-bool DirectInput::HoldButton(int buttonNumber) {
-	return ((preGamepadState.rgbButtons[buttonNumber] & 0x80) && (gamepadState.rgbButtons[buttonNumber] & 0x80));
+int DirectInput::GetRightStickX(int controllerID) const {
+	return ProcessDeadZone(gamepadStates[controllerID].Gamepad.sThumbRX);
 }
 
-bool DirectInput::ReleaseButton(int buttonNumber) {
-	return ((preGamepadState.rgbButtons[buttonNumber] & 0x80) && !(gamepadState.rgbButtons[buttonNumber] & 0x80));
+int DirectInput::GetRightStickY(int controllerID) const {
+	return ProcessDeadZone(gamepadStates[controllerID].Gamepad.sThumbRY);
 }
 
-// 左スティックのX軸位置取得関数
-int DirectInput::GetLeftStickX() const {
-	// lXを利用して左スティックのX軸位置を取得
-	return gamepadState.lX;
+int DirectInput::GetLeftTrigger(int controllerID) const {
+	return gamepadStates[controllerID].Gamepad.bLeftTrigger;
 }
 
-// 左スティックのY軸位置取得関数
-int DirectInput::GetLeftStickY() const {
-	// lYを利用して左スティックのY軸位置を取得
-	return gamepadState.lY;
+int DirectInput::GetRightTrigger(int controllerID) const {
+	return gamepadStates[controllerID].Gamepad.bRightTrigger;
 }
 
-// 右スティックのX軸位置取得関数
-int DirectInput::GetRightStickX() const {
-	// lRxを利用して右スティックのX軸位置を取得
-	return gamepadState.lRx;
+bool DirectInput::IsPadUp(int controllerID) const {
+	return (gamepadStates[controllerID].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) != 0;
 }
 
-// 右スティックのY軸位置取得関数
-int DirectInput::GetRightStickY() const {
-	// lRyを利用して右スティックのY軸位置を取得
-	return gamepadState.lRy;
+bool DirectInput::IsPadRight(int controllerID) const {
+	return (gamepadStates[controllerID].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) != 0;
 }
 
-// 左トリガーの位置取得関数
-int DirectInput::GetLeftTrigger() const {
-	// lZを利用して左トリガーの値を取得
-	return gamepadState.lZ;
+bool DirectInput::IsPadDown(int controllerID) const {
+	return (gamepadStates[controllerID].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN) != 0;
 }
 
-// 右トリガーの位置取得関数
-int DirectInput::GetRightTrigger() const {
-	// lRzを利用して右トリガーの値を取得
-	return gamepadState.lRz;
-}
-
-// D-Pad上の判定
-bool DirectInput::IsPadUp() const {
-    return gamepadState.rgdwPOV[0] == 0;
-}
-
-// D-Pad右の判定
-bool DirectInput::IsPadRight() const {
-    return gamepadState.rgdwPOV[0] == 9000;
-}
-
-// D-Pad下の判定
-bool DirectInput::IsPadDown() const {
-    return gamepadState.rgdwPOV[0] == 18000;
-}
-
-// D-Pad左の判定
-bool DirectInput::IsPadLeft() const {
-    return gamepadState.rgdwPOV[0] == 27000;
+bool DirectInput::IsPadLeft(int controllerID) const {
+	return (gamepadStates[controllerID].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) != 0;
 }
 
 void DirectInput::SetWindowManager(WindowManager* windowManager) {
 	windowManager_ = windowManager;
 }
-
