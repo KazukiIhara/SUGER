@@ -28,8 +28,12 @@ void Player::Update() {
 void Player::MoveReticle() {
 	float s = static_cast<float>(SUGER::GetLeftStickX(0));
 	// レティクルの操作
-	reticle_.SetPosition(reticle_.GetPosition() + Vector2(static_cast<float>(SUGER::GetLeftStickX(0) / 1000.0f), -static_cast<float>(SUGER::GetLeftStickY(0) / 1000.0f)));
-
+	Vector2 reticlePosition = reticle_.GetPosition() + Vector2(static_cast<float>(SUGER::GetLeftStickX(0) / 1000.0f), -static_cast<float>(SUGER::GetLeftStickY(0) / 1000.0f));
+	// 画面外へ行かないようにする処理
+	reticlePosition.x = std::clamp(reticlePosition.x, 100.0f, static_cast<float>(WindowManager::kClientWidth) - 100.0f);
+	reticlePosition.y = std::clamp(reticlePosition.y, 100.0f, static_cast<float>(WindowManager::kClientHeight) - 100.0f);
+	// レティクルの値をセット
+	reticle_.SetPosition(reticlePosition);
 }
 
 void Player::ScreenToWorld() {
