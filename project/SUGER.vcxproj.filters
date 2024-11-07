@@ -383,6 +383,7 @@
     <ClCompile Include="application\objects\player\Player.cpp" />
     <ClCompile Include="application\objects\playerBullet\PlayerBullet.cpp" />
     <ClCompile Include="application\objects\baroon\Baroon.cpp" />
+    <ClCompile Include="Engine\collider\Collider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -568,6 +569,7 @@
     <ClInclude Include="application\objects\player\Player.h" />
     <ClInclude Include="application\objects\playerBullet\PlayerBullet.h" />
     <ClInclude Include="application\objects\baroon\Baroon.h" />
+    <ClInclude Include="Engine\collider\Collider.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

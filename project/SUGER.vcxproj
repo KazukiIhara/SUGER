@@ -127,6 +127,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp" />
     <ClCompile Include="Engine\3d\model\Model.cpp" />
     <ClCompile Include="Engine\3d\object\Object3d.cpp" />
+    <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp" />
     <ClCompile Include="Engine\FixFPS\FixFPS.cpp" />
     <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp" />
@@ -179,6 +180,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h" />
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
+    <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="Engine\data\level\json\JsonLevelData.h" />
     <ClInclude Include="Engine\enum\DirectInputEnum.h" />
     <ClInclude Include="Engine\enum\ParticleEnum.h" />
