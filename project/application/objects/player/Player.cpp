@@ -88,7 +88,7 @@ void Player::Attack() {
 		Vector3 velocity(0, 0, kBulletSpeed_);
 		// 速度ベクトルを自機の向きに合わせて回転させる
 		Vector3 reticleWorldPos = ExtractionWorldPos(reticleTransform_.worldMatrix_);
-		Vector3 worldPos = ExtractionWorldPos(player_.GetWorldTransform()->worldMatrix_);
+		Vector3 worldPos = ExtractionWorldPos(player_.GetWorldTransform()->worldMatrix_) + kBulletShotOffset_;
 		velocity = reticleWorldPos - worldPos;
 		velocity = kBulletSpeed_ * Normalize(velocity);
 		// 弾を生成して初期化
