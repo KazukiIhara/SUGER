@@ -77,6 +77,8 @@ void Player::ScreenToWorld() {
 	reticleDirection = Normalize(reticleDirection);
 
 	reticleTransform_.translate_ = posNear + kDistanceReticle_ * reticleDirection;
+
+	reticleTransform_.Update();
 }
 
 void Player::Attack() {
