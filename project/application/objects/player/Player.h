@@ -42,4 +42,6 @@ private:
 	const float kDistanceReticle_ = 200.0f;
 	// 弾のリスト
 	std::list<PlayerBullet*> bullets_;
+	// 弾の速度
+	const float kBulletSpeed_ = 1.5f;
 };
