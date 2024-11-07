@@ -25,7 +25,7 @@ void ShootingCoasterScene::Initialize() {
 	SUGER::LoadJsonLevelData("ShootingCoaster");
 
 	// JsonDataをシーンにインポート
-	jsonImporter_.ImportLevelwithRailControllPoint(SUGER::FindJsonLevelData("ShootingCoaster"), railCamera_.get());
+	jsonImporter_.ImportLevel(SUGER::FindJsonLevelData("ShootingCoaster"), railCamera_.get());
 
 	// プレイヤーの生成と初期化
 	player_ = std::make_unique<Player>();

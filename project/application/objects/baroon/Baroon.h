@@ -1,5 +1,7 @@
 #pragma once
 
+#include "3d/controller/Object3dController.h"
+
 class Baroon {
 public:
 	Baroon() = default;

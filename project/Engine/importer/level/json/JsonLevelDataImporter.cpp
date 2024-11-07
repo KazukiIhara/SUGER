@@ -11,7 +11,7 @@ void JsonLevelDataImporter::Import(JsonLevelData* jsonLevelData) {
 	}
 }
 
-void JsonLevelDataImporter::ImportLevelwithRailControllPoint(JsonLevelData* jsonRailData, RailCamera* railCamera) {
+void JsonLevelDataImporter::ImportLevel(JsonLevelData* jsonRailData, RailCamera* railCamera) {
 	// データ受け取り
 	for (ObjectData3D object : jsonRailData->Get3DObjects()) {
 		SUGER::Create3DObject(object.objectName, object.modelName, object.transform);
@@ -20,4 +20,5 @@ void JsonLevelDataImporter::ImportLevelwithRailControllPoint(JsonLevelData* json
 	for (Vector3 controlPoint : jsonRailData->GetControlPoints()) {
 		railCamera->PushBackControlPoint(controlPoint);
 	}
+
 }

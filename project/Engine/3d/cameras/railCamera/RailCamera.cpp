@@ -56,6 +56,7 @@ void RailCamera::RunRail() {
 
 	// X軸の角度差を計算して補正
 	angleDifferenceX_ = std::fabs(std::atan2(calculatedUp.y, calculatedUp.z) - std::atan2(worldUp.y, worldUp.z)) * (180.0f / std::numbers::pi_v<float>);
+	// X軸の回転角が60度を越えている場合、進行方向から上方向を算出してカメラの回転を決める
 	currentUp_ = (angleDifferenceX_ < 60.0f) ? Lerp(currentUp_, worldUp, 0.1f) : calculatedUp;
 
 	// クォータニオンで回転を設定し、オイラー角に変換

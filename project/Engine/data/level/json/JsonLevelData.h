@@ -25,5 +25,6 @@ private:
 	std::vector<ObjectData3D> objects_;
 	// このレベルに存在するレールのコントロールポイントのデータコンテナ
 	std::vector<Vector3> controlPoints_;
-
+	// このレベルに存在するBaroonのデータコンテナ
+	std::vector<Baroon> baroons_;
 };
