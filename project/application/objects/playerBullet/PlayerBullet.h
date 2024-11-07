@@ -21,7 +21,7 @@ private:
 	// 移動量
 	Vector3 velocity_{};
 	// 寿命
-	static const int32_t kLifeTime_ = 60 * 5;
+	static const int32_t kLifeTime_ = 60;
 	// デスタイマー
 	int32_t deathTimer_ = kLifeTime_;
 

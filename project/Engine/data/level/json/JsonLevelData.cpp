@@ -101,6 +101,8 @@ void JsonLevelData::Load(const std::string& fullpath) {
 				// コントロールポイントコンテナに格納
 				controlPoints_.push_back(newControlPoint_);
 
+			} else if (object["object_name"] == "baroon") {
+
 			}
 		}
 

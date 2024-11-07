@@ -11,8 +11,9 @@
 #include "3d/cameras/railCamera/RailCamera.h"
 #include "importer/level/json/JsonLevelDataImporter.h"
 
-// Player
+// Objects
 #include "objects/player/Player.h"
+#include "objects/baroon/Baroon.h"
 
 class ShootingCoasterScene :public BaseScene {
 public: // 公開メンバ関数
@@ -35,6 +36,9 @@ private: // 非公開メンバ変数
 
 	// プレイヤー
 	std::unique_ptr<Player> player_ = nullptr;
+
+	// 風船
+	std::list<std::unique_ptr<Baroon>> baroons_;
 
 };
 

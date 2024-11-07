@@ -2,6 +2,7 @@
 
 class JsonLevelData;
 class RailCamera;
+class Baroon;
 
 class JsonLevelDataImporter {
 public:
@@ -12,7 +13,7 @@ public:
 	void Import(JsonLevelData* jsonLevelData);
 
 	// railDataをシーンにインポート
-	void ImportLevelwithRailControllPoint(JsonLevelData* jsonRailData, RailCamera* railCamera);
+	void ImportLevel(JsonLevelData* jsonRailData, RailCamera* railCamera);
 
 private:
 
