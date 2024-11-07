@@ -55,7 +55,7 @@ const Vector3& Object3DController::GetTranslate() {
 	return object3d_->GetTranslate();
 }
 
-const bool& Object3DController::GetIsDelete() {
+bool Object3DController::GetIsDelete() {
 	return object3d_->GetIsDelete();
 }
 

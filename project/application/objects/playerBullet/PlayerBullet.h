@@ -9,10 +9,11 @@ public:
 	PlayerBullet() = default;
 	~PlayerBullet() = default;
 
-	void Initialize(const Vector3& position, const Vector3& velocity, const uint32_t bulletNum);
+	void Initialize(const Vector3& position, const Vector3& velocity);
 
 	void Update();
 
+	bool GetIsDead();
 
 private:
 	// コントローラ
@@ -23,4 +24,6 @@ private:
 	static const int32_t kLifeTime_ = 60 * 5;
 	// デスタイマー
 	int32_t deathTimer_ = kLifeTime_;
+
+	bool isDead_ = false;
 };

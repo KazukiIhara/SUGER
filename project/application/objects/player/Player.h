@@ -1,8 +1,11 @@
 #pragma once
 
+#include <list>
+
 #include "3d/controller/Object3dController.h"
 #include "2d/controller/Object2dController.h"
 #include "worldTransform/WorldTransform.h"
+#include "objects/playerBullet/PlayerBullet.h"
 
 class Player {
 public:
@@ -37,4 +40,6 @@ private:
 	WorldTransform reticleTransform_{};
 	// カメラから照準への距離
 	const float kDistanceReticle_ = 200.0f;
+	// 弾のリスト
+	std::list<PlayerBullet*> bullets_;
 };

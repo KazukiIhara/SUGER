@@ -48,7 +48,7 @@ public:
 	const Vector3& GetTranslate();
 
 	// 削除フラグをゲット
-	const bool& GetIsDelete();
+	bool GetIsDelete();
 
 	// ワールドタンスフォームのゲット
 	WorldTransform* GetWorldTransform();

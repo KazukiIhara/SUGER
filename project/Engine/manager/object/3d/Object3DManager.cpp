@@ -52,13 +52,13 @@ void Object3DManager::Finalize() {
 	objects_.clear();
 }
 
-void Object3DManager::Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform) {
+std::string Object3DManager::Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform) {
 	// 重複した名前がある場合、番号を付加してユニークな名前を作成
 	std::string uniqueName = name;
-	int counter = 1;
+	int counter = 0;
 	while (objects_.find(uniqueName) != objects_.end()) {
-		uniqueName = name + "_" + std::to_string(counter);
 		counter++;
+		uniqueName = name + "_" + std::to_string(counter);
 	}
 
 	// オブジェクトの生成と初期化
@@ -86,7 +86,11 @@ void Object3DManager::Create(const std::string& name, const std::string& fileNam
 
 	// 3Dオブジェクトをコンテナに格納する
 	objects_.insert(std::make_pair(uniqueName, std::move(newObject)));
+
+	// オブジェクトの番号を返す
+	return uniqueName;
 }
+
 
 Object3D* Object3DManager::Find(const std::string& name) {
 	// 作成済みオブジェクトを検索

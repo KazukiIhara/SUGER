@@ -16,9 +16,21 @@ void Player::Initialize() {
 	reticle_.SetPosition(Vector2(WindowManager::kClientWidth / 2.0f, WindowManager::kClientHeight / 2.0f));
 
 	reticleTransform_.Initialize();
+
+	// 弾のモデル読み込み
+	SUGER::LoadModel("Bullet");
 }
 
 void Player::Update() {
+
+	/*デスフラグの立った弾を削除*/
+	bullets_.remove_if([](PlayerBullet* bullet) {
+		if (bullet->GetIsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+		});
 
 	// 照準の操作
 	MoveReticle();
@@ -28,6 +40,11 @@ void Player::Update() {
 
 	// 攻撃処理
 	Attack();
+
+	// 弾更新
+	for (PlayerBullet* bullet : bullets_) {
+		bullet->Update();
+	}
 }
 
 void Player::MoveReticle() {
@@ -63,7 +80,22 @@ void Player::ScreenToWorld() {
 }
 
 void Player::Attack() {
+	// パッドのボタンを押したら
+	if (SUGER::TriggerButton(0, ButtonA)) {
+		// 弾の速度
+		const float kBulletSpeed = 1.5f;
+		Vector3 velocity(0, 0, kBulletSpeed);
+		// 速度ベクトルを自機の向きに合わせて回転させる
+		Vector3 reticleWorldPos = ExtractionWorldPos(reticleTransform_.worldMatrix_);
+		Vector3 worldPos = ExtractionWorldPos(player_.GetWorldTransform()->worldMatrix_);
+		velocity = reticleWorldPos - worldPos;
+		velocity = kBulletSpeed * Normalize(velocity);
+		// 弾を生成して初期化
+		PlayerBullet* newBullet = new PlayerBullet();
+		newBullet->Initialize(worldPos, velocity);
 
+		bullets_.push_back(newBullet);
+	}
 }
 
 void Player::SetRailTransform(WorldTransform* railTransform) {

@@ -78,13 +78,13 @@ public: // クラスメソッド
 	static bool ReleaseKey(BYTE keyNumber);
 
 	// ボタンを押している
-	static bool PushButton(int buttonNumber,int controllerID);
+	static bool PushButton(int controllerID, int buttonNumber);
 	// ボタンを押した
-	static bool TriggerButton(int buttonNumber,int controllerID);
+	static bool TriggerButton(int controllerID, int buttonNumber);
 	// ボタンを押し続けている
-	static bool HoldButton(int buttonNumber,int controllerID);
+	static bool HoldButton(int controllerID, int buttonNumber);
 	// ボタンを離した
-	static bool ReleaseButton(int buttonNumber,int controllerID);
+	static bool ReleaseButton(int controllerID, int buttonNumber);
 
 	// 左スティックのX軸位置を取得（-1000～1000の範囲にスケーリング）
 	static int GetLeftStickX(int controllerID);
@@ -175,7 +175,7 @@ public: // クラスメソッド
 
 #pragma region Object3DManager
 	// 3Dオブジェクトの作成
-	static void Create3DObject(const std::string& name, const std::string& filePath = "", const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	static std::string Create3DObject(const std::string& name, const std::string& filePath = "", const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
 	// 3Dオブジェクトの更新
 	static void Update3DObjects();
 	// 3Dオブジェクトの描画
