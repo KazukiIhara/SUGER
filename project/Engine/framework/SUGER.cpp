@@ -278,20 +278,20 @@ bool SUGER::ReleaseKey(BYTE keyNumber) {
 	return directInput_->ReleaseKey(keyNumber);
 }
 
-bool SUGER::PushButton(int buttonNumber, int controllerID) {
-	return directInput_->PushButton(buttonNumber, controllerID);
+bool SUGER::PushButton(int controllerID, int buttonNumber) {
+	return directInput_->PushButton(controllerID, buttonNumber);
 }
 
-bool SUGER::TriggerButton(int buttonNumber, int controllerID) {
-	return directInput_->TriggerButton(buttonNumber, controllerID);
+bool SUGER::TriggerButton(int controllerID, int buttonNumber) {
+	return directInput_->TriggerButton(controllerID, buttonNumber);
 }
 
-bool SUGER::HoldButton(int buttonNumber, int controllerID) {
-	return directInput_->HoldButton(buttonNumber, controllerID);
+bool SUGER::HoldButton(int controllerID, int buttonNumber) {
+	return directInput_->HoldButton(controllerID, buttonNumber);
 }
 
-bool SUGER::ReleaseButton(int buttonNumber, int controllerID) {
-	return directInput_->ReleaseButton(buttonNumber, controllerID);
+bool SUGER::ReleaseButton(int controllerID, int buttonNumber) {
+	return directInput_->ReleaseButton(controllerID, buttonNumber);
 }
 
 int SUGER::GetLeftStickX(int controllerID) {
@@ -403,8 +403,8 @@ Sprite* SUGER::FindObject2D(const std::string& name) {
 	return object2dManager_->Find(name);
 }
 
-void SUGER::Create3DObject(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
-	object3dManager_->Create(name, filePath, transform);
+std::string SUGER::Create3DObject(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
+	return object3dManager_->Create(name, filePath, transform);
 }
 
 void SUGER::Update3DObjects() {

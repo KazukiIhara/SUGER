@@ -25,6 +25,9 @@ public:
 	// トランスレートのセット
 	void SetTranslate(const Vector3& translate);
 
+	// 削除フラグのセット
+	void SetIsDelete(const bool& isDelete);
+
 	// 親のセット
 	void SetParent(WorldTransform* parent);
 
@@ -43,6 +46,9 @@ public:
 	const Vector3& GetRotate();
 	// トランスレートをゲット
 	const Vector3& GetTranslate();
+
+	// 削除フラグをゲット
+	bool GetIsDelete();
 
 	// ワールドタンスフォームのゲット
 	WorldTransform* GetWorldTransform();

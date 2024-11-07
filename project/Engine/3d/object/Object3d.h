@@ -71,6 +71,10 @@ public: // Setter
 	void SetIsActive(const bool& isActive) {
 		isActive_ = isActive;
 	}
+	// 削除フラグのセット
+	void SetIsDelete(const bool& isDelete) {
+		isDelete_ = isDelete;
+	}
 	// ライトオンオフ
 	void SetEnableLightning(const bool& enableLighitning);
 public: // Getter
@@ -97,6 +101,10 @@ public: // Getter
 	// 有効フラグのゲッター
 	bool GetIsActive() const {
 		return isActive_;
+	}
+	// 削除フラグのゲッター
+	bool GetIsDelete()const {
+		return isDelete_;
 	}
 	// スキニング付きモデルを持っているかどうかのゲッター
 	bool GetHaveSkinningModel()const {
@@ -130,6 +138,9 @@ private:/*メンバ変数*/
 
 	// 有効かどうか
 	bool isActive_ = true;
+
+	// 削除フラグ
+	bool isDelete_ = false;
 
 	// スキニングアニメーション付きのモデルかどうか
 	bool haveSkinningModel_ = false;
