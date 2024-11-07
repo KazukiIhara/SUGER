@@ -12,6 +12,11 @@ void Object3DManager::Initialize(ModelManager* modelManager) {
 }
 
 void Object3DManager::Update() {
+	// 削除フラグが立っているオブジェクトを削除
+	std::erase_if(objects_, [](auto& pair) {
+		return pair.second && pair.second->GetIsDelete();
+		});
+
 	for (auto& pair : objects_) {
 		if (pair.second && pair.second->GetIsActive()) {  // unique_ptrが有効かつオブジェクトが有効状態
 			// 全オブジェクトを更新
@@ -48,12 +53,20 @@ void Object3DManager::Finalize() {
 }
 
 void Object3DManager::Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform) {
+	// 重複した名前がある場合、番号を付加してユニークな名前を作成
+	std::string uniqueName = name;
+	int counter = 1;
+	while (objects_.find(uniqueName) != objects_.end()) {
+		uniqueName = name + "_" + std::to_string(counter);
+		counter++;
+	}
+
 	// オブジェクトの生成と初期化
 	std::unique_ptr<Object3D> newObject = std::make_unique<Object3D>();
 	newObject->Initialize();
 
-	// 名前のセット
-	newObject->SetName(name);
+	// ユニークな名前をセット
+	newObject->SetName(uniqueName);
 
 	// トランスフォームのセット
 	newObject->SetScale(transform.scale);
@@ -72,7 +85,7 @@ void Object3DManager::Create(const std::string& name, const std::string& fileNam
 	}
 
 	// 3Dオブジェクトをコンテナに格納する
-	objects_.insert(std::make_pair(name, std::move(newObject)));
+	objects_.insert(std::make_pair(uniqueName, std::move(newObject)));
 }
 
 Object3D* Object3DManager::Find(const std::string& name) {

@@ -96,6 +96,22 @@ Vector3 Cross(const Vector3& a, const Vector3& b) {
 	};
 }
 
+Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix) {
+	Vector3 result{};
+	Vector4 coord = { vector.x, vector.y, vector.z, 1.0f };
+	Vector4 temp{};
+	temp.x = coord.x * matrix.m[0][0] + coord.y * matrix.m[1][0] + coord.z * matrix.m[2][0] + coord.w * matrix.m[3][0];
+	temp.y = coord.x * matrix.m[0][1] + coord.y * matrix.m[1][1] + coord.z * matrix.m[2][1] + coord.w * matrix.m[3][1];
+	temp.z = coord.x * matrix.m[0][2] + coord.y * matrix.m[1][2] + coord.z * matrix.m[2][2] + coord.w * matrix.m[3][2];
+	temp.w = coord.x * matrix.m[0][3] + coord.y * matrix.m[1][3] + coord.z * matrix.m[2][3] + coord.w * matrix.m[3][3];
+
+	result.x = temp.x / temp.w;
+	result.y = temp.y / temp.w;
+	result.z = temp.z / temp.w;
+
+	return result;
+}
+
 /// <summary>
 /// 単位行列を作成
 /// </summary>

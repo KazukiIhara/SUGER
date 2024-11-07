@@ -46,6 +46,9 @@ Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
 // クロス積
 Vector3 Cross(const Vector3& a, const Vector3& b);
 
+// トランスフォーム
+Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
+
 ///
 /// Vector4
 /// 
