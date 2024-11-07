@@ -7,6 +7,10 @@
 
 #include "3d/object/Object3d.h"
 
+
+// TODO:一時的な措置　エンジン部分とアプリ部分でファイル分けする
+class Baroon;
+
 class JsonLevelData {
 public:
 	JsonLevelData() = default;
