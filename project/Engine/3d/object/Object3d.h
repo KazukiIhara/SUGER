@@ -111,7 +111,7 @@ public: // Getter
 		return haveSkinningModel_;
 	}
 	// ワールドトランスフォームのゲッター
-	WorldTransform* GetWorldTransform();
+	WorldTransform* GetWorldTransformPtr();
 	// カメラのゲッター
 	Camera* GetCamera();
 

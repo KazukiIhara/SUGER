@@ -51,7 +51,7 @@ public:
 	bool GetIsDelete();
 
 	// ワールドタンスフォームのゲット
-	WorldTransform* GetWorldTransform();
+	WorldTransform* GetWorldTransformPtr();
 
 	// カメラのゲット
 	Camera* GetCamera();

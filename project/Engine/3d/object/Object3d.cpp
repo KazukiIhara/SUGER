@@ -89,7 +89,7 @@ void Object3D::SetEnableLightning(const bool& enableLighitning) {
 	}
 }
 
-WorldTransform* Object3D::GetWorldTransform() {
+WorldTransform* Object3D::GetWorldTransformPtr() {
 	return &transform_;
 }
 

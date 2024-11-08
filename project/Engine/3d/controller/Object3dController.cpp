@@ -59,8 +59,8 @@ bool Object3DController::GetIsDelete() {
 	return object3d_->GetIsDelete();
 }
 
-WorldTransform* Object3DController::GetWorldTransform() {
-	return object3d_->GetWorldTransform();
+WorldTransform* Object3DController::GetWorldTransformPtr() {
+	return object3d_->GetWorldTransformPtr();
 }
 
 Camera* Object3DController::GetCamera() {

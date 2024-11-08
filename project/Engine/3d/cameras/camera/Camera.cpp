@@ -79,7 +79,7 @@ void Camera::SetRotate(const Vector3& rotate) {
 	this->transform_.rotate_ = rotate;
 }
 
-WorldTransform* Camera::GetWorldTransform() {
+WorldTransform* Camera::GetWorldTransformPtr() {
 	return &transform_;
 }
 
