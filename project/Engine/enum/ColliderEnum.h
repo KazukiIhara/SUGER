@@ -3,5 +3,10 @@
 // コライダーの種類
 enum ColliderType {
 	kSphere,
-	kAABB,
+};
+
+// コライダーのカテゴリ
+enum ColliderCategory {
+	A,
+	B,
 };

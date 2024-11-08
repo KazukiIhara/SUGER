@@ -73,11 +73,17 @@ public: // Setter
 		isActive_ = isActive;
 	}
 	// 削除フラグのセット
-	void SetIsDelete(const bool& isDelete) {
-		isDelete_ = isDelete;
-	}
+	void SetIsDelete(const bool& isDelete);
+
 	// ライトオンオフ
 	void SetEnableLightning(const bool& enableLighitning);
+
+	// コライダータイプの設定
+	void SetColliderType(const ColliderType &colliderType);
+
+	// コライダーのカテゴリーの設定
+	void SetColliderCategory(const ColliderCategory &colliderCategory);
+
 public: // Getter
 	// 拡縮のゲッター
 	const Vector3& GetScale() const {
@@ -115,6 +121,12 @@ public: // Getter
 	WorldTransform* GetWorldTransformPtr();
 	// カメラのゲッター
 	Camera* GetCamera();
+
+	// コライダータイプのゲッター
+	const ColliderType& GetColliderType()const;
+
+	// コライダーカテゴリーのゲッター
+	const ColliderCategory& GetColliderCategory()const;
 
 private:/*メンバ変数*/
 

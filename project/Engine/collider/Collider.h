@@ -16,27 +16,31 @@ public:
 	void Initialize();
 
 	// ワールドトランスフォームの更新
-	void UpdateWorldTransform();
+	void UpdateWorldTransform(const WorldTransform& transform, const Vector3& colliderOffset = { 0.0f,0.0f,0.0f });
 
-	// 半径を取得
-	float GetRadius() {
-		return radius_;
-	}
 	// 半径を設定
 	void SetRadius(const float& radius) {
 		radius_ = radius;
 	}
 
 	// コライダーのタイプを設定
-	void SetColliderType(ColliderType colliderType);
+	void SetType(ColliderType colliderType);
+
+	// 種別IDを指定
+	void SetCategory(ColliderCategory category);
+
+
+	// 半径を取得
+	float GetRadius() {
+		return radius_;
+	}
 
 	// コライダータイプの取得
-	ColliderType GetColliderType()const;
+	ColliderType GetType()const;
 
 	// 種別IDを取得
-	uint32_t GetTypeID()const;
-	// 種別IDを指定
-	void SetTypeID(uint32_t typeID);
+	ColliderCategory GetCategory()const;
+
 
 private:
 	// ワールドトランスフォーム
@@ -46,6 +50,6 @@ private:
 	// コライダーのタイプ
 	ColliderType colliderType_ = kSphere;
 	// 種別ID
-	uint32_t typeID_ = 0u;
+	ColliderCategory category_ = A;
 
 };
