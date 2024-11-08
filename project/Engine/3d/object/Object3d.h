@@ -15,7 +15,6 @@
 #include "3d/model/Model.h"
 #include "3d/lights/punctualLight/PunctualLight.h"
 #include "3d/cameras/camera/Camera.h"
-#include "collider/Collider.h"
 
 class Object3D {
 public:
@@ -78,12 +77,6 @@ public: // Setter
 	// ライトオンオフ
 	void SetEnableLightning(const bool& enableLighitning);
 
-	// コライダータイプの設定
-	void SetColliderType(const ColliderType &colliderType);
-
-	// コライダーのカテゴリーの設定
-	void SetColliderCategory(const ColliderCategory &colliderCategory);
-
 public: // Getter
 	// 拡縮のゲッター
 	const Vector3& GetScale() const {
@@ -122,19 +115,10 @@ public: // Getter
 	// カメラのゲッター
 	Camera* GetCamera();
 
-	// コライダータイプのゲッター
-	const ColliderType& GetColliderType()const;
-
-	// コライダーカテゴリーのゲッター
-	const ColliderCategory& GetColliderCategory()const;
-
 private:/*メンバ変数*/
 
 	// モデルを受け取る箱
 	Model* model_ = nullptr;
-
-	// コライダー
-	Collider collider_;
 
 	/*WVP用のリソース*/
 	ComPtr<ID3D12Resource> transformationResource_ = nullptr;

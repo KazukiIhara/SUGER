@@ -9,8 +9,6 @@ void Object3D::Initialize() {
 	CreateWVPResource();
 	// データを書き込む
 	MapWVPData();
-	// コライダーの初期化
-	collider_.Initialize();
 }
 
 void Object3D::Update() {
@@ -25,8 +23,7 @@ void Object3D::Update() {
 	transformationData_->ViewProjection = camera_->GetViewProjectionMatrix();
 	transformationData_->WorldInverseTransepose = MakeInverseTransposeMatrix(transform_.worldMatrix_);
 
-	// コライダーの更新
-	collider_.UpdateWorldTransform(transform_,)
+
 }
 
 void Object3D::Draw(BlendMode blendMode) {
@@ -98,26 +95,10 @@ void Object3D::SetEnableLightning(const bool& enableLighitning) {
 	}
 }
 
-void Object3D::SetColliderType(const ColliderType& colliderType) {
-	collider_.SetType(colliderType);
-}
-
-void Object3D::SetColliderCategory(const ColliderCategory& colliderCategory) {
-	collider_.SetCategory(colliderCategory);
-}
-
 WorldTransform* Object3D::GetWorldTransformPtr() {
 	return &transform_;
 }
 
 Camera* Object3D::GetCamera() {
 	return camera_;
-}
-
-const ColliderType& Object3D::GetColliderType() const {
-	return collider_.GetType();
-}
-
-const ColliderCategory& Object3D::GetColliderCategory() const {
-	return collider_.GetCategory();
 }
