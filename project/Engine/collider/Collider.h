@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "enum/ColliderEnum.h"
+
 #include "math/function/MathFunction.h"
 #include "worldTransform/WorldTransform.h"
 
@@ -9,7 +11,7 @@ class Collider {
 public:
 
 	Collider() = default;
-	virtual ~Collider() = default;
+	~Collider() = default;
 	// 初期化
 	void Initialize();
 
@@ -24,22 +26,25 @@ public:
 	void SetRadius(const float& radius) {
 		radius_ = radius;
 	}
-	// 衝突時に呼ばれる関数
-	virtual void OnCollision([[maybe_unused]] Collider* other) {
-	}
-	// 中心座標を取得
-	virtual Vector3 GetCenterPosition()const = 0;
+
+	// コライダーのタイプを設定
+	void SetColliderType(ColliderType colliderType);
+
+	// コライダータイプの取得
+	ColliderType GetColliderType()const;
 
 	// 種別IDを取得
-	uint32_t GetTypeID()const { return typeID_; }
+	uint32_t GetTypeID()const;
 	// 種別IDを指定
-	void SetTypeID(uint32_t typeID) { typeID_ = typeID; }
+	void SetTypeID(uint32_t typeID);
 
 private:
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	// 衝突半径
 	float radius_ = 1.0f;
+	// コライダーのタイプ
+	ColliderType colliderType_ = kSphere;
 	// 種別ID
 	uint32_t typeID_ = 0u;
 

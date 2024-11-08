@@ -15,6 +15,7 @@
 #include "3d/model/Model.h"
 #include "3d/lights/punctualLight/PunctualLight.h"
 #include "3d/cameras/camera/Camera.h"
+#include "collider/Collider.h"
 
 class Object3D {
 public:
@@ -119,6 +120,9 @@ private:/*メンバ変数*/
 
 	// モデルを受け取る箱
 	Model* model_ = nullptr;
+
+	// コライダー
+	Collider collider_;
 
 	/*WVP用のリソース*/
 	ComPtr<ID3D12Resource> transformationResource_ = nullptr;

@@ -11,3 +11,18 @@ void Collider::UpdateWorldTransform() {
 	worldTransform_.Update();
 }
 
+void Collider::SetColliderType(ColliderType colliderType) {
+	colliderType_ = colliderType;
+}
+
+ColliderType Collider::GetColliderType() const {
+	return colliderType_;
+}
+
+uint32_t Collider::GetTypeID() const {
+	return typeID_;
+}
+
+void Collider::SetTypeID(uint32_t typeID){ 
+	typeID_ = typeID;
+}

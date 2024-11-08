@@ -182,6 +182,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\object\Object3d.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="Engine\data\level\json\JsonLevelData.h" />
+    <ClInclude Include="Engine\enum\ColliderEnum.h" />
     <ClInclude Include="Engine\enum\DirectInputEnum.h" />
     <ClInclude Include="Engine\enum\ParticleEnum.h" />
     <ClInclude Include="Engine\FixFPS\FixFPS.h" />

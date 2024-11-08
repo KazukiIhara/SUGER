@@ -570,6 +570,7 @@
     <ClInclude Include="application\objects\playerBullet\PlayerBullet.h" />
     <ClInclude Include="application\objects\baroon\Baroon.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
+    <ClInclude Include="Engine\enum\ColliderEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
