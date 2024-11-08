@@ -10,12 +10,10 @@ public:
 	~BaseEntity() = default;
 
 	// 初期化
-	void Initialize();
+	virtual void Initialize();
 	// 更新
-	void Update();
+	virtual void Update();
 
-	// 衝突時に呼ばれる関数
-	virtual void OnCollision([[maybe_unused]] Collider* other) {}
 	// 中心座標を取得
 	virtual Vector3 GetCenterPosition()const = 0;
 
