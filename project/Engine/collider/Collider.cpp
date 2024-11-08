@@ -4,11 +4,15 @@ void Collider::Initialize() {
 	worldTransform_.Initialize();
 }
 
-void Collider::UpdateWorldTransform(const WorldTransform &transform, const Vector3 &colliderOffset) {
+void Collider::UpdateWorldTransform(const WorldTransform& transform, const Vector3& colliderOffset) {
 	// ワールド座標をワールドトランスフォームに適用
 	worldTransform_.translate_ = Transform(colliderOffset, transform.worldMatrix_);
 	worldTransform_.scale_ = { radius_,radius_,radius_ };
 	worldTransform_.Update();
+}
+
+void Collider::SetRadius(const float& radius) {
+	radius_ = radius;
 }
 
 void Collider::SetType(ColliderType colliderType) {
@@ -17,6 +21,10 @@ void Collider::SetType(ColliderType colliderType) {
 
 void Collider::SetCategory(ColliderCategory category) {
 	category_ = category;
+}
+
+float Collider::GetRadius()const {
+	return radius_;
 }
 
 ColliderType Collider::GetType() const {

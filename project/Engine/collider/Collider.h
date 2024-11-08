@@ -18,10 +18,11 @@ public:
 	// ワールドトランスフォームの更新
 	void UpdateWorldTransform(const WorldTransform& transform, const Vector3& colliderOffset = { 0.0f,0.0f,0.0f });
 
+	// 衝突時に呼ばれる関数
+	virtual void OnCollision([[maybe_unused]] Collider* other) {}
+
 	// 半径を設定
-	void SetRadius(const float& radius) {
-		radius_ = radius;
-	}
+	void SetRadius(const float& radius);
 
 	// コライダーのタイプを設定
 	void SetType(ColliderType colliderType);
@@ -31,9 +32,7 @@ public:
 
 
 	// 半径を取得
-	float GetRadius() {
-		return radius_;
-	}
+	float GetRadius()const;
 
 	// コライダータイプの取得
 	ColliderType GetType()const;
