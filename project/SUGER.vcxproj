@@ -109,6 +109,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="application\myGame\MyGame.cpp" />
     <ClCompile Include="application\objects\baroon\Baroon.cpp" />
+    <ClCompile Include="application\objects\Entity1\Entity1.cpp" />
+    <ClCompile Include="application\objects\Entity2\Entity2.cpp" />
     <ClCompile Include="application\objects\playerBullet\PlayerBullet.cpp" />
     <ClCompile Include="application\objects\player\Player.cpp" />
     <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp" />
@@ -131,6 +133,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp" />
     <ClCompile Include="Engine\FixFPS\FixFPS.cpp" />
     <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp" />
+    <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\manager\data\level\json\JsonLevelDataManager.cpp" />
     <ClCompile Include="Engine\particle\random\RandomParticle.cpp" />
     <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
@@ -162,6 +165,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="application\myGame\MyGame.h" />
     <ClInclude Include="application\objects\baroon\Baroon.h" />
+    <ClInclude Include="application\objects\Entity1\Entity1.h" />
+    <ClInclude Include="application\objects\Entity2\Entity2.h" />
     <ClInclude Include="application\objects\playerBullet\PlayerBullet.h" />
     <ClInclude Include="application\objects\player\Player.h" />
     <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h" />
@@ -187,6 +192,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\enum\ParticleEnum.h" />
     <ClInclude Include="Engine\FixFPS\FixFPS.h" />
     <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h" />
+    <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
     <ClInclude Include="Engine\manager\data\level\json\JsonLevelDataManager.h" />
     <ClInclude Include="Engine\math\types\Quaternion.h" />
     <ClInclude Include="Engine\particle\random\RandomParticle.h" />
