@@ -29,8 +29,8 @@ void SampleScene::Initialize() {
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 
 	// エンティティを生成、初期化
-	entity_ = std::make_unique<Entity>();
-	entity_->Initialize();
+	sampleEntity_ = std::make_unique<SampleEntity>();
+	sampleEntity_->Initialize();
 
 	// オブジェクト2Dコントローラの初期化
 	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
@@ -68,7 +68,7 @@ void SampleScene::Update() {
 	}
 	
 	// エンティティの更新
-	entity_->Update();
+	sampleEntity_->Update();
 
 	// 
 	// シーンの更新処理ここまで

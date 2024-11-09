@@ -110,7 +110,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\myGame\MyGame.cpp" />
     <ClCompile Include="application\objects\baroon\Baroon.cpp" />
     <ClCompile Include="application\objects\baseEntity\BaseEntity.cpp" />
-    <ClCompile Include="application\objects\entity\Entity.cpp" />
+    <ClCompile Include="application\objects\sampleEntity\SampleEntity.cpp" />
     <ClCompile Include="application\objects\playerBullet\PlayerBullet.cpp" />
     <ClCompile Include="application\objects\player\Player.cpp" />
     <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp" />
@@ -166,7 +166,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\myGame\MyGame.h" />
     <ClInclude Include="application\objects\baroon\Baroon.h" />
     <ClInclude Include="application\objects\baseEntity\BaseEntity.h" />
-    <ClInclude Include="application\objects\entity\Entity.h" />
+    <ClInclude Include="application\objects\sampleEntity\SampleEntity.h" />
     <ClInclude Include="application\objects\playerBullet\PlayerBullet.h" />
     <ClInclude Include="application\objects\player\Player.h" />
     <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h" />

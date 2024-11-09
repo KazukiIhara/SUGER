@@ -11,7 +11,7 @@ class Collider {
 public:
 
 	Collider() = default;
-	~Collider() = default;
+	virtual ~Collider() = default;
 	// 初期化
 	void Initialize();
 

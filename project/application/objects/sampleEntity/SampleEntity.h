@@ -4,20 +4,20 @@
 #include "worldTransform/WorldTransform.h"
 #include "objects/baseEntity/BaseEntity.h"
 
-class Entity:public BaseEntity {
+class SampleEntity:public BaseEntity {
 public:
-	Entity() = default;
-	~Entity() = default;
+	SampleEntity() = default;
+	~SampleEntity() = default;
 
-	void Initialize();
+	void Initialize()override;
 
-	void Update();
+	void Update()override;
 
 	// 衝突を検知したら呼び出されるコールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 	// コライダーの中心座標を取得
 	Vector3 GetCenterPosition()const override;
-	
+
 
 private:
 

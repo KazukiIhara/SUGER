@@ -385,7 +385,7 @@
     <ClCompile Include="application\objects\baroon\Baroon.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="application\objects\baseEntity\BaseEntity.cpp" />
-    <ClCompile Include="application\objects\entity\Entity.cpp" />
+    <ClCompile Include="application\objects\sampleEntity\SampleEntity.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -575,7 +575,7 @@
     <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="Engine\enum\ColliderEnum.h" />
     <ClInclude Include="application\objects\baseEntity\BaseEntity.h" />
-    <ClInclude Include="application\objects\entity\Entity.h" />
+    <ClInclude Include="application\objects\sampleEntity\SampleEntity.h" />
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
   </ItemGroup>
   <ItemGroup>
