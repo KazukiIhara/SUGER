@@ -25,12 +25,13 @@ void SampleScene::Initialize() {
 	//SUGER::SetSceneCamera(sceneCamera_.get());
 
 	// オブジェクトの生成と、モデルの読み込み
-	SUGER::Create3DObject("skinningSample", "Run");
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 
-	// スキニング用オブジェクト3Dコントローラの初期化
-	skinningSample_.Initialize(SUGER::FindObject3D("skinningSample"));
+	// エンティティを生成、初期化
+	entity_ = std::make_unique<Entity>();
+	entity_->Initialize();
+
 	// オブジェクト2Dコントローラの初期化
 	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
 	// パーティクルコントローラの初期化
@@ -41,10 +42,6 @@ void SampleScene::Initialize() {
 	pronama_chan.SetPosition(pronama_chan.GetSize() / 2.0f);
 	pronama_chan.SetAnchorPoint(Vector2(0.5f, 0.5f));
 
-
-	// スキニングサンプルモデルのトランスフォーム設定
-	skinningSample_.SetRotate(Vector3(0.0f, 3.14f, 0.0f));
-	skinningSample_.SetEnableLightning(false);
 
 	// パーティクル無効化
 	plane_.SetIsActive(false);
@@ -65,16 +62,13 @@ void SampleScene::Update() {
 	if (SUGER::PushKey(DIK_D)) {
 		// スプライトを回転
 		pronama_chan.SetRotation(pronama_chan.GetRotation() + 0.01f);
-		// モデルをy軸+方向に回転
-		skinningSample_.SetRotate(Vector3(skinningSample_.GetRotate().x, skinningSample_.GetRotate().y + 0.01f, skinningSample_.GetRotate().z));
-
 	} else if (SUGER::PushKey(DIK_A)) {
 		// スプライトを回転
 		pronama_chan.SetRotation(pronama_chan.GetRotation() - 0.01f);
-		// モデルをy軸+方向に回転
-		skinningSample_.SetRotate(Vector3(skinningSample_.GetRotate().x, skinningSample_.GetRotate().y - 0.01f, skinningSample_.GetRotate().z));
 	}
-
+	
+	// エンティティの更新
+	entity_->Update();
 
 	// 
 	// シーンの更新処理ここまで

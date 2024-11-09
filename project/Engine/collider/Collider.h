@@ -20,26 +20,22 @@ public:
 
 	// 衝突時に呼ばれる関数
 	virtual void OnCollision([[maybe_unused]] Collider* other) {}
-
 	// 半径を設定
 	void SetRadius(const float& radius);
-
 	// コライダーのタイプを設定
 	void SetType(ColliderType colliderType);
-
 	// 種別IDを指定
 	void SetCategory(ColliderCategory category);
 
 
 	// 半径を取得
 	float GetRadius()const;
-
 	// コライダータイプの取得
 	ColliderType GetType()const;
-
 	// 種別IDを取得
 	ColliderCategory GetCategory()const;
-
+	// 中心座標を取得
+	virtual Vector3 GetCenterPosition()const = 0;
 
 private:
 	// ワールドトランスフォーム

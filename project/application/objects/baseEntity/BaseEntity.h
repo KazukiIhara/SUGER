@@ -15,7 +15,7 @@ public:
 	virtual void Update();
 
 	// 中心座標を取得
-	virtual Vector3 GetCenterPosition()const = 0;
+	virtual Vector3 GetCenterPosition()const override;
 
 
 protected:
