@@ -110,7 +110,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\myGame\MyGame.cpp" />
     <ClCompile Include="application\objects\baroon\Baroon.cpp" />
     <ClCompile Include="application\objects\baseEntity\BaseEntity.cpp" />
-    <ClCompile Include="application\objects\sampleEntity\SampleEntity.cpp" />
+    <ClCompile Include="application\objects\sample\sampleEntity\SampleEntity.cpp" />
     <ClCompile Include="application\objects\playerBullet\PlayerBullet.cpp" />
     <ClCompile Include="application\objects\player\Player.cpp" />
     <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp" />
@@ -130,6 +130,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3d\model\Model.cpp" />
     <ClCompile Include="Engine\3d\object\Object3d.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
+    <ClCompile Include="Engine\contactRecord\ContactRecord.cpp" />
     <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp" />
     <ClCompile Include="Engine\FixFPS\FixFPS.cpp" />
     <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp" />
@@ -166,7 +167,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\myGame\MyGame.h" />
     <ClInclude Include="application\objects\baroon\Baroon.h" />
     <ClInclude Include="application\objects\baseEntity\BaseEntity.h" />
-    <ClInclude Include="application\objects\sampleEntity\SampleEntity.h" />
+    <ClInclude Include="application\objects\sample\sampleEntity\SampleEntity.h" />
     <ClInclude Include="application\objects\playerBullet\PlayerBullet.h" />
     <ClInclude Include="application\objects\player\Player.h" />
     <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h" />
@@ -186,6 +187,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\model\Model.h" />
     <ClInclude Include="Engine\3d\object\Object3d.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
+    <ClInclude Include="Engine\contactRecord\ContactRecord.h" />
     <ClInclude Include="Engine\data\level\json\JsonLevelData.h" />
     <ClInclude Include="Engine\enum\ColliderEnum.h" />
     <ClInclude Include="Engine\enum\DirectInputEnum.h" />

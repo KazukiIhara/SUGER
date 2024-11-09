@@ -32,10 +32,10 @@ public:
 	float GetRadius()const;
 	// コライダータイプの取得
 	ColliderType GetType()const;
-	// 種別IDを取得
+	// カテゴリーを取得
 	ColliderCategory GetCategory()const;
 	// 中心座標を取得
-	virtual Vector3 GetCenterPosition()const = 0;
+	virtual Vector3 GetCenterPosition() = 0;
 
 private:
 	// ワールドトランスフォーム

@@ -385,8 +385,9 @@
     <ClCompile Include="application\objects\baroon\Baroon.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="application\objects\baseEntity\BaseEntity.cpp" />
-    <ClCompile Include="application\objects\sampleEntity\SampleEntity.cpp" />
+    <ClCompile Include="application\objects\sample\sampleEntity\SampleEntity.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
+    <ClCompile Include="Engine\contactRecord\ContactRecord.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -575,8 +576,9 @@
     <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="Engine\enum\ColliderEnum.h" />
     <ClInclude Include="application\objects\baseEntity\BaseEntity.h" />
-    <ClInclude Include="application\objects\sampleEntity\SampleEntity.h" />
+    <ClInclude Include="application\objects\sample\sampleEntity\SampleEntity.h" />
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
+    <ClInclude Include="Engine\contactRecord\ContactRecord.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

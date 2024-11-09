@@ -3,6 +3,7 @@
 #include "3d/controller/Object3dController.h"
 #include "worldTransform/WorldTransform.h"
 #include "collider/Collider.h"
+#include "contactRecord/ContactRecord.h"
 
 class BaseEntity:public Collider {
 public:
@@ -15,11 +16,14 @@ public:
 	virtual void Update();
 
 	// 中心座標を取得
-	virtual Vector3 GetCenterPosition()const override;
+	virtual Vector3 GetCenterPosition()override;
 
 
 protected:
 	// このオブジェクトのコントローラ
 	Object3DController controller_;
+
+	// 接触履歴計測関数
+	ContactRecord contactRecord_;
 
 };

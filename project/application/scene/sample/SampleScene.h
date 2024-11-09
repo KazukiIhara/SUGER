@@ -5,7 +5,7 @@
 #include "3d/controller/Object3dController.h"
 #include "2d/controller/Object2dController.h"
 #include "particle/controller/ParticleController.h"
-#include "objects/sampleEntity/SampleEntity.h"
+#include "objects/sample/sampleEntity/SampleEntity.h"
 
 class SampleScene :public BaseScene {
 public: // 公開メンバ関数

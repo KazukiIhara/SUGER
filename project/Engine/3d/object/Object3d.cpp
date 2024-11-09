@@ -95,6 +95,10 @@ void Object3D::SetEnableLightning(const bool& enableLighitning) {
 	}
 }
 
+void Object3D::SetColor(const Vector4& color) {
+	model_->SetColor(color);
+}
+
 WorldTransform* Object3D::GetWorldTransformPtr() {
 	return &transform_;
 }

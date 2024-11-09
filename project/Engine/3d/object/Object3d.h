@@ -76,6 +76,9 @@ public: // Setter
 
 	// ライトオンオフ
 	void SetEnableLightning(const bool& enableLighitning);
+	
+	// 色のセット
+	void SetColor(const Vector4& color);
 
 public: // Getter
 	// 拡縮のゲッター

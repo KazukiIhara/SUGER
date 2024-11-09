@@ -43,6 +43,10 @@ void Object3DController::SetEnableLightning(const bool& enableLightning) {
 	object3d_->SetEnableLightning(enableLightning);
 }
 
+void Object3DController::SetColor(const Vector4& color) {
+	object3d_->SetColor(color);
+}
+
 const Vector3& Object3DController::GetScale() {
 	return object3d_->GetScale();
 }
