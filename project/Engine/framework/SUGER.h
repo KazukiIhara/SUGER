@@ -18,6 +18,7 @@
 #include "manager/object/2d/Object2DManager.h"
 #include "manager/object/3d/Object3DManager.h"
 #include "manager/particle/ParticleManager.h"
+#include "manager/collision/CollisionManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "2d/system/Object2dSystem.h"
 #include "3d/system/Object3dSystem.h"
@@ -205,6 +206,14 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region CollisionManager
+	// BaseEntityを継承しているオブジェクトをコライダーリストに追加
+	static void AddCollider(BaseEntity* baseEntity);
+	// コライダーリスト内のすべてのペアの当たり判定
+	static void CheckAllCollisions();
+
+#pragma endregion
+
 #pragma region JsonLevelDataManager
 	// JsonLevelDataManagerの機能
 	// Json形式のlevelデータの読み込み
@@ -257,6 +266,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<Object2DManager> object2dManager_;
 	static std::unique_ptr<Object3DManager> object3dManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
+	static std::unique_ptr<CollisionManager> collisionManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;

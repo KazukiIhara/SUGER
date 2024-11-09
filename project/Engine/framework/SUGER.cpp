@@ -18,6 +18,7 @@ std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
 std::unique_ptr<Object3DManager> SUGER::object3dManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
+std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
@@ -70,6 +71,10 @@ void SUGER::Initialize() {
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
 
+	// collisionManagerの初期化
+	collisionManager_ = std::make_unique<CollisionManager>();
+	collisionManager_->Initialize();
+
 	// JsonLevelDataManagerの初期化
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
 	jsonLevelDataManager_->Initialize();
@@ -111,6 +116,12 @@ void SUGER::Finalize() {
 	if (jsonLevelDataManager_) {
 		jsonLevelDataManager_->Finalize();
 		jsonLevelDataManager_.reset();
+	}
+
+	// collisionManagerの終了処理
+	if (collisionManager_) {
+		collisionManager_->Finalize();
+		collisionManager_.reset();
 	}
 
 	// ParticleManagerの終了処理
@@ -449,6 +460,14 @@ void SUGER::DrawParticle() {
 
 RandomParticle* SUGER::FindParticle(const std::string& name) {
 	return particleManager_->Find(name);
+}
+
+void SUGER::AddCollider(BaseEntity* baseEntity) {
+	collisionManager_->AddCollider(baseEntity);
+}
+
+void SUGER::CheckAllCollisions() {
+	collisionManager_->CheckAllCollisions();
 }
 
 void SUGER::PreDrawObject2D() {

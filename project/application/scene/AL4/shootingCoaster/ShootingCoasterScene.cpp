@@ -30,7 +30,7 @@ void ShootingCoasterScene::Initialize() {
 	// プレイヤーの生成と初期化
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
-	player_->SetRailTransform(railCamera_->GetWorldTransform());
+	player_->SetRailTransform(railCamera_->GetWorldTransformPtr());
 
 }
 

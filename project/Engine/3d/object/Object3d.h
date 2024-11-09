@@ -72,11 +72,14 @@ public: // Setter
 		isActive_ = isActive;
 	}
 	// 削除フラグのセット
-	void SetIsDelete(const bool& isDelete) {
-		isDelete_ = isDelete;
-	}
+	void SetIsDelete(const bool& isDelete);
+
 	// ライトオンオフ
 	void SetEnableLightning(const bool& enableLighitning);
+	
+	// 色のセット
+	void SetColor(const Vector4& color);
+
 public: // Getter
 	// 拡縮のゲッター
 	const Vector3& GetScale() const {
@@ -111,7 +114,7 @@ public: // Getter
 		return haveSkinningModel_;
 	}
 	// ワールドトランスフォームのゲッター
-	WorldTransform* GetWorldTransform();
+	WorldTransform* GetWorldTransformPtr();
 	// カメラのゲッター
 	Camera* GetCamera();
 

@@ -473,6 +473,12 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 
 }
 
+void Model::SetColor(const Vector4& color) {
+	for (size_t i = 0; i < materials_.size(); ++i) {
+		materials_[i].color = color;
+	}
+}
+
 void Model::SetEnableLight(const bool& enableLightning) {
 	for (size_t i = 0; i < materials_.size(); ++i) {
 		materials_[i].enableLighting = enableLightning;

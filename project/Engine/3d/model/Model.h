@@ -63,6 +63,9 @@ public: // メンバ関数
 		materials_ = materials;
 	}
 
+	// カラーのセット
+	void SetColor(const Vector4& color);
+
 	// ライトオンオフ
 	void SetEnableLight(const bool& enbleLightning);
 

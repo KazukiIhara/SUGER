@@ -5,8 +5,10 @@
 #include "3d/controller/Object3dController.h"
 #include "2d/controller/Object2dController.h"
 #include "particle/controller/ParticleController.h"
+#include "objects/sample/sampleEntity/SampleEntity.h"
+#include "objects/sample/sampleEntity1/SampleEntity1.h"
 
-class SampleScene :public BaseScene {
+class SampleScene:public BaseScene {
 public: // 公開メンバ関数
 	// コンストラクタ
 	SampleScene() = default;
@@ -21,9 +23,10 @@ public: // 公開メンバ関数
 private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
-
-	// skinningSample用のオブジェクトコントローラ
-	Object3DController skinningSample_;// 
+	// エンティティのサンプル
+	std::unique_ptr<SampleEntity> sampleEntity_ = nullptr;
+	// エンティティのサンプル
+	std::unique_ptr<SampleEntity1> sampleEntity1_ = nullptr;
 	// jeanne用のオブジェクト2Dコントローラ
 	Object2DController pronama_chan;
 	// plane用パーティクルコントローラ
