@@ -26,6 +26,8 @@ public:
 	void SetType(ColliderType colliderType);
 	// 種別IDを指定
 	void SetCategory(ColliderCategory category);
+	// シリアルナンバーのセット
+	void SetSerialNumber(const uint32_t& serialNumber);
 
 
 	// 半径を取得
@@ -34,6 +36,8 @@ public:
 	ColliderType GetType()const;
 	// カテゴリーを取得
 	ColliderCategory GetCategory()const;
+	// シリアルナンバーのゲット
+	uint32_t GetSerialNumber()const;
 	// 中心座標を取得
 	virtual Vector3 GetCenterPosition() = 0;
 
@@ -45,6 +49,8 @@ private:
 	// コライダーのタイプ
 	ColliderType colliderType_ = kSphere;
 	// 種別ID
-	ColliderCategory category_ = A;
+	ColliderCategory category_ = kNone;
+	// シリアルナンバ
+	uint32_t serialNumber_ = 0x00000000;
 
 };

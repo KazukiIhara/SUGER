@@ -7,6 +7,5 @@ enum ColliderType {
 
 // コライダーのカテゴリ
 enum ColliderCategory {
-	A,
-	B,
+	kNone,
 };

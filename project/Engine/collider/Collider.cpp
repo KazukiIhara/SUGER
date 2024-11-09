@@ -23,6 +23,10 @@ void Collider::SetCategory(ColliderCategory category) {
 	category_ = category;
 }
 
+void Collider::SetSerialNumber(const uint32_t& serialNumber) {
+	serialNumber_ = serialNumber;
+}
+
 float Collider::GetRadius()const {
 	return radius_;
 }
@@ -33,4 +37,8 @@ ColliderType Collider::GetType() const {
 
 ColliderCategory Collider::GetCategory() const {
 	return category_;
+}
+
+uint32_t Collider::GetSerialNumber() const {
+	return serialNumber_;
 }

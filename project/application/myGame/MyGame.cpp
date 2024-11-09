@@ -5,8 +5,7 @@
 #include "debugTools/logger/Logger.h"
 
 
-MyGame::~MyGame() {
-}
+MyGame::~MyGame() {}
 
 void MyGame::Initialize() {
 	// 基底システムの初期化
@@ -34,6 +33,8 @@ void MyGame::Update() {
 	SUGER::Update();
 	// シーンの更新処理
 	sceneManager_->Update();
+	// CollisionManager内の当たり判定を取得
+	SUGER::CheckAllCollisions();
 	// 2DObjectの更新
 	SUGER::Update2DObjects();
 	// 3DObjectの更新

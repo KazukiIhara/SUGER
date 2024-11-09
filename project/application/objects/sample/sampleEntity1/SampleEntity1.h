@@ -4,10 +4,10 @@
 #include "worldTransform/WorldTransform.h"
 #include "objects/baseEntity/BaseEntity.h"
 
-class SampleEntity:public BaseEntity {
+class SampleEntity1:public BaseEntity {
 public:
-	SampleEntity() = default;
-	~SampleEntity() = default;
+	SampleEntity1() = default;
+	~SampleEntity1() = default;
 
 	void Initialize()override;
 
@@ -18,6 +18,5 @@ public:
 
 
 private:
-
 
 };
