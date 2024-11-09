@@ -23,7 +23,7 @@ protected:
 	// このオブジェクトのコントローラ
 	Object3DController controller_;
 
-	// 接触履歴計測関数
+	// 接触履歴計測クラス
 	ContactRecord contactRecord_;
 
 };
