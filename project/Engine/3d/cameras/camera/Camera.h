@@ -32,7 +32,7 @@ public:
 	void SetRotate(const Vector3& rotate);
 
 	// ワールドトランスフォームを送る
-	WorldTransform* GetWorldTransform();
+	WorldTransform* GetWorldTransformPtr();
 
 	// ビュープロジェクションマトリックスを送る関数
 	Matrix4x4 GetViewProjectionMatrix()const {

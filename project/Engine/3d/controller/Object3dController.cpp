@@ -43,6 +43,10 @@ void Object3DController::SetEnableLightning(const bool& enableLightning) {
 	object3d_->SetEnableLightning(enableLightning);
 }
 
+void Object3DController::SetColor(const Vector4& color) {
+	object3d_->SetColor(color);
+}
+
 const Vector3& Object3DController::GetScale() {
 	return object3d_->GetScale();
 }
@@ -59,8 +63,8 @@ bool Object3DController::GetIsDelete() {
 	return object3d_->GetIsDelete();
 }
 
-WorldTransform* Object3DController::GetWorldTransform() {
-	return object3d_->GetWorldTransform();
+WorldTransform* Object3DController::GetWorldTransformPtr() {
+	return object3d_->GetWorldTransformPtr();
 }
 
 Camera* Object3DController::GetCamera() {

@@ -39,6 +39,9 @@ public:
 
 	// ライトのオンオフ
 	void SetEnableLightning(const bool& enableLightning);
+	
+	// 色のセット
+	void SetColor(const Vector4& color);
 
 	// スケールをゲット
 	const Vector3& GetScale();
@@ -51,7 +54,7 @@ public:
 	bool GetIsDelete();
 
 	// ワールドタンスフォームのゲット
-	WorldTransform* GetWorldTransform();
+	WorldTransform* GetWorldTransformPtr();
 
 	// カメラのゲット
 	Camera* GetCamera();

@@ -22,6 +22,8 @@ void Object3D::Update() {
 	transformationData_->World = transform_.worldMatrix_;
 	transformationData_->ViewProjection = camera_->GetViewProjectionMatrix();
 	transformationData_->WorldInverseTransepose = MakeInverseTransposeMatrix(transform_.worldMatrix_);
+
+
 }
 
 void Object3D::Draw(BlendMode blendMode) {
@@ -83,13 +85,21 @@ void Object3D::SetParent(WorldTransform* parent) {
 	transform_.parent_ = parent;
 }
 
+void Object3D::SetIsDelete(const bool& isDelete) {
+	isDelete_ = isDelete;
+}
+
 void Object3D::SetEnableLightning(const bool& enableLighitning) {
 	if (model_) {
 		model_->SetEnableLight(enableLighitning);
 	}
 }
 
-WorldTransform* Object3D::GetWorldTransform() {
+void Object3D::SetColor(const Vector4& color) {
+	model_->SetColor(color);
+}
+
+WorldTransform* Object3D::GetWorldTransformPtr() {
 	return &transform_;
 }
 
