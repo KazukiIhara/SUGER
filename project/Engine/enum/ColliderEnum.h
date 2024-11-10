@@ -8,4 +8,6 @@ enum ColliderType {
 // コライダーのカテゴリ
 enum ColliderCategory {
 	kNone,
+	kPlayerBullet,
+	kBaroon,
 };

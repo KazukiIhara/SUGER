@@ -35,11 +35,6 @@ void SampleScene::Initialize() {
 	sampleEntity1_ = std::make_unique<SampleEntity1>();
 	sampleEntity1_->Initialize();
 
-	// サンプルエンティティをコライダーに追加
-	SUGER::AddCollider(sampleEntity_.get());
-	SUGER::AddCollider(sampleEntity1_.get());
-
-
 	// オブジェクト2Dコントローラの初期化
 	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
 	// パーティクルコントローラの初期化
@@ -77,6 +72,15 @@ void SampleScene::Update() {
 
 	// エンティティの更新
 	sampleEntity_->Update();
+	sampleEntity1_->Update();
+
+	// コライダーリストをリセット
+	SUGER::ResetColliderList();
+
+	// サンプルエンティティをコライダーに追加
+	SUGER::AddCollider(sampleEntity_.get());
+	SUGER::AddCollider(sampleEntity1_.get());
+
 
 	// 
 	// シーンの更新処理ここまで

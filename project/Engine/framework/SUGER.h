@@ -207,6 +207,8 @@ public: // クラスメソッド
 #pragma endregion
 
 #pragma region CollisionManager
+	// コライダーリストのリセット
+	static void ResetColliderList();
 	// BaseEntityを継承しているオブジェクトをコライダーリストに追加
 	static void AddCollider(BaseEntity* baseEntity);
 	// コライダーリスト内のすべてのペアの当たり判定

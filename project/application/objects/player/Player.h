@@ -26,6 +26,9 @@ public:
 	// 攻撃
 	void Attack();
 
+	// 弾リストをコライダーリストにセット
+	void SetColliderListBullet();
+
 	// レールカメラのトランスフォームセット
 	void SetRailTransform(WorldTransform* railTransform);
 
