@@ -6,7 +6,7 @@ void SampleEntity::Initialize() {
 	// モデルの読み込みとオブジェクトの作成、コントローラへの登録
 	controller_.Initialize(SUGER::FindObject3D(SUGER::Create3DObject("sampleEntity", "teapot")));
 	// 初期位置を移動
-	controller_.SetTranslate(Vector3(2.0f, 0.0f, 0.0f));
+	controller_.SetTranslate(Vector3(3.0f, 0.0f, 0.0f));
 
 }
 
