@@ -14,6 +14,8 @@ void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity) 
 		std::atan2(velocity_.x, velocity_.z),
 		0.0f
 	));
+	// コライダーの半径を設定
+	SetRadius(0.5f);
 }
 
 void PlayerBullet::Update() {

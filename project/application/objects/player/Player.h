@@ -46,7 +46,7 @@ private:
 	// 弾のリスト
 	std::list<PlayerBullet*> bullets_;
 	// 弾の速度
-	const float kBulletSpeed_ = 0.5f;
+	const float kBulletSpeed_ = 1.5f;
 	// 弾を発射する位置のオフセット
 	const Vector3 kBulletShotOffset_ = { 0.0f,-0.5f,-0.0f };
 
