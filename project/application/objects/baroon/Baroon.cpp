@@ -9,3 +9,16 @@ void Baroon::Initialize(const std::string& name, const std::string& filePath, co
 void Baroon::Update() {
 
 }
+
+void Baroon::OnCollision(Collider* other) {
+	// 衝突相手のカテゴリを取得
+	ColliderCategory category = other->GetCategory();
+
+	switch (category) {
+		case kPlayerBullet:
+			controller_.SetIsDelete(true);
+			break;
+		default:
+			break;
+	}
+}
