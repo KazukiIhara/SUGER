@@ -1,0 +1,1175 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "rail",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    1.6323965787887573,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    1.6323965787887573,
+                    0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    3.2470436096191406,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    3.2470436096191406,
+                    0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.003",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.918133735656738,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.003",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.918133735656738,
+                    0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.004",
+            "transform": {
+                "translation": [
+                    0.0,
+                    6.599623203277588,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.004",
+            "transform": {
+                "translation": [
+                    0.0,
+                    6.599623203277588,
+                    0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.005",
+            "transform": {
+                "translation": [
+                    0.0,
+                    8.272808074951172,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.005",
+            "transform": {
+                "translation": [
+                    0.0,
+                    8.272808074951172,
+                    0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.006",
+            "transform": {
+                "translation": [
+                    0.0,
+                    9.806378364562988,
+                    0.5524681806564331
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.006",
+            "transform": {
+                "translation": [
+                    0.0,
+                    9.425490379333496,
+                    1.0160671472549438
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.007",
+            "transform": {
+                "translation": [
+                    0.0,
+                    11.062273025512695,
+                    1.5784895420074463
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.007",
+            "transform": {
+                "translation": [
+                    0.0,
+                    10.681385040283203,
+                    2.042088508605957
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.008",
+            "transform": {
+                "translation": [
+                    0.0,
+                    12.316575050354004,
+                    2.6063413619995117
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.008",
+            "transform": {
+                "translation": [
+                    0.0,
+                    11.935687065124512,
+                    3.0699403285980225
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.009",
+            "transform": {
+                "translation": [
+                    0.0,
+                    13.622102737426758,
+                    3.681286096572876
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.009",
+            "transform": {
+                "translation": [
+                    0.0,
+                    13.241214752197266,
+                    4.1448845863342285
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.010",
+            "transform": {
+                "translation": [
+                    0.0,
+                    14.907941818237305,
+                    4.737181663513184
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.010",
+            "transform": {
+                "translation": [
+                    0.0,
+                    14.527053833007812,
+                    5.200779914855957
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.011",
+            "transform": {
+                "translation": [
+                    0.0,
+                    16.170166015625,
+                    5.783714771270752
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.011",
+            "transform": {
+                "translation": [
+                    0.0,
+                    15.789278984069824,
+                    6.247313022613525
+                ],
+                "rotation": [
+                    0.6877678632736206,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.012",
+            "transform": {
+                "translation": [
+                    0.0,
+                    17.71356773376465,
+                    6.335112571716309
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.012",
+            "transform": {
+                "translation": [
+                    0.0,
+                    17.722665786743164,
+                    6.835040092468262
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.013",
+            "transform": {
+                "translation": [
+                    0.0,
+                    19.359651565551758,
+                    6.335112571716309
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.013",
+            "transform": {
+                "translation": [
+                    0.0,
+                    19.368749618530273,
+                    6.835040092468262
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.014",
+            "transform": {
+                "translation": [
+                    0.0,
+                    21.037437438964844,
+                    6.335112571716309
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.014",
+            "transform": {
+                "translation": [
+                    0.0,
+                    21.04653549194336,
+                    6.835040092468262
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.015",
+            "transform": {
+                "translation": [
+                    0.0,
+                    22.701021194458008,
+                    6.335112571716309
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.015",
+            "transform": {
+                "translation": [
+                    0.0,
+                    22.710119247436523,
+                    6.835040092468262
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.016",
+            "transform": {
+                "translation": [
+                    0.0,
+                    24.379539489746094,
+                    6.335112571716309
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.016",
+            "transform": {
+                "translation": [
+                    0.0,
+                    24.38863754272461,
+                    6.835040092468262
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.017",
+            "transform": {
+                "translation": [
+                    0.5550910234451294,
+                    25.834177017211914,
+                    5.937592506408691
+                ],
+                "rotation": [
+                    -0.22890284657478333,
+                    -0.16907446086406708,
+                    -0.6254912614822388
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.017",
+            "transform": {
+                "translation": [
+                    0.5605605840682983,
+                    25.981088638305664,
+                    6.415502548217773
+                ],
+                "rotation": [
+                    -0.22890278697013855,
+                    -0.1690744161605835,
+                    -0.6254910826683044
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.018",
+            "transform": {
+                "translation": [
+                    1.8143737316131592,
+                    26.719024658203125,
+                    5.447882652282715
+                ],
+                "rotation": [
+                    -0.2333822101354599,
+                    -0.0788741484284401,
+                    -1.0821632146835327
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.018",
+            "transform": {
+                "translation": [
+                    1.9063661098480225,
+                    26.811145782470703,
+                    5.930646896362305
+                ],
+                "rotation": [
+                    -0.23338226974010468,
+                    -0.0788741409778595,
+                    -1.0821632146835327
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.019",
+            "transform": {
+                "translation": [
+                    3.2411439418792725,
+                    26.951400756835938,
+                    4.9290452003479
+                ],
+                "rotation": [
+                    -0.23020637035369873,
+                    -0.16016153991222382,
+                    -1.548271656036377
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.019",
+            "transform": {
+                "translation": [
+                    3.3623039722442627,
+                    27.031444549560547,
+                    5.407504558563232
+                ],
+                "rotation": [
+                    -0.23020637035369873,
+                    -0.16016153991222382,
+                    -1.548271656036377
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.020",
+            "transform": {
+                "translation": [
+                    4.761828899383545,
+                    26.464509963989258,
+                    4.445760726928711
+                ],
+                "rotation": [
+                    -0.23020637035369873,
+                    -0.16016153991222382,
+                    -2.1341259479522705
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.020",
+            "transform": {
+                "translation": [
+                    4.907041549682617,
+                    26.464216232299805,
+                    4.924220085144043
+                ],
+                "rotation": [
+                    -0.2302064150571823,
+                    -0.160161554813385,
+                    -2.1341259479522705
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.021",
+            "transform": {
+                "translation": [
+                    5.764212608337402,
+                    25.21954345703125,
+                    3.9457688331604004
+                ],
+                "rotation": [
+                    -0.23020637035369873,
+                    -0.16016153991222382,
+                    -2.738999366760254
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.021",
+            "transform": {
+                "translation": [
+                    5.883493900299072,
+                    25.13672637939453,
+                    4.424228191375732
+                ],
+                "rotation": [
+                    -0.23020637035369873,
+                    -0.16016153991222382,
+                    -2.738999366760254
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.022",
+            "transform": {
+                "translation": [
+                    6.087728023529053,
+                    23.50081443786621,
+                    3.4754152297973633
+                ],
+                "rotation": [
+                    -0.23020637035369873,
+                    -0.16016152501106262,
+                    3.088745355606079
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.022",
+            "transform": {
+                "translation": [
+                    6.158422946929932,
+                    23.373971939086914,
+                    3.9538745880126953
+                ],
+                "rotation": [
+                    -0.23020634055137634,
+                    -0.16016153991222382,
+                    3.088745355606079
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.023",
+            "transform": {
+                "translation": [
+                    5.694093227386475,
+                    22.01615333557129,
+                    3.042931079864502
+                ],
+                "rotation": [
+                    -0.23020632565021515,
+                    -0.16016153991222382,
+                    2.635411024093628
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.023",
+            "transform": {
+                "translation": [
+                    5.702094554901123,
+                    21.87116050720215,
+                    3.521390438079834
+                ],
+                "rotation": [
+                    -0.23020632565021515,
+                    -0.16016153991222382,
+                    2.635411262512207
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.024",
+            "transform": {
+                "translation": [
+                    4.650018692016602,
+                    20.79315185546875,
+                    2.591701030731201
+                ],
+                "rotation": [
+                    -0.23020635545253754,
+                    -0.1601615846157074,
+                    2.312854051589966
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.024",
+            "transform": {
+                "translation": [
+                    4.611645698547363,
+                    20.653099060058594,
+                    3.070160388946533
+                ],
+                "rotation": [
+                    -0.23020632565021515,
+                    -0.1601615846157074,
+                    2.312854051589966
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000894069672,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "rail.025",
+            "transform": {
+                "translation": [
+                    3.188906192779541,
+                    20.204023361206055,
+                    2.1772050857543945
+                ],
+                "rotation": [
+                    -0.23020634055137634,
+                    -0.160161554813385,
+                    1.7343400716781616
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "object3d",
+            "model_name": "rail"
+        },
+        {
+            "type": "MESH",
+            "name": "controlPoint.025",
+            "transform": {
+                "translation": [
+                    3.0801992416381836,
+                    20.10774040222168,
+                    2.6556644439697266
+                ],
+                "rotation": [
+                    -0.23020632565021515,
+                    -0.1601615697145462,
+                    1.7343400716781616
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "object_name": "controlPoint"
+        }
+    ]
+}
