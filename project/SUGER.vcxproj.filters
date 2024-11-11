@@ -355,9 +355,6 @@
     <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp">
       <Filter>engine\3d\lights\punctualLight</Filter>
     </ClCompile>
-    <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp">
-      <Filter>application\scene\ShootingCoaster</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp">
       <Filter>engine\3d\cameras\camera</Filter>
     </ClCompile>
@@ -380,15 +377,11 @@
       <Filter>engine\importer\level\json</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
-    <ClCompile Include="application\objects\player\Player.cpp" />
-    <ClCompile Include="application\objects\playerBullet\PlayerBullet.cpp" />
-    <ClCompile Include="application\objects\baroon\Baroon.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="application\objects\baseEntity\BaseEntity.cpp" />
     <ClCompile Include="application\objects\sample\sampleEntity\SampleEntity.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\contactRecord\ContactRecord.cpp" />
-    <ClCompile Include="application\objects\sample\sampleEntity1\SampleEntity1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -541,9 +534,6 @@
     <ClInclude Include="Engine\structs\PunctualLightStruct.h">
       <Filter>engine\structs</Filter>
     </ClInclude>
-    <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h">
-      <Filter>application\scene\ShootingCoaster</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\3d\cameras\camera\Camera.h">
       <Filter>engine\3d\cameras\camera</Filter>
     </ClInclude>
@@ -571,16 +561,12 @@
     <ClInclude Include="Engine\math\types\Quaternion.h" />
     <ClInclude Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
     <ClInclude Include="Engine\enum\DirectInputEnum.h" />
-    <ClInclude Include="application\objects\player\Player.h" />
-    <ClInclude Include="application\objects\playerBullet\PlayerBullet.h" />
-    <ClInclude Include="application\objects\baroon\Baroon.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="Engine\enum\ColliderEnum.h" />
     <ClInclude Include="application\objects\baseEntity\BaseEntity.h" />
     <ClInclude Include="application\objects\sample\sampleEntity\SampleEntity.h" />
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
     <ClInclude Include="Engine\contactRecord\ContactRecord.h" />
-    <ClInclude Include="application\objects\sample\sampleEntity1\SampleEntity1.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
