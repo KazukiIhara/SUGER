@@ -462,6 +462,10 @@ RandomParticle* SUGER::FindParticle(const std::string& name) {
 	return particleManager_->Find(name);
 }
 
+void SUGER::ResetColliderList() {
+	collisionManager_->Reset();
+}
+
 void SUGER::AddCollider(BaseEntity* baseEntity) {
 	collisionManager_->AddCollider(baseEntity);
 }

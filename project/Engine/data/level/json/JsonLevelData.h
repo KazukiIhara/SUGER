@@ -7,10 +7,7 @@
 
 #include "3d/object/Object3d.h"
 
-
-// TODO:一時的な措置　エンジン部分とアプリ部分でファイル分けする
-class Baroon;
-
+// TODO:レベルデータの既定クラスを作る
 class JsonLevelData {
 public:
 	JsonLevelData() = default;
@@ -24,11 +21,15 @@ public:
 	// レールのコントロールポイントコンテナのゲッター
 	std::vector<Vector3> GetControlPoints()const;
 
+	// Baroonコンテナのゲッター
+	std::vector<ObjectData3D> GetBaroons()const;
+
 private:
 	// このレベルに存在するobject3dのデータコンテナ
 	std::vector<ObjectData3D> objects_;
 	// このレベルに存在するレールのコントロールポイントのデータコンテナ
 	std::vector<Vector3> controlPoints_;
-	// このレベルに存在するBaroonのデータコンテナ
-	//std::vector<Baroon> baroons_;
+	// このレベルに存在するBaroonObjectのデータコンテナ
+	std::vector<ObjectData3D> baroons_;
+
 };

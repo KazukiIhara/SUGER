@@ -2,9 +2,9 @@
 
 #include <cstdint>
 #include "3d/controller/Object3dController.h"
+#include "objects/baseEntity/BaseEntity.h"
 
-
-class PlayerBullet {
+class PlayerBullet:public BaseEntity {
 public:
 	PlayerBullet() = default;
 	~PlayerBullet() = default;
@@ -15,9 +15,10 @@ public:
 
 	bool GetIsDead();
 
+	// 衝突を検知したら呼び出されるコールバック関数
+	void OnCollision([[maybe_unused]] Collider* other)override;
+
 private:
-	// コントローラ
-	Object3DController bullet_;
 	// 移動量
 	Vector3 velocity_{};
 	// 寿命

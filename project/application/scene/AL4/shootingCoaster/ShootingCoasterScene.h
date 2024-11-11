@@ -15,7 +15,7 @@
 #include "objects/player/Player.h"
 #include "objects/baroon/Baroon.h"
 
-class ShootingCoasterScene :public BaseScene {
+class ShootingCoasterScene:public BaseScene {
 public: // 公開メンバ関数
 	// コンストラクタ
 	ShootingCoasterScene() = default;

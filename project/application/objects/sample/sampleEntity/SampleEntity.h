@@ -9,9 +9,9 @@ public:
 	SampleEntity() = default;
 	~SampleEntity() = default;
 
-	void Initialize()override;
+	void Initialize();
 
-	void Update()override;
+	void Update();
 
 	// 衝突を検知したら呼び出されるコールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;

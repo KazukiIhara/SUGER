@@ -25,7 +25,7 @@ void ShootingCoasterScene::Initialize() {
 	SUGER::LoadJsonLevelData("ShootingCoaster");
 
 	// JsonDataをシーンにインポート
-	jsonImporter_.ImportLevel(SUGER::FindJsonLevelData("ShootingCoaster"), railCamera_.get());
+	jsonImporter_.ImportLevel(SUGER::FindJsonLevelData("ShootingCoaster"), railCamera_.get(), baroons_);
 
 	// プレイヤーの生成と初期化
 	player_ = std::make_unique<Player>();
@@ -51,6 +51,16 @@ void ShootingCoasterScene::Update() {
 
 	// プレイヤーの更新
 	player_->Update();
+
+	// コライダーリストの初期化
+	SUGER::ResetColliderList();
+	// プレイヤーの球リストをコライダーリストに追加
+	player_->SetColliderListBullet();
+
+	// baroonをコライダーに追加
+	for (const std::unique_ptr<Baroon>& baroon : baroons_) {
+		SUGER::AddCollider(baroon.get());
+	}
 
 	// 
 	// シーンの更新処理ここまで

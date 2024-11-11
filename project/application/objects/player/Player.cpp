@@ -94,8 +94,16 @@ void Player::Attack() {
 		// 弾を生成して初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(worldPos, velocity);
+		// コライダーリストに追加
+		newBullet->SetCategory(kPlayerBullet);
 
 		bullets_.push_back(newBullet);
+	}
+}
+
+void Player::SetColliderListBullet() {
+	for (PlayerBullet* bullet : bullets_) {
+		SUGER::AddCollider(bullet);
 	}
 }
 

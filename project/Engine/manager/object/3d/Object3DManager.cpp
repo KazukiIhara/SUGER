@@ -78,6 +78,9 @@ std::string Object3DManager::Create(const std::string& name, const std::string& 
 	// ライトのセット
 	newObject->SetPunctualLight(light_);
 
+	// 値を代入した後に一回更新
+	newObject->Update();
+
 	// filePathの指定がある場合、モデル読み込み
 	if (!fileName.empty()) {
 		modelManager_->Load(fileName);

@@ -18,7 +18,7 @@ void MyGame::Initialize() {
 	// シーンマネージャにシーンファクトリをセット
 	sceneManager_->SetSceneFactory(sceneFactory_.get());
 	// 初期シーンのセット
-	sceneManager_->ChangeScene("SAMPLE");
+	sceneManager_->ChangeScene("SHOOTINGCOASTER");
 }
 
 void MyGame::Finalize() {
@@ -33,14 +33,14 @@ void MyGame::Update() {
 	SUGER::Update();
 	// シーンの更新処理
 	sceneManager_->Update();
-	// CollisionManager内の当たり判定を取得
-	SUGER::CheckAllCollisions();
 	// 2DObjectの更新
 	SUGER::Update2DObjects();
 	// 3DObjectの更新
 	SUGER::Update3DObjects();
 	// Particleの更新
 	SUGER::UpdateParticle();
+	// CollisionManager内の当たり判定を取得
+	SUGER::CheckAllCollisions();
 }
 
 void MyGame::Draw() {

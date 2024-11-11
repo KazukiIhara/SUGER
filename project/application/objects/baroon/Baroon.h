@@ -1,15 +1,18 @@
 #pragma once
 
-#include "3d/controller/Object3dController.h"
+#include "objects/baseEntity/BaseEntity.h"
 
-class Baroon {
+class Baroon:public BaseEntity {
 public:
 	Baroon() = default;
 	~Baroon() = default;
 
-	void Initialize();
+	void Initialize(const std::string& name, const std::string& filePath, const EulerTransform3D& transform);
 
 	void Update();
+
+	// 衝突を検知したら呼び出されるコールバック関数
+	void OnCollision([[maybe_unused]] Collider* other)override;
 
 private:
 

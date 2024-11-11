@@ -5,6 +5,7 @@
 
 // 数学関数ヘッダー
 #include "math/function/MathFunction.h"
+#include "structs/ObjectStructs.h"
 
 class Object3D;
 class WorldTransform;
