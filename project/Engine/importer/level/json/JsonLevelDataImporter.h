@@ -1,10 +1,7 @@
 #pragma once
 
-#include <list>
-#include <memory>
 
 class JsonLevelData;
-class RailCamera;
 
 class JsonLevelDataImporter {
 public:

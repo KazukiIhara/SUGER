@@ -1,7 +1,6 @@
 #include "JsonLevelDataImporter.h"
 
 #include "data/level/json/JsonLevelData.h"
-#include "3d/cameras/railCamera/RailCamera.h"
 
 #include "framework/SUGER.h"
 
