@@ -10,4 +10,3 @@ void JsonLevelDataImporter::Import(JsonLevelData* jsonLevelData) {
 		SUGER::Create3DObject(object.objectName, object.modelName, object.transform);
 	}
 }
-
