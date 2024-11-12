@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <array>
 
 #include "3d/controller/Object3dController.h"
 #include "2d/controller/Object2dController.h"
@@ -49,6 +50,10 @@ private:
 	Object2DController reticle_;
 	// スコア表示のコントローラ
 	Object2DController score_;
+
+	// 数字表示用のコントローラ
+	std::array<Object2DController, 4> number_;
+	
 	// レティクルのスクリーン座標
 	Vector2 reticlePosition_{};
 	// レティクルのワールド座標
@@ -66,5 +71,7 @@ private:
 
 
 	uint32_t scorePoint_ = 0;
+
+	std::vector<int> sepalateScore_;
 
 };

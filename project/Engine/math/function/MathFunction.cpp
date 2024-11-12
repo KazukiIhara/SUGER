@@ -2,7 +2,20 @@
 
 #include "MathFunction.h"
 #include <algorithm>
+#include <string>
 
+std::vector<int> SepalateNumber(int score) {
+	// 数字を文字列に変換
+	std::string scoreStr = std::to_string(score);
+	std::vector<int> digits;
+
+	// 各文字を数字に変換して配列に追加
+	for (char ch : scoreStr) {
+		digits.push_back(ch - '0');
+	}
+
+	return digits;
+}
 
 float Lerp(float a, float b, float t) {
 	return a + t * (b - a);

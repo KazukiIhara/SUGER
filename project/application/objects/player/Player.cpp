@@ -24,6 +24,17 @@ void Player::Initialize() {
 	score_.SetAnchorPoint(Vector2(0.5f, 0.5f));
 	score_.SetPosition(Vector2(1600.0f, 840.0f));
 
+	// 数字表示作成
+	for (uint32_t i = 0; i < 4; i++) {
+		std::string number = std::to_string(i);
+		SUGER::Create2DObject("Number" + number, "numbers.png");
+		number_[i].Initialize(SUGER::FindObject2D("Number" + number));
+		number_[i].SetAnchorPoint(Vector2(0.5f, 0.5f));
+		number_[i].SetSize(Vector2(128.0f, 128.0f));
+		number_[i].SetCutOutSize(Vector2(128.0f, 128.0f));
+		number_[i].SetPosition(Vector2(1000.0f, 840.0f));
+	}
+
 	// 弾のモデル読み込み
 	SUGER::LoadModel("Bullet");
 
@@ -47,6 +58,9 @@ void Player::Update() {
 		}
 		return false;
 		});
+
+	sepalateScore_ = SepalateNumber(scorePoint_);
+
 
 
 	// 照準の操作

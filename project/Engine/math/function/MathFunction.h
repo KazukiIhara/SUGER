@@ -7,6 +7,13 @@
 // MyHedder
 #include "math/operator/MathOperator.h"
 
+//
+// int
+//
+
+std::vector<int> SepalateNumber(int score);
+
+
 // 
 // float
 // 
