@@ -20,6 +20,7 @@ void Baroon::OnCollision(Collider* other) {
 
 	switch (category) {
 		case kPlayerBullet:
+			isDelete_ = true;
 			controller_.SetIsDelete(true);
 			break;
 		default:

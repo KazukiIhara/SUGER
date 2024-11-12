@@ -43,17 +43,17 @@ void PlayerBullet::OnCollision(Collider* other) {
 	// 衝突相手のカテゴリを取得
 	ColliderCategory category = other->GetCategory();
 
+	if (contactRecord_.CheckRecord(other->GetSerialNumber())) {
+		return;
+	}
+
+	contactRecord_.AddRecord(other->GetSerialNumber());
+
 	switch (category) {
-	case kNone:
-		break;
-	case kPlayerBullet:
-		break;
 	case kBaroon:
 		player_->PlusScore();
 		isDead_ = true;
 		controller_.SetIsDelete(true);
-		break;
-	default:
 		break;
 	}
 }

@@ -32,6 +32,13 @@ void Player::Initialize() {
 
 void Player::Update() {
 
+#ifdef _DEBUG
+	ImGui::Begin("Score");
+	ImGui::Text("score: %u", scorePoint_);
+	ImGui::End();
+#endif // _DEBUG
+
+
 	/*デスフラグの立った弾を削除*/
 	bullets_.remove_if([](PlayerBullet* bullet) {
 		if (bullet->GetIsDead()) {
@@ -114,7 +121,12 @@ void Player::Attack() {
 }
 
 void Player::SetColliderListBullet() {
+	int num = 0;
 	for (PlayerBullet* bullet : bullets_) {
+		num++;
+		bullet->SetSerialNumber(num);
+		bullet->SetCategory(kPlayerBullet);
+		bullet->SetRadius(0.5f);
 		SUGER::AddCollider(bullet);
 	}
 }

@@ -14,6 +14,10 @@ public:
 	// 衝突を検知したら呼び出されるコールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
-private:
+	bool GetIsDead() {
+		return isDelete_;
+	}
 
+private:
+	bool isDelete_ = false;
 };

@@ -46,6 +46,13 @@ void ShootingCoasterScene::Update() {
 	// シーンの更新処理ここから
 	// 
 
+	baroons_.remove_if([](const std::unique_ptr<Baroon>& baroon) {
+		if (baroon->GetIsDead()) {
+			return true;
+		}
+		return false;
+		});
+
 	// プレイヤーの更新
 	player_->Update();
 
@@ -62,6 +69,8 @@ void ShootingCoasterScene::Update() {
 
 	// baroonをコライダーに追加
 	for (const std::unique_ptr<Baroon>& baroon : baroons_) {
+		baroon->SetCategory(kBaroon);
+		baroon->SetRadius(0.5f);
 		SUGER::AddCollider(baroon.get());
 	}
 
