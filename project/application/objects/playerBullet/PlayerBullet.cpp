@@ -1,7 +1,9 @@
 #include "PlayerBullet.h"
 #include "framework/SUGER.h"
 
-void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity) {
+#include "objects/player/Player.h"
+
+void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity, Player* player) {
 	// 弾を作成
 	const std::string objectName = SUGER::Create3DObject("Bullet", "Bullet", EulerTransform3D(Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f), position));
 	// 移動量を代入
@@ -14,8 +16,13 @@ void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity) 
 		std::atan2(velocity_.x, velocity_.z),
 		0.0f
 	));
+	controller_.SetIsDelete(false);
+	isDead_ = false;
+	SetCategory(kPlayerBullet);
 	// コライダーの半径を設定
 	SetRadius(0.5f);
+
+	player_ = player;
 }
 
 void PlayerBullet::Update() {
@@ -37,15 +44,16 @@ void PlayerBullet::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetCategory();
 
 	switch (category) {
-		case kNone:
-			break;
-		case kPlayerBullet:
-			break;
-		case kBaroon:
-			isDead_ = true;
-			controller_.SetIsDelete(true);
-			break;
-		default:
-			break;
+	case kNone:
+		break;
+	case kPlayerBullet:
+		break;
+	case kBaroon:
+		player_->PlusScore();
+		isDead_ = true;
+		controller_.SetIsDelete(true);
+		break;
+	default:
+		break;
 	}
 }

@@ -21,7 +21,10 @@ public:
 	// コントロールポイント挿入
 	void PushBackControlPoint(const Vector3& point);
 
-	void SetSpeed(float rotateX);
+	float GetT() {
+		return t_;
+	}
+
 
 private:
 	// スプライン曲線制御点

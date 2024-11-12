@@ -26,6 +26,8 @@ void Player::Initialize() {
 
 	// 弾のモデル読み込み
 	SUGER::LoadModel("Bullet");
+
+	scorePoint_ = 0;
 }
 
 void Player::Update() {
@@ -39,14 +41,17 @@ void Player::Update() {
 		return false;
 		});
 
+
 	// 照準の操作
 	MoveReticle();
 
 	// 照準の座標変換
 	ScreenToWorld();
 
-	// 攻撃処理
-	Attack();
+	if (t_ < 0.99f) {
+		// 攻撃処理
+		Attack();
+	}
 
 	// 弾更新
 	for (PlayerBullet* bullet : bullets_) {
@@ -100,7 +105,7 @@ void Player::Attack() {
 		velocity = kBulletSpeed_ * Normalize(velocity);
 		// 弾を生成して初期化
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(worldPos, velocity);
+		newBullet->Initialize(worldPos, velocity, this);
 		// コライダーリストに追加
 		newBullet->SetCategory(kPlayerBullet);
 

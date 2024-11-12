@@ -32,7 +32,15 @@ public:
 	// レールカメラのトランスフォームセット
 	void SetRailTransform(WorldTransform* railTransform);
 
-	const float &GetRotateX();
+	const float& GetRotateX();
+
+	void SetT(const float& t) {
+		t_ = t;
+	}
+
+	void PlusScore() {
+		scorePoint_ += 50;
+	}
 
 private:
 	// プレイヤーオブジェクトのコントローラ
@@ -53,5 +61,10 @@ private:
 	const float kBulletSpeed_ = 1.5f;
 	// 弾を発射する位置のオフセット
 	const Vector3 kBulletShotOffset_ = { 0.0f,-0.5f,-0.0f };
+
+	float t_ = 0.0f;
+
+
+	uint32_t scorePoint_ = 0;
 
 };

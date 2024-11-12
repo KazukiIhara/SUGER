@@ -49,10 +49,11 @@ void ShootingCoasterScene::Update() {
 	// プレイヤーの更新
 	player_->Update();
 
-	railCamera_->SetSpeed(player_->GetRotateX());
-
 	// レールカメラの更新
 	railCamera_->Update();
+
+	player_->SetT(railCamera_->GetT());
+
 
 	// コライダーリストの初期化
 	SUGER::ResetColliderList();

@@ -7020,6 +7020,1294 @@
                 ]
             },
             "object_name": "controlPoint"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere",
+            "transform": {
+                "translation": [
+                    -0.9622592329978943,
+                    15.220732688903809,
+                    6.745998859405518
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.001",
+            "transform": {
+                "translation": [
+                    -0.9622592329978943,
+                    17.719356536865234,
+                    7.324150562286377
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.002",
+            "transform": {
+                "translation": [
+                    -0.9622592329978943,
+                    20.13502311706543,
+                    7.41806173324585
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.004",
+            "transform": {
+                "translation": [
+                    -0.9622592329978943,
+                    24.694717407226562,
+                    7.41806173324585
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.006",
+            "transform": {
+                "translation": [
+                    4.59754753112793,
+                    28.64824104309082,
+                    5.960084915161133
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.005",
+            "transform": {
+                "translation": [
+                    1.9481570720672607,
+                    25.372127532958984,
+                    5.960084915161133
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.007",
+            "transform": {
+                "translation": [
+                    8.271596908569336,
+                    22.61200714111328,
+                    3.764376640319824
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.008",
+            "transform": {
+                "translation": [
+                    7.227429389953613,
+                    20.000761032104492,
+                    3.5712802410125732
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.009",
+            "transform": {
+                "translation": [
+                    4.136742115020752,
+                    18.420988082885742,
+                    2.4579379558563232
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.010",
+            "transform": {
+                "translation": [
+                    2.3247575759887695,
+                    18.624160766601562,
+                    1.5543936491012573
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.011",
+            "transform": {
+                "translation": [
+                    -1.5911023616790771,
+                    23.189136505126953,
+                    0.6642210483551025
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.014",
+            "transform": {
+                "translation": [
+                    -1.6913572549819946,
+                    29.29673194885254,
+                    0.7701122760772705
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.015",
+            "transform": {
+                "translation": [
+                    -1.6913572549819946,
+                    30.922962188720703,
+                    1.7453639507293701
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.016",
+            "transform": {
+                "translation": [
+                    1.5198228359222412,
+                    32.38914108276367,
+                    1.7453639507293701
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.017",
+            "transform": {
+                "translation": [
+                    1.92061448097229,
+                    33.707881927490234,
+                    -0.16383439302444458
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.003",
+            "transform": {
+                "translation": [
+                    -3.3941290378570557,
+                    44.0711555480957,
+                    2.7205753326416016
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.012",
+            "transform": {
+                "translation": [
+                    -3.3941290378570557,
+                    49.011627197265625,
+                    0.627161979675293
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.013",
+            "transform": {
+                "translation": [
+                    -3.3941290378570557,
+                    52.902687072753906,
+                    1.4926763772964478
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.018",
+            "transform": {
+                "translation": [
+                    3.4896461963653564,
+                    52.902687072753906,
+                    3.277042865753174
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.019",
+            "transform": {
+                "translation": [
+                    3.4896461963653564,
+                    56.9457893371582,
+                    5.153437614440918
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.020",
+            "transform": {
+                "translation": [
+                    12.137791633605957,
+                    56.322418212890625,
+                    5.9811015129089355
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.021",
+            "transform": {
+                "translation": [
+                    12.137791633605957,
+                    54.98451232910156,
+                    5.457683086395264
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.022",
+            "transform": {
+                "translation": [
+                    15.55219554901123,
+                    41.517974853515625,
+                    7.764148235321045
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.023",
+            "transform": {
+                "translation": [
+                    5.774236679077148,
+                    41.24955368041992,
+                    6.61073112487793
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.024",
+            "transform": {
+                "translation": [
+                    4.044562816619873,
+                    41.24955368041992,
+                    6.61073112487793
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.025",
+            "transform": {
+                "translation": [
+                    2.1347920894622803,
+                    41.24955368041992,
+                    6.61073112487793
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.027",
+            "transform": {
+                "translation": [
+                    -3.262479543685913,
+                    41.95594024658203,
+                    6.61073112487793
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.028",
+            "transform": {
+                "translation": [
+                    13.090559959411621,
+                    52.54546356201172,
+                    5.9811015129089355
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.029",
+            "transform": {
+                "translation": [
+                    -8.272629737854004,
+                    39.02446746826172,
+                    7.944642066955566
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.030",
+            "transform": {
+                "translation": [
+                    -10.283899307250977,
+                    40.71092987060547,
+                    7.645772933959961
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.031",
+            "transform": {
+                "translation": [
+                    -15.013585090637207,
+                    40.71092987060547,
+                    6.575473785400391
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.032",
+            "transform": {
+                "translation": [
+                    -17.69288444519043,
+                    40.71092987060547,
+                    6.575473785400391
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.033",
+            "transform": {
+                "translation": [
+                    -22.757186889648438,
+                    43.74653244018555,
+                    6.575473785400391
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.034",
+            "transform": {
+                "translation": [
+                    -27.145980834960938,
+                    38.3954963684082,
+                    6.726449966430664
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.035",
+            "transform": {
+                "translation": [
+                    -23.762136459350586,
+                    36.038394927978516,
+                    8.782630920410156
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.036",
+            "transform": {
+                "translation": [
+                    -26.640029907226562,
+                    32.13450241088867,
+                    8.782630920410156
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.037",
+            "transform": {
+                "translation": [
+                    -30.13928985595703,
+                    27.213390350341797,
+                    11.520129203796387
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.038",
+            "transform": {
+                "translation": [
+                    -36.507694244384766,
+                    23.78923797607422,
+                    12.884617805480957
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.039",
+            "transform": {
+                "translation": [
+                    -36.839717864990234,
+                    21.16171646118164,
+                    12.884617805480957
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.040",
+            "transform": {
+                "translation": [
+                    -36.839717864990234,
+                    15.012065887451172,
+                    13.538722038269043
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.041",
+            "transform": {
+                "translation": [
+                    -36.416046142578125,
+                    10.494041442871094,
+                    11.128087043762207
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.042",
+            "transform": {
+                "translation": [
+                    -30.36269760131836,
+                    7.5510759353637695,
+                    7.662621974945068
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.043",
+            "transform": {
+                "translation": [
+                    -30.36269760131836,
+                    5.157247543334961,
+                    5.097162246704102
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.044",
+            "transform": {
+                "translation": [
+                    -30.36269760131836,
+                    3.525238513946533,
+                    5.549777030944824
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.045",
+            "transform": {
+                "translation": [
+                    -30.36269760131836,
+                    1.7515108585357666,
+                    4.700374603271484
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.046",
+            "transform": {
+                "translation": [
+                    -36.41984558105469,
+                    1.7515108585357666,
+                    4.700374603271484
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.047",
+            "transform": {
+                "translation": [
+                    -36.41984558105469,
+                    -5.474278450012207,
+                    1.2317464351654053
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.048",
+            "transform": {
+                "translation": [
+                    -32.90869903564453,
+                    -7.2347869873046875,
+                    -0.13316893577575684
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.049",
+            "transform": {
+                "translation": [
+                    -24.101314544677734,
+                    -9.600974082946777,
+                    0.6619411706924438
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.050",
+            "transform": {
+                "translation": [
+                    -21.37217140197754,
+                    -10.4656400680542,
+                    1.0391032695770264
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.051",
+            "transform": {
+                "translation": [
+                    -15.50274658203125,
+                    -6.177574157714844,
+                    1.2188677787780762
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.052",
+            "transform": {
+                "translation": [
+                    -12.891757011413574,
+                    -11.238183975219727,
+                    1.2188677787780762
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.053",
+            "transform": {
+                "translation": [
+                    -9.990621566772461,
+                    -10.260405540466309,
+                    2.029324531555176
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.054",
+            "transform": {
+                "translation": [
+                    1.2756820917129517,
+                    -6.394799709320068,
+                    0.9357209205627441
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.055",
+            "transform": {
+                "translation": [
+                    -1.2087990045547485,
+                    -8.090982437133789,
+                    0.9357209205627441
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
+        },
+        {
+            "type": "MESH",
+            "name": "Icosphere.056",
+            "transform": {
+                "translation": [
+                    -4.943811416625977,
+                    -6.938136100769043,
+                    0.9357209205627441
+                ],
+                "rotation": [
+                    1.5707964897155762,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "object_name": "baroon",
+            "model_name": "Baroon"
         }
     ]
 }

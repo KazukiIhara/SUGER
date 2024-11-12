@@ -67,7 +67,3 @@ void RailCamera::RunRail() {
 void RailCamera::PushBackControlPoint(const Vector3& point) {
 	controlPoints_.push_back(point);
 }
-
-void RailCamera::SetSpeed(float rotateX) {
-	speed_ = kSpeed_ * (rotateX + 1.0f);
-}
