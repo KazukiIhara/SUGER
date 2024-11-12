@@ -18,6 +18,7 @@ void RailCamera::Initialize() {
 
 	// 補間用変数をリセット
 	t_ = 0.0f;
+	angleDifferenceX_ = 0.0f;
 }
 
 void RailCamera::Update() {
@@ -30,6 +31,7 @@ void RailCamera::Update() {
 #endif // _DEBUG
 
 
+
 	// レールを走らせる
 	RunRail();
 
@@ -39,8 +41,12 @@ void RailCamera::Update() {
 
 void RailCamera::RunRail() {
 	// 世界の上方向ベクトル
-	constexpr Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
 	static Vector3 currentUp_ = worldUp;
+
+	// t_が0に戻った場合、currentUp_をリセット
+	if (t_ == 0.0f) {
+		currentUp_ = worldUp;
+	}
 
 	// t_の更新
 	t_ = std::min(t_ + speed_, 1.0f);
@@ -57,7 +63,7 @@ void RailCamera::RunRail() {
 	// X軸の角度差を計算して補正
 	angleDifferenceX_ = std::fabs(std::atan2(calculatedUp.y, calculatedUp.z) - std::atan2(worldUp.y, worldUp.z)) * (180.0f / std::numbers::pi_v<float>);
 	// X軸の回転角が60度を越えている場合、進行方向から上方向を算出してカメラの回転を決める
-	currentUp_ = (angleDifferenceX_ < 60.0f) ? Lerp(currentUp_, worldUp, 0.1f) : calculatedUp;
+	currentUp_ = (angleDifferenceX_ < 50.0f) ? Lerp(currentUp_, worldUp, 0.1f) : calculatedUp;
 
 	// クォータニオンで回転を設定し、オイラー角に変換
 	transform_.rotate_ = QuaternionToEulerAngles(QuaternionLookRotation(forward, currentUp_));

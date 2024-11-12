@@ -5,7 +5,7 @@
 #include "3d/cameras/camera/Camera.h"
 #include "math/function/MathFunction.h"
 
-class RailCamera :public Camera {
+class RailCamera:public Camera {
 public:
 	RailCamera() = default;
 	~RailCamera() = default;
@@ -27,6 +27,7 @@ public:
 
 
 private:
+	Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
 	// スプライン曲線制御点
 	std::vector<Vector3> controlPoints_;
 	// レールカメラ補間変数
@@ -37,6 +38,5 @@ private:
 	const float kSpeed_ = 0.0003f;
 	float speed_ = kSpeed_;
 	// カメラの上方向
-	Vector3 currentUp_{ 0.0f,1.0f,0.0f };
-	float angleDifferenceX_;
+	float angleDifferenceX_ = 0.0f;
 };
