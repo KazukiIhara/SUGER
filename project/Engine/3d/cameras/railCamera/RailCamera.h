@@ -29,7 +29,7 @@ private:
 	// カメラが向くtの値
 	float targetOffset_ = 0.01f;
 	// レールカメラの速度
-	float speed_ = 0.0005f;
+	float speed_ = 0.0002f;
 	// カメラの上方向
 	Vector3 currentUp_{ 0.0f,1.0f,0.0f };
 	float angleDifferenceX_;
