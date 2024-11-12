@@ -17,6 +17,13 @@ void Player::Initialize() {
 
 	reticleTransform_.Initialize();
 
+	// スコア表示作成
+	SUGER::Create2DObject("Score", "Score.png");
+	// スコアのコントローラを初期化
+	score_.Initialize(SUGER::FindObject2D("Score"));
+	score_.SetAnchorPoint(Vector2(0.5f, 0.5f));
+	score_.SetPosition(Vector2(1600.0f, 840.0f));
+
 	// 弾のモデル読み込み
 	SUGER::LoadModel("Bullet");
 }
@@ -109,4 +116,8 @@ void Player::SetColliderListBullet() {
 
 void Player::SetRailTransform(WorldTransform* railTransform) {
 	player_.SetParent(railTransform);
+}
+
+const float& Player::GetRotateX() {
+	return player_.GetRotate().x;
 }

@@ -21,6 +21,8 @@ public:
 	// コントロールポイント挿入
 	void PushBackControlPoint(const Vector3& point);
 
+	void SetSpeed(float rotateX);
+
 private:
 	// スプライン曲線制御点
 	std::vector<Vector3> controlPoints_;
@@ -29,7 +31,8 @@ private:
 	// カメラが向くtの値
 	float targetOffset_ = 0.01f;
 	// レールカメラの速度
-	float speed_ = 0.0002f;
+	const float kSpeed_ = 0.0003f;
+	float speed_ = kSpeed_;
 	// カメラの上方向
 	Vector3 currentUp_{ 0.0f,1.0f,0.0f };
 	float angleDifferenceX_;

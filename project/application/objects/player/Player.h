@@ -32,11 +32,15 @@ public:
 	// レールカメラのトランスフォームセット
 	void SetRailTransform(WorldTransform* railTransform);
 
+	const float &GetRotateX();
+
 private:
 	// プレイヤーオブジェクトのコントローラ
 	Object3DController player_;
 	// レティクルのコントローラ
 	Object2DController reticle_;
+	// スコア表示のコントローラ
+	Object2DController score_;
 	// レティクルのスクリーン座標
 	Vector2 reticlePosition_{};
 	// レティクルのワールド座標
