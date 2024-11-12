@@ -115,6 +115,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\objects\playerBullet\PlayerBullet.cpp" />
     <ClCompile Include="application\objects\player\Player.cpp" />
     <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp" />
+    <ClCompile Include="application\scene\AL4\titleScene\TitleScene.cpp" />
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\sample\SampleScene.cpp" />
     <ClCompile Include="Engine\2d\controller\Object2dController.cpp" />
@@ -173,6 +174,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\objects\playerBullet\PlayerBullet.h" />
     <ClInclude Include="application\objects\player\Player.h" />
     <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h" />
+    <ClInclude Include="application\scene\AL4\titleScene\TitleScene.h" />
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\sample\SampleScene.h" />
     <ClInclude Include="Engine\2d\controller\Object2dController.h" />

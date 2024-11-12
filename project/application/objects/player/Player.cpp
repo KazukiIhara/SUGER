@@ -8,6 +8,8 @@ void Player::Initialize() {
 	// オブジェクト3dコントローラを初期化 
 	player_.Initialize(SUGER::FindObject3D("Player"));
 
+
+
 	// 照準作成
 	SUGER::Create2DObject("Reticle", "Reticle.png");
 	// 照準のコントローラを初期化
@@ -17,6 +19,17 @@ void Player::Initialize() {
 
 	reticleTransform_.Initialize();
 
+	// 数字表示作成
+	for (uint32_t i = 0; i < 4; i++) {
+		std::string number = std::to_string(i);
+		SUGER::Create2DObject("ZNumber" + number, "numbers.png");
+		number_[i].Initialize(SUGER::FindObject2D("ZNumber" + number));
+		number_[i].SetAnchorPoint(Vector2(0.5f, 0.5f));
+		number_[i].SetSize(Vector2(48.0f, 64.0f));
+		number_[i].SetCutOutSize(Vector2(48.0f, 64.0f));
+		number_[i].SetPosition(Vector2(1640.0f + i * 48.0f, 840.0f));
+	}
+
 	// スコア表示作成
 	SUGER::Create2DObject("Score", "Score.png");
 	// スコアのコントローラを初期化
@@ -24,16 +37,7 @@ void Player::Initialize() {
 	score_.SetAnchorPoint(Vector2(0.5f, 0.5f));
 	score_.SetPosition(Vector2(1600.0f, 840.0f));
 
-	// 数字表示作成
-	for (uint32_t i = 0; i < 4; i++) {
-		std::string number = std::to_string(i);
-		SUGER::Create2DObject("Number" + number, "numbers.png");
-		number_[i].Initialize(SUGER::FindObject2D("Number" + number));
-		number_[i].SetAnchorPoint(Vector2(0.5f, 0.5f));
-		number_[i].SetSize(Vector2(128.0f, 128.0f));
-		number_[i].SetCutOutSize(Vector2(128.0f, 128.0f));
-		number_[i].SetPosition(Vector2(1000.0f, 840.0f));
-	}
+
 
 	// 弾のモデル読み込み
 	SUGER::LoadModel("Bullet");
@@ -61,6 +65,9 @@ void Player::Update() {
 
 	sepalateScore_ = SepalateNumber(scorePoint_);
 
+	for (uint32_t i = 0; i < 4; i++) {
+		number_[i].SetLeftTop(Vector2(sepalateScore_[i] * 48.0f, 0.0f));
+	}
 
 
 	// 照準の操作

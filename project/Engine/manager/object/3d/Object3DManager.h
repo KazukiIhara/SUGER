@@ -25,6 +25,8 @@ public:
 	void Draw();
 	// スキニングモデル描画処理
 	void DrawSkinning();
+	// コンテナをクリア
+	void Clear();
 	// 終了処理
 	void Finalize();
 

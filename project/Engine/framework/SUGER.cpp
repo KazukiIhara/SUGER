@@ -350,6 +350,10 @@ ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes) {
 	return directXManager_->CreateBufferResource(sizeInBytes);
 }
 
+void SUGER::ResetFixFPS() {
+	directXManager_->ResetFixFPS();
+}
+
 D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleCPU(uint32_t index) {
 	return srvManager_->GetDescriptorHandleCPU(index);
 }
@@ -432,6 +436,10 @@ void SUGER::DrawSkinning3DObjects() {
 
 Object3D* SUGER::FindObject3D(const std::string& name) {
 	return object3dManager_->Find(name);
+}
+
+void SUGER::Clear3DObjects() {
+	object3dManager_->Clear();
 }
 
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {

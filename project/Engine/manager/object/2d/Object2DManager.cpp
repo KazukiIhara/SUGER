@@ -2,7 +2,7 @@
 
 void Object2DManager::Initialize() {
 	// コンテナをクリア
-	objects_.clear();
+	Clear();
 }
 
 void Object2DManager::Update() {
@@ -25,6 +25,10 @@ void Object2DManager::Draw() {
 
 void Object2DManager::Finalize() {
 	// コンテナをクリア
+	Clear();
+}
+
+void Object2DManager::Clear() {
 	objects_.clear();
 }
 

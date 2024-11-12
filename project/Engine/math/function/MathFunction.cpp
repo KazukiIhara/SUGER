@@ -3,10 +3,20 @@
 #include "MathFunction.h"
 #include <algorithm>
 #include <string>
+#include <iomanip>
+#include <sstream>
 
 std::vector<int> SepalateNumber(int score) {
-	// 数字を文字列に変換
-	std::string scoreStr = std::to_string(score);
+	// scoreの最大値を9999に制限
+	if (score > 9999) {
+		score = 9999;
+	}
+
+	// 数字を4桁の文字列に変換（不足分は先頭に0を追加）
+	std::ostringstream oss;
+	oss << std::setw(4) << std::setfill('0') << score;
+	std::string scoreStr = oss.str();
+
 	std::vector<int> digits;
 
 	// 各文字を数字に変換して配列に追加

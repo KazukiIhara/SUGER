@@ -3,6 +3,7 @@
 
 #include "scene/sample/SampleScene.h"
 #include "scene/AL4/shootingCoaster/ShootingCoasterScene.h"
+#include "scene/AL4/titleScene/TitleScene.h"
 
 BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 	// 次のシーンを生成
@@ -12,6 +13,8 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 		newScene = new SampleScene();
 	} else if (sceneName == "SHOOTINGCOASTER") {
 		newScene = new ShootingCoasterScene();
+	} else if (sceneName=="TITLE") {
+		newScene = new TitleScene();
 	}
 
 	return newScene;

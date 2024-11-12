@@ -43,6 +43,9 @@ public: // 公開メンバ関数
 	// コマンドリストをリセット
 	void ResetCommandList();
 
+	// FIXFPSシステム初期化
+	void ResetFixFPS();
+
 	// スワップチェインディスクリプタを取得
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const {
 		return swapChainDesc_;

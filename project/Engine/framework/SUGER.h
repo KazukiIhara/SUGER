@@ -113,6 +113,8 @@ public: // クラスメソッド
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
 	// バッファリソースの作成
 	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
+	// FPS制限初期化
+	static void ResetFixFPS();
 #pragma endregion
 
 #pragma region SRVManager
@@ -185,6 +187,8 @@ public: // クラスメソッド
 	static void DrawSkinning3DObjects();
 	// 3Dオブジェクト検索
 	static Object3D* FindObject3D(const std::string& name);
+	// 3Dオブジェクトコンテナをクリア
+	static void Clear3DObjects();
 
 	// シーンのカメラとライトをセット
 	static void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);

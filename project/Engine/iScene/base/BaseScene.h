@@ -2,6 +2,7 @@
 
 // C++
 #include <memory>
+#include <string>
 
 // MyHedder
 #include "3d/cameras/camera/Camera.h"
@@ -21,6 +22,9 @@ public: // 仮想関数
 	virtual void Finalize() = 0;
 	// 更新
 	virtual void Update();
+
+	// シーンチェンジ
+	void ChangeScene(const std::string &necxtScene);
 
 	// シーンマネージャのセット
 	virtual void SetSceneManager(SceneManager* sceneManager) {

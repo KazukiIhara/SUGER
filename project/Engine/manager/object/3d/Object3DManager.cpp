@@ -8,7 +8,7 @@ void Object3DManager::Initialize(ModelManager* modelManager) {
 	// モデルマネージャのインスタンスをセット
 	SetModelManager(modelManager);
 	// コンテナをクリア
-	objects_.clear();
+	Clear();
 }
 
 void Object3DManager::Update() {
@@ -47,9 +47,13 @@ void Object3DManager::DrawSkinning() {
 	}
 }
 
+void Object3DManager::Clear() {
+	objects_.clear();
+}
+
 void Object3DManager::Finalize() {
 	// コンテナをクリア
-	objects_.clear();
+	Clear();
 }
 
 std::string Object3DManager::Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform) {

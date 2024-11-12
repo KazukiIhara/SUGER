@@ -22,6 +22,9 @@ public:
 	// 終了処理
 	void Finalize();
 
+	// コンテナのクリア
+	void Clear();
+
 	// オブジェクト作成
 	void Create(const std::string& name, const std::string& filePath);
 

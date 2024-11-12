@@ -389,6 +389,7 @@
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\contactRecord\ContactRecord.cpp" />
     <ClCompile Include="application\objects\sample\sampleEntity1\SampleEntity1.cpp" />
+    <ClCompile Include="application\scene\AL4\titleScene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -581,6 +582,7 @@
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
     <ClInclude Include="Engine\contactRecord\ContactRecord.h" />
     <ClInclude Include="application\objects\sample\sampleEntity1\SampleEntity1.h" />
+    <ClInclude Include="application\scene\AL4\titleScene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

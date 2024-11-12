@@ -74,6 +74,10 @@ void ShootingCoasterScene::Update() {
 		SUGER::AddCollider(baroon.get());
 	}
 
+	if (railCamera_->GetT() == 1.0f) {
+		ChangeScene("TITLE");
+	}
+
 	// 
 	// シーンの更新処理ここまで
 	//

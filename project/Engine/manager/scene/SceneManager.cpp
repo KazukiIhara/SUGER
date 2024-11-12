@@ -38,6 +38,8 @@ void SceneManager::SwitchScene() {
 
 		// 次のシーンを初期化
 		currentScene_->Initialize();
+
+		
 	}
 }
 

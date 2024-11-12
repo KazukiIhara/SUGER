@@ -1,4 +1,5 @@
 #include "BaseScene.h"
+#include "manager/scene/SceneManager.h"
 
 #include "framework/SUGER.h"
 #include "imgui.h"
@@ -14,6 +15,14 @@ void BaseScene::Initialize() {
 
 	// シーンに必要なカメラとライトのセット
 	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
+
+	// Objectコンテナをクリア
+	SUGER::Clear3DObjects();
+
+	// コライダーリストをリセット
+	SUGER::ResetColliderList();
+	// FiXFPSシステムをリセット
+	SUGER::ResetFixFPS();
 }
 
 void BaseScene::Update() {
@@ -26,6 +35,10 @@ void BaseScene::Update() {
 
 	// ライトの更新
 	light_->Update();
+}
+
+void BaseScene::ChangeScene(const std::string& necxtScene) {
+	sceneManager_->ChangeScene(necxtScene);
 }
 
 void BaseScene::ImGuiForDebugCamera() {
