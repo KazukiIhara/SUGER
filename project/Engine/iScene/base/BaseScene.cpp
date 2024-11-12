@@ -18,6 +18,7 @@ void BaseScene::Initialize() {
 
 	// Objectコンテナをクリア
 	SUGER::Clear3DObjects();
+	SUGER::Clear2DObjects();
 
 	// コライダーリストをリセット
 	SUGER::ResetColliderList();

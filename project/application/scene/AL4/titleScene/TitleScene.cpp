@@ -11,6 +11,11 @@ void TitleScene::Initialize() {
 	// シーンの初期化処理ここから
 	// 
 
+	SUGER::Create2DObject("PushA", "pushA.png");
+
+	pushA_.Initialize(SUGER::FindObject2D("PushA"));
+	pushA_.SetAnchorPoint(Vector2(0.5f, 0.5f));
+	pushA_.SetPosition(Vector2(WindowManager::kClientWidth / 2.0f, 800.0f));
 }
 
 void TitleScene::Finalize() {}

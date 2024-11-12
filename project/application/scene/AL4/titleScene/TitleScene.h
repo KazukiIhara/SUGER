@@ -8,6 +8,8 @@
 // MyHedder
 #include "iScene/base/BaseScene.h"
 
+#include "2d/controller/Object2dController.h"
+
 class TitleScene:public BaseScene {
 public:
 	TitleScene() = default;
@@ -20,5 +22,7 @@ public:
 	// 更新
 	void Update()override;
 private:
+
+	Object2DController pushA_;
 
 };

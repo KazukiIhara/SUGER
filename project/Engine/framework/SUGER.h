@@ -174,6 +174,8 @@ public: // クラスメソッド
 
 	// 2Dオブジェクト検索
 	static Sprite* FindObject2D(const std::string& name);
+	// 2Dオブジェクトコンテナをクリア
+	static void Clear2DObjects();
 #pragma endregion
 
 #pragma region Object3DManager

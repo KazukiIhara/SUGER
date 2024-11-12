@@ -418,6 +418,10 @@ Sprite* SUGER::FindObject2D(const std::string& name) {
 	return object2dManager_->Find(name);
 }
 
+void SUGER::Clear2DObjects() {
+	object2dManager_->Clear();
+}
+
 std::string SUGER::Create3DObject(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
 	return object3dManager_->Create(name, filePath, transform);
 }
