@@ -6,7 +6,9 @@ void Entity::Initialize() {
 	// 基底クラスの初期化処理
 	Empty::Initialize();
 	// WVP用のリソース作成
-
+	CreateWVPResource();
+	// データを書きこむ
+	MapWVPData();
 }
 
 void Entity::Update() {
