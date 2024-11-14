@@ -33,10 +33,15 @@ void SampleEntity::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetCategory();
 
 	// カテゴリごとのリアクションを行う
-	if (category == kNone) {
-
-		// 衝突している間色を変更
-		controller_.SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+	switch (category) {
+	case kNone:
+		break;
+	case kPlayerBullet:
+		break;
+	case kBaroon:
+		break;
+	default:
+		break;
 	}
 }
 
