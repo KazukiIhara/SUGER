@@ -12,9 +12,9 @@ public:
 	~Empty() = default;
 
 	// 初期化
-	void Initialize();
+	virtual void Initialize();
 	// 更新
-	void Update();
+	virtual void Update();
 
 	//
 	// Setter

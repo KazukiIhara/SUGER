@@ -113,6 +113,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\sample\SampleScene.cpp" />
     <ClCompile Include="Engine\!FixEngine\empty\Empty.cpp" />
+    <ClCompile Include="Engine\!FixEngine\entity\Entity.cpp" />
     <ClCompile Include="Engine\2d\controller\Object2dController.cpp" />
     <ClCompile Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\2d\sprite\Sprite.cpp" />
@@ -167,6 +168,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\sample\SampleScene.h" />
     <ClInclude Include="Engine\!FixEngine\empty\Empty.h" />
+    <ClInclude Include="Engine\!FixEngine\entity\Entity.h" />
     <ClInclude Include="Engine\2d\controller\Object2dController.h" />
     <ClInclude Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.h" />
     <ClInclude Include="Engine\2d\sprite\Sprite.h" />
