@@ -1,5 +1,8 @@
 #pragma once
 
+// エンプティ
+#include "!FixEngine/empty/empty.h"
+
 class EmptyManager {
 public:
 	EmptyManager() = default;

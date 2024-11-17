@@ -6,6 +6,7 @@
 // MyHedder
 #include "worldTransform/WorldTransform.h"
 
+// モデルなしの3Dオブジェクト
 class Empty {
 public:
 	Empty() = default;

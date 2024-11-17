@@ -1,15 +1,15 @@
 #pragma once
 
 #include "directX/includes/ComPtr.h"
-#include "!FixEngine/empty/empty.h"
 #include "3d/model/Model.h"
 #include "3d/cameras/camera/Camera.h"
 #include "3d/lights/punctualLight/PunctualLight.h"
+#include "!FixEngine/empty/empty.h"
 
 #include "enum/GraphicsPipelineEnum.h"
 
-
-class Entity :public Empty {
+// モデルつきの3Dオブジェクト
+class Entity:public Empty {
 public:
 	Entity() = default;
 	~Entity() = default;

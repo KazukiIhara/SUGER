@@ -34,7 +34,7 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 	// デフォルトフォントを明示的に追加
 	io.Fonts->AddFontDefault();
 	// 赤ずきんポップフォントを追加
-	ImFont* loadFont = io.Fonts->AddFontFromFileTTF("resources/fonts/AkazukiPOP.otf", 20.0f);
+	ImFont* loadFont = io.Fonts->AddFontFromFileTTF("resources/fonts/AkazukiPOP.otf", 16.0f);
 }
 
 void ImGuiManager::BeginFrame() {
