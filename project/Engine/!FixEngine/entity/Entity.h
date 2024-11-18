@@ -19,7 +19,7 @@ public:
 	// 更新
 	void Update()override;
 	// 描画
-	void Draw();
+	virtual void Draw();
 
 	// カメラのゲット
 	Camera* GetCamera();
@@ -35,7 +35,7 @@ private:
 	void CreateWVPResource();
 	// データを書き込む
 	void MapWVPData();
-private:
+protected:
 	// モデルを受け取る箱
 	Model* model_ = nullptr;
 

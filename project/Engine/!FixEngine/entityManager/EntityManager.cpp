@@ -17,7 +17,20 @@ void EntityManager::Update() {
 		return pair.second && pair.second->GetIsDelete();
 		});
 
+	// 削除フラグが立っているオブジェクトを削除
+	std::erase_if(skiningEntities_, [](auto& pair) {
+		return pair.second && pair.second->GetIsDelete();
+		});
+
 	for (auto& pair : entities_) {
+		// unique_ptrが有効かつオブジェクトが有効状態
+		if (pair.second && pair.second->GetIsActive()) {
+			// 全オブジェクトを更新
+			pair.second->Update();
+		}
+	}
+
+	for (auto& pair : skiningEntities_) {
 		// unique_ptrが有効かつオブジェクトが有効状態
 		if (pair.second && pair.second->GetIsActive()) {
 			// 全オブジェクトを更新
@@ -36,6 +49,16 @@ void EntityManager::Draw() {
 	}
 }
 
+void EntityManager::DrawSkining() {
+	for (auto& pair : skiningEntities_) {
+		// unique_ptrが有効かつオブジェクトが有効状態
+		if (pair.second && pair.second->GetIsActive()) {
+			// 全オブジェクトを描画
+			pair.second->Draw();
+		}
+	}
+}
+
 void EntityManager::Finalize() {
 	// コンテナのクリア
 	ClearContainer();
@@ -46,7 +69,7 @@ void EntityManager::ClearContainer() {
 	entities_.clear();
 }
 
-std::string EntityManager::Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform) {
+std::string EntityManager::Create(const std::string& name, const std::string& fileName, const bool& haveSkiningAnimation, const EulerTransform3D& transform) {
 	// 重複した名前がある場合、番号を付加してユニークな名前を作成
 	std::string uniqueName = name;
 	int counter = 0;
@@ -56,7 +79,14 @@ std::string EntityManager::Create(const std::string& name, const std::string& fi
 	}
 
 	// エンプティの生成と初期化
-	std::unique_ptr<Entity> newEntity = std::make_unique<Entity>();
+	std::unique_ptr<Entity> newEntity;
+
+	if (haveSkiningAnimation) {
+		newEntity = std::make_unique<SkiningEntity>();
+	} else {
+		newEntity = std::make_unique<Entity>();
+	}
+
 	newEntity->Initialize();
 
 	// 名前のセット
@@ -72,17 +102,21 @@ std::string EntityManager::Create(const std::string& name, const std::string& fi
 	// ライトをセット
 	newEntity->SetLight(light_);
 
-	// filePathの指定がある場合、モデル読み込み
-	if (!fileName.empty()) {
-		modelManager_->Load(fileName);
-		newEntity->SetModel(fileName);
-	}
+	// モデル読み込み
+	modelManager_->Load(fileName);
+	newEntity->SetModel(fileName);
+
 
 	// 行列を更新
 	newEntity->Update();
 
-	// コンテナに格納
-	entities_.insert(std::make_pair(uniqueName, std::move(newEntity)));
+	if (haveSkiningAnimation) {
+		// コンテナに格納
+		skiningEntities_.insert(std::make_pair(uniqueName, std::move(newEntity)));
+	} else {
+		// コンテナに格納
+		entities_.insert(std::make_pair(uniqueName, std::move(newEntity)));
+	}
 
 	// オブジェクトの名前を返す
 	return uniqueName;

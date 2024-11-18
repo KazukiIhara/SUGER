@@ -5,7 +5,6 @@
 #include "3d/controller/Object3dController.h"
 #include "2d/controller/Object2dController.h"
 #include "particle/controller/ParticleController.h"
-#include "objects/sample/sampleEntity/SampleEntity.h"
 
 class SampleScene:public BaseScene {
 public: // 公開メンバ関数
@@ -22,8 +21,6 @@ public: // 公開メンバ関数
 private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
-	// エンティティのサンプル
-	std::unique_ptr<SampleEntity> sampleEntity_ = nullptr;
 	// jeanne用のオブジェクト2Dコントローラ
 	Object2DController pronama_chan;
 	// plane用パーティクルコントローラ

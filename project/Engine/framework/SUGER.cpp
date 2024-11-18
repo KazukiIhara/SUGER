@@ -231,14 +231,13 @@ void SUGER::Update() {
 void SUGER::Draw() {
 	// 3Dオブジェクト描画前処理
 	PreDrawObject3D();
-
 	// Entity描画処理
 	DrawEntiteis();
 
 	// Skinningあり3Dオブジェクト描画前処理
 	PreDrawObject3DSkinning();
-	// Skinningあり3Dオブジェクト描画処理
-	DrawSkinning3DObjects();
+	// Skining付きEntity描画処理
+	DrawSkiningEntities();
 
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
@@ -473,8 +472,8 @@ Empty* SUGER::FindEmpty(const std::string& name) {
 	return nullptr;
 }
 
-std::string SUGER::CreateEntity(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
-	return entityManager_->Create(name, filePath, transform);
+std::string SUGER::CreateEntity(const std::string& name, const std::string& filePath, const bool& haveSkiningAnimation, const EulerTransform3D& transform) {
+	return entityManager_->Create(name, filePath, haveSkiningAnimation, transform);
 }
 
 void SUGER::UpdateEntities() {
@@ -483,6 +482,10 @@ void SUGER::UpdateEntities() {
 
 void SUGER::DrawEntiteis() {
 	entityManager_->Draw();
+}
+
+void SUGER::DrawSkiningEntities() {
+	entityManager_->DrawSkining();
 }
 
 Entity* SUGER::FindEntity(const std::string& name) {

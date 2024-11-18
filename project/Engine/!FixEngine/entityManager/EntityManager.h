@@ -6,7 +6,7 @@
 #include <memory>
 
 // エンティティ
-#include "!FixEngine/entity/Entity.h"
+#include "!FixEngine/skiningEntity/SkiningEntity.h"
 
 class ModelManager;
 class PunctualLight;
@@ -23,6 +23,8 @@ public:
 	void Update();
 	// 描画処理
 	void Draw();
+	// スキニング付きエンティティの描画
+	void DrawSkining();
 	// 終了
 	void Finalize();
 
@@ -30,7 +32,7 @@ public:
 	void ClearContainer();
 
 	// エンティティ生成
-	std::string Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform);
+	std::string Create(const std::string& name, const std::string& fileName, const bool& haveSkiningAnimation, const EulerTransform3D& transform);
 	// エンティティ検索
 	Entity* Find(const std::string& name);
 
@@ -48,7 +50,7 @@ private:
 private:
 	// エンティティのコンテナ
 	std::map<std::string, std::unique_ptr<Entity>> entities_;
-
+	std::map<std::string, std::unique_ptr<Entity>> skiningEntities_;
 private:
 	// モデルマネージャのインスタンス
 	ModelManager* modelManager_ = nullptr;
