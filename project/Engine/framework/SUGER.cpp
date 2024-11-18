@@ -16,13 +16,14 @@ std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
 std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
-std::unique_ptr<Object3DManager> SUGER::object3dManager_ = nullptr;
+std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
+std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
-std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
+
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
@@ -59,21 +60,21 @@ void SUGER::Initialize() {
 	modelManager_ = std::make_unique<ModelManager>();
 	modelManager_->Initialize();
 
-	// object3dManagerの初期化
-	object3dManager_ = std::make_unique<Object3DManager>();
-	object3dManager_->Initialize(modelManager_.get());
-
 	// object2dManagerの初期化
 	object2dManager_ = std::make_unique<Object2DManager>();
 	object2dManager_->Initialize();
 
+	// emptyManagerの初期化
+	emptyManager_ = std::make_unique<EmptyManager>();
+	emptyManager_->Initialize();
+
+	// entityManagerの初期化
+	entityManager_ = std::make_unique<EntityManager>();
+	entityManager_->Initialize(modelManager_.get());
+
 	// particleManagerの初期化
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
-
-	// collisionManagerの初期化
-	collisionManager_ = std::make_unique<CollisionManager>();
-	collisionManager_->Initialize();
 
 	// JsonLevelDataManagerの初期化
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
@@ -118,12 +119,6 @@ void SUGER::Finalize() {
 		jsonLevelDataManager_.reset();
 	}
 
-	// collisionManagerの終了処理
-	if (collisionManager_) {
-		collisionManager_->Finalize();
-		collisionManager_.reset();
-	}
-
 	// ParticleManagerの終了処理
 	if (particleManager_) {
 		particleManager_.reset();
@@ -135,10 +130,16 @@ void SUGER::Finalize() {
 		object2dManager_.reset();
 	}
 
-	// Object3DManagerの終了処理
-	if (object3dManager_) {
-		object3dManager_->Finalize();
-		object3dManager_.reset();
+	// EmptyManagerの終了処理
+	if (emptyManager_) {
+		emptyManager_->Finalize();
+		emptyManager_.reset();
+	}
+
+	// EntityManagerの終了処理
+	if (entityManager_) {
+		entityManager_->Finalize();
+		entityManager_.reset();
 	}
 
 	// ModelManagerの終了処理
@@ -216,13 +217,13 @@ void SUGER::Update() {
 void SUGER::Draw() {
 	// 3Dオブジェクト描画前処理
 	PreDrawObject3D();
-	// 3Dオブジェクト描画処理
-	Draw3DObjects();
+	// Entity描画処理
+	DrawEntiteis();
 
 	// Skinningあり3Dオブジェクト描画前処理
 	PreDrawObject3DSkinning();
-	// Skinningあり3Dオブジェクト描画処理
-	DrawSkinning3DObjects();
+	// Skining付きEntity描画処理
+	DrawSkiningEntities();
 
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
@@ -414,33 +415,44 @@ Sprite* SUGER::FindObject2D(const std::string& name) {
 	return object2dManager_->Find(name);
 }
 
-std::string SUGER::Create3DObject(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
-	return object3dManager_->Create(name, filePath, transform);
+std::string SUGER::CreateEmpty(const std::string& name, const EulerTransform3D& transform) {
+	return std::string();
 }
 
-void SUGER::Update3DObjects() {
-	object3dManager_->Update();
+void SUGER::UpdateEmpties() {
 }
 
-void SUGER::Draw3DObjects() {
-	object3dManager_->Draw();
+Empty* SUGER::FindEmpty(const std::string& name) {
+	return nullptr;
 }
 
-void SUGER::DrawSkinning3DObjects() {
-	object3dManager_->DrawSkinning();
+std::string SUGER::CreateEntity(const std::string& name, const std::string& filePath, const bool& haveSkiningAnimation, const EulerTransform3D& transform) {
+	return entityManager_->Create(name, filePath, haveSkiningAnimation, transform);
 }
 
-Object3D* SUGER::FindObject3D(const std::string& name) {
-	return object3dManager_->Find(name);
+void SUGER::UpdateEntities() {
+	entityManager_->Update();
+}
+
+void SUGER::DrawEntiteis() {
+	entityManager_->Draw();
+}
+
+void SUGER::DrawSkiningEntities() {
+	entityManager_->DrawSkining();
+}
+
+Entity* SUGER::FindEntity(const std::string& name) {
+	return entityManager_->Find(name);
 }
 
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
-	object3dManager_->SetRequiredObjects(camera, punctualLight);
+	entityManager_->SetRequiredObjects(camera, punctualLight);
 	particleManager_->SetSceneCamera(camera);
 }
 
 void SUGER::SetSceneCamera(Camera* camera) {
-	object3dManager_->SetSceneCamera(camera);
+	entityManager_->SetSceneCamera(camera);
 	particleManager_->SetSceneCamera(camera);
 }
 
@@ -460,18 +472,6 @@ void SUGER::DrawParticle() {
 
 RandomParticle* SUGER::FindParticle(const std::string& name) {
 	return particleManager_->Find(name);
-}
-
-void SUGER::ResetColliderList() {
-	collisionManager_->Reset();
-}
-
-void SUGER::AddCollider(BaseEntity* baseEntity) {
-	collisionManager_->AddCollider(baseEntity);
-}
-
-void SUGER::CheckAllCollisions() {
-	collisionManager_->CheckAllCollisions();
 }
 
 void SUGER::PreDrawObject2D() {

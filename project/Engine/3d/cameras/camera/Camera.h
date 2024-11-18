@@ -63,8 +63,10 @@ protected:
 	Vector3 worldPos_{};
 	// ビュープロジェクションマトリックス
 	Matrix4x4 viewProjectionMatrix_{};
+	// 水平視野角(度数法)
+	float fovYDegrees_ = 60.0f;
 	// 水平方向視野角
-	float fovY_ = 0.7f;
+	float fovY_ = fovYDegrees_ * (std::numbers::pi_v<float> / 180.0f);
 	// アスペクト比
 	float aspectRaito_ = 16.0f / 9.0f;
 	// ニアクリップ距離
@@ -74,7 +76,7 @@ protected:
 
 	// カメラの初期トランスフォーム
 	const Vector3 kDefaultCameraRotate_ = { 0.45f,0.0f,0.0f };
-	const Vector3 kDefaultCameraTranslate_ = { 0.0f,5.0f,-10.0f };
+	const Vector3 kDefaultCameraTranslate_ = { 0.0f,2.0f,-5.0f };
 
 	// Camera用リソース
 	ComPtr<ID3D12Resource> cameraResource_ = nullptr;
