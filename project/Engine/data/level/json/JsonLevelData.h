@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-#include "3d/object/Object3d.h"
+#include "!FixEngine/entity/Entity.h"
 
 // TODO:レベルデータの既定クラスを作る
 class JsonLevelData {

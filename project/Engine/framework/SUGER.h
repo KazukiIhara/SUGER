@@ -16,19 +16,13 @@
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "manager/model/ModelManager.h"
 #include "manager/object/2d/Object2DManager.h"
-#include "manager/object/3d/Object3DManager.h"
+#include "!FixEngine/emptyManager/EmptyManager.h"
+#include "!FixEngine/entityManager/EntityManager.h"
 #include "manager/particle/ParticleManager.h"
-#include "manager/collision/CollisionManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "2d/system/Object2dSystem.h"
 #include "3d/system/Object3dSystem.h"
 #include "particle/system/ParticleSystem.h"
-
-//
-// new
-//
-#include "!FixEngine/emptyManager/EmptyManager.h"
-#include "!FixEngine/entityManager/EntityManager.h"
 
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
@@ -185,25 +179,6 @@ public: // クラスメソッド
 	static Sprite* FindObject2D(const std::string& name);
 #pragma endregion
 
-#pragma region Object3DManager
-	// 3Dオブジェクトの作成
-	static std::string Create3DObject(const std::string& name, const std::string& filePath = "", const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
-	// 3Dオブジェクトの更新
-	static void Update3DObjects();
-	// 3Dオブジェクトの描画
-	static void Draw3DObjects();
-	// スキニングありモデルを持っている3Dオブジェクトの描画
-	static void DrawSkinning3DObjects();
-	// 3Dオブジェクト検索
-	static Object3D* FindObject3D(const std::string& name);
-
-	// シーンのカメラとライトをセット
-	static void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
-
-	// シーンのカメラをセット
-	static void SetSceneCamera(Camera* camera);
-#pragma endregion
-
 #pragma region EmptyManager
 	// エンプティの作成
 	static std::string CreateEmpty(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
@@ -224,10 +199,12 @@ public: // クラスメソッド
 	static void DrawSkiningEntities();
 	// エンティティ検索
 	static Entity* FindEntity(const std::string& name);
+
 	// シーンのカメラとライトをセット
+	static void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
 
 	// シーンのカメラをセット
-
+	static void SetSceneCamera(Camera* camera);
 #pragma endregion
 
 #pragma region ParticleManager
@@ -240,16 +217,6 @@ public: // クラスメソッド
 
 	// パーティクル検索
 	static RandomParticle* FindParticle(const std::string& name);
-
-#pragma endregion
-
-#pragma region CollisionManager
-	// コライダーリストのリセット
-	static void ResetColliderList();
-	// BaseEntityを継承しているオブジェクトをコライダーリストに追加
-	static void AddCollider(BaseEntity* baseEntity);
-	// コライダーリスト内のすべてのペアの当たり判定
-	static void CheckAllCollisions();
 
 #pragma endregion
 
@@ -303,18 +270,12 @@ private: // クラスのポインタ
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
 	static std::unique_ptr<ModelManager> modelManager_;
 	static std::unique_ptr<Object2DManager> object2dManager_;
-	static std::unique_ptr<Object3DManager> object3dManager_;
+	static std::unique_ptr<EmptyManager> emptyManager_;
+	static std::unique_ptr<EntityManager> entityManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
-	static std::unique_ptr<CollisionManager> collisionManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
 	static std::unique_ptr<ParticleSystem> particleSystem_;
 
-	//
-	// new
-	//
-
-	static std::unique_ptr<EmptyManager> emptyManager_;
-	static std::unique_ptr<EntityManager> entityManager_;
 };

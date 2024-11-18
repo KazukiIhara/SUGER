@@ -325,15 +325,6 @@
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp">
       <Filter>engine\manager\object\2d</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\object\3d\Object3DManager.cpp">
-      <Filter>engine\manager\object\3d</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3d\object\Object3d.cpp">
-      <Filter>engine\3d\object</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3d\controller\Object3dController.cpp">
-      <Filter>engine\controller\object3d</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\particle\random\RandomParticle.cpp">
       <Filter>engine\particle\3d</Filter>
     </ClCompile>
@@ -377,11 +368,6 @@
       <Filter>engine\importer\level\json</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
-    <ClCompile Include="Engine\collider\Collider.cpp" />
-    <ClCompile Include="application\objects\baseEntity\BaseEntity.cpp" />
-    <ClCompile Include="application\objects\sample\sampleEntity\SampleEntity.cpp" />
-    <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
-    <ClCompile Include="Engine\contactRecord\ContactRecord.cpp" />
     <ClCompile Include="Engine\!FixEngine\empty\Empty.cpp" />
     <ClCompile Include="Engine\!FixEngine\entity\Entity.cpp" />
     <ClCompile Include="Engine\!FixEngine\emptyManager\EmptyManager.cpp" />
@@ -505,15 +491,6 @@
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h">
       <Filter>engine\manager\object\2d</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\object\3d\Object3DManager.h">
-      <Filter>engine\manager\object\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3d\object\Object3d.h">
-      <Filter>engine\3d\object</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3d\controller\Object3dController.h">
-      <Filter>engine\controller\object3d</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\particle\random\RandomParticle.h">
       <Filter>engine\particle\3d</Filter>
     </ClInclude>
@@ -568,12 +545,7 @@
     <ClInclude Include="Engine\math\types\Quaternion.h" />
     <ClInclude Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
     <ClInclude Include="Engine\enum\DirectInputEnum.h" />
-    <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="Engine\enum\ColliderEnum.h" />
-    <ClInclude Include="application\objects\baseEntity\BaseEntity.h" />
-    <ClInclude Include="application\objects\sample\sampleEntity\SampleEntity.h" />
-    <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
-    <ClInclude Include="Engine\contactRecord\ContactRecord.h" />
     <ClInclude Include="Engine\!FixEngine\empty\Empty.h" />
     <ClInclude Include="Engine\!FixEngine\entity\Entity.h" />
     <ClInclude Include="Engine\!FixEngine\emptyManager\EmptyManager.h" />

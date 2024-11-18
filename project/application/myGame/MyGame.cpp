@@ -41,8 +41,6 @@ void MyGame::Update() {
 	SUGER::UpdateEntities();
 	// Particleの更新
 	SUGER::UpdateParticle();
-	// CollisionManager内の当たり判定を取得
-	SUGER::CheckAllCollisions();
 }
 
 void MyGame::Draw() {
