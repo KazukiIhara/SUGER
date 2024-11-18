@@ -2,7 +2,6 @@
 
 // MyHedder
 #include "iScene/base/BaseScene.h"
-#include "3d/controller/Object3dController.h"
 #include "2d/controller/Object2dController.h"
 #include "particle/controller/ParticleController.h"
 
