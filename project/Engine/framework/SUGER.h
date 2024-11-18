@@ -24,6 +24,12 @@
 #include "3d/system/Object3dSystem.h"
 #include "particle/system/ParticleSystem.h"
 
+//
+// new
+//
+#include "!FixEngine/emptyManager/EmptyManager.h"
+#include "!FixEngine/entityManager/EntityManager.h"
+
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
 #endif // _DEBUG
@@ -37,6 +43,11 @@ class RandomParticle;
 class Camera;
 class PunctualLight;
 class JsonLevelData;
+
+
+//
+// new
+//
 
 class SUGER {
 public:
@@ -193,6 +204,21 @@ public: // クラスメソッド
 	static void SetSceneCamera(Camera* camera);
 #pragma endregion
 
+#pragma region EmptyManager
+	// エンプティの作成
+	static std::string CreateEmpty(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	// エンプティの更新
+	static void UpdateEmpties();
+	// エンプティの検索
+	static Empty* FindEmpty(const std::string& name);
+#pragma endregion
+
+#pragma region EntityManager
+
+
+#pragma endregion
+
+
 #pragma region ParticleManager
 	// Particleの作成
 	static void CreatePlaneParticle(const std::string& name, const std::string& filePath = "", const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
@@ -273,4 +299,11 @@ private: // クラスのポインタ
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
 	static std::unique_ptr<ParticleSystem> particleSystem_;
+
+	//
+	// new
+	//
+
+	static std::unique_ptr<EmptyManager> emptyManager_;
+	static std::unique_ptr<EntityManager> entityManager_;
 };

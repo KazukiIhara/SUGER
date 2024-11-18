@@ -24,6 +24,13 @@ std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
 
+//
+// new
+//
+
+std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
+std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
+
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
 
@@ -66,6 +73,13 @@ void SUGER::Initialize() {
 	// object2dManagerの初期化
 	object2dManager_ = std::make_unique<Object2DManager>();
 	object2dManager_->Initialize();
+
+	// emptyManagerの初期化
+	emptyManager_ = std::make_unique<EmptyManager>();
+	
+
+	// entityManagerの初期化
+	entityManager_ = std::make_unique<EntityManager>();
 
 	// particleManagerの初期化
 	particleManager_ = std::make_unique<ParticleManager>();
@@ -442,6 +456,17 @@ void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 void SUGER::SetSceneCamera(Camera* camera) {
 	object3dManager_->SetSceneCamera(camera);
 	particleManager_->SetSceneCamera(camera);
+}
+
+std::string SUGER::CreateEmpty(const std::string& name, const EulerTransform3D& transform) {
+	return std::string();
+}
+
+void SUGER::UpdateEmpties() {
+}
+
+Empty* SUGER::FindEmpty(const std::string& name) {
+	return nullptr;
 }
 
 void SUGER::CreatePlaneParticle(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {

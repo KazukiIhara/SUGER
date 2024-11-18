@@ -5,6 +5,7 @@
 
 // MyHedder
 #include "worldTransform/WorldTransform.h"
+#include "structs/ObjectStructs.h"
 
 // モデルなしの3Dオブジェクト
 class Empty {
@@ -21,6 +22,19 @@ public:
 	// Setter
 	//
 
+	// 名前のセット
+	void SetName(const std::string& name);
+
+	// スケールのセット
+	void SetScale(const Vector3& scale);
+	// 回転のセット
+	void SetRotate(const Vector3& rotate);
+	// 移動量のセット
+	void SetTranslate(const Vector3& translate);
+
+	// トランスフォームのセット
+	void SetTransform(const EulerTransform3D& transform);
+
 	// 有効フラグのセット
 	void SetIsActive(const bool& isActive);
 
@@ -30,6 +44,9 @@ public:
 	//
 	// Getter
 	//
+
+	// 名前のゲット
+	std::string GetName()const;
 
 	// 有効フラグのゲット
 	bool GetIsActive()const;
