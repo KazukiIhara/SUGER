@@ -35,6 +35,9 @@ public:
 	// トランスフォームのセット
 	void SetTransform(const EulerTransform3D& transform);
 
+	// 親トランスフォームのセット
+	void SetParent(WorldTransform* parent);
+
 	// 有効フラグのセット
 	void SetIsActive(const bool& isActive);
 
@@ -46,13 +49,23 @@ public:
 	//
 
 	// 名前のゲット
-	std::string GetName()const;
+	const std::string& GetName()const;
+
+	// スケールのゲッター
+	const Vector3& GetScale()const;
+	// 回転のゲッター
+	const Vector3& GetRotate()const;
+	// 移動量のゲッター
+	const Vector3& GetTranslate()const;
+
+	// ワールドトランスフォームのポインタのゲッター
+	WorldTransform* GetWorldTransformPtr();
 
 	// 有効フラグのゲット
-	bool GetIsActive()const;
+	const bool &GetIsActive()const;
 
 	// 削除フラグのゲット
-	bool GetIsDelete()const;
+	const bool &GetIsDelete()const;
 
 protected:
 	// 名前

@@ -388,6 +388,7 @@
     <ClCompile Include="Engine\!FixEngine\entityManager\EntityManager.cpp" />
     <ClCompile Include="Engine\!FixEngine\entityController\EntityController.cpp" />
     <ClCompile Include="Engine\!FixEngine\emptyController\EmptyController.cpp" />
+    <ClCompile Include="Engine\!FixEngine\skiningEntity\SkiningEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -579,6 +580,7 @@
     <ClInclude Include="Engine\!FixEngine\entityManager\EntityManager.h" />
     <ClInclude Include="Engine\!FixEngine\entityController\EntityController.h" />
     <ClInclude Include="Engine\!FixEngine\emptyController\EmptyController.h" />
+    <ClInclude Include="Engine\!FixEngine\skiningEntity\SkiningEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

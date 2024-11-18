@@ -34,6 +34,10 @@ void Empty::SetTransform(const EulerTransform3D& transform) {
 	worldTransform_.translate_ = transform.translate;
 }
 
+void Empty::SetParent(WorldTransform* parent) {
+	worldTransform_.parent_ = parent; 
+}
+
 void Empty::SetIsActive(const bool& isActive) {
 	isActive_ = isActive;
 }
@@ -42,14 +46,30 @@ void Empty::SetIsDelete(const bool& isDelete) {
 	isDelete_ = isDelete;
 }
 
-std::string Empty::GetName() const {
+const std::string& Empty::GetName() const {
 	return name_;
 }
 
-bool Empty::GetIsActive() const {
+const Vector3& Empty::GetScale() const {
+	return worldTransform_.scale_;
+}
+
+const Vector3& Empty::GetRotate() const {
+	return worldTransform_.rotate_;
+}
+
+const Vector3& Empty::GetTranslate() const {
+	return worldTransform_.translate_;
+}
+
+WorldTransform* Empty::GetWorldTransformPtr() {
+	return &worldTransform_;
+}
+
+const bool& Empty::GetIsActive() const {
 	return isActive_;
 }
 
-bool Empty::GetIsDelete() const {
+const bool& Empty::GetIsDelete() const {
 	return isDelete_;
 }

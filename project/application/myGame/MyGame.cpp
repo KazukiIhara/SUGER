@@ -35,8 +35,10 @@ void MyGame::Update() {
 	sceneManager_->Update();
 	// 2DObjectの更新
 	SUGER::Update2DObjects();
-	// 3DObjectの更新
-	SUGER::Update3DObjects();
+	// Emptyの更新
+	SUGER::UpdateEmpties();
+	// Entityの更新
+	SUGER::UpdateEntities();
 	// Particleの更新
 	SUGER::UpdateParticle();
 	// CollisionManager内の当たり判定を取得

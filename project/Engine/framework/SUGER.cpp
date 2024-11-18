@@ -76,10 +76,11 @@ void SUGER::Initialize() {
 
 	// emptyManagerの初期化
 	emptyManager_ = std::make_unique<EmptyManager>();
-	
+	emptyManager_->Initialize();
 
 	// entityManagerの初期化
 	entityManager_ = std::make_unique<EntityManager>();
+	entityManager_->Initialize(modelManager_.get());
 
 	// particleManagerの初期化
 	particleManager_ = std::make_unique<ParticleManager>();
@@ -230,8 +231,9 @@ void SUGER::Update() {
 void SUGER::Draw() {
 	// 3Dオブジェクト描画前処理
 	PreDrawObject3D();
-	// 3Dオブジェクト描画処理
-	Draw3DObjects();
+
+	// Entity描画処理
+	DrawEntiteis();
 
 	// Skinningあり3Dオブジェクト描画前処理
 	PreDrawObject3DSkinning();
@@ -450,11 +452,13 @@ Object3D* SUGER::FindObject3D(const std::string& name) {
 
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	object3dManager_->SetRequiredObjects(camera, punctualLight);
+	entityManager_->SetRequiredObjects(camera, punctualLight);
 	particleManager_->SetSceneCamera(camera);
 }
 
 void SUGER::SetSceneCamera(Camera* camera) {
 	object3dManager_->SetSceneCamera(camera);
+	entityManager_->SetSceneCamera(camera);
 	particleManager_->SetSceneCamera(camera);
 }
 
@@ -467,6 +471,22 @@ void SUGER::UpdateEmpties() {
 
 Empty* SUGER::FindEmpty(const std::string& name) {
 	return nullptr;
+}
+
+std::string SUGER::CreateEntity(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
+	return entityManager_->Create(name, filePath, transform);
+}
+
+void SUGER::UpdateEntities() {
+	entityManager_->Update();
+}
+
+void SUGER::DrawEntiteis() {
+	entityManager_->Draw();
+}
+
+Entity* SUGER::FindEntity(const std::string& name) {
+	return entityManager_->Find(name);
 }
 
 void SUGER::CreatePlaneParticle(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {

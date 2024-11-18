@@ -9,7 +9,7 @@
 #include "enum/GraphicsPipelineEnum.h"
 
 // モデルつきの3Dオブジェクト
-class Entity:public Empty {
+class Entity :public Empty {
 public:
 	Entity() = default;
 	~Entity() = default;
@@ -24,6 +24,8 @@ public:
 	// カメラのゲット
 	Camera* GetCamera();
 
+	// modelのセット
+	void SetModel(const std::string& filePath);
 	// カメラのセット
 	void SetCamera(Camera* camera);
 	// ライトのセット

@@ -18,7 +18,7 @@ public:
 	~EntityManager() = default;
 
 	// 初期化
-	void Initialize();
+	void Initialize(ModelManager* modelManager);
 	// 更新
 	void Update();
 	// 描画処理
@@ -26,8 +26,11 @@ public:
 	// 終了
 	void Finalize();
 
+	// コンテナのクリア
+	void ClearContainer();
+
 	// エンティティ生成
-	std::string Create(const std::string& name, const std::string& filePath, const EulerTransform3D& transform);
+	std::string Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform);
 	// エンティティ検索
 	Entity* Find(const std::string& name);
 
