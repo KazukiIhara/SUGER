@@ -416,14 +416,15 @@ Sprite* SUGER::FindObject2D(const std::string& name) {
 }
 
 std::string SUGER::CreateEmpty(const std::string& name, const EulerTransform3D& transform) {
-	return std::string();
+	return emptyManager_->Create(name, transform);
 }
 
 void SUGER::UpdateEmpties() {
+	emptyManager_->Update();
 }
 
 Empty* SUGER::FindEmpty(const std::string& name) {
-	return nullptr;
+	return emptyManager_->Find(name);
 }
 
 std::string SUGER::CreateEntity(const std::string& name, const std::string& filePath, const bool& haveSkiningAnimation, const EulerTransform3D& transform) {
