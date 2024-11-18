@@ -50,10 +50,14 @@ private:
 	Object2DController reticle_;
 	// スコア表示のコントローラ
 	Object2DController score_;
+	// 射撃エネルギーゲージ
+	Object2DController gauge_;
+	// バー
+	Object2DController bar_;
 
 	// 数字表示用のコントローラ
 	std::array<Object2DController, 4> number_;
-	
+
 	// レティクルのスクリーン座標
 	Vector2 reticlePosition_{};
 	// レティクルのワールド座標
@@ -73,5 +77,7 @@ private:
 	uint32_t scorePoint_ = 0;
 
 	std::vector<int> sepalateScore_;
+
+	float energy_ = 512.0f;
 
 };

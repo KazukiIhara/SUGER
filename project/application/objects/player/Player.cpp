@@ -37,6 +37,17 @@ void Player::Initialize() {
 	score_.SetAnchorPoint(Vector2(0.5f, 0.5f));
 	score_.SetPosition(Vector2(1600.0f, 840.0f));
 
+	// ゲージ表示
+	SUGER::Create2DObject("Gauge", "gauge.png");
+	gauge_.Initialize(SUGER::FindObject2D("Gauge"));
+	gauge_.SetAnchorPoint(Vector2(0.5f, 0.5f));
+	gauge_.SetPosition(Vector2(128.0f, 750.0f));
+
+	// バー表示
+	SUGER::Create2DObject("Bar", "bar.png");
+	bar_.Initialize(SUGER::FindObject2D("Bar"));
+	bar_.SetAnchorPoint(Vector2(0.5f, 1.0f));
+	bar_.SetPosition(Vector2(128.0f, 750.0f + 256.0f));
 
 
 	// 弾のモデル読み込み
@@ -68,6 +79,8 @@ void Player::Update() {
 	for (uint32_t i = 0; i < 4; i++) {
 		number_[i].SetLeftTop(Vector2(sepalateScore_[i] * 48.0f, 0.0f));
 	}
+
+	bar_.SetSize(Vector2(bar_.GetSize().x, energy_));
 
 
 	// 照準の操作
@@ -124,20 +137,25 @@ void Player::ScreenToWorld() {
 void Player::Attack() {
 	// パッドのボタンを押したら
 	if (SUGER::PushButton(0, ButtonA)) {
-		// 弾の速度
-		Vector3 velocity(0, 0, kBulletSpeed_);
-		// 速度ベクトルを自機の向きに合わせて回転させる
-		Vector3 reticleWorldPos = ExtractionWorldPos(reticleTransform_.worldMatrix_);
-		Vector3 worldPos = ExtractionWorldPos(player_.GetWorldTransformPtr()->worldMatrix_) + kBulletShotOffset_;
-		velocity = reticleWorldPos - worldPos;
-		velocity = kBulletSpeed_ * Normalize(velocity);
-		// 弾を生成して初期化
-		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(worldPos, velocity, this);
-		// コライダーリストに追加
-		newBullet->SetCategory(kPlayerBullet);
+		if (energy_ > 0) {
+			energy_ -= 4;
+			// 弾の速度
+			Vector3 velocity(0, 0, kBulletSpeed_);
+			// 速度ベクトルを自機の向きに合わせて回転させる
+			Vector3 reticleWorldPos = ExtractionWorldPos(reticleTransform_.worldMatrix_);
+			Vector3 worldPos = ExtractionWorldPos(player_.GetWorldTransformPtr()->worldMatrix_) + kBulletShotOffset_;
+			velocity = reticleWorldPos - worldPos;
+			velocity = kBulletSpeed_ * Normalize(velocity);
+			// 弾を生成して初期化
+			PlayerBullet* newBullet = new PlayerBullet();
+			newBullet->Initialize(worldPos, velocity, this);
+			// コライダーリストに追加
+			newBullet->SetCategory(kPlayerBullet);
 
-		bullets_.push_back(newBullet);
+			bullets_.push_back(newBullet);
+		}
+	} else if (energy_ < 512) {
+		energy_ += 4;
 	}
 }
 
