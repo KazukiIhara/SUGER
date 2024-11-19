@@ -29,7 +29,7 @@ void SampleScene::Initialize() {
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 	SUGER::LoadWaveSound("Alarm01.wav");
 	// エンティティコントローラ初期化
-	entity_.Initialize(SUGER::CreateEntity("teapot", "teapot"));
+	entity_.Initialize(SUGER::CreateEntity("teapot", "pronama_chan"));
 
 	entity_.SetEnableLight(false);
 
