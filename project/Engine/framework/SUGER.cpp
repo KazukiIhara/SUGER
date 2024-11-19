@@ -21,6 +21,7 @@ std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
 std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
+std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
@@ -85,6 +86,10 @@ void SUGER::Initialize() {
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
 	jsonLevelDataManager_->Initialize();
 
+	// grobalDataManagerの初期化
+	grobalDataManager_ = std::make_unique<GrobalDataManager>();
+	grobalDataManager_->Initialize();
+
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
 	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
@@ -116,6 +121,12 @@ void SUGER::Finalize() {
 	// Object2DSystemの終了処理
 	if (object2dSystem_) {
 		object2dSystem_.reset();
+	}
+
+	// grobalDataManagerの終了処理
+	if (grobalDataManager_) {
+		grobalDataManager_->Finalize();
+		grobalDataManager_.reset();
 	}
 
 	// JsonLevelDataManagerの終了処理

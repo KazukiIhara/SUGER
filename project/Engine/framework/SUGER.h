@@ -21,6 +21,7 @@
 #include "manager/particle/ParticleManager.h"
 #include "manager/sound/SoundManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
+#include "manager/data/grobal/GrobalDataManager.h"
 #include "2d/system/Object2dSystem.h"
 #include "3d/system/Object3dSystem.h"
 #include "particle/system/ParticleSystem.h"
@@ -283,6 +284,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<ParticleManager> particleManager_;
 	static std::unique_ptr<SoundManager> soundManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
+	static std::unique_ptr<GrobalDataManager> grobalDataManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
 	static std::unique_ptr<ParticleSystem> particleSystem_;
