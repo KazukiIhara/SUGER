@@ -49,10 +49,20 @@ private:
 
 	// instancingリソース作成
 	void CreateInstancingResource();
+	// instancingリソース書き込み
 	void MapInstancingData();
+
+	// マテリアルリソースの作成
+	void CreateMaterialResource();
+	// マテリアルデータの書き込み
+	void MapMaterialData();
 
 	// Particleの生成
 	ParticleData MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate);
+
+	// パーティクルの発生関数
+	std::list<ParticleData> Emit(const Emitter& emitter, std::mt19937& randomEngine);
+
 
 private:/*メンバ変数*/
 
@@ -70,13 +80,17 @@ private:/*メンバ変数*/
 	// instancing描画用のデータ
 	ParticleForGPU* instancingData_ = nullptr;
 
+	// マテリアルリソース
+	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
+	// マテリアルデータ
+	Material3D* materialData_;
+	// マテリアル
+	Material3D material_;
+
 	// パーティクル
 	std::list<ParticleData> particles_;
 	// デルタタイムを設定。ひとまず60fps固定
 	const float kDeltaTime = 1.0f / 60.0f;
-
-	// パーティクルの発生関数
-	std::list<ParticleData> Emit(const Emitter& emitter, std::mt19937& randomEngine);
 
 	// instance描画する際に使う変数
 	uint32_t instanceCount_ = kNumMaxInstance;

@@ -53,31 +53,12 @@ public: // メンバ関数
 	// 板ポリ作成
 	void CreatePlane(const std::string& textureFilePath);
 
-	// UVTransformのセット
-	void SetUVTransform(const std::vector<UVTransform>& uvTransforms) {
-		uvTransforms_ = uvTransforms;
-	}
-
-	// マテリアルのセット
-	void SetMaterials(const std::vector<Material3D>& materials) {
-		materials_ = materials;
-	}
-
 	// カラーのセット
 	void SetColor(const Vector4& color);
 
 	// ライトオンオフ
 	void SetEnableLight(const bool& enbleLightning);
 
-	// マテリアルのゲッター
-	std::vector<Material3D> GetMaterials() {
-		return materials_;
-	}
-
-	// UVTransformのゲッター
-	std::vector<UVTransform> GetUVTransforms() {
-		return uvTransforms_;
-	}
 	// スキニングアニメーションがあるかどうかのゲッター
 	const bool& GetHaveAnimation() const;
 
@@ -101,10 +82,7 @@ private: // メンバ関数
 #pragma endregion
 
 #pragma region Material
-	/*マテリアルリソースの作成*/
-	void CreateMaterialResource();
-	/*マテリアルデータの書き込み*/
-	void MapMaterialData();
+	
 #pragma endregion
 
 #pragma region Node
@@ -176,17 +154,6 @@ private: // メンバ変数
 	std::vector<uint32_t*> indexData_;
 	/*インデックスバッファビュー*/
 	std::vector<D3D12_INDEX_BUFFER_VIEW> indexBufferViews_{};
-#pragma endregion
-
-#pragma region マテリアル
-	/*マテリアルリソース*/
-	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> materialResources_;
-	/*マテリアルデータ*/
-	std::vector<Material3D*> materialData_;
-	// マテリアル
-	std::vector<Material3D> materials_;
-	/*uvTransform*/
-	std::vector<UVTransform> uvTransforms_;
 #pragma endregion
 
 #pragma region Animation
