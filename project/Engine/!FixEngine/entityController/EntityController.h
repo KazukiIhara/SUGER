@@ -2,10 +2,10 @@
 
 #include "!FixEngine/entity/Entity.h"
 
-class EmtityContoroller {
+class EntityController {
 public:
-	EmtityContoroller() = default;
-	~EmtityContoroller() = default;
+	EntityController() = default;
+	~EntityController() = default;
 
 	// 初期化
 	void Initialize(const std::string& name);

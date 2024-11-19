@@ -27,8 +27,11 @@ void SampleScene::Initialize() {
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	SUGER::CreatePlaneParticle("plane", "circle.png");
-	SUGER::CreateEntity("teapot", "walk");
 	SUGER::LoadWaveSound("Alarm01.wav");
+	// エンティティコントローラ初期化
+	entity_.Initialize(SUGER::CreateEntity("teapot", "teapot"));
+
+	entity_.SetEnableLight(false);
 
 	// オブジェクト2Dコントローラの初期化
 	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));

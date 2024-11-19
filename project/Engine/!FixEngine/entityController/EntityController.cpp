@@ -2,54 +2,54 @@
 
 #include "framework/SUGER.h"
 
-void EmtityContoroller::Initialize(const std::string& name) {
+void EntityController::Initialize(const std::string& name) {
 	// エンティティをマネージャからセット
 	entity_ = SUGER::FindEntity(name);
 	// なかったらassert
 	assert(entity_);
 }
 
-void EmtityContoroller::SetScale(const Vector3& scale) {
+void EntityController::SetScale(const Vector3& scale) {
 	entity_->SetScale(scale);
 }
 
-void EmtityContoroller::SetRotate(const Vector3& rotate) {
+void EntityController::SetRotate(const Vector3& rotate) {
 	entity_->SetRotate(rotate);
 }
 
-void EmtityContoroller::SetTranslate(const Vector3& translate) {
+void EntityController::SetTranslate(const Vector3& translate) {
 	entity_->SetTranslate(translate);
 }
 
-void EmtityContoroller::SetParent(WorldTransform* parent) {
+void EntityController::SetParent(WorldTransform* parent) {
 	entity_->SetParent(parent);
 }
 
-void EmtityContoroller::SetColor(const Vector4& color) {
+void EntityController::SetColor(const Vector4& color) {
 	entity_->SetColor(color);
 }
 
-void EmtityContoroller::SetEnableLight(const bool& enbleLight) {
+void EntityController::SetEnableLight(const bool& enbleLight) {
 	entity_->SetEnableLight(enbleLight);
 }
 
-const Vector3& EmtityContoroller::GetScale() const {
+const Vector3& EntityController::GetScale() const {
 	return entity_->GetScale();
 }
 
-const Vector3& EmtityContoroller::GetRotate() const {
+const Vector3& EntityController::GetRotate() const {
 	return entity_->GetRotate();
 }
 
-const Vector3& EmtityContoroller::GetTranslate() const {
+const Vector3& EntityController::GetTranslate() const {
 	return entity_->GetTranslate();
 }
 
-WorldTransform* EmtityContoroller::GetWorldTransformPtr() {
+WorldTransform* EntityController::GetWorldTransformPtr() {
 	return entity_->GetWorldTransformPtr();
 }
 
-Camera* EmtityContoroller::GetCameraPtr() {
+Camera* EntityController::GetCameraPtr() {
 	return entity_->GetCamera();
 }
 

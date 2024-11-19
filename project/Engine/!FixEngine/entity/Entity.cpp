@@ -31,6 +31,13 @@ void Entity::Update() {
 	transformationData_->World = worldTransform_.worldMatrix_;
 	transformationData_->ViewProjection = camera_->GetViewProjectionMatrix();
 	transformationData_->WorldInverseTransepose = MakeInverseTransposeMatrix(worldTransform_.worldMatrix_);
+
+	// マテリアルの更新
+	materialData_->color = material_.color;
+	materialData_->enableLighting = material_.enableLighting;
+	materialData_->shininess = material_.shininess;
+	materialData_->uvTransformMatrix = material_.uvTransformMatrix;
+
 }
 
 void Entity::Draw() {
