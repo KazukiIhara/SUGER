@@ -32,7 +32,7 @@ public:
 	void ClearContainer();
 
 	// エンティティ生成
-	std::string Create(const std::string& name, const std::string& fileName, const bool& haveSkiningAnimation, const EulerTransform3D& transform);
+	std::string Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform);
 	// エンティティ検索
 	Entity* Find(const std::string& name);
 

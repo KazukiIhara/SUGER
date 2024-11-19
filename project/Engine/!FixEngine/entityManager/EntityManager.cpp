@@ -69,7 +69,7 @@ void EntityManager::ClearContainer() {
 	entities_.clear();
 }
 
-std::string EntityManager::Create(const std::string& name, const std::string& fileName, const bool& haveSkiningAnimation, const EulerTransform3D& transform) {
+std::string EntityManager::Create(const std::string& name, const std::string& fileName, const EulerTransform3D& transform) {
 	// 重複した名前がある場合、番号を付加してユニークな名前を作成
 	std::string uniqueName = name;
 	int counter = 0;
@@ -78,12 +78,20 @@ std::string EntityManager::Create(const std::string& name, const std::string& fi
 		uniqueName = name + "_" + std::to_string(counter);
 	}
 
+	// モデル読み込み
+	modelManager_->Load(fileName);
+
+	// スキニングアニメーションを持っているかどうか
+	bool haveSkiningAnimation = modelManager_->Find(fileName)->GetHaveAnimation();
+
 	// エンプティの生成と初期化
 	std::unique_ptr<Entity> newEntity;
 
 	if (haveSkiningAnimation) {
+		// スキニングアニメーションあり
 		newEntity = std::make_unique<SkiningEntity>();
 	} else {
+		// スキニングアニメーションなし
 		newEntity = std::make_unique<Entity>();
 	}
 
@@ -101,11 +109,8 @@ std::string EntityManager::Create(const std::string& name, const std::string& fi
 	newEntity->SetCamera(camera_);
 	// ライトをセット
 	newEntity->SetLight(light_);
-
-	// モデル読み込み
-	modelManager_->Load(fileName);
+	// モデルをセット
 	newEntity->SetModel(fileName);
-
 
 	// 行列を更新
 	newEntity->Update();
