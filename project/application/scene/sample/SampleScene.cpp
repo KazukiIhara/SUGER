@@ -47,6 +47,17 @@ void SampleScene::Initialize() {
 
 	// パーティクル無効化
 	plane_.SetIsActive(false);
+
+
+	//
+	// GrobalData
+	//
+
+	// プロ生ちゃんのデータグループを作成
+	SUGER::AddGrobalDataGroup("Pronama_Chan");
+	// グローバルデータのプロ生ちゃんグループにトランスレート情報を追加
+	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", entity_.GetTranslate());
+
 }
 
 void SampleScene::Finalize() {
@@ -57,21 +68,42 @@ void SampleScene::Finalize() {
 
 void SampleScene::Update() {
 
+	//
+	// GrobalData
+	//
+
+	// 更新処理の初めにグローバルデータクラスに保存されている値を取得
+	entity_.SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
+
+
 	// 
 	// シーンの更新処理ここから
 	// 
 
+
 	if (SUGER::PushKey(DIK_D)) {
 		// スプライトを回転
 		pronama_chan.SetRotation(pronama_chan.GetRotation() + 0.01f);
+		entity_.SetTranslate(Vector3(entity_.GetTranslate().x + 0.1f, entity_.GetTranslate().y, entity_.GetTranslate().z));
 	} else if (SUGER::PushKey(DIK_A)) {
 		// スプライトを回転
 		pronama_chan.SetRotation(pronama_chan.GetRotation() - 0.01f);
+		entity_.SetTranslate(Vector3(entity_.GetTranslate().x - 0.1f, entity_.GetTranslate().y, entity_.GetTranslate().z));
 	}
+
 
 	// 
 	// シーンの更新処理ここまで
 	//
+
+
+	//
+	// GrobalData
+	//
+
+	// 行列更新の手前でローカルデータをグローバルデータクラスに挿入
+	SUGER::SetGrobalDataValue("Pronama_Chan", "translate", entity_.GetTranslate());
+
 
 	// シーンの更新(更新処理の最後)
 	BaseScene::Update();

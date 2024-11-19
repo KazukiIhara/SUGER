@@ -5,7 +5,10 @@
 
 
 void GrobalDataManager::Initialize() {
+	// 配列をクリア
 	datas_.clear();
+	// ヘッダ内で宣言しているディレクトリ内のjsonFileを読み込み
+	LoadFiles();
 }
 
 void GrobalDataManager::Finalize() {
@@ -50,7 +53,7 @@ void GrobalDataManager::Update() {
 			// Vector3型の値を保持していれば
 			else if (std::holds_alternative<Vector3>(item.value)) {
 				Vector3* ptr = std::get_if<Vector3>(&item.value);
-				ImGui::SliderFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), -10.0f, 10.0f);
+				ImGui::DragFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), 0.001f);
 			}
 			// Bool型の値を保持していれば
 			else if (std::holds_alternative<bool>(item.value)) {

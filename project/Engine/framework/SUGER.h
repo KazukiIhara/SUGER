@@ -237,6 +237,29 @@ public: // クラスメソッド
 	static JsonLevelData* FindJsonLevelData(const std::string& levelDataName);
 #pragma endregion
 
+#pragma region GrobalDataManager
+	// グループの追加
+	static void AddGrobalDataGroup(const std::string& groupname);
+	// アイテムの追加
+	static void AddGrobalDataItem(const std::string& groupname, const std::string& itemname, int32_t value);
+	static void AddGrobalDataItem(const std::string& groupname, const std::string& itemname, float value);
+	static void AddGrobalDataItem(const std::string& groupname, const std::string& itemname, Vector3 value);
+	static void AddGrobalDataItem(const std::string& groupname, const std::string& itemname, bool value);
+
+	// グループとキーから値をセット
+	static void SetGrobalDataValue(const std::string& groupname, const std::string& itemname, int32_t value);
+	static void SetGrobalDataValue(const std::string& groupname, const std::string& itemname, float value);
+	static void SetGrobalDataValue(const std::string& groupname, const std::string& itemname, Vector3 value);
+	static void SetGrobalDataValue(const std::string& groupname, const std::string& itemname, bool value);
+
+	// グループとキーから値の取得
+	static int32_t GetGrobalDataValueInt(const std::string& groupName, const std::string& key);
+	static float GetGrobalDataValueFloat(const std::string& groupName, const std::string& key);
+	static Vector3 GetGrobalDataValueVector3(const std::string& groupName, const std::string& key);
+	static bool GetGrobalDataValueBool(const std::string& groupName, const std::string& key);
+#pragma endregion
+
+
 #pragma region Object2DSystem
 	// Object2DSystemの機能
 	// 2dオブジェクト描画前処理
