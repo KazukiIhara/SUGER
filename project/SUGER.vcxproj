@@ -132,6 +132,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\FixFPS\FixFPS.cpp" />
     <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp" />
     <ClCompile Include="Engine\manager\data\level\json\JsonLevelDataManager.cpp" />
+    <ClCompile Include="Engine\manager\sound\SoundManager.cpp" />
     <ClCompile Include="Engine\particle\random\RandomParticle.cpp" />
     <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
     <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp" />
@@ -187,6 +188,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\FixFPS\FixFPS.h" />
     <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h" />
     <ClInclude Include="Engine\manager\data\level\json\JsonLevelDataManager.h" />
+    <ClInclude Include="Engine\manager\sound\SoundManager.h" />
     <ClInclude Include="Engine\math\types\Quaternion.h" />
     <ClInclude Include="Engine\particle\random\RandomParticle.h" />
     <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
@@ -223,6 +225,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\structs\ObjectStructs.h" />
     <ClInclude Include="Engine\structs\ParticleStruct.h" />
     <ClInclude Include="Engine\structs\PunctualLightStruct.h" />
+    <ClInclude Include="Engine\structs\SoundStruct.h" />
     <ClInclude Include="Engine\structs\TextureStruct.h" />
     <ClInclude Include="Engine\worldTransform\WorldTransform.h" />
   </ItemGroup>

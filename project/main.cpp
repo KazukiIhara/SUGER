@@ -14,6 +14,8 @@
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
+#pragma comment(lib,"xaudio2.lib")
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Logger::Log("Hello,DirectX!\n");

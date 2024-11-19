@@ -28,6 +28,7 @@ void SampleScene::Initialize() {
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	SUGER::CreatePlaneParticle("plane", "circle.png");
 	SUGER::CreateEntity("teapot", "walk");
+	SUGER::LoadWaveSound("Alarm01.wav");
 
 	// オブジェクト2Dコントローラの初期化
 	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
@@ -39,6 +40,7 @@ void SampleScene::Initialize() {
 	pronama_chan.SetPosition(pronama_chan.GetSize() / 2.0f);
 	pronama_chan.SetAnchorPoint(Vector2(0.5f, 0.5f));
 
+	SUGER::PlayWaveSound("Alarm01.wav");
 
 	// パーティクル無効化
 	plane_.SetIsActive(false);

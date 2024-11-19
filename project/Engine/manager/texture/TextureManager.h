@@ -47,5 +47,4 @@ private: // インスタンス受け取り変数
 	DirectXManager* directXManager_ = nullptr;
 	// SrvManager
 	SRVManager* srvManager_ = nullptr;
-
 };
