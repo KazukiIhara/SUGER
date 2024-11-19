@@ -132,6 +132,10 @@ Entity* EntityManager::Find(const std::string& name) {
 	if (entities_.contains(name)) {
 		// エンティティを返す
 		return entities_.at(name).get();
+		// スキニング付きのエンティティを検索
+	} else if (skiningEntities_.contains(name)) {
+		// スキニング付きのエンティティを返す
+		return skiningEntities_.at(name).get();
 	}
 	// ファイル名一致なし
 	return nullptr;

@@ -31,6 +31,13 @@ void Entity::Update() {
 	transformationData_->World = worldTransform_.worldMatrix_;
 	transformationData_->ViewProjection = camera_->GetViewProjectionMatrix();
 	transformationData_->WorldInverseTransepose = MakeInverseTransposeMatrix(worldTransform_.worldMatrix_);
+
+	// マテリアルの更新
+	materialData_->color = material_.color;
+	materialData_->enableLighting = material_.enableLighting;
+	materialData_->shininess = material_.shininess;
+	materialData_->uvTransformMatrix = material_.uvTransformMatrix;
+
 }
 
 void Entity::Draw() {
@@ -63,6 +70,18 @@ void Entity::SetCamera(Camera* camera) {
 
 void Entity::SetLight(PunctualLight* punctualLight) {
 	punctualLight_ = punctualLight;
+}
+
+void Entity::SetColor(const Vector4& color) {
+	material_.color = color;
+}
+
+void Entity::SetEnableLight(const bool& enableLight) {
+	material_.enableLighting = enableLight;
+}
+
+void Entity::SetShininess(const float& shininess) {
+	material_.shininess = shininess;
 }
 
 void Entity::CreateWVPResource() {

@@ -21,7 +21,7 @@ public:
 	// 描画
 	virtual void Draw();
 
-	// カメラのゲット
+	// セットされているカメラを取得
 	Camera* GetCamera();
 
 	// modelのセット
@@ -30,6 +30,13 @@ public:
 	void SetCamera(Camera* camera);
 	// ライトのセット
 	void SetLight(PunctualLight* punctualLight);
+
+	// 色をセット
+	void SetColor(const Vector4& color);
+	// ライトオンオフ
+	void SetEnableLight(const bool& enableLight);
+	// 光沢のセット
+	void SetShininess(const float& shininess);
 private:
 	// WVP用のリソース作成
 	void CreateWVPResource();
