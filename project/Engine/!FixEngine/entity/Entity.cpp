@@ -5,10 +5,21 @@
 void Entity::Initialize() {
 	// 基底クラスの初期化処理
 	Empty::Initialize();
+
+	// マテリアル初期化
+	material_.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	material_.enableLighting = true;
+	material_.shininess = 40.0f;
+	material_.uvTransformMatrix = MakeIdentityMatrix4x4();
+
 	// WVP用のリソース作成
 	CreateWVPResource();
 	// データを書きこむ
 	MapWVPData();
+	// マテリアル用のリソース作成
+	CreateMaterialResource();
+	// マテリアルデータ書き込み
+	MapMateiralData();
 }
 
 void Entity::Update() {
@@ -27,6 +38,8 @@ void Entity::Draw() {
 	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kObject3d, blendMode_));
 	// wvp用のCBufferの場所を設定
 	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(1, transformationResource_->GetGPUVirtualAddress());
+	// マテリアルCBufferの場所を設定
+	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	// ライトを転送
 	punctualLight_->TransferLight();
 	// カメラ情報を転送
@@ -66,4 +79,18 @@ void Entity::MapWVPData() {
 	transformationData_->World = MakeIdentityMatrix4x4();
 	transformationData_->ViewProjection = MakeIdentityMatrix4x4();
 	transformationData_->WorldInverseTransepose = MakeIdentityMatrix4x4();
+}
+
+void Entity::CreateMaterialResource() {
+	// マテリアル用のリソース作成
+	materialResource_ = SUGER::CreateBufferResource(sizeof(Material3D));
+}
+
+void Entity::MapMateiralData() {
+	materialData_ = nullptr;
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+	materialData_->color = material_.color;
+	materialData_->enableLighting = material_.enableLighting;
+	materialData_->shininess = material_.shininess;
+	materialData_->uvTransformMatrix = material_.uvTransformMatrix;
 }

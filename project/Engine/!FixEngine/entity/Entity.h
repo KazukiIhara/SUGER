@@ -35,6 +35,10 @@ private:
 	void CreateWVPResource();
 	// データを書き込む
 	void MapWVPData();
+	// マテリアルリソースの作成
+	void CreateMaterialResource();
+	// マテリアルデータの書き込み
+	void MapMateiralData();
 protected:
 	// モデルを受け取る箱
 	Model* model_ = nullptr;
@@ -51,5 +55,12 @@ protected:
 	Camera* camera_ = nullptr;
 	// ライトを受け取る箱
 	PunctualLight* punctualLight_ = nullptr;
+
+	// マテリアルリソース
+	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
+	// マテリアルデータ
+	Material3D* materialData_;
+	// マテリアル
+	Material3D material_;
 
 };

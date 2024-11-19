@@ -30,13 +30,22 @@ void RandomParticle::Initialize(Model* model, Camera* camera, const std::string&
 	emitter_.frequency = 0.5f;	// 発生頻度
 	emitter_.frequencyTime = 0.0f;	// 発生頻度用の時刻、0で初期化
 
-#pragma region Instancing
+	// マテリアル初期化
+	material_.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	material_.enableLighting = true;
+	material_.shininess = 40.0f;
+	material_.uvTransformMatrix = MakeIdentityMatrix4x4();
+
 	// Instancingリソースを作る
 	CreateInstancingResource();
 	// Instancingデータを書き込む
 	MapInstancingData();
 
-#pragma endregion
+	// マテリアルリソース作成
+	CreateMaterialResource();
+	// マテリアルデータ書き込み
+	MapMaterialData();
+
 	// srvのインデックスを割り当て
 	srvIndex_ = SUGER::SrvAllocate();
 	// Srvを作成
@@ -121,6 +130,8 @@ void RandomParticle::Draw(BlendMode blendMode) {
 
 	// StructuredBufferのSRVを設定する
 	SUGER::GetDirectXCommandList()->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVDescriptorHandleGPU(srvIndex_));
+	// マテリアルCBufferの場所を設定
+	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
 	// モデルがある場合描画
 	if (model_) {
@@ -177,6 +188,12 @@ void RandomParticle::MapInstancingData() {
 
 		instancingData_[index].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
+}
+
+void RandomParticle::CreateMaterialResource() {
+}
+
+void RandomParticle::MapMaterialData() {
 }
 
 ParticleData RandomParticle::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate) {

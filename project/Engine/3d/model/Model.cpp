@@ -22,18 +22,6 @@ void Model::Initialize(const std::string& filename) {
 		skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
 	}
 
-	// マテリアル初期化
-	for (auto& mesh : modelData_.meshes) {
-		Material3D material;
-		material.color = mesh.material.color;
-		material.enableLighting = true;
-		material.shininess = 40.0f;
-		material.uvTransformMatrix = MakeIdentityMatrix4x4();
-		materials_.push_back(material);
-		UVTransform identity = { {1.0f,1.0},0.0f,{0.0f,0.0f} };
-		uvTransforms_.push_back(identity);
-	}
-
 #pragma region 頂点データ
 	/*頂点リソースの作成*/
 	CreateVertexResource();
@@ -51,13 +39,6 @@ void Model::Initialize(const std::string& filename) {
 	/*インデックスリソースにデータを書き込む*/
 	MapIndexData();
 #pragma endregion
-
-#pragma region マテリアルデータ
-	/*マテリアル用のリソース作成*/
-	CreateMaterialResource();
-	/*マテリアルにデータを書き込む*/
-	MapMaterialData();
-#pragma endregion
 }
 
 
@@ -70,15 +51,6 @@ void Model::Update() {
 		SkeletonUpdate(skeleton_);
 		SkinClusterUpdate(skinCluster_, skeleton_);
 	}
-
-	// マテリアルの更新
-	for (size_t i = 0; i < materials_.size(); ++i) {
-		materialData_[i]->color = materials_[i].color;
-		materialData_[i]->enableLighting = materials_[i].enableLighting;
-		materialData_[i]->shininess = materials_[i].shininess;
-		materials_[i].uvTransformMatrix = MakeUVMatrix(uvTransforms_[i].scale, uvTransforms_[i].rotateZ, uvTransforms_[i].translate);
-		materialData_[i]->uvTransformMatrix = materials_[i].uvTransformMatrix;
-	}
 }
 
 void Model::Draw() {
@@ -88,8 +60,6 @@ void Model::Draw() {
 		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
 		// IBVを設定
 		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
-		// マテリアルCBufferの場所を設定
-		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
 		if (modelData_.meshes[i].material.haveUV_) {
 			// SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
@@ -113,8 +83,6 @@ void Model::DrawSkinning() {
 		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 2, vbvs);
 		// IBVを設定
 		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
-		// マテリアルCBufferの場所を設定
-		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
 		if (modelData_.meshes[i].material.haveUV_) {
 			// SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
@@ -134,8 +102,6 @@ void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& 
 		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
 		// IBVを設定
 		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
-		// マテリアルCBufferの場所を設定
-		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResources_[i]->GetGPUVirtualAddress());
 		// SRVセット
 		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[textureFileName].srvIndex);
 		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
@@ -374,17 +340,6 @@ void Model::CreateSphere(const std::string& textureFilePath) {
 	// スフィアの頂点作成
 	GenerateSphere(textureFilePath);
 
-	// マテリアル初期化
-	Material3D material;
-	material.color = { 1.0f,1.0f,1.0f,1.0f };
-	material.enableLighting = true;
-	material.shininess = 40.0f;
-	material.uvTransformMatrix = MakeIdentityMatrix4x4();
-	materials_.push_back(material);
-
-	UVTransform identity = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
-	uvTransforms_.push_back(identity);
-
 #pragma region 頂点データ
 	/*頂点リソースの作成*/
 	CreateVertexResource();
@@ -392,13 +347,6 @@ void Model::CreateSphere(const std::string& textureFilePath) {
 	CreateVertexBufferView();
 	/*頂点データの書き込み*/
 	MapVertexData();
-#pragma endregion
-
-#pragma region マテリアルデータ
-	/*マテリアル用のリソース作成*/
-	CreateMaterialResource();
-	/*マテリアルにデータを書き込む*/
-	MapMaterialData();
 #pragma endregion
 }
 
@@ -435,17 +383,6 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	// 板ポリの頂点作成
 	GeneratePlane(textureFilePath);
 
-	// マテリアル初期化
-	Material3D material;
-	material.color = { 1.0f,1.0f,1.0f,1.0f };
-	material.enableLighting = true;
-	material.shininess = 40.0f;
-	material.uvTransformMatrix = MakeIdentityMatrix4x4();
-	materials_.push_back(material);
-
-	UVTransform identity = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
-	uvTransforms_.push_back(identity);
-
 #pragma region 頂点データ
 	/*頂点リソースの作成*/
 	CreateVertexResource();
@@ -464,25 +401,6 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	MapIndexData();
 #pragma endregion
 
-#pragma region マテリアルデータ
-	/*マテリアル用のリソース作成*/
-	CreateMaterialResource();
-	/*マテリアルにデータを書き込む*/
-	MapMaterialData();
-#pragma endregion
-
-}
-
-void Model::SetColor(const Vector4& color) {
-	for (size_t i = 0; i < materials_.size(); ++i) {
-		materials_[i].color = color;
-	}
-}
-
-void Model::SetEnableLight(const bool& enableLightning) {
-	for (size_t i = 0; i < materials_.size(); ++i) {
-		materials_[i].enableLighting = enableLightning;
-	}
 }
 
 const bool& Model::GetHaveAnimation() const {
@@ -570,25 +488,6 @@ void Model::MapIndexData() {
 		}
 	}
 
-}
-
-void Model::CreateMaterialResource() {
-	for (size_t i = 0; i < materials_.size(); ++i) {
-		Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = SUGER::CreateBufferResource(sizeof(Material3D));
-		materialResources_.push_back(materialResource);
-	}
-}
-
-void Model::MapMaterialData() {
-	for (size_t i = 0; i < materials_.size(); ++i) {
-		Material3D* materialData = nullptr;
-		materialResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-		materialData->color = materials_[i].color;
-		materialData->enableLighting = materials_[i].enableLighting;
-		materialData->shininess = materials_[i].shininess;
-		materialData->uvTransformMatrix = materials_[i].uvTransformMatrix;
-		materialData_.push_back(materialData);
-	}
 }
 
 Node Model::ReadNode(aiNode* node) {
