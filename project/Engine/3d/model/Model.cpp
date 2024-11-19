@@ -119,7 +119,7 @@ void Model::DrawSkinning() {
 			// SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
 			// Skinning用SRVセット
-			SUGER::SetGraphicsRootDescriptorTable(5, skinClusterSrvIndex_);
+			SUGER::SetGraphicsRootDescriptorTable(5, skinCluster_.srvIndex);
 			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
 		} else {
@@ -801,10 +801,10 @@ SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& 
 	skinCluster.mappedPalette = { mappedPalette, skeleton.joints.size() };
 
 	// srvのインデックスを割り当て
-	skinClusterSrvIndex_ = SUGER::SrvAllocate();
+	skinCluster.srvIndex = SUGER::SrvAllocate();
 
 	// Srvを作成
-	SUGER::CreateSrvStructured(skinClusterSrvIndex_, skinCluster.paletteResources.Get(), UINT(skeleton.joints.size()), sizeof(WellForGPU));
+	SUGER::CreateSrvStructured(skinCluster.srvIndex, skinCluster.paletteResources.Get(), UINT(skeleton.joints.size()), sizeof(WellForGPU));
 
 	// 合計頂点数を取得
 	size_t totalVertexCount = 0;

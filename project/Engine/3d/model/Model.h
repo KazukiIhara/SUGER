@@ -156,8 +156,6 @@ private: // メンバ変数
 	Skeleton skeleton_;
 	// スキン
 	SkinCluster skinCluster_;
-	// スキン用のSrvIndex
-	uint32_t skinClusterSrvIndex_ = 0;
 #pragma endregion
 
 #pragma region 頂点
