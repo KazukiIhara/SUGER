@@ -190,7 +190,7 @@ public: // クラスメソッド
 
 #pragma region EntityManager
 	// エンティティの作成
-	static std::string CreateEntity(const std::string& name, const std::string& filePath, const bool& haveSkiningAnimation = false, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	static std::string CreateEntity(const std::string& name, const std::string& filePath, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
 	// エンティティの更新
 	static void UpdateEntities();
 	// エンティティの描画

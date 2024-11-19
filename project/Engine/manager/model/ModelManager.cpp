@@ -36,11 +36,11 @@ void ModelManager::CreatePlane(const std::string& textureFile, const std::string
 	models_.insert(std::make_pair("Plane", std::move(model)));
 }
 
-Model* ModelManager::Find(const std::string& filePath) {
+Model* ModelManager::Find(const std::string& fileName) {
 	// 読み込み済みモデルを検索
-	if (models_.contains(filePath)) {
+	if (models_.contains(fileName)) {
 		// 読み込みモデルを戻り値としてreturn
-		return models_.at(filePath).get();
+		return models_.at(fileName).get();
 	}
 	// ファイル名一致なし
 	return nullptr;

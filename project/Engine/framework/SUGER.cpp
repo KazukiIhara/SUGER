@@ -427,8 +427,8 @@ Empty* SUGER::FindEmpty(const std::string& name) {
 	return emptyManager_->Find(name);
 }
 
-std::string SUGER::CreateEntity(const std::string& name, const std::string& filePath, const bool& haveSkiningAnimation, const EulerTransform3D& transform) {
-	return entityManager_->Create(name, filePath, haveSkiningAnimation, transform);
+std::string SUGER::CreateEntity(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
+	return entityManager_->Create(name, filePath, transform);
 }
 
 void SUGER::UpdateEntities() {

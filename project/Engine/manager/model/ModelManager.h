@@ -19,7 +19,7 @@ public:
 	// 板ポリ作成
 	void CreatePlane(const std::string& textureFile, const std::string& directoryPath = "resources/images");
 	// モデルの検索
-	Model* Find(const std::string& filePath);
+	Model* Find(const std::string& fileName);
 	// 終了
 	void Finalize();
 
