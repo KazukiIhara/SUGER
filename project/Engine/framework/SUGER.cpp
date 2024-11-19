@@ -21,6 +21,7 @@ std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
 std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
+std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
@@ -85,6 +86,10 @@ void SUGER::Initialize() {
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
 	jsonLevelDataManager_->Initialize();
 
+	// grobalDataManagerの初期化
+	grobalDataManager_ = std::make_unique<GrobalDataManager>();
+	grobalDataManager_->Initialize();
+
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
 	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
@@ -116,6 +121,12 @@ void SUGER::Finalize() {
 	// Object2DSystemの終了処理
 	if (object2dSystem_) {
 		object2dSystem_.reset();
+	}
+
+	// grobalDataManagerの終了処理
+	if (grobalDataManager_) {
+		grobalDataManager_->Finalize();
+		grobalDataManager_.reset();
 	}
 
 	// JsonLevelDataManagerの終了処理
@@ -219,6 +230,9 @@ void SUGER::Update() {
 
 	// ImGui開始処理
 	imguiManager_->BeginFrame();
+
+	// グローバルデータ更新処理
+	grobalDataManager_->Update();
 
 	// FPS表示
 	ShowFPS();
@@ -516,6 +530,58 @@ void SUGER::LoadJsonLevelData(const std::string& fileName) {
 
 JsonLevelData* SUGER::FindJsonLevelData(const std::string& levelDataName) {
 	return jsonLevelDataManager_->Find(levelDataName);
+}
+
+void SUGER::AddGrobalDataGroup(const std::string& groupname) {
+	grobalDataManager_->CreateGroup(groupname);
+}
+
+void SUGER::AddGrobalDataItem(const std::string& groupname, const std::string& itemname, int32_t value) {
+	grobalDataManager_->AddItem(groupname, itemname, value);
+}
+
+void SUGER::AddGrobalDataItem(const std::string& groupname, const std::string& itemname, float value) {
+	grobalDataManager_->AddItem(groupname, itemname, value);
+}
+
+void SUGER::AddGrobalDataItem(const std::string& groupname, const std::string& itemname, Vector3 value) {
+	grobalDataManager_->AddItem(groupname, itemname, value);
+}
+
+void SUGER::AddGrobalDataItem(const std::string& groupname, const std::string& itemname, bool value) {
+	grobalDataManager_->AddItem(groupname, itemname, value);
+}
+
+void SUGER::SetGrobalDataValue(const std::string& groupname, const std::string& itemname, int32_t value) {
+	grobalDataManager_->SetValue(groupname, itemname, value);
+}
+
+void SUGER::SetGrobalDataValue(const std::string& groupname, const std::string& itemname, float value) {
+	grobalDataManager_->SetValue(groupname, itemname, value);
+}
+
+void SUGER::SetGrobalDataValue(const std::string& groupname, const std::string& itemname, Vector3 value) {
+	grobalDataManager_->SetValue(groupname, itemname, value);
+}
+
+void SUGER::SetGrobalDataValue(const std::string& groupname, const std::string& itemname, bool value) {
+	grobalDataManager_->SetValue(groupname, itemname, value);
+}
+
+int32_t SUGER::GetGrobalDataValueInt(const std::string& groupName, const std::string& key) {
+	return grobalDataManager_->GetValueInt(groupName, key);
+}
+
+float SUGER::GetGrobalDataValueFloat(const std::string& groupName, const std::string& key) {
+	return grobalDataManager_->GetValueFloat(groupName, key);
+}
+
+Vector3 SUGER::GetGrobalDataValueVector3(const std::string& groupName, const std::string& key) {
+	return grobalDataManager_->GetValueVector3(groupName, key);
+}
+
+bool SUGER::GetGrobalDataValueBool(const std::string& groupName, const std::string& key) {
+	return grobalDataManager_->GetValueBool(groupName, key);
 }
 
 void SUGER::ShowFPS() {

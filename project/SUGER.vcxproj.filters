@@ -376,6 +376,7 @@
     <ClCompile Include="Engine\!FixEngine\emptyController\EmptyController.cpp" />
     <ClCompile Include="Engine\!FixEngine\skiningEntity\SkiningEntity.cpp" />
     <ClCompile Include="Engine\manager\sound\SoundManager.cpp" />
+    <ClCompile Include="Engine\manager\data\grobal\GrobalDataManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -556,6 +557,7 @@
     <ClInclude Include="Engine\!FixEngine\skiningEntity\SkiningEntity.h" />
     <ClInclude Include="Engine\manager\sound\SoundManager.h" />
     <ClInclude Include="Engine\structs\SoundStruct.h" />
+    <ClInclude Include="Engine\manager\data\grobal\GrobalDataManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
