@@ -19,6 +19,7 @@
 #include "!FixEngine/emptyManager/EmptyManager.h"
 #include "!FixEngine/entityManager/EntityManager.h"
 #include "manager/particle/ParticleManager.h"
+#include "manager/sound/SoundManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "2d/system/Object2dSystem.h"
 #include "3d/system/Object3dSystem.h"
@@ -220,6 +221,13 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region SoundManager
+	// 音声読み込み
+	static void LoadWaveSound(const std::string& filename, const std::string& directoryPath = "resources/sounds");
+	// 音声再生
+	static void PlayWaveSound(const std::string& filename);
+#pragma endregion
+
 #pragma region JsonLevelDataManager
 	// JsonLevelDataManagerの機能
 	// Json形式のlevelデータの読み込み
@@ -273,6 +281,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<EmptyManager> emptyManager_;
 	static std::unique_ptr<EntityManager> entityManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
+	static std::unique_ptr<SoundManager> soundManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
