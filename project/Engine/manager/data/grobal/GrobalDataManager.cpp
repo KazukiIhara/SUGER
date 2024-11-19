@@ -2,9 +2,11 @@
 
 #include "manager/imgui/ImGuiManager.h"
 
+#include "manager/directX/DirectXManager.h"
 
-
-void GrobalDataManager::Initialize() {
+void GrobalDataManager::Initialize(DirectXManager* directXManager) {
+	// DirectXManagerのセット
+	SetDirectXManager(directXManager);
 	// 配列をクリア
 	datas_.clear();
 	// ヘッダ内で宣言しているディレクトリ内のjsonFileを読み込み
@@ -154,6 +156,9 @@ void GrobalDataManager::SaveFile(const std::string& groupName) {
 	ofs << std::setw(4) << root << std::endl;
 	// ファイルを閉じる
 	ofs.close();
+
+	// フレーム制限処理
+	directX_->InitializeFixFPS();
 }
 
 void GrobalDataManager::LoadFile(const std::string& groupName) {
@@ -396,4 +401,8 @@ void GrobalDataManager::AddItem(const std::string& groupName, const std::string&
 	if (itItem == group.items.end()) {
 		SetValue(groupName, key, value);
 	}
+}
+
+void GrobalDataManager::SetDirectXManager(DirectXManager* directXmanager) {
+	directX_ = directXmanager;
 }

@@ -88,7 +88,7 @@ void SUGER::Initialize() {
 
 	// grobalDataManagerの初期化
 	grobalDataManager_ = std::make_unique<GrobalDataManager>();
-	grobalDataManager_->Initialize();
+	grobalDataManager_->Initialize(directXManager_.get());
 
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();

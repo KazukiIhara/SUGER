@@ -125,6 +125,10 @@ void DirectXManager::ResetCommandList() {
 	assert(SUCCEEDED(hr_));
 }
 
+void DirectXManager::InitializeFixFPS() {
+	fixFPS_->Initialize();
+}
+
 ID3D12Device* DirectXManager::GetDevice() {
 	return dxgi_->GetDevice();
 }

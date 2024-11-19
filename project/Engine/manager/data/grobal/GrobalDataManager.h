@@ -12,6 +12,8 @@
 
 #include "math/function/MathFunction.h"
 
+class DirectXManager;
+
 /// <summary>
 /// using宣言
 /// </summary>
@@ -36,7 +38,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(DirectXManager* directXManager);
 
 	/// <summary>
 	/// 終了
@@ -99,8 +101,15 @@ public:
 #pragma endregion
 
 private:
+	void SetDirectXManager(DirectXManager* directXmanager);
+
+private:
 	// 全データ
 	std::map<std::string, Group> datas_;
 	// グローバル変数の保存先ファイルパス
 	const std::string kDirectoryPath = "resources/globalDatas/";
+
+private:
+	// DirectXManager
+	DirectXManager* directX_ = nullptr;
 };
