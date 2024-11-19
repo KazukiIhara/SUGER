@@ -13,6 +13,10 @@ void EntityController::SetScale(const Vector3& scale) {
 	entity_->SetScale(scale);
 }
 
+void EntityController::SetScale(const float& scale) {
+	entity_->SetScale(Vector3(scale, scale, scale));
+}
+
 void EntityController::SetRotate(const Vector3& rotate) {
 	entity_->SetRotate(rotate);
 }

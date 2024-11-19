@@ -16,6 +16,7 @@ public:
 
 	// スケールのセット
 	void SetScale(const Vector3& scale);
+	void SetScale(const float& scale);
 	// 回転のセット
 	void SetRotate(const Vector3& rotate);
 	// トランスレートのセット
