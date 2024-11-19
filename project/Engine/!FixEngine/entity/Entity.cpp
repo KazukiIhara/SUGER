@@ -65,6 +65,18 @@ void Entity::SetLight(PunctualLight* punctualLight) {
 	punctualLight_ = punctualLight;
 }
 
+void Entity::SetColor(const Vector4& color) {
+	material_.color = color;
+}
+
+void Entity::SetEnableLight(const bool& enableLight) {
+	material_.enableLighting = enableLight;
+}
+
+void Entity::SetShininess(const float& shininess) {
+	material_.shininess = shininess;
+}
+
 void Entity::CreateWVPResource() {
 	// WVP用のリソースを作る
 	transformationResource_ = SUGER::CreateBufferResource(sizeof(TransformationMatrix));
