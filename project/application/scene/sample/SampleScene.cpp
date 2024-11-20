@@ -46,7 +46,7 @@ void SampleScene::Initialize() {
 	SUGER::PlayWaveSound("Alarm01.wav");
 
 	// パーティクル無効化
-	plane_.SetIsActive(false);
+	plane_.SetIsActive(true);
 
 
 	//
