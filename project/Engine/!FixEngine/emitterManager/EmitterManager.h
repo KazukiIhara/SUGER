@@ -1,1 +1,37 @@
 #pragma once
+
+// C++
+#include <map>
+#include <string>
+#include <memory>
+
+#include "!FixEngine/emitter/Emitter.h"
+
+class FixParticleManager;
+
+class EmitterManager {
+public:
+	EmitterManager() = default;
+	~EmitterManager() = default;
+
+	// 初期化
+	void Initialize();
+	// 更新
+	void Update();
+	// 終了
+	void Finalize();
+
+	// コンテナをクリア
+	void ClearContainer();
+
+	// エミッターを新規作成
+	void CreateEmitter(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+
+	// 作成済みのエミッターを検索
+	Emitter* Find(const std::string& name);
+
+private:
+	// エミッターデータコンテナ
+	std::map <std::string, std::unique_ptr<Emitter>> emitters_;
+
+};

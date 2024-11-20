@@ -35,7 +35,7 @@ void Empty::SetTransform(const EulerTransform3D& transform) {
 }
 
 void Empty::SetParent(WorldTransform* parent) {
-	worldTransform_.parent_ = parent; 
+	worldTransform_.parent_ = parent;
 }
 
 void Empty::SetIsActive(const bool& isActive) {
@@ -60,6 +60,10 @@ const Vector3& Empty::GetRotate() const {
 
 const Vector3& Empty::GetTranslate() const {
 	return worldTransform_.translate_;
+}
+
+const Vector3& Empty::GetWorldPosition() const {
+	return ExtractionWorldPos(worldTransform_.worldMatrix_);
 }
 
 WorldTransform* Empty::GetWorldTransformPtr() {

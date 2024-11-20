@@ -1,6 +1,12 @@
 #pragma once
 #include "structs/ObjectStructs.h"
 
+struct EmitSetting {
+	Vector3 velocity;
+	Vector4 color;
+	float lifeTime;
+};
+
 struct ParticleData {
 	EulerTransform3D transform;
 	Vector3 velocity;

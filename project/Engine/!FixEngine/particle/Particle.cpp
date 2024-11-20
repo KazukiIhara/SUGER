@@ -99,29 +99,29 @@ void Particle::Draw() {
 	// モデルがある場合描画
 	if (model_) {
 		switch (type_) {
-		case kPlane:
-			model_->DrawPlaneParticle(instanceCount_, textureFileName_);
-			break;
-		case kModel:
-			// TODO:3Dモデルパーティクルの実装
-			break;
+			case kPlane:
+				model_->DrawPlaneParticle(instanceCount_, textureFileName_);
+				break;
+			case kModel:
+				// TODO:3Dモデルパーティクルの実装
+				break;
 		}
 	}
 }
 
-void Particle::AddNewParticle(const Vector3& emitPosition, const ParticleData& particleData) {
+void Particle::AddNewParticle(const Vector3& emitPosition, const EmitSetting& emitSetting) {
 	ParticleData particle;
 	// トランスフォームの設定
 	particle.transform.scale = { 1.0f,1.0f,1.0f };
 	particle.transform.rotate = { 0.0f,0.0f,0.0f };
 	particle.transform.translate = emitPosition;
 	// 移動量の設定
-	particle.velocity = particleData.velocity;
+	particle.velocity = emitSetting.velocity;
 	// 色の設定
-	particle.color = particleData.color;
+	particle.color = emitSetting.color;
 
 	// 生存時間の設定
-	particle.lifeTime = particleData.lifeTime;
+	particle.lifeTime = emitSetting.lifeTime;
 	particle.currentTime = 0;
 
 }

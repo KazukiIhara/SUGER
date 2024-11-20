@@ -19,6 +19,10 @@
 #include "manager/emptyManager/EmptyManager.h"
 #include "manager/entityManager/EntityManager.h"
 #include "manager/particle/ParticleManager.h"
+
+#include "!FixEngine/emitterManager/EmitterManager.h"
+#include "!FixEngine/particleManager/FixParticleManager.h"
+
 #include "manager/sound/SoundManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "manager/data/grobal/GrobalDataManager.h"
@@ -307,6 +311,10 @@ private: // クラスのポインタ
 	static std::unique_ptr<EmptyManager> emptyManager_;
 	static std::unique_ptr<EntityManager> entityManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
+
+	static std::unique_ptr<EmitterManager> emitterManager_;
+	static std::unique_ptr<FixParticleManager> fixParticleManager_;
+
 	static std::unique_ptr<SoundManager> soundManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<GrobalDataManager> grobalDataManager_;

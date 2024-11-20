@@ -58,6 +58,9 @@ public:
 	// 移動量のゲッター
 	const Vector3& GetTranslate()const;
 
+	// ワールド座標のゲッター
+	const Vector3& GetWorldPosition()const;
+
 	// ワールドトランスフォームのポインタのゲッター
 	WorldTransform* GetWorldTransformPtr();
 
