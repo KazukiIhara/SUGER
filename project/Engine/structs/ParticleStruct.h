@@ -15,7 +15,7 @@ struct ParticleForGPU {
 	Vector4 color;
 };
 
-struct Emitter {
+struct EmitterData {
 	EulerTransform3D transform;	// エミッターのTransform
 	uint32_t count;			// 発生数
 	float frequency;		// 発生頻度

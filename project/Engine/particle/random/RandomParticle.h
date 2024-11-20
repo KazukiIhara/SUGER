@@ -61,7 +61,7 @@ private:
 	ParticleData MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate);
 
 	// パーティクルの発生関数
-	std::list<ParticleData> Emit(const Emitter& emitter, std::mt19937& randomEngine);
+	std::list<ParticleData> Emit(const EmitterData& emitter, std::mt19937& randomEngine);
 
 
 private:/*メンバ変数*/
@@ -73,7 +73,7 @@ private:/*メンバ変数*/
 	ParticleType type_;
 
 	// Emitter
-	Emitter emitter_{};
+	EmitterData emitter_{};
 
 	// instancing描画用のリソース
 	ComPtr<ID3D12Resource> instancingResource_ = nullptr;

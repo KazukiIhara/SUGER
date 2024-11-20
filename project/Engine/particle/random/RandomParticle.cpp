@@ -232,7 +232,7 @@ ParticleData RandomParticle::MakeNewParticle(std::mt19937& randomEngine, const V
 	return particle;
 }
 
-std::list<ParticleData> RandomParticle::Emit(const Emitter& emitter, std::mt19937& randomEngine) {
+std::list<ParticleData> RandomParticle::Emit(const EmitterData& emitter, std::mt19937& randomEngine) {
 	std::list<ParticleData> particles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
 		particles.push_back(MakeNewParticle(randomEngine, emitter.transform.translate));

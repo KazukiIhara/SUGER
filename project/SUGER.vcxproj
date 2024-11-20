@@ -112,6 +112,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\sample\SampleScene.cpp" />
     <ClCompile Include="Engine\!FixEngine\emitterManager\EmitterManager.cpp" />
     <ClCompile Include="Engine\!FixEngine\emitter\Emitter.cpp" />
+    <ClCompile Include="Engine\!FixEngine\particleManager\FixParticleManager.cpp" />
+    <ClCompile Include="Engine\!FixEngine\particle\Particle.cpp" />
     <ClCompile Include="Engine\3d\emptyController\EmptyController.cpp" />
     <ClCompile Include="Engine\manager\emptyManager\EmptyManager.cpp" />
     <ClCompile Include="Engine\3d\empty\Empty.cpp" />
@@ -168,6 +170,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\sample\SampleScene.h" />
     <ClInclude Include="Engine\!FixEngine\emitterManager\EmitterManager.h" />
     <ClInclude Include="Engine\!FixEngine\emitter\Emitter.h" />
+    <ClInclude Include="Engine\!FixEngine\particleManager\FixParticleManager.h" />
+    <ClInclude Include="Engine\!FixEngine\particle\Particle.h" />
     <ClInclude Include="Engine\3d\emptyController\EmptyController.h" />
     <ClInclude Include="Engine\manager\emptyManager\EmptyManager.h" />
     <ClInclude Include="Engine\3d\empty\Empty.h" />

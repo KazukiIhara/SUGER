@@ -41,7 +41,6 @@ void Model::Initialize(const std::string& filename) {
 #pragma endregion
 }
 
-
 void Model::Update() {
 	// スキニングアニメーションがある場合アニメーション更新
 	if (haveSkinningAnimation_) {
@@ -103,7 +102,7 @@ void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& 
 		// IBVを設定
 		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
 		// SRVセット
-		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[textureFileName].srvIndex);
+		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
 		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), instanceCount, 0, 0, 0);
 	}
@@ -333,7 +332,6 @@ void Model::GenerateSphere(const std::string& textureFilePath) {
 
 	modelData_.meshes.push_back(meshData);
 }
-
 
 void Model::CreateSphere(const std::string& textureFilePath) {
 

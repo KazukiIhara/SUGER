@@ -379,6 +379,8 @@
     <ClCompile Include="Engine\manager\data\grobal\GrobalDataManager.cpp" />
     <ClCompile Include="Engine\!FixEngine\emitter\Emitter.cpp" />
     <ClCompile Include="Engine\!FixEngine\emitterManager\EmitterManager.cpp" />
+    <ClCompile Include="Engine\!FixEngine\particleManager\FixParticleManager.cpp" />
+    <ClCompile Include="Engine\!FixEngine\particle\Particle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -562,6 +564,8 @@
     <ClInclude Include="Engine\manager\data\grobal\GrobalDataManager.h" />
     <ClInclude Include="Engine\!FixEngine\emitter\Emitter.h" />
     <ClInclude Include="Engine\!FixEngine\emitterManager\EmitterManager.h" />
+    <ClInclude Include="Engine\!FixEngine\particleManager\FixParticleManager.h" />
+    <ClInclude Include="Engine\!FixEngine\particle\Particle.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
