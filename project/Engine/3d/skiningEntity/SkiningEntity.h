@@ -1,6 +1,6 @@
 #pragma once
 
-#include "!FixEngine/entity/Entity.h"
+#include "3d/entity/Entity.h"
 
 class SkiningEntity :public Entity {
 public:

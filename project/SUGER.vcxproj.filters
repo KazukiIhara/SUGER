@@ -368,13 +368,13 @@
       <Filter>engine\importer\level\json</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
-    <ClCompile Include="Engine\!FixEngine\empty\Empty.cpp" />
-    <ClCompile Include="Engine\!FixEngine\entity\Entity.cpp" />
-    <ClCompile Include="Engine\!FixEngine\emptyManager\EmptyManager.cpp" />
-    <ClCompile Include="Engine\!FixEngine\entityManager\EntityManager.cpp" />
-    <ClCompile Include="Engine\!FixEngine\entityController\EntityController.cpp" />
-    <ClCompile Include="Engine\!FixEngine\emptyController\EmptyController.cpp" />
-    <ClCompile Include="Engine\!FixEngine\skiningEntity\SkiningEntity.cpp" />
+    <ClCompile Include="Engine\3d\empty\Empty.cpp" />
+    <ClCompile Include="Engine\3d\entity\Entity.cpp" />
+    <ClCompile Include="Engine\manager\emptyManager\EmptyManager.cpp" />
+    <ClCompile Include="Engine\manager\entityManager\EntityManager.cpp" />
+    <ClCompile Include="Engine\3d\entityController\EntityController.cpp" />
+    <ClCompile Include="Engine\3d\emptyController\EmptyController.cpp" />
+    <ClCompile Include="Engine\3d\skiningEntity\SkiningEntity.cpp" />
     <ClCompile Include="Engine\manager\sound\SoundManager.cpp" />
     <ClCompile Include="Engine\manager\data\grobal\GrobalDataManager.cpp" />
   </ItemGroup>
@@ -548,13 +548,13 @@
     <ClInclude Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
     <ClInclude Include="Engine\enum\DirectInputEnum.h" />
     <ClInclude Include="Engine\enum\ColliderEnum.h" />
-    <ClInclude Include="Engine\!FixEngine\empty\Empty.h" />
-    <ClInclude Include="Engine\!FixEngine\entity\Entity.h" />
-    <ClInclude Include="Engine\!FixEngine\emptyManager\EmptyManager.h" />
-    <ClInclude Include="Engine\!FixEngine\entityManager\EntityManager.h" />
-    <ClInclude Include="Engine\!FixEngine\entityController\EntityController.h" />
-    <ClInclude Include="Engine\!FixEngine\emptyController\EmptyController.h" />
-    <ClInclude Include="Engine\!FixEngine\skiningEntity\SkiningEntity.h" />
+    <ClInclude Include="Engine\3d\empty\Empty.h" />
+    <ClInclude Include="Engine\3d\entity\Entity.h" />
+    <ClInclude Include="Engine\manager\emptyManager\EmptyManager.h" />
+    <ClInclude Include="Engine\manager\entityManager\EntityManager.h" />
+    <ClInclude Include="Engine\3d\entityController\EntityController.h" />
+    <ClInclude Include="Engine\3d\emptyController\EmptyController.h" />
+    <ClInclude Include="Engine\3d\skiningEntity\SkiningEntity.h" />
     <ClInclude Include="Engine\manager\sound\SoundManager.h" />
     <ClInclude Include="Engine\structs\SoundStruct.h" />
     <ClInclude Include="Engine\manager\data\grobal\GrobalDataManager.h" />
