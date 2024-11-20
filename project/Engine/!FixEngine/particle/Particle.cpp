@@ -33,6 +33,7 @@ void Particle::Initialize(Model* model, Camera* camera, const std::string& textu
 }
 
 void Particle::Update() {
+
 	// 描画すべきインスタンス数
 	instanceCount_ = 0;
 
@@ -87,6 +88,13 @@ void Particle::Update() {
 		// 次のイテレーターに進める
 		++particleIterator;
 	}
+
+#ifdef _DEBUG
+	ImGui::Begin("particle");
+	ImGui::Text("instanceCount: %d", instanceCount_);
+	ImGui::Text("particleNum: %d", particles_.size());
+	ImGui::End();
+#endif // _DEBUG
 }
 
 void Particle::Draw() {
@@ -110,6 +118,7 @@ void Particle::Draw() {
 }
 
 void Particle::AddNewParticle(const Vector3& emitPosition, const EmitSetting& emitSetting) {
+	// 追加するパーティクル
 	ParticleData particle;
 	// トランスフォームの設定
 	particle.transform.scale = { 1.0f,1.0f,1.0f };
@@ -126,7 +135,6 @@ void Particle::AddNewParticle(const Vector3& emitPosition, const EmitSetting& em
 
 	// コンテナに挿入
 	particles_.push_back(particle);
-
 }
 
 void Particle::SetCamera(Camera* camera) {
@@ -163,7 +171,6 @@ void Particle::MapInstancingData() {
 	instancingResource_->Map(0, nullptr, reinterpret_cast<void**>(&instancingData_));
 
 	for (uint32_t index = 0; index < kNumMaxInstance; ++index) {
-
 		instancingData_[index].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 }

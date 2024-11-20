@@ -26,34 +26,32 @@ void SampleScene::Initialize() {
 
 	// オブジェクトの生成と、モデルの読み込み
 	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
-	SUGER::CreatePlaneParticle("plane", "circle.png");
+	// サウンド読み込み
 	SUGER::LoadWaveSound("Alarm01.wav");
 
+	// 板ポリパーティクルの作成
 	SUGER::CreatePlaneFixParticle("circle", "circle.png");
+	// エミッターの作成
 	SUGER::CreateEmitter("sampleEmitter");
 
-	emitter_.Initialize("sampleEmitter");
-	emitter_.SetParticle("circle");
-
-
-
-	// エンティティコントローラ初期化
+	// エンティティの作成とエンティティコントローラ初期化
 	entity_.Initialize(SUGER::CreateEntity("teapot", "pronama_chan"));
-
+	// ライトを無効化
 	entity_.SetEnableLight(false);
 
 	// オブジェクト2Dコントローラの初期化
 	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
-	// パーティクルコントローラの初期化
-	plane_.Initialize(SUGER::FindParticle("plane"));
 
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
 	pronama_chan.SetSize(Vector2(400.0f, 400.0f));
 	pronama_chan.SetPosition(pronama_chan.GetSize() / 2.0f);
 	pronama_chan.SetAnchorPoint(Vector2(0.5f, 0.5f));
 
-	// パーティクル無効化
-	plane_.SetIsActive(false);
+
+	// エミッターのコントローラを初期化
+	emitter_.Initialize("sampleEmitter");
+	// エミッターにパーティクルをセット
+	emitter_.SetParticle("circle");
 
 	// 音声再生
 	SUGER::PlayWaveSound("Alarm01.wav");
@@ -85,7 +83,7 @@ void SampleScene::Update() {
 	entity_.SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
 
 	// スペースキーを押すと発生
-	if (SUGER::TriggerKey(DIK_SPACE)) {
+	if (SUGER::PushKey(DIK_SPACE)) {
 		emitter_.Emit();
 	}
 
