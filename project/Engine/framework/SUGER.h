@@ -292,7 +292,9 @@ private: // メンバ変数
 	// 終了リクエスト
 	bool endRequest_ = false;
 private: // クラスのポインタ
+#ifdef _DEBUG
 	static std::unique_ptr<D3DResourceLeakChecker> leakCheck_;
+#endif // _DEBUG
 	static std::unique_ptr<WindowManager> windowManager_;
 	static std::unique_ptr<DirectInput> directInput_;
 	static std::unique_ptr<DirectXManager> directXManager_;
