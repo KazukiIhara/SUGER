@@ -6,7 +6,7 @@
 #include <memory>
 
 // エンティティ
-#include "!FixEngine/skiningEntity/SkiningEntity.h"
+#include "3d/skiningEntity/SkiningEntity.h"
 
 class ModelManager;
 class PunctualLight;

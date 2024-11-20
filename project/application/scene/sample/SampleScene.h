@@ -3,7 +3,7 @@
 // MyHedder
 #include "iScene/base/BaseScene.h"
 #include "2d/controller/Object2dController.h"
-#include "!FixEngine/entityController/EntityController.h"
+#include "3d/entityController/EntityController.h"
 #include "particle/controller/ParticleController.h"
 
 class SampleScene :public BaseScene {
