@@ -124,6 +124,9 @@ void Particle::AddNewParticle(const Vector3& emitPosition, const EmitSetting& em
 	particle.lifeTime = emitSetting.lifeTime;
 	particle.currentTime = 0;
 
+	// コンテナに挿入
+	particles_.push_back(particle);
+
 }
 
 void Particle::SetCamera(Camera* camera) {

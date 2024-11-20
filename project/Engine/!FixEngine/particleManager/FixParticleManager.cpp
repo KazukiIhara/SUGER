@@ -75,4 +75,10 @@ void FixParticleManager::SetTextureManager(TextureManager* textureManager) {
 void FixParticleManager::SetSceneCamera(Camera* camera) {
 	assert(camera);
 	camera_ = camera;
+	for (auto& pair : particles_) {
+		if (pair.second) {  // unique_ptrが有効か確認
+			// カメラをセット
+			pair.second->SetCamera(camera_);
+		}
+	}
 }

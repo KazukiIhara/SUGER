@@ -281,6 +281,7 @@ void SUGER::Draw() {
 	PreDrawParticle3D();
 	// 3Dパーティクル描画処理
 	DrawParticle();
+	DrawParticles();
 
 	// 2Dオブジェクト描画前処理
 	PreDrawObject2D();
@@ -330,7 +331,7 @@ bool SUGER::PushKey(BYTE keyNumber) {
 	return directInput_->PushKey(keyNumber);
 }
 
-bool SUGER::TrrigerKey(BYTE keyNumber) {
+bool SUGER::TriggerKey(BYTE keyNumber) {
 	return directInput_->TriggerKey(keyNumber);
 }
 
@@ -502,6 +503,7 @@ Entity* SUGER::FindEntity(const std::string& name) {
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	entityManager_->SetRequiredObjects(camera, punctualLight);
 	particleManager_->SetSceneCamera(camera);
+	fixParticleManager_->SetSceneCamera(camera);
 }
 
 void SUGER::SetSceneCamera(Camera* camera) {
@@ -525,6 +527,36 @@ void SUGER::DrawParticle() {
 
 RandomParticle* SUGER::FindParticle(const std::string& name) {
 	return particleManager_->Find(name);
+}
+
+void SUGER::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {
+	emitterManager_->CreateEmitter(name, transform);
+}
+
+void SUGER::UpdateEmitters() {
+	emitterManager_->Update();
+}
+
+Emitter* SUGER::FindEmitter(const std::string& name) {
+	return emitterManager_->Find(name);
+}
+
+void SUGER::CreatePlaneFixParticle(const std::string& name, const std::string& filePath) {
+	// 既定のディレクトリパス
+	const std::string& directoryPath = "resources/images/";
+	fixParticleManager_->CreatePlaneParticle(name, directoryPath + filePath);
+}
+
+void SUGER::UpdateParticles() {
+	fixParticleManager_->Update();
+}
+
+void SUGER::DrawParticles() {
+	fixParticleManager_->Draw();
+}
+
+Particle* SUGER::FindFixParticle(const std::string& name) {
+	return fixParticleManager_->Find(name);
 }
 
 void SUGER::LoadWaveSound(const std::string& filename, const std::string& directoryPath) {

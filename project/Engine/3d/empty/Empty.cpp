@@ -62,7 +62,7 @@ const Vector3& Empty::GetTranslate() const {
 	return worldTransform_.translate_;
 }
 
-const Vector3& Empty::GetWorldPosition() const {
+Vector3 Empty::GetWorldPosition()const {
 	return ExtractionWorldPos(worldTransform_.worldMatrix_);
 }
 

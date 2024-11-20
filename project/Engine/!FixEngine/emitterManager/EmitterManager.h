@@ -25,7 +25,7 @@ public:
 	void ClearContainer();
 
 	// エミッターを新規作成
-	void CreateEmitter(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	void CreateEmitter(const std::string& name, const EulerTransform3D& transform);
 
 	// 作成済みのエミッターを検索
 	Emitter* Find(const std::string& name);
