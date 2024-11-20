@@ -62,9 +62,12 @@ Camera* Entity::GetCamera() {
 void Entity::SetModel(const std::string& filePath) {
 	// モデルをセット
 	model_ = SUGER::FindModel(filePath);
+	// モデルがなければassert
+	assert(model_);
 }
 
 void Entity::SetCamera(Camera* camera) {
+
 	camera_ = camera;
 }
 

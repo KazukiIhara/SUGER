@@ -39,7 +39,7 @@ struct QuaternionTransform3D {
 };
 
 // 3DObjectData
-struct ObjectData3D {
+struct EntityData {
 	EulerTransform3D transform;
 	std::string objectName;
 	std::string modelName;

@@ -67,7 +67,7 @@ void JsonLevelData::Load(const std::string& fullpath) {
 				objectData.scale.y = static_cast<float>(transform["scaling"][2]);
 				objectData.scale.z = static_cast<float>(transform["scaling"][1]);
 
-				ObjectData3D newObject;
+				EntityData newObject;
 
 				// トランスフォームのセット
 				newObject.transform.scale = objectData.scale;
@@ -94,6 +94,6 @@ void JsonLevelData::Load(const std::string& fullpath) {
 
 }
 
-std::vector<ObjectData3D> JsonLevelData::Get3DObjects()const {
+std::vector<EntityData> JsonLevelData::Get3DObjects()const {
 	return objects_;
 }
