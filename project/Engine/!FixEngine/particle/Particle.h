@@ -52,7 +52,7 @@ private:
 	void MapMaterialData();
 private:
 	// パーティクルの最大数
-	static const uint32_t kNumMaxInstance = 1000;
+	static const uint32_t kNumMaxInstance = 200;
 	// パーティクル
 	std::list<ParticleData> particles_;
 	// パーティクルのタイプ
