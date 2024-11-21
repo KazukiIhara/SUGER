@@ -9,7 +9,7 @@ void Emitter::Update() {
 
 	// 繰り返しフラグがオンなら繰り返し発生
 	if (isRepeat_) {
-
+		// TODO: 繰り返しパーティクルを発生させる処理
 	}
 }
 
