@@ -1,6 +1,12 @@
 #pragma once
 #include "structs/ObjectStructs.h"
 
+struct EmitSetting {
+	Vector3 velocity;
+	Vector4 color;
+	float lifeTime;
+};
+
 struct ParticleData {
 	EulerTransform3D transform;
 	Vector3 velocity;
@@ -15,7 +21,7 @@ struct ParticleForGPU {
 	Vector4 color;
 };
 
-struct Emitter {
+struct EmitterData {
 	EulerTransform3D transform;	// エミッターのTransform
 	uint32_t count;			// 発生数
 	float frequency;		// 発生頻度

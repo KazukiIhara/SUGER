@@ -19,6 +19,10 @@
 #include "manager/emptyManager/EmptyManager.h"
 #include "manager/entityManager/EntityManager.h"
 #include "manager/particle/ParticleManager.h"
+
+#include "!FixEngine/emitterManager/EmitterManager.h"
+#include "!FixEngine/particleManager/FixParticleManager.h"
+
 #include "manager/sound/SoundManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "manager/data/grobal/GrobalDataManager.h"
@@ -79,7 +83,7 @@ public: // クラスメソッド
 	// キーを押している
 	static bool PushKey(BYTE keyNumber);
 	// キーを押した
-	static bool TrrigerKey(BYTE keyNumber);
+	static bool TriggerKey(BYTE keyNumber);
 	// キーを押し続けている
 	static bool HoldKey(BYTE keyNumber);
 	// キーを離した
@@ -217,9 +221,29 @@ public: // クラスメソッド
 	// Particleの描画
 	static void DrawParticle();
 
-	// パーティクル検索
+	// パーティクル検索                                 
 	static RandomParticle* FindParticle(const std::string& name);
+#pragma endregion
 
+#pragma region EmitterManager
+	// Emitterの作成
+	static void CreateEmitter(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	// Emitterの更新
+	static void UpdateEmitters();
+	// Emitterの検索
+	static Emitter* FindEmitter(const std::string& name);
+#pragma endregion
+
+#pragma region FixParticleManager
+	// FixParticleの作成
+	static void CreatePlaneFixParticle(const std::string& name, const std::string& filePath = "");
+	// FixParticleの更新
+	static void UpdateParticles();
+	// FixParticleの描画
+	static void DrawParticles();
+
+	// パーティクル検索
+	static Particle* FindFixParticle(const std::string& name);
 #pragma endregion
 
 #pragma region SoundManager
@@ -307,6 +331,10 @@ private: // クラスのポインタ
 	static std::unique_ptr<EmptyManager> emptyManager_;
 	static std::unique_ptr<EntityManager> entityManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
+
+	static std::unique_ptr<EmitterManager> emitterManager_;
+	static std::unique_ptr<FixParticleManager> fixParticleManager_;
+
 	static std::unique_ptr<SoundManager> soundManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<GrobalDataManager> grobalDataManager_;

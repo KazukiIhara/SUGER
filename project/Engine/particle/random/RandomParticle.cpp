@@ -32,7 +32,7 @@ void RandomParticle::Initialize(Model* model, Camera* camera, const std::string&
 
 	// マテリアル初期化
 	material_.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	material_.enableLighting = true;
+	material_.enableLighting = false;
 	material_.shininess = 40.0f;
 	material_.uvTransformMatrix = MakeIdentityMatrix4x4();
 
@@ -191,9 +191,17 @@ void RandomParticle::MapInstancingData() {
 }
 
 void RandomParticle::CreateMaterialResource() {
+	// マテリアル用のリソース作成
+	materialResource_ = SUGER::CreateBufferResource(sizeof(Material3D));
 }
 
 void RandomParticle::MapMaterialData() {
+	materialData_ = nullptr;
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+	materialData_->color = material_.color;
+	materialData_->enableLighting = material_.enableLighting;
+	materialData_->shininess = material_.shininess;
+	materialData_->uvTransformMatrix = material_.uvTransformMatrix;
 }
 
 ParticleData RandomParticle::MakeNewParticle(std::mt19937& randomEngine, const Vector3& translate) {
@@ -224,7 +232,7 @@ ParticleData RandomParticle::MakeNewParticle(std::mt19937& randomEngine, const V
 	return particle;
 }
 
-std::list<ParticleData> RandomParticle::Emit(const Emitter& emitter, std::mt19937& randomEngine) {
+std::list<ParticleData> RandomParticle::Emit(const EmitterData& emitter, std::mt19937& randomEngine) {
 	std::list<ParticleData> particles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
 		particles.push_back(MakeNewParticle(randomEngine, emitter.transform.translate));

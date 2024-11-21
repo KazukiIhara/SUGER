@@ -41,7 +41,6 @@ void Model::Initialize(const std::string& filename) {
 #pragma endregion
 }
 
-
 void Model::Update() {
 	// スキニングアニメーションがある場合アニメーション更新
 	if (haveSkinningAnimation_) {
@@ -333,7 +332,6 @@ void Model::GenerateSphere(const std::string& textureFilePath) {
 
 	modelData_.meshes.push_back(meshData);
 }
-
 
 void Model::CreateSphere(const std::string& textureFilePath) {
 

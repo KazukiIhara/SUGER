@@ -6,7 +6,7 @@
 
 void JsonLevelDataImporter::Import(JsonLevelData* jsonLevelData) {
 	// 配置されているすべてのオブジェクトを生成
-	for (ObjectData3D object : jsonLevelData->Get3DObjects()) {
+	for (EntityData object : jsonLevelData->Get3DObjects()) {
 		SUGER::CreateEntity(object.objectName, object.modelName, object.transform);
 	}
 }

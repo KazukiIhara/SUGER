@@ -41,6 +41,10 @@ void MyGame::Update() {
 	SUGER::UpdateEntities();
 	// Particleの更新
 	SUGER::UpdateParticle();
+	// Emitterの更新
+	SUGER::UpdateEmitters();
+	// Particleの更新
+	SUGER::UpdateParticles();
 }
 
 void MyGame::Draw() {

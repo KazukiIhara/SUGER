@@ -58,14 +58,17 @@ public:
 	// 移動量のゲッター
 	const Vector3& GetTranslate()const;
 
+	// ワールド座標のゲッター
+	Vector3 GetWorldPosition()const;
+
 	// ワールドトランスフォームのポインタのゲッター
 	WorldTransform* GetWorldTransformPtr();
 
 	// 有効フラグのゲット
-	const bool &GetIsActive()const;
+	const bool& GetIsActive()const;
 
 	// 削除フラグのゲット
-	const bool &GetIsDelete()const;
+	const bool& GetIsDelete()const;
 
 protected:
 	// 名前
