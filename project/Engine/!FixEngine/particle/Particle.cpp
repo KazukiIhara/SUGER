@@ -118,6 +118,12 @@ void Particle::Draw() {
 }
 
 void Particle::AddNewParticle(const Vector3& emitPosition, const EmitSetting& emitSetting) {
+
+	// 最大数を超えていたら追加しない
+	if (particles_.size() >= kNumMaxInstance) {
+		return;
+	}
+
 	// 追加するパーティクル
 	ParticleData particle;
 	// トランスフォームの設定

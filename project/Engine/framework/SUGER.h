@@ -221,7 +221,7 @@ public: // クラスメソッド
 	// Particleの描画
 	static void DrawParticle();
 
-	// パーティクル検索
+	// パーティクル検索                                 
 	static RandomParticle* FindParticle(const std::string& name);
 #pragma endregion
 

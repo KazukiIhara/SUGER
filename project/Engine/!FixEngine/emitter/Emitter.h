@@ -25,7 +25,7 @@ public:
 
 protected:
 	// 発生数
-	uint32_t count_ = 1;
+	uint32_t count_ = 10;
 	// 発生頻度
 	float frequency_ = 0.5f;
 	// 繰り返し発生させるかどうか
