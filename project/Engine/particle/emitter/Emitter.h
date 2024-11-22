@@ -11,7 +11,7 @@ public:
 	void Initialize()override;
 
 	// 更新
-	virtual void Update()override;
+	void Update()override;
 
 	// パーティクル発生
 	virtual void Emit();
@@ -25,10 +25,15 @@ public:
 	void SerFrequency(const float& frequency);
 	// 繰り返し発生フラグのセット
 	void SetIsRepeat(const bool& isRepeat);
+	// ランダムフラグのセット
+	void SetIsRandom(const bool& isRandom);
 
 protected:
 	// デルタタイム
 	const float kDeltaTime_ = 1.0f / 60.0f;
+
+	// セットするパーティクル
+	Particle* particle_ = nullptr;
 
 	// パーティクル発生設定
 	EmitSetting emitSetting_{};
@@ -40,6 +45,24 @@ protected:
 	bool isRepeat_ = false;
 	// 頻度用時刻
 	float frequencyTime_ = 0.0f;
-	// セットするパーティクル
-	Particle* particle_ = nullptr;
+
+	// ランダム値を使用するかどうか
+	bool isRandom_ = false;
+
+	// 発生場所のランダム閾値
+	Vector3 randomMinTranslate_ = { -1.0f,-1.0f,-1.0f };
+	Vector3 randomMaxTranslate_ = { 1.0f,1.0f,1.0f };
+
+	// 移動量のランダム閾値
+	Vector3	randomMinVelocity_ = { -1.0f,-1.0f,-1.0f };
+	Vector3	randomMaxVelocity_ = { 1.0f,1.0f,1.0f };
+
+	// 色のランダム閾値
+	Vector3 randomMinColor_ = { 0.0f,0.0f,0.0f };
+	Vector3	randomMaxColor_ = { 1.0f,1.0f,1.0f };
+
+	// 生存時間のランダム閾値
+	float randomMinLifeTime_ = 0.0f;
+	float randomMaxLifeTime_ = 5.0f;
+
 };

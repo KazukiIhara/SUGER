@@ -30,7 +30,7 @@ void SampleScene::Initialize() {
 	SUGER::LoadWaveSound("Alarm01.wav");
 
 	// 板ポリパーティクルの作成
-	SUGER::CreateFixParticle("circle", ParticleType::kPlane, "circle.png");
+	SUGER::CreateFixParticle("circle", ParticleType::kModel, "teapot");
 	// エミッターの作成
 	SUGER::CreateEmitter("sampleEmitter");
 
@@ -52,8 +52,12 @@ void SampleScene::Initialize() {
 	emitter_.Initialize("sampleEmitter");
 	// エミッターにパーティクルをセット
 	emitter_.SetParticle("circle");
+	// エミッターの発生個数を変更
+	emitter_.SetCount(10);
 	// 繰り返し発生ON
 	emitter_.SetIsRepeat(true);
+	// ランダム発生ON
+	emitter_.SetIsRandom(true);
 
 	// 音声再生
 	SUGER::PlayWaveSound("Alarm01.wav");

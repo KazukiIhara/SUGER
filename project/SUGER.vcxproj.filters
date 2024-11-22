@@ -374,7 +374,6 @@
     <ClCompile Include="Engine\particle\particle\Particle.cpp" />
     <ClCompile Include="Engine\particle\emitterController\EmitterController.cpp" />
     <ClCompile Include="Engine\random\Random.cpp" />
-    <ClCompile Include="Engine\particle\randomEmitter\RandomEmitter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -553,7 +552,6 @@
     <ClInclude Include="Engine\particle\particle\Particle.h" />
     <ClInclude Include="Engine\particle\emitterController\EmitterController.h" />
     <ClInclude Include="Engine\random\Random.h" />
-    <ClInclude Include="Engine\particle\randomEmitter\RandomEmitter.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

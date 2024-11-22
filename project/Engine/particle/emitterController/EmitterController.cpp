@@ -35,8 +35,16 @@ void EmitterController::SetParticle(const std::string& particleName) {
 	emitter_->SetParticle(particleName);
 }
 
+void EmitterController::SetCount(const uint32_t& count) {
+	emitter_->SetCount(count);
+}
+
 void EmitterController::SetIsRepeat(const bool& isRepeat) {
 	emitter_->SetIsRepeat(isRepeat);
+}
+
+void EmitterController::SetIsRandom(const bool& isRandom) {
+	emitter_->SetIsRandom(isRandom);
 }
 
 const Vector3& EmitterController::GetScale() const {
@@ -51,7 +59,7 @@ const Vector3& EmitterController::GetTranslate() const {
 	return emitter_->GetTranslate();
 }
 
- Vector3 EmitterController::GetWorldPosition() const {
+Vector3 EmitterController::GetWorldPosition() const {
 	return emitter_->GetWorldPosition();
 }
 

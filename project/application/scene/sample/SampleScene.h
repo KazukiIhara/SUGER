@@ -5,7 +5,7 @@
 #include "2d/controller/Object2dController.h"
 #include "3d/entityController/EntityController.h"
 
-#include "!FixEngine/emitterController/EmitterController.h"
+#include "particle/emitterController/EmitterController.h"
 
 class SampleScene:public BaseScene {
 public: // 公開メンバ関数

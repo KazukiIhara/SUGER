@@ -31,9 +31,14 @@ public:
 	// パーティクルのセット
 	void SetParticle(const std::string& particleName);
 
+	// 同時発生個数のセット
+	void SetCount(const uint32_t& count);
+
 	// 繰り返し発生フラグセット
 	void SetIsRepeat(const bool& isRepeat);
 
+	// ランダムフラグセット
+	void SetIsRandom(const bool& isRandom);
 
 	//
 	// Getter

@@ -1,6 +1,7 @@
 #include "Emitter.h"
 
 #include "framework/SUGER.h"
+#include "random/Random.h"
 
 void Emitter::Initialize() {
 	// 基底クラスの初期化
@@ -38,14 +39,33 @@ void Emitter::Update() {
 }
 
 void Emitter::Emit() {
+	// パーティクル発生ポジション
+	Vector3 emitPosition = GetWorldPosition();
 	// 発生個数分ループ
 	for (uint32_t i = 0; i < count_; i++) {
+		// ランダム発生処理
+		if (isRandom_) {
+			// 発生座標
+			emitPosition.x = Random::GenerateFloat(randomMinTranslate_.x, randomMaxTranslate_.x);
+			emitPosition.y = Random::GenerateFloat(randomMinTranslate_.y, randomMaxTranslate_.y);
+			emitPosition.z = Random::GenerateFloat(randomMinTranslate_.z, randomMaxTranslate_.z);
+			// 移動量
+			emitSetting_.velocity.x = Random::GenerateFloat(randomMinVelocity_.x, randomMaxVelocity_.x);
+			emitSetting_.velocity.y = Random::GenerateFloat(randomMinVelocity_.y, randomMaxVelocity_.y);
+			emitSetting_.velocity.z = Random::GenerateFloat(randomMinVelocity_.z, randomMaxVelocity_.z);
+			// 色
+			emitSetting_.color.x = Random::GenerateFloat(randomMinColor_.x, randomMaxColor_.x);
+			emitSetting_.color.y = Random::GenerateFloat(randomMinColor_.y, randomMaxColor_.y);
+			emitSetting_.color.z = Random::GenerateFloat(randomMinColor_.z, randomMaxColor_.z);
+			// 生存時間
+			emitSetting_.lifeTime = Random::GenerateFloat(randomMinLifeTime_, randomMaxLifeTime_);
+		}
 
 		//
 		// このクラスを継承して、ここにemitSettingを変更する処理を追加することで、様々なパーティクルを出すことが可能
 		//
 
-		particle_->AddNewParticle(GetWorldPosition(), emitSetting_);
+		particle_->AddNewParticle(emitPosition, emitSetting_);
 	}
 }
 
@@ -64,4 +84,8 @@ void Emitter::SerFrequency(const float& frequency) {
 
 void Emitter::SetIsRepeat(const bool& isRepeat) {
 	isRepeat_ = isRepeat;
+}
+
+void Emitter::SetIsRandom(const bool& isRandom) {
+	isRandom_ = isRandom;
 }
