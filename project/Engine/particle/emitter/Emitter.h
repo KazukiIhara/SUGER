@@ -28,6 +28,31 @@ public:
 	// ランダムフラグのセット
 	void SetIsRandom(const bool& isRandom);
 
+	// ランダム発生の閾値設定
+	// 座標最小値
+	void SetRandomMinPosition(const Vector3& randomMinPosition);
+
+	// 座標最大値
+	void SetRandomMaxPosition(const Vector3& randomMaxPosition);
+
+	// 移動量最小値
+	void SetRandomMinVelocity(const Vector3& randomMinVelocity);
+
+	// 移動量最大値
+	void SetRandomMaxVelocity(const Vector3& randomMaxVelocity);
+
+	// 色最小値
+	void SetRandomMinColor(const Vector3& randomMinColor);
+
+	// 色最大値
+	void SetRandomMaxColor(const Vector3& randomMaxColor);
+
+	// 生存時間最小値
+	void SetRandomMinLifeTime(float randomMinLifeTime);
+
+	// 生存時間最大値
+	void SetRandomMaxLifeTime(float randomMaxLifeTime);
+
 protected:
 	// デルタタイム
 	const float kDeltaTime_ = 1.0f / 60.0f;

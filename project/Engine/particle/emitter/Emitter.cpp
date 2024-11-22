@@ -40,15 +40,15 @@ void Emitter::Update() {
 
 void Emitter::Emit() {
 	// パーティクル発生ポジション
-	Vector3 emitPosition = GetWorldPosition();
+	emitSetting_.position = GetWorldPosition();
 	// 発生個数分ループ
 	for (uint32_t i = 0; i < count_; i++) {
 		// ランダム発生処理
 		if (isRandom_) {
 			// 発生座標
-			emitPosition.x = Random::GenerateFloat(randomMinTranslate_.x, randomMaxTranslate_.x);
-			emitPosition.y = Random::GenerateFloat(randomMinTranslate_.y, randomMaxTranslate_.y);
-			emitPosition.z = Random::GenerateFloat(randomMinTranslate_.z, randomMaxTranslate_.z);
+			emitSetting_.position.x = Random::GenerateFloat(randomMinTranslate_.x, randomMaxTranslate_.x);
+			emitSetting_.position.y = Random::GenerateFloat(randomMinTranslate_.y, randomMaxTranslate_.y);
+			emitSetting_.position.z = Random::GenerateFloat(randomMinTranslate_.z, randomMaxTranslate_.z);
 			// 移動量
 			emitSetting_.velocity.x = Random::GenerateFloat(randomMinVelocity_.x, randomMaxVelocity_.x);
 			emitSetting_.velocity.y = Random::GenerateFloat(randomMinVelocity_.y, randomMaxVelocity_.y);
@@ -65,7 +65,7 @@ void Emitter::Emit() {
 		// このクラスを継承して、ここにemitSettingを変更する処理を追加することで、様々なパーティクルを出すことが可能
 		//
 
-		particle_->AddNewParticle(emitPosition, emitSetting_);
+		particle_->AddNewParticle(emitSetting_);
 	}
 }
 
@@ -88,4 +88,36 @@ void Emitter::SetIsRepeat(const bool& isRepeat) {
 
 void Emitter::SetIsRandom(const bool& isRandom) {
 	isRandom_ = isRandom;
+}
+
+void Emitter::SetRandomMinPosition(const Vector3& randomMinPosition) {
+	randomMinTranslate_ = randomMinPosition;
+}
+
+void Emitter::SetRandomMaxPosition(const Vector3& randomMaxPosition) {
+	randomMaxTranslate_ = randomMaxPosition;
+}
+
+void Emitter::SetRandomMinVelocity(const Vector3& randomMinVelocity) {
+	randomMinVelocity_ = randomMinVelocity;
+}
+
+void Emitter::SetRandomMaxVelocity(const Vector3& randomMaxVelocity) {
+	randomMaxVelocity_ = randomMaxVelocity;
+}
+
+void Emitter::SetRandomMinColor(const Vector3& randomMinColor) {
+	randomMinColor_ = randomMinColor;
+}
+
+void Emitter::SetRandomMaxColor(const Vector3& randomMaxColor) {
+	randomMaxColor_ = randomMaxColor;
+}
+
+void Emitter::SetRandomMinLifeTime(float randomMinLifeTime) {
+	randomMinLifeTime_ = randomMinLifeTime;
+}
+
+void Emitter::SetRandomMaxLifeTime(float randomMaxLifeTime) {
+	randomMaxLifeTime_ = randomMaxLifeTime;
 }
