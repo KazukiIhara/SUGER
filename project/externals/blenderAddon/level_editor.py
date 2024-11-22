@@ -439,47 +439,49 @@ class MYADDON_OT_add_modelname(bpy.types.Operator):
 
         return {"FINISHED"}
 
-#パネル　オブジェクト名
-class OBJECT_PT_object_name(bpy.types.Panel):
-    """オブジェクトのネームパネル"""
-    bl_idname = "OBJECT_PT_object_name"
-    bl_label = "ObjectName"
+# パネル　オブジェクトタイプ
+class OBJECT_PT_object_type(bpy.types.Panel):
+    """オブジェクトのタイプパネル"""
+    bl_idname = "OBJECT_PT_object_type"
+    bl_label = "ObjectType"
     bl_space_type = "PROPERTIES"
     bl_region_type = "WINDOW"
     bl_context = "object"
 
-    #サブメニューの描画
-    def draw(self,context):
+    # サブメニューの描画
+    def draw(self, context):
 
-        #パネルに項目を追加
-        if "object_name" in context.object:
-            #既にプロパティがあれば、プロパティを表示
-            self.layout.prop(context.object,'["object_name"]', text = self.bl_label)
+        # パネルに項目を追加
+        if "object_type" in context.object:
+            # 既にプロパティがあれば、プロパティを表示
+            self.layout.prop(context.object, '["object_type"]', text=self.bl_label)
         else:
-            #プロパティがなければ、プロパティ追加ボタンを表示
-            self.layout.operator(MYADDON_OT_add_objectname.bl_idname)
+            # プロパティがなければ、プロパティ追加ボタンを表示
+            self.layout.operator(MYADDON_OT_add_objecttype.bl_idname)
 
-#オペレータ　カスタムプロパティ
-class MYADDON_OT_add_objectname(bpy.types.Operator):
-    bl_idname = "myaddon.myaddon_ot_add_objectname"
-    bl_label = "ObjectName 追加"
-    bl_description = "['object_name']カスタムプロパティを追加します"
+
+# オペレータ　カスタムプロパティ
+class MYADDON_OT_add_objecttype(bpy.types.Operator):
+    bl_idname = "myaddon.myaddon_ot_add_objecttype"
+    bl_label = "ObjectType 追加"
+    bl_description = "['object_type']カスタムプロパティを追加します"
     bl_options = {"REGISTER", "UNDO"}
 
-    def execute(self,context):
+    def execute(self, context):
 
-        #['object_name']カスタムプロパティを追加
-        context.object["object_name"] = ""
+        # ['object_type']カスタムプロパティを追加
+        context.object["object_type"] = ""
 
         return {"FINISHED"}
 
-#Blenderに登録するクラスリスト
-classes =(
+
+# Blenderに登録するクラスリスト
+classes = (
     MYADDON_OT_export_scene,
     MYADDON_OT_create_ico_sphere,
     TOPBAR_MT_my_menu,
-    MYADDON_OT_add_objectname,
-    OBJECT_PT_object_name,
+    MYADDON_OT_add_objecttype,
+    OBJECT_PT_object_type,
     MYADDON_OT_add_modelname,
     OBJECT_PT_model_name,
     MYADDON_OT_add_collider,
