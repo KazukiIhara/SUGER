@@ -11,7 +11,7 @@ public:
 	void Initialize()override;
 
 	// 更新
-	void Update()override;
+	virtual void Update()override;
 
 	// パーティクル発生
 	virtual void Emit();
@@ -27,6 +27,9 @@ public:
 	void SetIsRepeat(const bool& isRepeat);
 
 protected:
+	// デルタタイム
+	const float kDeltaTime_ = 1.0f / 60.0f;
+
 	// パーティクル発生設定
 	EmitSetting emitSetting_{};
 	// 発生数
@@ -37,10 +40,6 @@ protected:
 	bool isRepeat_ = false;
 	// 頻度用時刻
 	float frequencyTime_ = 0.0f;
-
-	// デルタタイム
-	const float kDeltaTime_ = 1.0f / 60.0f;
-
 	// セットするパーティクル
 	Particle* particle_ = nullptr;
 };

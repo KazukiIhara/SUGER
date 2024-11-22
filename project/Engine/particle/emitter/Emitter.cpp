@@ -30,10 +30,7 @@ void Emitter::Update() {
 
 		// 頻度より大きいなら発生
 		if (frequency_ <= frequencyTime_) {
-			// 発生個数分ループ
-			for (uint32_t i = 0; i < count_; i++) {
-				particle_->AddNewParticle(GetWorldPosition(), emitSetting_);
-			}
+			Emit();
 			// 余計に過ぎた時間も加味して頻度計算する
 			frequencyTime_ -= frequency_;
 		}
