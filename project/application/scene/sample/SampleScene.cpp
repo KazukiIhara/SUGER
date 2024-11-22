@@ -52,6 +52,8 @@ void SampleScene::Initialize() {
 	emitter_.Initialize("sampleEmitter");
 	// エミッターにパーティクルをセット
 	emitter_.SetParticle("circle");
+	// 繰り返し発生ON
+	emitter_.SetIsRepeat(true);
 
 	// 音声再生
 	SUGER::PlayWaveSound("Alarm01.wav");

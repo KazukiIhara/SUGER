@@ -7,6 +7,9 @@ public:
 	Emitter() = default;
 	~Emitter() = default;
 
+	// 初期化
+	void Initialize()override;
+
 	// 更新
 	void Update()override;
 
@@ -24,6 +27,8 @@ public:
 	void SetIsRepeat(const bool& isRepeat);
 
 protected:
+	// パーティクル発生設定
+	EmitSetting emitSetting_{};
 	// 発生数
 	uint32_t count_ = 1;
 	// 発生頻度
@@ -32,6 +37,9 @@ protected:
 	bool isRepeat_ = false;
 	// 頻度用時刻
 	float frequencyTime_ = 0.0f;
+
+	// デルタタイム
+	const float kDeltaTime_ = 1.0f / 60.0f;
 
 	// セットするパーティクル
 	Particle* particle_ = nullptr;

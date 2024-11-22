@@ -31,6 +31,9 @@ public:
 	// パーティクルのセット
 	void SetParticle(const std::string& particleName);
 
+	// 繰り返し発生フラグセット
+	void SetIsRepeat(const bool& isRepeat);
+
 
 	//
 	// Getter

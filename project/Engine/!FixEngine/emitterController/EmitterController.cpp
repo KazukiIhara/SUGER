@@ -35,6 +35,10 @@ void EmitterController::SetParticle(const std::string& particleName) {
 	emitter_->SetParticle(particleName);
 }
 
+void EmitterController::SetIsRepeat(const bool& isRepeat) {
+	emitter_->SetIsRepeat(isRepeat);
+}
+
 const Vector3& EmitterController::GetScale() const {
 	return emitter_->GetScale();
 }

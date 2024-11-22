@@ -2,28 +2,53 @@
 
 #include "framework/SUGER.h"
 
+void Emitter::Initialize() {
+	// 基底クラスの初期化
+	Empty::Initialize();
+
+	// 発生設定の初期化
+	// 発生数は1
+	count_ = 1;
+	// 移動量は0
+	emitSetting_.velocity = { 0.0f,0.0f,0.0f };
+	// 色は白
+	emitSetting_.color = { 1.0f,1.0f,1.0f,1.0f };
+	// 生存時間をひとまず5秒に設定
+	emitSetting_.lifeTime = 5.0f;
+}
+
 void Emitter::Update() {
 	// 基底クラスの更新
 	Empty::Update();
 
 	// 繰り返しフラグがオンなら繰り返し発生
 	if (isRepeat_) {
-		// TODO: 繰り返しパーティクルを発生させる処理
+
+		// エミッターの処理
+		// 時刻を進める
+		frequencyTime_ += kDeltaTime_;
+
+		// 頻度より大きいなら発生
+		if (frequency_ <= frequencyTime_) {
+			// 発生個数分ループ
+			for (uint32_t i = 0; i < count_; i++) {
+				particle_->AddNewParticle(GetWorldPosition(), emitSetting_);
+			}
+			// 余計に過ぎた時間も加味して頻度計算する
+			frequencyTime_ -= frequency_;
+		}
 	}
 }
 
 void Emitter::Emit() {
-	// パーティクル発生設定
-	EmitSetting emitSetting{};
-	// 移動量は0
-	emitSetting.velocity = { 0.0f,0.0f,0.0f };
-	// 色は白
-	emitSetting.color = { 1.0f,1.0f,1.0f,1.0f };
-	// 生存時間をひとまず5秒に設定
-	emitSetting.lifeTime = 5.0f;
 	// 発生個数分ループ
 	for (uint32_t i = 0; i < count_; i++) {
-		particle_->AddNewParticle(GetWorldPosition(), emitSetting);
+
+		//
+		// このクラスを継承して、ここにemitSettingを変更する処理を追加することで、様々なパーティクルを出すことが可能
+		//
+
+		particle_->AddNewParticle(GetWorldPosition(), emitSetting_);
 	}
 }
 
