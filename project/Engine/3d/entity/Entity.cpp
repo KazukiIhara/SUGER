@@ -67,11 +67,14 @@ void Entity::SetModel(const std::string& filePath) {
 }
 
 void Entity::SetCamera(Camera* camera) {
-
+	// カメラがなければassert
+	assert(camera);
 	camera_ = camera;
 }
 
 void Entity::SetLight(PunctualLight* punctualLight) {
+	// ライトがなければassert
+	assert(punctualLight);
 	punctualLight_ = punctualLight;
 }
 

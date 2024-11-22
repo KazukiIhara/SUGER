@@ -30,7 +30,7 @@ void SampleScene::Initialize() {
 	SUGER::LoadWaveSound("Alarm01.wav");
 
 	// 板ポリパーティクルの作成
-	SUGER::CreatePlaneFixParticle("circle", "circle.png");
+	SUGER::CreateFixParticle("circle", ParticleType::kPlane, "circle.png");
 	// エミッターの作成
 	SUGER::CreateEmitter("sampleEmitter");
 

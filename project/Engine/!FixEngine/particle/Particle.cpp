@@ -8,7 +8,9 @@ void Particle::Initialize(Model* model, Camera* camera, const std::string& textu
 	SetCamera(camera);
 
 	// テクスチャファイル名をセット
-	textureFileName_ = textureFileName;
+	if (textureFileName != "") {
+		textureFileName_ = textureFileName;
+	}
 
 	// マテリアル初期化
 	material_.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -111,7 +113,7 @@ void Particle::Draw() {
 				model_->DrawPlaneParticle(instanceCount_, textureFileName_);
 				break;
 			case kModel:
-				// TODO:3Dモデルパーティクルの実装
+				model_->DrawModelParticle(instanceCount_);
 				break;
 		}
 	}

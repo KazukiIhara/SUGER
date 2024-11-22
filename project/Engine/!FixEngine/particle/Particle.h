@@ -17,7 +17,7 @@ public:
 	~Particle() = default;
 
 	// 初期化
-	void Initialize(Model* model, Camera* camera, const std::string& textureFileName);
+	void Initialize(Model* model, Camera* camera, const std::string& textureFileName = "");
 	// 更新
 	void Update();
 	// 描画
@@ -67,7 +67,7 @@ private:
 	Camera* camera_ = nullptr;
 
 	// 板ポリ描画時のテクスチャファイル名
-	std::string textureFileName_;
+	std::string textureFileName_ = "";
 
 	// instancing描画用のリソース
 	ComPtr<ID3D12Resource> instancingResource_ = nullptr;

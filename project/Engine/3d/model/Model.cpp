@@ -108,6 +108,19 @@ void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& 
 	}
 }
 
+void Model::DrawModelParticle(const uint32_t& instanceCount) {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		// VBVを設定
+		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		// IBVを設定
+		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
+		// SRVセット
+		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
+		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), instanceCount, 0, 0, 0);
+	}
+}
+
 void Model::LoadModel(const std::string& filename, const std::string& directoryPath) {
 	// 対応する拡張子のリスト
 	std::vector<std::string> supportedExtensions = { ".obj", ".gltf" };

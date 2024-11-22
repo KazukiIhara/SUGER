@@ -236,7 +236,7 @@ public: // クラスメソッド
 
 #pragma region FixParticleManager
 	// FixParticleの作成
-	static void CreatePlaneFixParticle(const std::string& name, const std::string& filePath = "");
+	static void CreateFixParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath);
 	// FixParticleの更新
 	static void UpdateParticles();
 	// FixParticleの描画

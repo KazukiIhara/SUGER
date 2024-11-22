@@ -541,10 +541,21 @@ Emitter* SUGER::FindEmitter(const std::string& name) {
 	return emitterManager_->Find(name);
 }
 
-void SUGER::CreatePlaneFixParticle(const std::string& name, const std::string& filePath) {
+void SUGER::CreateFixParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath) {
 	// 既定のディレクトリパス
-	const std::string& directoryPath = "resources/images/";
-	fixParticleManager_->CreatePlaneParticle(name, directoryPath + filePath);
+	const std::string& textureDirectoryPath = "resources/images/";
+	// パーティクルタイプに応じてパーティクルを作成
+	switch (particleType) {
+		case kPlane:
+			// 板ポリパーティクルを作成
+			fixParticleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
+			break;
+		case kModel:
+			// モデルパーティクルを作成
+			fixParticleManager_->CreateModelParticle(name, filePath);
+			break;
+	}
+
 }
 
 void SUGER::UpdateParticles() {

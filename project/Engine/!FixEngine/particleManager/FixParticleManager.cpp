@@ -52,6 +52,18 @@ void FixParticleManager::CreatePlaneParticle(const std::string& name, const std:
 	particles_.insert(std::make_pair(name, std::move(newParticle)));
 }
 
+void FixParticleManager::CreateModelParticle(const std::string& name, const std::string& filePath) {
+	// モデルを読み込み
+	modelManager_->Load(filePath);
+	// 新規パーティクル作成、初期化
+	std::unique_ptr<Particle> newParticle = std::make_unique<Particle>();
+	newParticle->Initialize(modelManager_->Find(filePath), camera_);
+	// 板ポリタイプ
+	newParticle->SetType(kModel);
+	// 生成したパーティクルをmapコンテナに格納
+	particles_.insert(std::make_pair(name, std::move(newParticle)));
+}
+
 Particle* FixParticleManager::Find(const std::string& name) {
 	// 作成済みパーティクルを検索
 	if (particles_.contains(name)) {

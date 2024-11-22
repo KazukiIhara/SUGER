@@ -28,8 +28,11 @@ public:
 	// コンテナをクリア
 	void ClearContainer();
 
-	// 新規パーティクル作成
+	// 新規板ポリパーティクル作成
 	void CreatePlaneParticle(const std::string& name, const std::string& filePath);
+
+	// 新規モデルパーティクル作成
+	void CreateModelParticle(const std::string& name, const std::string& filePath);
 
 	// 作成済みのパーティクルを検索
 	Particle* Find(const std::string& name);
