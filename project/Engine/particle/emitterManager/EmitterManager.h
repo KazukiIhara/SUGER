@@ -7,7 +7,7 @@
 
 #include "particle/emitter/Emitter.h"
 
-class FixParticleManager;
+class ParticleManager;
 
 class EmitterManager {
 public:

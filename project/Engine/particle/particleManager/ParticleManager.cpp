@@ -1,10 +1,10 @@
-#include "FixParticleManager.h"
+#include "ParticleManager.h"
 
 #include "manager/model/ModelManager.h"
 #include "manager/texture/TextureManager.h"
 #include "3d/cameras/camera/Camera.h"
 
-void FixParticleManager::Initialize(ModelManager* modelManager, TextureManager* textureManager) {
+void ParticleManager::Initialize(ModelManager* modelManager, TextureManager* textureManager) {
 	// モデルマネージャのインスタンスをセット
 	SetModelManager(modelManager);
 	// テクスチャマネージャのセット
@@ -13,7 +13,7 @@ void FixParticleManager::Initialize(ModelManager* modelManager, TextureManager* 
 	ClearContainer();
 }
 
-void FixParticleManager::Update() {
+void ParticleManager::Update() {
 	for (auto& pair : particles_) {
 		if (pair.second && pair.second->GetIsActive()) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
@@ -22,7 +22,7 @@ void FixParticleManager::Update() {
 	}
 }
 
-void FixParticleManager::Draw() {
+void ParticleManager::Draw() {
 	for (auto& pair : particles_) {
 		if (pair.second && pair.second->GetIsActive()) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
@@ -31,16 +31,16 @@ void FixParticleManager::Draw() {
 	}
 }
 
-void FixParticleManager::Finalize() {
+void ParticleManager::Finalize() {
 	// コンテナをクリア
 	ClearContainer();
 }
 
-void FixParticleManager::ClearContainer() {
+void ParticleManager::ClearContainer() {
 	particles_.clear();
 }
 
-void FixParticleManager::CreatePlaneParticle(const std::string& name, const std::string& filePath) {
+void ParticleManager::CreatePlaneParticle(const std::string& name, const std::string& filePath) {
 	// テクスチャを読み込み
 	textureManager_->Load(filePath);
 	// 新規パーティクル作成、初期化
@@ -52,7 +52,7 @@ void FixParticleManager::CreatePlaneParticle(const std::string& name, const std:
 	particles_.insert(std::make_pair(name, std::move(newParticle)));
 }
 
-void FixParticleManager::CreateModelParticle(const std::string& name, const std::string& filePath) {
+void ParticleManager::CreateModelParticle(const std::string& name, const std::string& filePath) {
 	// モデルを読み込み
 	modelManager_->Load(filePath);
 	// 新規パーティクル作成、初期化
@@ -64,7 +64,7 @@ void FixParticleManager::CreateModelParticle(const std::string& name, const std:
 	particles_.insert(std::make_pair(name, std::move(newParticle)));
 }
 
-Particle* FixParticleManager::Find(const std::string& name) {
+Particle* ParticleManager::Find(const std::string& name) {
 	// 作成済みパーティクルを検索
 	if (particles_.contains(name)) {
 		// オブジェクトを戻り値としてreturn
@@ -74,17 +74,17 @@ Particle* FixParticleManager::Find(const std::string& name) {
 	return nullptr;
 }
 
-void FixParticleManager::SetModelManager(ModelManager* modelManager) {
+void ParticleManager::SetModelManager(ModelManager* modelManager) {
 	assert(modelManager);
 	modelManager_ = modelManager;
 }
 
-void FixParticleManager::SetTextureManager(TextureManager* textureManager) {
+void ParticleManager::SetTextureManager(TextureManager* textureManager) {
 	assert(textureManager);
 	textureManager_ = textureManager;
 }
 
-void FixParticleManager::SetSceneCamera(Camera* camera) {
+void ParticleManager::SetSceneCamera(Camera* camera) {
 	assert(camera);
 	camera_ = camera;
 	for (auto& pair : particles_) {

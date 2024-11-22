@@ -11,10 +11,10 @@ class ModelManager;
 class TextureManager;
 class Camera;
 
-class FixParticleManager {
+class ParticleManager {
 public:
-	FixParticleManager() = default;
-	~FixParticleManager() = default;
+	ParticleManager() = default;
+	~ParticleManager() = default;
 
 	// 初期化処理
 	void Initialize(ModelManager* modelManager, TextureManager* textureManager);

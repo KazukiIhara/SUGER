@@ -19,7 +19,7 @@
 #include "manager/emptyManager/EmptyManager.h"
 #include "manager/entityManager/EntityManager.h"
 #include "particle/emitterManager/EmitterManager.h"
-#include "particle/particleManager/FixParticleManager.h"
+#include "particle/particleManager/ParticleManager.h"
 #include "manager/sound/SoundManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "manager/data/grobal/GrobalDataManager.h"
@@ -30,21 +30,6 @@
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
 #endif // _DEBUG
-
-
-class WorldTransform;
-class Sprite;
-class Object3D;
-class Model;
-class RandomParticle;
-class Camera;
-class PunctualLight;
-class JsonLevelData;
-
-
-//
-// new
-//
 
 class SUGER {
 public:
@@ -316,7 +301,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<EmptyManager> emptyManager_;
 	static std::unique_ptr<EntityManager> entityManager_;
 	static std::unique_ptr<EmitterManager> emitterManager_;
-	static std::unique_ptr<FixParticleManager> fixParticleManager_;
+	static std::unique_ptr<ParticleManager> particleManager_;
 	static std::unique_ptr<SoundManager> soundManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<GrobalDataManager> grobalDataManager_;

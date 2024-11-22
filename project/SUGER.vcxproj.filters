@@ -370,7 +370,7 @@
     <ClCompile Include="Engine\manager\data\grobal\GrobalDataManager.cpp" />
     <ClCompile Include="Engine\particle\emitter\Emitter.cpp" />
     <ClCompile Include="Engine\particle\emitterManager\EmitterManager.cpp" />
-    <ClCompile Include="Engine\particle\particleManager\FixParticleManager.cpp" />
+    <ClCompile Include="Engine\particle\particleManager\ParticleManager.cpp" />
     <ClCompile Include="Engine\particle\particle\Particle.cpp" />
     <ClCompile Include="Engine\particle\emitterController\EmitterController.cpp" />
     <ClCompile Include="Engine\random\Random.cpp" />
@@ -548,7 +548,7 @@
     <ClInclude Include="Engine\manager\data\grobal\GrobalDataManager.h" />
     <ClInclude Include="Engine\particle\emitter\Emitter.h" />
     <ClInclude Include="Engine\particle\emitterManager\EmitterManager.h" />
-    <ClInclude Include="Engine\particle\particleManager\FixParticleManager.h" />
+    <ClInclude Include="Engine\particle\particleManager\ParticleManager.h" />
     <ClInclude Include="Engine\particle\particle\Particle.h" />
     <ClInclude Include="Engine\particle\emitterController\EmitterController.h" />
     <ClInclude Include="Engine\random\Random.h" />

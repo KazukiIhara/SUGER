@@ -19,7 +19,7 @@ std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
 std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
 std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<EmitterManager> SUGER::emitterManager_ = nullptr;
-std::unique_ptr<FixParticleManager> SUGER::fixParticleManager_ = nullptr;
+std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
 std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
 std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
@@ -80,8 +80,8 @@ void SUGER::Initialize() {
 	emitterManager_->Initialize();
 
 	// FixParticleManagerの初期化
-	fixParticleManager_ = std::make_unique<FixParticleManager>();
-	fixParticleManager_->Initialize(modelManager_.get(), textureManager_.get());
+	particleManager_ = std::make_unique<ParticleManager>();
+	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
 
 
 
@@ -155,9 +155,9 @@ void SUGER::Finalize() {
 	}
 
 	// FixParticleManagerの終了処理
-	if (fixParticleManager_) {
-		fixParticleManager_->Finalize();
-		fixParticleManager_.reset();
+	if (particleManager_) {
+		particleManager_->Finalize();
+		particleManager_.reset();
 	}
 
 	// Object2DManagerの終了処理
@@ -488,12 +488,12 @@ Entity* SUGER::FindEntity(const std::string& name) {
 
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	entityManager_->SetRequiredObjects(camera, punctualLight);
-	fixParticleManager_->SetSceneCamera(camera);
+	particleManager_->SetSceneCamera(camera);
 }
 
 void SUGER::SetSceneCamera(Camera* camera) {
 	entityManager_->SetSceneCamera(camera);
-	fixParticleManager_->SetSceneCamera(camera);
+	particleManager_->SetSceneCamera(camera);
 }
 
 void SUGER::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {
@@ -515,26 +515,26 @@ void SUGER::CreateFixParticle(const std::string& name, const ParticleType& parti
 	switch (particleType) {
 		case kPlane:
 			// 板ポリパーティクルを作成
-			fixParticleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
+			particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
 			break;
 		case kModel:
 			// モデルパーティクルを作成
-			fixParticleManager_->CreateModelParticle(name, filePath);
+			particleManager_->CreateModelParticle(name, filePath);
 			break;
 	}
 
 }
 
 void SUGER::UpdateParticles() {
-	fixParticleManager_->Update();
+	particleManager_->Update();
 }
 
 void SUGER::DrawParticles() {
-	fixParticleManager_->Draw();
+	particleManager_->Draw();
 }
 
 Particle* SUGER::FindFixParticle(const std::string& name) {
-	return fixParticleManager_->Find(name);
+	return particleManager_->Find(name);
 }
 
 void SUGER::LoadWaveSound(const std::string& filename, const std::string& directoryPath) {
