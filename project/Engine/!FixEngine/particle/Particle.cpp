@@ -90,13 +90,6 @@ void Particle::Update() {
 		// 次のイテレーターに進める
 		++particleIterator;
 	}
-
-#ifdef _DEBUG
-	ImGui::Begin("particle");
-	ImGui::Text("instanceCount: %d", instanceCount_);
-	ImGui::Text("particleNum: %d", particles_.size());
-	ImGui::End();
-#endif // _DEBUG
 }
 
 void Particle::Draw() {
