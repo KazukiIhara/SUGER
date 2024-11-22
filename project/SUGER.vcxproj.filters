@@ -325,17 +325,11 @@
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp">
       <Filter>engine\manager\object\2d</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\particle\random\RandomParticle.cpp">
-      <Filter>engine\particle\3d</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\particle\system\ParticleSystem.cpp">
       <Filter>engine\particle\system</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp">
       <Filter>engine\3d\graphicsPipeline</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp">
-      <Filter>engine\manager\particle</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\system\Object3dSystem.cpp">
       <Filter>engine\3d\system</Filter>
@@ -354,9 +348,6 @@
     </ClCompile>
     <ClCompile Include="Engine\2d\controller\Object2dController.cpp">
       <Filter>engine\controller\object2d</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\particle\controller\ParticleController.cpp">
-      <Filter>engine\particle\controller</Filter>
     </ClCompile>
     <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp">
       <Filter>engine\data\level\json</Filter>
@@ -377,11 +368,11 @@
     <ClCompile Include="Engine\3d\skiningEntity\SkiningEntity.cpp" />
     <ClCompile Include="Engine\manager\sound\SoundManager.cpp" />
     <ClCompile Include="Engine\manager\data\grobal\GrobalDataManager.cpp" />
-    <ClCompile Include="Engine\!FixEngine\emitter\Emitter.cpp" />
-    <ClCompile Include="Engine\!FixEngine\emitterManager\EmitterManager.cpp" />
-    <ClCompile Include="Engine\!FixEngine\particleManager\FixParticleManager.cpp" />
-    <ClCompile Include="Engine\!FixEngine\particle\Particle.cpp" />
-    <ClCompile Include="Engine\!FixEngine\emitterController\EmitterController.cpp" />
+    <ClCompile Include="Engine\particle\emitter\Emitter.cpp" />
+    <ClCompile Include="Engine\particle\emitterManager\EmitterManager.cpp" />
+    <ClCompile Include="Engine\particle\particleManager\FixParticleManager.cpp" />
+    <ClCompile Include="Engine\particle\particle\Particle.cpp" />
+    <ClCompile Include="Engine\particle\emitterController\EmitterController.cpp" />
     <ClCompile Include="Engine\random\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -499,17 +490,11 @@
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h">
       <Filter>engine\manager\object\2d</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\particle\random\RandomParticle.h">
-      <Filter>engine\particle\3d</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\particle\system\ParticleSystem.h">
       <Filter>engine\particle\system</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h">
       <Filter>engine\3d\graphicsPipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\manager\particle\ParticleManager.h">
-      <Filter>engine\manager\particle</Filter>
     </ClInclude>
     <ClInclude Include="Engine\structs\ParticleStruct.h">
       <Filter>engine\structs</Filter>
@@ -538,9 +523,6 @@
     <ClInclude Include="Engine\2d\controller\Object2dController.h">
       <Filter>engine\controller\object2d</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\particle\controller\ParticleController.h">
-      <Filter>engine\particle\controller</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\data\level\json\JsonLevelData.h">
       <Filter>engine\data\level\json</Filter>
     </ClInclude>
@@ -564,11 +546,11 @@
     <ClInclude Include="Engine\manager\sound\SoundManager.h" />
     <ClInclude Include="Engine\structs\SoundStruct.h" />
     <ClInclude Include="Engine\manager\data\grobal\GrobalDataManager.h" />
-    <ClInclude Include="Engine\!FixEngine\emitter\Emitter.h" />
-    <ClInclude Include="Engine\!FixEngine\emitterManager\EmitterManager.h" />
-    <ClInclude Include="Engine\!FixEngine\particleManager\FixParticleManager.h" />
-    <ClInclude Include="Engine\!FixEngine\particle\Particle.h" />
-    <ClInclude Include="Engine\!FixEngine\emitterController\EmitterController.h" />
+    <ClInclude Include="Engine\particle\emitter\Emitter.h" />
+    <ClInclude Include="Engine\particle\emitterManager\EmitterManager.h" />
+    <ClInclude Include="Engine\particle\particleManager\FixParticleManager.h" />
+    <ClInclude Include="Engine\particle\particle\Particle.h" />
+    <ClInclude Include="Engine\particle\emitterController\EmitterController.h" />
     <ClInclude Include="Engine\random\Random.h" />
   </ItemGroup>
   <ItemGroup>

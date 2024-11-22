@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-#include "!FixEngine/emitter/Emitter.h"
+#include "particle/emitter/Emitter.h"
 
 class FixParticleManager;
 

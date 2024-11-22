@@ -18,11 +18,8 @@
 #include "manager/object/2d/Object2DManager.h"
 #include "manager/emptyManager/EmptyManager.h"
 #include "manager/entityManager/EntityManager.h"
-#include "manager/particle/ParticleManager.h"
-
-#include "!FixEngine/emitterManager/EmitterManager.h"
-#include "!FixEngine/particleManager/FixParticleManager.h"
-
+#include "particle/emitterManager/EmitterManager.h"
+#include "particle/particleManager/FixParticleManager.h"
 #include "manager/sound/SoundManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "manager/data/grobal/GrobalDataManager.h"
@@ -213,18 +210,6 @@ public: // クラスメソッド
 	static void SetSceneCamera(Camera* camera);
 #pragma endregion
 
-#pragma region ParticleManager
-	// Particleの作成
-	static void CreatePlaneParticle(const std::string& name, const std::string& filePath = "", const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
-	// Particleの更新
-	static void UpdateParticle();
-	// Particleの描画
-	static void DrawParticle();
-
-	// パーティクル検索                                 
-	static RandomParticle* FindParticle(const std::string& name);
-#pragma endregion
-
 #pragma region EmitterManager
 	// Emitterの作成
 	static void CreateEmitter(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
@@ -330,11 +315,8 @@ private: // クラスのポインタ
 	static std::unique_ptr<Object2DManager> object2dManager_;
 	static std::unique_ptr<EmptyManager> emptyManager_;
 	static std::unique_ptr<EntityManager> entityManager_;
-	static std::unique_ptr<ParticleManager> particleManager_;
-
 	static std::unique_ptr<EmitterManager> emitterManager_;
 	static std::unique_ptr<FixParticleManager> fixParticleManager_;
-
 	static std::unique_ptr<SoundManager> soundManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<GrobalDataManager> grobalDataManager_;

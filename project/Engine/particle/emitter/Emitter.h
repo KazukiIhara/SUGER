@@ -1,6 +1,6 @@
 #pragma once
 #include "3d/empty/empty.h"
-#include "!FixEngine/particle/Particle.h"
+#include "particle/particle/Particle.h"
 
 class Emitter:public Empty {
 public:

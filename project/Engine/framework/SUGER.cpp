@@ -18,11 +18,8 @@ std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
 std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
 std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
-std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
-
 std::unique_ptr<EmitterManager> SUGER::emitterManager_ = nullptr;
 std::unique_ptr<FixParticleManager> SUGER::fixParticleManager_ = nullptr;
-
 std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
 std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
@@ -77,11 +74,6 @@ void SUGER::Initialize() {
 	// entityManagerの初期化
 	entityManager_ = std::make_unique<EntityManager>();
 	entityManager_->Initialize(modelManager_.get());
-
-	// particleManagerの初期化
-	particleManager_ = std::make_unique<ParticleManager>();
-	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
-
 
 	// emitterManagerの初期化
 	emitterManager_ = std::make_unique<EmitterManager>();
@@ -166,11 +158,6 @@ void SUGER::Finalize() {
 	if (fixParticleManager_) {
 		fixParticleManager_->Finalize();
 		fixParticleManager_.reset();
-	}
-
-	// ParticleManagerの終了処理
-	if (particleManager_) {
-		particleManager_.reset();
 	}
 
 	// Object2DManagerの終了処理
@@ -280,7 +267,6 @@ void SUGER::Draw() {
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
 	// 3Dパーティクル描画処理
-	DrawParticle();
 	DrawParticles();
 
 	// 2Dオブジェクト描画前処理
@@ -502,31 +488,12 @@ Entity* SUGER::FindEntity(const std::string& name) {
 
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	entityManager_->SetRequiredObjects(camera, punctualLight);
-	particleManager_->SetSceneCamera(camera);
 	fixParticleManager_->SetSceneCamera(camera);
 }
 
 void SUGER::SetSceneCamera(Camera* camera) {
 	entityManager_->SetSceneCamera(camera);
-	particleManager_->SetSceneCamera(camera);
-}
-
-void SUGER::CreatePlaneParticle(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
-	// 規定のディレクトリパス
-	const std::string& directoryPath = "resources/images/";
-	particleManager_->CreatePlane(name, directoryPath + filePath, transform);
-}
-
-void SUGER::UpdateParticle() {
-	particleManager_->Update();
-}
-
-void SUGER::DrawParticle() {
-	particleManager_->Draw();
-}
-
-RandomParticle* SUGER::FindParticle(const std::string& name) {
-	return particleManager_->Find(name);
+	fixParticleManager_->SetSceneCamera(camera);
 }
 
 void SUGER::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {
