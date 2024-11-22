@@ -1,7 +1,6 @@
 #include "Emitter.h"
 
 #include "framework/SUGER.h"
-#include "random/Random.h"
 
 void Emitter::Update() {
 	// 基底クラスの更新
