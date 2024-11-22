@@ -31,9 +31,30 @@ public:
 	// パーティクルのセット
 	void SetParticle(const std::string& particleName);
 
+	// 同時発生個数のセット
+	void SetCount(const uint32_t& count);
+
 	// 繰り返し発生フラグセット
 	void SetIsRepeat(const bool& isRepeat);
 
+	// ランダムフラグセット
+	void SetIsRandom(const bool& isRandom);
+
+	// 発生場所のランダム閾値
+	void SetRandomMinPosition(const Vector3& randomMinPosition);
+	void SetRandomMaxPosition(const Vector3& randomMaxPosition);
+
+	// 移動量のランダム閾値
+	void SetRandomMinVelocity(const Vector3& randomMinVelocity);
+	void SetRandomMaxVelocity(const Vector3& randomMaxVelocity);
+
+	// 色のランダム閾値
+	void SetRandomMinColor(const Vector3& randomMinColor);
+	void SetRandomMaxColor(const Vector3& randomMaxColor);
+
+	// 生存時間のランダム閾値
+	void SetRandomMinLifeTime(float randomMinLifeTime);
+	void SetRandomMaxLifeTime(float randomMaxLifeTime);
 
 	//
 	// Getter

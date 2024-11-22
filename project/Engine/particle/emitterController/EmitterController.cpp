@@ -35,8 +35,48 @@ void EmitterController::SetParticle(const std::string& particleName) {
 	emitter_->SetParticle(particleName);
 }
 
+void EmitterController::SetCount(const uint32_t& count) {
+	emitter_->SetCount(count);
+}
+
 void EmitterController::SetIsRepeat(const bool& isRepeat) {
 	emitter_->SetIsRepeat(isRepeat);
+}
+
+void EmitterController::SetIsRandom(const bool& isRandom) {
+	emitter_->SetIsRandom(isRandom);
+}
+
+void EmitterController::SetRandomMinPosition(const Vector3& randomMinPosition) {
+	emitter_->SetRandomMinPosition(randomMinPosition);
+}
+
+void EmitterController::SetRandomMaxPosition(const Vector3& randomMaxPosition) {
+	emitter_->SetRandomMaxPosition(randomMaxPosition);
+}
+
+void EmitterController::SetRandomMinVelocity(const Vector3& randomMinVelocity) {
+	emitter_->SetRandomMinVelocity(randomMinVelocity);
+}
+
+void EmitterController::SetRandomMaxVelocity(const Vector3& randomMaxVelocity) {
+	emitter_->SetRandomMaxVelocity(randomMaxVelocity);
+}
+
+void EmitterController::SetRandomMinColor(const Vector3& randomMinColor) {
+	emitter_->SetRandomMinColor(randomMinColor);
+}
+
+void EmitterController::SetRandomMaxColor(const Vector3& randomMaxColor) {
+	emitter_->SetRandomMaxColor(randomMaxColor);
+}
+
+void EmitterController::SetRandomMinLifeTime(float randomMinLifeTime) {
+	emitter_->SetRandomMinLifeTime(randomMinLifeTime);
+}
+
+void EmitterController::SetRandomMaxLifeTime(float randomMaxLifeTime) {
+	emitter_->SetRandomMaxLifeTime(randomMaxLifeTime);
 }
 
 const Vector3& EmitterController::GetScale() const {
@@ -51,7 +91,7 @@ const Vector3& EmitterController::GetTranslate() const {
 	return emitter_->GetTranslate();
 }
 
- Vector3 EmitterController::GetWorldPosition() const {
+Vector3 EmitterController::GetWorldPosition() const {
 	return emitter_->GetWorldPosition();
 }
 

@@ -25,8 +25,41 @@ public:
 	void SerFrequency(const float& frequency);
 	// 繰り返し発生フラグのセット
 	void SetIsRepeat(const bool& isRepeat);
+	// ランダムフラグのセット
+	void SetIsRandom(const bool& isRandom);
+
+	// ランダム発生の閾値設定
+	// 座標最小値
+	void SetRandomMinPosition(const Vector3& randomMinPosition);
+
+	// 座標最大値
+	void SetRandomMaxPosition(const Vector3& randomMaxPosition);
+
+	// 移動量最小値
+	void SetRandomMinVelocity(const Vector3& randomMinVelocity);
+
+	// 移動量最大値
+	void SetRandomMaxVelocity(const Vector3& randomMaxVelocity);
+
+	// 色最小値
+	void SetRandomMinColor(const Vector3& randomMinColor);
+
+	// 色最大値
+	void SetRandomMaxColor(const Vector3& randomMaxColor);
+
+	// 生存時間最小値
+	void SetRandomMinLifeTime(float randomMinLifeTime);
+
+	// 生存時間最大値
+	void SetRandomMaxLifeTime(float randomMaxLifeTime);
 
 protected:
+	// デルタタイム
+	const float kDeltaTime_ = 1.0f / 60.0f;
+
+	// セットするパーティクル
+	Particle* particle_ = nullptr;
+
 	// パーティクル発生設定
 	EmitSetting emitSetting_{};
 	// 発生数
@@ -38,9 +71,23 @@ protected:
 	// 頻度用時刻
 	float frequencyTime_ = 0.0f;
 
-	// デルタタイム
-	const float kDeltaTime_ = 1.0f / 60.0f;
+	// ランダム値を使用するかどうか
+	bool isRandom_ = false;
 
-	// セットするパーティクル
-	Particle* particle_ = nullptr;
+	// 発生場所のランダム閾値
+	Vector3 randomMinTranslate_ = { -1.0f,-1.0f,-1.0f };
+	Vector3 randomMaxTranslate_ = { 1.0f,1.0f,1.0f };
+
+	// 移動量のランダム閾値
+	Vector3	randomMinVelocity_ = { -1.0f,-1.0f,-1.0f };
+	Vector3	randomMaxVelocity_ = { 1.0f,1.0f,1.0f };
+
+	// 色のランダム閾値
+	Vector3 randomMinColor_ = { 0.0f,0.0f,0.0f };
+	Vector3	randomMaxColor_ = { 1.0f,1.0f,1.0f };
+
+	// 生存時間のランダム閾値
+	float randomMinLifeTime_ = 0.0f;
+	float randomMaxLifeTime_ = 5.0f;
+
 };

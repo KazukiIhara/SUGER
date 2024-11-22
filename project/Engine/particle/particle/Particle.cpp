@@ -112,7 +112,7 @@ void Particle::Draw() {
 	}
 }
 
-void Particle::AddNewParticle(const Vector3& emitPosition, const EmitSetting& emitSetting) {
+void Particle::AddNewParticle(const EmitSetting& emitSetting) {
 
 	// 最大数を超えていたら追加しない
 	if (particles_.size() >= kNumMaxInstance) {
@@ -124,7 +124,7 @@ void Particle::AddNewParticle(const Vector3& emitPosition, const EmitSetting& em
 	// トランスフォームの設定
 	particle.transform.scale = { 1.0f,1.0f,1.0f };
 	particle.transform.rotate = { 0.0f,0.0f,0.0f };
-	particle.transform.translate = emitPosition;
+	particle.transform.translate = emitSetting.position;
 	// 移動量の設定
 	particle.velocity = emitSetting.velocity;
 	// 色の設定
