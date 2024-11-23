@@ -40,7 +40,7 @@ void SampleScene::Initialize() {
 	entity_.SetEnableLight(false);
 
 	// オブジェクト2Dコントローラの初期化
-	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
+	pronama_chan.Initialize("pronama_chan");
 
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
 	pronama_chan.SetSize(Vector2(400.0f, 400.0f));
@@ -79,7 +79,12 @@ void SampleScene::Finalize() {
 
 }
 
-void SampleScene::Update() {
+void SampleScene::SceneStatusPlayInitialize() {
+	
+
+}
+
+void SampleScene::SceneStatusPlayUpdate() {
 
 	//
 	// GrobalData
@@ -88,15 +93,14 @@ void SampleScene::Update() {
 	// 更新処理の初めにグローバルデータクラスに保存されている値を取得
 	entity_.SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
 
-	// スペースキーを押すと発生
-	if (SUGER::PushKey(DIK_SPACE)) {
-		emitter_.Emit();
-	}
-
 	// 
 	// シーンの更新処理ここから
 	// 
 
+	// スペースキーを押すと発生
+	if (SUGER::PushKey(DIK_SPACE)) {
+		emitter_.Emit();
+	}
 
 	if (SUGER::PushKey(DIK_D)) {
 		// スプライトを回転
@@ -121,7 +125,4 @@ void SampleScene::Update() {
 	// 行列更新の手前でローカルデータをグローバルデータクラスに挿入
 	SUGER::SetGrobalDataValue("Pronama_Chan", "translate", entity_.GetTranslate());
 
-
-	// シーンの更新(更新処理の最後)
-	BaseScene::Update();
 }

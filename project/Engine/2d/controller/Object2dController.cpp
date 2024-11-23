@@ -2,15 +2,13 @@
 
 #include <cassert>
 
-#include "2d/sprite/Sprite.h"
+#include "framework/SUGER.h"
 
-void Object2DController::Initialize(Sprite* object2d) {
-#ifdef _DEBUG
-	// nullptrだった場合assert
-	assert(object2d);
-#endif // _DEBUG
-	// オブジェクトをセット
-	SetObject(object2d);
+void Object2DController::Initialize(const std::string& objectName) {
+	// Spriteをマネージャから持ってきてセット
+	object2d_ = SUGER::FindObject2D(objectName);
+	// なかったらassert
+	assert(object2d_);
 }
 
 
@@ -56,9 +54,6 @@ void Object2DController::SetColor(const Vector4& color) {
 }
 void Object2DController::SetIsActive(const bool& isActive) {
 	object2d_->SetIsActive(isActive);
-}
-void Object2DController::SetObject(Sprite* object2d) {
-	object2d_ = object2d;
 }
 
 // 座標の取得(スクリーン座標系)
