@@ -375,6 +375,7 @@
     <ClCompile Include="Engine\particle\emitterController\EmitterController.cpp" />
     <ClCompile Include="Engine\random\Random.cpp" />
     <ClCompile Include="Engine\transition\fade\Fade.cpp" />
+    <ClCompile Include="application\scene\direction\DirectionScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -556,6 +557,7 @@
     <ClInclude Include="Engine\transition\fade\Fade.h" />
     <ClInclude Include="Engine\enum\FadeEnum.h" />
     <ClInclude Include="Engine\enum\SceneEnum.h" />
+    <ClInclude Include="application\scene\direction\DirectionScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

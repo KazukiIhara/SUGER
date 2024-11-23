@@ -454,6 +454,10 @@ Sprite* SUGER::FindObject2D(const std::string& name) {
 	return object2dManager_->Find(name);
 }
 
+void SUGER::Clear2DObjectContainer() {
+	object2dManager_->ClearContainer();
+}
+
 std::string SUGER::CreateEmpty(const std::string& name, const EulerTransform3D& transform) {
 	return emptyManager_->Create(name, transform);
 }
@@ -464,6 +468,10 @@ void SUGER::UpdateEmpties() {
 
 Empty* SUGER::FindEmpty(const std::string& name) {
 	return emptyManager_->Find(name);
+}
+
+void SUGER::ClearEmptyContainer() {
+	emptyManager_->ClearContainer();
 }
 
 std::string SUGER::CreateEntity(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
@@ -484,6 +492,10 @@ void SUGER::DrawSkiningEntities() {
 
 Entity* SUGER::FindEntity(const std::string& name) {
 	return entityManager_->Find(name);
+}
+
+void SUGER::ClearEntityContainer() {
+	entityManager_->ClearContainer();
 }
 
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
@@ -508,7 +520,11 @@ Emitter* SUGER::FindEmitter(const std::string& name) {
 	return emitterManager_->Find(name);
 }
 
-void SUGER::CreateFixParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath) {
+void SUGER::ClearEmitterContainer() {
+	emitterManager_->ClearContainer();
+}
+
+void SUGER::CreateParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath) {
 	// 既定のディレクトリパス
 	const std::string& textureDirectoryPath = "resources/images/";
 	// パーティクルタイプに応じてパーティクルを作成
@@ -522,7 +538,6 @@ void SUGER::CreateFixParticle(const std::string& name, const ParticleType& parti
 			particleManager_->CreateModelParticle(name, filePath);
 			break;
 	}
-
 }
 
 void SUGER::UpdateParticles() {
@@ -533,8 +548,12 @@ void SUGER::DrawParticles() {
 	particleManager_->Draw();
 }
 
-Particle* SUGER::FindFixParticle(const std::string& name) {
+Particle* SUGER::FindParticle(const std::string& name) {
 	return particleManager_->Find(name);
+}
+
+void SUGER::ClearParticleContainer() {
+	particleManager_->ClearContainer();
 }
 
 void SUGER::LoadWaveSound(const std::string& filename, const std::string& directoryPath) {

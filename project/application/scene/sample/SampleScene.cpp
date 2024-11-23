@@ -8,7 +8,6 @@
 #include "framework/SUGER.h"
 #include "debugTools/logger/Logger.h"
 
-
 void SampleScene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
@@ -28,7 +27,7 @@ void SampleScene::Initialize() {
 	SUGER::LoadWaveSound("Alarm01.wav");
 
 	// 板ポリパーティクルの作成
-	SUGER::CreateFixParticle("circle", ParticleType::kModel, "teapot");
+	SUGER::CreateParticle("circle", ParticleType::kPlane, "circle.png");
 	// エミッターの作成
 	SUGER::CreateEmitter("sampleEmitter");
 
@@ -50,8 +49,10 @@ void SampleScene::Initialize() {
 	// エミッターにパーティクルをセット
 	emitter_.SetParticle("circle");
 	// エミッターの発生個数を変更
-	emitter_.SetCount(10);
+	emitter_.SetCount(5);
 
+	emitter_.SetIsRandom(true);
+	emitter_.SetIsRepeat(true);
 
 	//
 	// GrobalData
@@ -64,6 +65,8 @@ void SampleScene::Initialize() {
 }
 
 void SampleScene::Finalize() {
+	// 既定シーンの削除処理
+	BaseScene::Finalize();
 	// デバッグ用文字
 	Logger::Log("SampleScene,Finalized\n");
 
