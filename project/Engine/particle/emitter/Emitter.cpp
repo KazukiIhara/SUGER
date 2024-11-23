@@ -71,7 +71,7 @@ void Emitter::Emit() {
 
 void Emitter::SetParticle(const std::string& particleName) {
 	// パーティクルがなければassert
-	particle_ = SUGER::FindFixParticle(particleName);
+	particle_ = SUGER::FindParticle(particleName);
 }
 
 void Emitter::SetCount(const uint32_t& count) {

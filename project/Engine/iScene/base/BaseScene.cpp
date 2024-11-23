@@ -2,8 +2,23 @@
 
 #include "framework/SUGER.h"
 #include "imgui.h"
+#include "debugTools/logger/Logger.h"
 
 void BaseScene::Initialize() {
+	// オブジェクトコンテナのクリア
+	// Emitter
+	SUGER::ClearEmitterContainer();
+	// Particle
+	SUGER::ClearParticleContainer();
+	// Entity
+	SUGER::ClearEntityContainer();
+	// Empty
+	SUGER::ClearEmptyContainer();
+	// 2DObject
+	SUGER::Clear2DObjectContainer();
+	// デバッグログ
+	Logger::Log("AllObjetcsCleared\n");
+
 	// デバッグカメラ作成
 	debugCamera_ = std::make_unique<Camera>();
 	debugCamera_->Initialize();
@@ -16,7 +31,7 @@ void BaseScene::Initialize() {
 	fade_ = std::make_unique<Fade>();
 	// フェード初期化
 	fade_->Initialize();
-	// フェードイン
+	// フェードインリクエスト
 	sceneStatusRequest_ = SceneStatus::kFadeIn;
 
 	// シーンに必要なカメラとライトのセット
@@ -30,12 +45,14 @@ void BaseScene::Update() {
 	debugCamera_->Update();
 	// ライトの更新
 	light_->Update();
-
 	// シーンステータスのリクエスト初期化処理
 	SceneStatusInitizlize();
 	// シーンステータスのリクエスト更新処理
 	SceneStatusUpdate();
+}
 
+void BaseScene::SetSceneManager(SceneManager* sceneManager) {
+	sceneManager_ = sceneManager;
 }
 
 void BaseScene::ImGuiForDebugCamera() {

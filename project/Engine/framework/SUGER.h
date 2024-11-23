@@ -162,9 +162,10 @@ public: // クラスメソッド
 	static void Update2DObjects();
 	// 2Dオブジェクトの描画
 	static void Draw2DObjects();
-
 	// 2Dオブジェクト検索
 	static Sprite* FindObject2D(const std::string& name);
+	// 2Dオブジェクトコンテナのクリア
+	static void Clear2DObjectContainer();
 #pragma endregion
 
 #pragma region EmptyManager
@@ -174,6 +175,8 @@ public: // クラスメソッド
 	static void UpdateEmpties();
 	// エンプティの検索
 	static Empty* FindEmpty(const std::string& name);
+	// エンプティコンテナのクリア
+	static void ClearEmptyContainer();
 #pragma endregion
 
 #pragma region EntityManager
@@ -187,10 +190,11 @@ public: // クラスメソッド
 	static void DrawSkiningEntities();
 	// エンティティ検索
 	static Entity* FindEntity(const std::string& name);
+	// エンティティコンテナのクリア
+	static void ClearEntityContainer();
 
 	// シーンのカメラとライトをセット
 	static void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
-
 	// シーンのカメラをセット
 	static void SetSceneCamera(Camera* camera);
 #pragma endregion
@@ -202,18 +206,21 @@ public: // クラスメソッド
 	static void UpdateEmitters();
 	// Emitterの検索
 	static Emitter* FindEmitter(const std::string& name);
+	// エミッターコンテナのクリア
+	static void ClearEmitterContainer();
 #pragma endregion
 
-#pragma region FixParticleManager
+#pragma region ParticleManager
 	// FixParticleの作成
-	static void CreateFixParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath);
+	static void CreateParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath);
 	// FixParticleの更新
 	static void UpdateParticles();
 	// FixParticleの描画
 	static void DrawParticles();
-
 	// パーティクル検索
-	static Particle* FindFixParticle(const std::string& name);
+	static Particle* FindParticle(const std::string& name);
+	// パーティクルコンテナのクリア
+	static void ClearParticleContainer();
 #pragma endregion
 
 #pragma region SoundManager

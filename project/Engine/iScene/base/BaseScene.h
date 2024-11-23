@@ -26,9 +26,7 @@ public: // 仮想関数
 	void Update();
 
 	// シーンマネージャのセット
-	virtual void SetSceneManager(SceneManager* sceneManager) {
-		sceneManager_ = sceneManager;
-	}
+	virtual void SetSceneManager(SceneManager* sceneManager);
 
 protected:
 	// ベースシーンの状態初期化処理

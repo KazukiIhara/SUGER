@@ -21,6 +21,8 @@ public:
 	void Draw();
 	// 終了処理
 	void Finalize();
+	// コンテナのクリア
+	void ClearContainer();
 
 	// オブジェクト作成
 	std::string Create(const std::string& name, const std::string& filePath);
