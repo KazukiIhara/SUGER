@@ -28,7 +28,7 @@ void SampleScene::Initialize() {
 	SUGER::LoadWaveSound("Alarm01.wav");
 
 	// 板ポリパーティクルの作成
-	SUGER::CreateFixParticle("circle", ParticleType::kModel, "teapot");
+	SUGER::CreateFixParticle("circle", ParticleType::kPlane, "circle.png");
 	// エミッターの作成
 	SUGER::CreateEmitter("sampleEmitter");
 
@@ -50,8 +50,10 @@ void SampleScene::Initialize() {
 	// エミッターにパーティクルをセット
 	emitter_.SetParticle("circle");
 	// エミッターの発生個数を変更
-	emitter_.SetCount(10);
+	emitter_.SetCount(5);
 
+	emitter_.SetIsRandom(true);
+	emitter_.SetIsRepeat(true);
 
 	//
 	// GrobalData

@@ -108,6 +108,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\myGame\MyGame.cpp" />
+    <ClCompile Include="application\scene\direction\DirectionScene.cpp" />
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\sample\SampleScene.cpp" />
     <ClCompile Include="Engine\particle\emitterController\EmitterController.cpp" />
@@ -166,6 +167,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\myGame\MyGame.h" />
+    <ClInclude Include="application\scene\direction\DirectionScene.h" />
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\sample\SampleScene.h" />
     <ClInclude Include="Engine\enum\FadeEnum.h" />
