@@ -438,8 +438,8 @@ Model* SUGER::FindModel(const std::string& filePath) {
 	return modelManager_->Find(filePath);
 }
 
-void SUGER::Create2DObject(const std::string& name, const std::string& filePath) {
-	object2dManager_->Create(name, filePath);
+std::string SUGER::Create2DObject(const std::string& name, const std::string& filePath) {
+	return object2dManager_->Create(name, filePath);
 }
 
 void SUGER::Update2DObjects() {
