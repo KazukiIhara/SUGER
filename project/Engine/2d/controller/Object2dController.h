@@ -7,7 +7,8 @@
 #include "math/function/MathFunction.h"
 #include "structs/ObjectStructs.h"
 
-class Sprite;
+#include "2d/sprite/Sprite.h"
+
 
 class Object2DController {
 public:
@@ -15,7 +16,7 @@ public:
 	~Object2DController() = default;
 
 	// 初期化
-	void Initialize(Sprite* object2d);
+	void Initialize(const std::string& objectName);
 
 	// 
 	// セッター
@@ -89,9 +90,6 @@ public:
 	// 色の取得(R,G,B,A)
 	const Vector4& GetColor() const;
 
-private:
-	// オブジェクトのセット
-	void SetObject(Sprite* object2d);
 private:
 	// コントロールするオブジェクト
 	Sprite* object2d_ = nullptr;

@@ -156,6 +156,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\math\operator\MathOperator.cpp" />
     <ClCompile Include="Engine\particle\system\ParticleSystem.cpp" />
     <ClCompile Include="Engine\random\Random.cpp" />
+    <ClCompile Include="Engine\transition\fade\Fade.cpp" />
     <ClCompile Include="Engine\worldTransform\WorldTransform.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp" />
@@ -167,6 +168,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\myGame\MyGame.h" />
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\sample\SampleScene.h" />
+    <ClInclude Include="Engine\enum\FadeEnum.h" />
+    <ClInclude Include="Engine\enum\SceneEnum.h" />
     <ClInclude Include="Engine\particle\emitterController\EmitterController.h" />
     <ClInclude Include="Engine\particle\emitterManager\EmitterManager.h" />
     <ClInclude Include="Engine\particle\emitter\Emitter.h" />
@@ -235,6 +238,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\structs\PunctualLightStruct.h" />
     <ClInclude Include="Engine\structs\SoundStruct.h" />
     <ClInclude Include="Engine\structs\TextureStruct.h" />
+    <ClInclude Include="Engine\transition\fade\Fade.h" />
     <ClInclude Include="Engine\worldTransform\WorldTransform.h" />
   </ItemGroup>
   <ItemGroup>

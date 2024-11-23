@@ -17,8 +17,12 @@ public: // 公開メンバ関数
 	void Initialize()override;
 	// 終了
 	void Finalize()override;
-	// 更新
-	void Update()override;
+
+	// プレイフェーズ初期化
+	void SceneStatusPlayInitialize()override;
+	// プレイフェーズ更新
+	void SceneStatusPlayUpdate()override;
+
 private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;

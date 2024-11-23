@@ -24,8 +24,6 @@ void SampleScene::Initialize() {
 	// シーンにカメラをセット
 	//SUGER::SetSceneCamera(sceneCamera_.get());
 
-	// オブジェクトの生成と、モデルの読み込み
-	SUGER::Create2DObject("pronama_chan", "pronama_chan.png");
 	// サウンド読み込み
 	SUGER::LoadWaveSound("Alarm01.wav");
 
@@ -39,14 +37,13 @@ void SampleScene::Initialize() {
 	// ライトを無効化
 	entity_.SetEnableLight(false);
 
-	// オブジェクト2Dコントローラの初期化
-	pronama_chan.Initialize(SUGER::FindObject2D("pronama_chan"));
+	// オブジェクト2Dの作成とコントローラの初期化
+	pronama_chan.Initialize(SUGER::Create2DObject("pronama_chan", "pronama_chan.png"));
 
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
 	pronama_chan.SetSize(Vector2(400.0f, 400.0f));
 	pronama_chan.SetPosition(pronama_chan.GetSize() / 2.0f);
 	pronama_chan.SetAnchorPoint(Vector2(0.5f, 0.5f));
-
 
 	// エミッターのコントローラを初期化
 	emitter_.Initialize("sampleEmitter");
@@ -54,13 +51,7 @@ void SampleScene::Initialize() {
 	emitter_.SetParticle("circle");
 	// エミッターの発生個数を変更
 	emitter_.SetCount(10);
-	// 繰り返し発生ON
-	emitter_.SetIsRepeat(true);
-	// ランダム発生ON
-	emitter_.SetIsRandom(true);
 
-	// 音声再生
-	SUGER::PlayWaveSound("Alarm01.wav");
 
 	//
 	// GrobalData
@@ -70,7 +61,6 @@ void SampleScene::Initialize() {
 	SUGER::AddGrobalDataGroup("Pronama_Chan");
 	// グローバルデータのプロ生ちゃんグループにトランスレート情報を追加
 	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", entity_.GetTranslate());
-
 }
 
 void SampleScene::Finalize() {
@@ -79,7 +69,12 @@ void SampleScene::Finalize() {
 
 }
 
-void SampleScene::Update() {
+void SampleScene::SceneStatusPlayInitialize() {
+
+
+}
+
+void SampleScene::SceneStatusPlayUpdate() {
 
 	//
 	// GrobalData
@@ -88,15 +83,14 @@ void SampleScene::Update() {
 	// 更新処理の初めにグローバルデータクラスに保存されている値を取得
 	entity_.SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
 
-	// スペースキーを押すと発生
-	if (SUGER::PushKey(DIK_SPACE)) {
-		emitter_.Emit();
-	}
-
 	// 
 	// シーンの更新処理ここから
 	// 
 
+	// スペースキーを押すと発生
+	if (SUGER::PushKey(DIK_SPACE)) {
+		emitter_.Emit();
+	}
 
 	if (SUGER::PushKey(DIK_D)) {
 		// スプライトを回転
@@ -121,7 +115,4 @@ void SampleScene::Update() {
 	// 行列更新の手前でローカルデータをグローバルデータクラスに挿入
 	SUGER::SetGrobalDataValue("Pronama_Chan", "translate", entity_.GetTranslate());
 
-
-	// シーンの更新(更新処理の最後)
-	BaseScene::Update();
 }

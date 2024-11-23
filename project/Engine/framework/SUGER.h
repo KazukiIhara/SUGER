@@ -157,7 +157,7 @@ public: // クラスメソッド
 
 #pragma region Object2DManager
 	// 2Dオブジェクトの作成
-	static void Create2DObject(const std::string& name, const std::string& filePath);
+	static std::string Create2DObject(const std::string& name, const std::string& filePath);
 	// 2Dオブジェクトの更新
 	static void Update2DObjects();
 	// 2Dオブジェクトの描画

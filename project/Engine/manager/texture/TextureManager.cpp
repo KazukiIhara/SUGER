@@ -7,8 +7,14 @@
 #include "manager/srv/SRVManager.h"
 
 void TextureManager::Initialize(DirectXManager* directXManager, SRVManager* srvManager) {
+	// 必要なインスタンスのポインタを取得
 	SetDirectXCommon(directXManager);
 	SetSrvManager(srvManager);
+	// エンジンで使うテクスチャを読み込む
+	// 既定のディレクトリ
+	const std::string textureDirectoryPath = "resources/images/";
+	// ホワイトテクスチャ
+	Load(textureDirectoryPath + "white.png");
 }
 
 void TextureManager::Load(const std::string& filePath) {

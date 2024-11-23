@@ -23,7 +23,7 @@ public:
 	void Finalize();
 
 	// オブジェクト作成
-	void Create(const std::string& name, const std::string& filePath);
+	std::string Create(const std::string& name, const std::string& filePath);
 
 	// オブジェクト検索
 	Sprite* Find(const std::string& name);
