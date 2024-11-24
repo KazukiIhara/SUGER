@@ -36,6 +36,12 @@ void BaseScene::Initialize() {
 
 	// シーンに必要なカメラとライトのセット
 	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
+
+	// レベルデータをロード
+	SUGER::LoadJsonLevelData("");
+	// レベルデータをシーンにインポート
+	levelDataImporter_.Import("");
+
 }
 
 void BaseScene::Update() {

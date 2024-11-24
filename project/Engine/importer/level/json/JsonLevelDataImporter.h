@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 
 class JsonLevelData;
 
@@ -9,7 +10,7 @@ public:
 	~JsonLevelDataImporter() = default;
 
 	// LevelDataをシーンにインポート
-	void Import(JsonLevelData* jsonLevelData);
+	void Import(const std::string& levelDataName);
 
 private:
 
