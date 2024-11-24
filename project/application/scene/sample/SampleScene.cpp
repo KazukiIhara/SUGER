@@ -65,8 +65,6 @@ void SampleScene::Initialize() {
 }
 
 void SampleScene::Finalize() {
-	// 既定シーンの削除処理
-	BaseScene::Finalize();
 	// デバッグ用文字
 	Logger::Log("SampleScene,Finalized\n");
 
