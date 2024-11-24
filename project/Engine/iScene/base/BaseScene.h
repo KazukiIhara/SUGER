@@ -9,6 +9,7 @@
 #include "3d/lights/punctualLight/PunctualLight.h"
 #include "transition/fade/Fade.h"
 #include "enum/SceneEnum.h"
+#include "importer/level/json/JsonLevelDataImporter.h"
 
 // 前方宣言
 class SceneManager;
@@ -70,7 +71,6 @@ protected:
 	// フェード
 	std::unique_ptr<Fade> fade_;
 
-	// カメラ制御用のトランスフォーム
-	Vector3 cameraRotate_;
-	Vector3 cameraTranslate_;
+	// レベルデータインポータ
+	JsonLevelDataImporter levelDataImporter_;
 };

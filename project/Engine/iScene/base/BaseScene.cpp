@@ -58,8 +58,8 @@ void BaseScene::SetSceneManager(SceneManager* sceneManager) {
 void BaseScene::ImGuiForDebugCamera() {
 #ifdef _DEBUG
 	// 回転と移動量を持ってくる
-	cameraRotate_ = debugCamera_->GetRotate();
-	cameraTranslate_ = debugCamera_->GetTranslate();
+	Vector3 cameraRotate_ = debugCamera_->GetRotate();
+	Vector3 cameraTranslate_ = debugCamera_->GetTranslate();
 
 	// ImGuiの処理
 	ImGui::Begin("DebugCamera");
