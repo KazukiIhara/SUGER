@@ -250,7 +250,7 @@ class MYADDON_OT_export_scene(bpy.types.Operator,bpy_extras.io_utils.ExportHelpe
         json_object["transform"] = transform
 
          #カスタムプロパティ'object name'
-        if "object_name" in object:
+        if "object_type" in object:
             json_object["object_type"] = object["object_type"]
 
         #カスタムプロパティ'model name'

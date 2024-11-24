@@ -47,7 +47,7 @@ void JsonLevelData::Load(const std::string& fullpath) {
 		if (type.compare("MESH") == 0) {
 
 			// object3Dの場合
-			if (object["object_type"] == "object3d") {
+			if (object["object_type"] == "entity") {
 				// トランスフォームのパラメータ読み込み
 				nlohmann::json& transform = object["transform"];
 
@@ -94,6 +94,6 @@ void JsonLevelData::Load(const std::string& fullpath) {
 
 }
 
-std::vector<EntityData> JsonLevelData::Get3DObjects()const {
+std::vector<EntityData> JsonLevelData::GetEntities()const {
 	return objects_;
 }

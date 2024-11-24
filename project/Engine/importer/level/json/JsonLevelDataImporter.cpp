@@ -8,7 +8,7 @@ void JsonLevelDataImporter::Import(const std::string& levelDataName) {
 	// レベルデータマネージャからロード済みのレベルデータを取得
 	JsonLevelData* jsonLevelData = SUGER::FindJsonLevelData(levelDataName);
 	// 配置されているすべてのオブジェクトを生成
-	for (EntityData object : jsonLevelData->Get3DObjects()) {
+	for (EntityData object : jsonLevelData->GetEntities()) {
 		SUGER::CreateEntity(object.objectName, object.modelName, object.transform);
 	}
 }

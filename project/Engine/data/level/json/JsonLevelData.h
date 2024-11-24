@@ -17,7 +17,7 @@ public:
 	void Load(const std::string& fullpath);
 
 	// 3Dオブジェクトコンテナのゲッター
-	std::vector<EntityData> Get3DObjects()const;
+	std::vector<EntityData> GetEntities()const;
 
 private:
 	// このレベルに存在するobject3dのデータコンテナ
