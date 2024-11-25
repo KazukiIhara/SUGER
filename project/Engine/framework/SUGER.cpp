@@ -387,7 +387,6 @@ bool SUGER::IsPadLeft(int controllerID) {
 	return directInput_->IsPadLeft(controllerID);
 }
 
-
 ID3D12Device* SUGER::GetDirectXDevice() {
 	return directXManager_->GetDevice();
 }

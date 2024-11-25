@@ -4,7 +4,6 @@
 #include "iScene/base/BaseScene.h"
 #include "2d/controller/Object2dController.h"
 #include "3d/entityController/EntityController.h"
-
 #include "particle/emitterController/EmitterController.h"
 
 // SampleScene
@@ -30,7 +29,7 @@ private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 	// エンティティコントローラ
-	std::unique_ptr<PronamaChan> pronamaChan_;
+	std::unique_ptr<PronamaChan> pronamaChan_ = nullptr;
 	// jeanne用のオブジェクト2Dコントローラ
 	Object2DController pronamaChanTex;
 	// Emitterコントローラ
