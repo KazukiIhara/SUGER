@@ -273,6 +273,7 @@ void SUGER::Draw() {
 	// Skining付きEntity描画処理
 	DrawSkiningEntities();
 
+
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
 	// 3Dパーティクル描画処理
@@ -538,14 +539,14 @@ void SUGER::CreateParticle(const std::string& name, const ParticleType& particle
 	const std::string& textureDirectoryPath = "resources/images/";
 	// パーティクルタイプに応じてパーティクルを作成
 	switch (particleType) {
-		case kPlane:
-			// 板ポリパーティクルを作成
-			particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
-			break;
-		case kModel:
-			// モデルパーティクルを作成
-			particleManager_->CreateModelParticle(name, filePath);
-			break;
+	case kPlane:
+		// 板ポリパーティクルを作成
+		particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
+		break;
+	case kModel:
+		// モデルパーティクルを作成
+		particleManager_->CreateModelParticle(name, filePath);
+		break;
 	}
 }
 
@@ -571,6 +572,18 @@ void SUGER::LoadWaveSound(const std::string& filename, const std::string& direct
 
 void SUGER::PlayWaveSound(const std::string& filename) {
 	soundManager_->PlayWave(filename);
+}
+
+void SUGER::AddColliderList(EntityController* entityController) {
+	collisionManager_->AddCollider(entityController);
+}
+
+void SUGER::ClearColliderContainer() {
+	collisionManager_->ClearContainer();
+}
+
+void SUGER::CheckAllCollisions() {
+	collisionManager_->CheckAllCollisions();
 }
 
 void SUGER::PreDrawObject2D() {

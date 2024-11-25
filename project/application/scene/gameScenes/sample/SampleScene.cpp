@@ -32,9 +32,10 @@ void SampleScene::Initialize() {
 	SUGER::CreateEmitter("sampleEmitter");
 
 	// エンティティの作成とエンティティコントローラ初期化
-	pronamaChan_.Initialize(SUGER::CreateEntity("sampleEntity", "pronama_chan"));
+	pronamaChan_ = std::make_unique<PronamaChan>();
+	pronamaChan_->Initialize(SUGER::CreateEntity("sampleEntity", "pronama_chan"));
 	// ライトを無効化
-	pronamaChan_.SetEnableLight(false);
+	pronamaChan_->SetEnableLight(false);
 
 	// オブジェクト2Dの作成とコントローラの初期化
 	pronamaChanTex.Initialize(SUGER::Create2DObject("0_pronama_chan", "pronama_chan.png"));
@@ -61,7 +62,7 @@ void SampleScene::Initialize() {
 	// プロ生ちゃんのデータグループを作成
 	SUGER::AddGrobalDataGroup("Pronama_Chan");
 	// グローバルデータのプロ生ちゃんグループにトランスレート情報を追加
-	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_.GetTranslate());
+	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
 }
 
 void SampleScene::Finalize() {
@@ -82,7 +83,7 @@ void SampleScene::SceneStatusPlayUpdate() {
 	//
 
 	// 更新処理の初めにグローバルデータクラスに保存されている値を取得
-	pronamaChan_.SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
+	pronamaChan_->SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
 
 	// 
 	// シーンの更新処理ここから
@@ -96,24 +97,36 @@ void SampleScene::SceneStatusPlayUpdate() {
 	if (SUGER::PushKey(DIK_D)) {
 		// スプライトを回転
 		pronamaChanTex.SetRotation(pronamaChanTex.GetRotation() + 0.01f);
-		pronamaChan_.SetTranslate(Vector3(pronamaChan_.GetTranslate().x + 0.1f, pronamaChan_.GetTranslate().y, pronamaChan_.GetTranslate().z));
+		pronamaChan_->SetTranslate(Vector3(pronamaChan_->GetTranslate().x + 0.1f, pronamaChan_->GetTranslate().y, pronamaChan_->GetTranslate().z));
 	} else if (SUGER::PushKey(DIK_A)) {
 		// スプライトを回転
 		pronamaChanTex.SetRotation(pronamaChanTex.GetRotation() - 0.01f);
-		pronamaChan_.SetTranslate(Vector3(pronamaChan_.GetTranslate().x - 0.1f, pronamaChan_.GetTranslate().y, pronamaChan_.GetTranslate().z));
+		pronamaChan_->SetTranslate(Vector3(pronamaChan_->GetTranslate().x - 0.1f, pronamaChan_->GetTranslate().y, pronamaChan_->GetTranslate().z));
 	}
 
-
-	// 
+	//
 	// シーンの更新処理ここまで
 	//
 
+	//
+	// コライダーの処理ここから
+	//
+
+	// コライダーコンテナをリセット
+	SUGER::ClearColliderContainer();
+
+	// コライダーリストに追加していく
+	SUGER::AddColliderList(pronamaChan_.get());
+
+	//
+	// コライダーの処理ここまで
+	//
 
 	//
 	// GrobalData
 	//
 
 	// 行列更新の手前でローカルデータをグローバルデータクラスに挿入
-	SUGER::SetGrobalDataValue("Pronama_Chan", "translate", pronamaChan_.GetTranslate());
+	SUGER::SetGrobalDataValue("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
 
 }

@@ -10,7 +10,7 @@
 // SampleScene
 #include "objects/pronamaChan/PronamaChan.h"
 
-class SampleScene:public BaseScene {
+class SampleScene :public BaseScene {
 public: // 公開メンバ関数
 	// コンストラクタ
 	SampleScene() = default;
@@ -30,7 +30,7 @@ private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 	// エンティティコントローラ
-	PronamaChan pronamaChan_;
+	std::unique_ptr<PronamaChan> pronamaChan_;
 	// jeanne用のオブジェクト2Dコントローラ
 	Object2DController pronamaChanTex;
 	// Emitterコントローラ
