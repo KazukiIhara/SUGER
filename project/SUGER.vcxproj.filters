@@ -277,7 +277,7 @@
     <ClCompile Include="application\scene\factory\SceneFactory.cpp">
       <Filter>application\scene\factory</Filter>
     </ClCompile>
-    <ClCompile Include="application\scene\sample\SampleScene.cpp">
+    <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp">
       <Filter>application\scene\sample</Filter>
     </ClCompile>
     <ClCompile Include="Engine\math\operator\MathOperator.cpp">
@@ -417,7 +417,7 @@
     <ClInclude Include="application\scene\factory\SceneFactory.h">
       <Filter>application\scene\factory</Filter>
     </ClInclude>
-    <ClInclude Include="application\scene\sample\SampleScene.h">
+    <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h">
       <Filter>application\scene\sample</Filter>
     </ClInclude>
     <ClInclude Include="Engine\math\operator\MathOperator.h">

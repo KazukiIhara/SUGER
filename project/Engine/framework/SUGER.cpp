@@ -21,6 +21,7 @@ std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<EmitterManager> SUGER::emitterManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
 std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
+std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
 std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
@@ -83,11 +84,13 @@ void SUGER::Initialize() {
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
 
-
-
 	// soundManagerの初期化
 	soundManager_ = std::make_unique<SoundManager>();
 	soundManager_->Initialize();
+
+	// collisionManager
+	collisionManager_ = std::make_unique<CollisionManager>();
+	collisionManager_->Initialize();
 
 	// JsonLevelDataManagerの初期化
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
@@ -140,6 +143,12 @@ void SUGER::Finalize() {
 	if (jsonLevelDataManager_) {
 		jsonLevelDataManager_->Finalize();
 		jsonLevelDataManager_.reset();
+	}
+
+	// collisionManagerの終了処理
+	if (collisionManager_) {
+		collisionManager_->Finalize();
+		collisionManager_.reset();
 	}
 
 	// soundManagerの終了処理
