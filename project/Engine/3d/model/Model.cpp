@@ -117,6 +117,8 @@ void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& 
 		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
 		// SRVセット
 		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[textureFileName].srvIndex);
+		// ModelMaterial用CBufferの場所を設定
+		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(3, materialResources_[i]->GetGPUVirtualAddress());
 		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), instanceCount, 0, 0, 0);
 	}
@@ -130,6 +132,8 @@ void Model::DrawModelParticle(const uint32_t& instanceCount) {
 		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
 		// SRVセット
 		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
+		// ModelMaterial用CBufferの場所を設定
+		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(3, materialResources_[i]->GetGPUVirtualAddress());
 		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), instanceCount, 0, 0, 0);
 	}
@@ -408,6 +412,8 @@ void Model::GeneratePlane(const std::string& textureFilePath) {
 	SUGER::LoadTexture(textureFilePath);
 
 	MeshData meshData;
+	meshData.material.color = { 1.0f,1.0f,1.0f,1.0f };
+	meshData.material.uvMatrix = MakeIdentityMatrix4x4();
 	meshData.material.textureFilePath = textureFilePath;
 	meshData.material.haveUV_ = true;
 
@@ -452,7 +458,12 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	/*インデックスリソースにデータを書き込む*/
 	MapIndexData();
 #pragma endregion
-
+#pragma region マテリアルデータ
+	/*マテリアル用のリソース作成*/
+	CreateMaterialResource();
+	/*マテリアルにデータを書き込む*/
+	MapMaterialData();
+#pragma endregion
 }
 
 const bool& Model::GetHaveAnimation() const {
