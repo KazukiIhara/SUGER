@@ -27,17 +27,17 @@ void SampleScene::Initialize() {
 	SUGER::LoadWaveSound("Alarm01.wav");
 
 	// 板ポリパーティクルの作成
-	SUGER::CreateParticle("circle", ParticleType::kPlane, "circle.png");
+	SUGER::CreateParticle("sampleParticle", ParticleType::kPlane, "circle.png");
 	// エミッターの作成
 	SUGER::CreateEmitter("sampleEmitter");
 
 	// エンティティの作成とエンティティコントローラ初期化
-	entity_.Initialize(SUGER::CreateEntity("teapot", "pronama_chan"));
+	entity_.Initialize(SUGER::CreateEntity("sampleEntity", "pronama_chan"));
 	// ライトを無効化
 	entity_.SetEnableLight(false);
 
 	// オブジェクト2Dの作成とコントローラの初期化
-	pronama_chan.Initialize(SUGER::Create2DObject("pronama_chan", "pronama_chan.png"));
+	pronama_chan.Initialize(SUGER::Create2DObject("0_pronama_chan", "pronama_chan.png"));
 
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
 	pronama_chan.SetSize(Vector2(400.0f, 400.0f));
@@ -47,7 +47,7 @@ void SampleScene::Initialize() {
 	// エミッターのコントローラを初期化
 	emitter_.Initialize("sampleEmitter");
 	// エミッターにパーティクルをセット
-	emitter_.SetParticle("circle");
+	emitter_.SetParticle("sampleParticle");
 	// エミッターの発生個数を変更
 	emitter_.SetCount(5);
 

@@ -30,6 +30,8 @@ public:
 	void SetCamera(Camera* camera);
 	// タイプのセット
 	void SetType(ParticleType type);
+	// ブレンドモードのセット
+	void SetBlendMode(const BlendMode& blendMode);
 
 	// 有効フラグのセッター
 	void SetIsActive(const bool& isActive);

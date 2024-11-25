@@ -148,6 +148,10 @@ void Particle::SetType(ParticleType type) {
 	type_ = type;
 }
 
+void Particle::SetBlendMode(const BlendMode& blendMode) {
+	blendMode_ = blendMode;
+}
+
 void Particle::SetIsActive(const bool& isActive) {
 	isActive_ = isActive;
 }

@@ -101,6 +101,8 @@ void Model::DrawSkinning() {
 			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
 			// Skinning用SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(5, skinCluster_.srvIndex);
+			// ModelMaterial用CBufferの場所を設定
+			SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(6, materialResources_[i]->GetGPUVirtualAddress());
 			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
 		} else {

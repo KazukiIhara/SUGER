@@ -4,9 +4,9 @@
 
 void Fade::Initialize() {
 	// フェード処理用のオブジェクトを作成
-	SUGER::Create2DObject("Fade", "white.png");
+	SUGER::Create2DObject("9999_Fade", "white.png");
 	// コントローラ初期化
-	controller_.Initialize("Fade");
+	controller_.Initialize("9999_Fade");
 	// サイズ設定
 	controller_.SetSize(Vector2(WindowManager::kClientWidth, WindowManager::kClientHeight));
 	// カラー設定
