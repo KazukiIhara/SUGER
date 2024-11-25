@@ -1,7 +1,7 @@
 // This
 #include "SceneFactory.h"
 
-#include "scene/sample/SampleScene.h"
+#include "scene/gameScenes/sample/SampleScene.h"
 
 BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 	// 次のシーンを生成

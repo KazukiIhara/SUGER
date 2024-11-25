@@ -277,7 +277,7 @@
     <ClCompile Include="application\scene\factory\SceneFactory.cpp">
       <Filter>application\scene\factory</Filter>
     </ClCompile>
-    <ClCompile Include="application\scene\sample\SampleScene.cpp">
+    <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp">
       <Filter>application\scene\sample</Filter>
     </ClCompile>
     <ClCompile Include="Engine\math\operator\MathOperator.cpp">
@@ -375,7 +375,6 @@
     <ClCompile Include="Engine\particle\emitterController\EmitterController.cpp" />
     <ClCompile Include="Engine\random\Random.cpp" />
     <ClCompile Include="Engine\transition\fade\Fade.cpp" />
-    <ClCompile Include="application\scene\direction\DirectionScene.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
@@ -417,7 +416,7 @@
     <ClInclude Include="application\scene\factory\SceneFactory.h">
       <Filter>application\scene\factory</Filter>
     </ClInclude>
-    <ClInclude Include="application\scene\sample\SampleScene.h">
+    <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h">
       <Filter>application\scene\sample</Filter>
     </ClInclude>
     <ClInclude Include="Engine\math\operator\MathOperator.h">
@@ -560,7 +559,6 @@
     <ClInclude Include="Engine\transition\fade\Fade.h" />
     <ClInclude Include="Engine\enum\FadeEnum.h" />
     <ClInclude Include="Engine\enum\SceneEnum.h" />
-    <ClInclude Include="application\scene\direction\DirectionScene.h" />
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="application\colliderCategory\ColliderCategory.h" />

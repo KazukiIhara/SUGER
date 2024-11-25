@@ -21,6 +21,7 @@
 #include "particle/emitterManager/EmitterManager.h"
 #include "particle/particleManager/ParticleManager.h"
 #include "manager/sound/SoundManager.h"
+#include "manager/collision/CollisionManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "manager/data/grobal/GrobalDataManager.h"
 #include "2d/system/Object2dSystem.h"
@@ -230,6 +231,10 @@ public: // クラスメソッド
 	static void PlayWaveSound(const std::string& filename);
 #pragma endregion
 
+#pragma region ColliderManager
+	// 
+#pragma endregion
+
 #pragma region JsonLevelDataManager
 	// JsonLevelDataManagerの機能
 	// Json形式のlevelデータの読み込み
@@ -310,6 +315,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<EmitterManager> emitterManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
 	static std::unique_ptr<SoundManager> soundManager_;
+	static std::unique_ptr<CollisionManager> collisionManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<GrobalDataManager> grobalDataManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
