@@ -8,6 +8,6 @@ public:
 	~PronamaChan() = default;
 
 	// 衝突コールバック関数
-	void OnCollision([[maybe_unused]] Collider* other);
+	void OnCollision([[maybe_unused]] Collider* other)override;
 
 };

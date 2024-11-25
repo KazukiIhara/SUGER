@@ -376,6 +376,9 @@
     <ClCompile Include="Engine\random\Random.cpp" />
     <ClCompile Include="Engine\transition\fade\Fade.cpp" />
     <ClCompile Include="application\scene\direction\DirectionScene.cpp" />
+    <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
+    <ClCompile Include="Engine\collider\Collider.cpp" />
+    <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -558,6 +561,10 @@
     <ClInclude Include="Engine\enum\FadeEnum.h" />
     <ClInclude Include="Engine\enum\SceneEnum.h" />
     <ClInclude Include="application\scene\direction\DirectionScene.h" />
+    <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
+    <ClInclude Include="Engine\collider\Collider.h" />
+    <ClInclude Include="application\colliderCategory\ColliderCategory.h" />
+    <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

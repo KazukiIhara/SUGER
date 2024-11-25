@@ -22,11 +22,11 @@ public:
 	// コンテナをクリア
 	void ClearContainer();
 	// ペア同士の当たり判定をチェック
-	void CheckCollisionPair(EntityController* controllerA, EntityController controllerB);
+	void CheckCollisionPair(EntityController* controllerA, EntityController* controllerB);
 	// すべてのコライダー同士の当たり判定チェック
 	void CheckAllCollisions();
 
 private:
 	// コントローラコンテナ
-	std::list<std::unique_ptr<EntityController>> controllers_;
+	std::list<EntityController*> controllers_;
 };

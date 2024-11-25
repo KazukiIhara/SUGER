@@ -20,6 +20,10 @@ void Collider::SetColliderType(const ColliderType& colliderType) {
 	colliderType_ = colliderType;
 }
 
+void Collider::SetColliderCategory(const ColliderCategory& colliderCategory) {
+	colliderCategory_ = colliderCategory;
+}
+
 void Collider::SetSize(const float& size) {
 	size_ = size;
 }
@@ -30,6 +34,10 @@ Vector3 Collider::GetWorldPosition() const {
 
 ColliderType Collider::GetColliderType() const {
 	return colliderType_;
+}
+
+ColliderCategory Collider::GetColliderCategory() const {
+	return colliderCategory_;
 }
 
 float Collider::GetSize() const {

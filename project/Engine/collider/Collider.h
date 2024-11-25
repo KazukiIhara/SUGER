@@ -2,6 +2,7 @@
 
 #include "math/function/MathFunction.h"
 #include "enum/ColliderEnum.h"
+#include "colliderCategory/ColliderCategory.h"
 
 class Collider {
 public:
@@ -21,6 +22,9 @@ public:
 	// コライダータイプのセッター
 	void SetColliderType(const ColliderType& colliderType);
 
+	// コライダーカテゴリのセッター
+	void SetColliderCategory(const ColliderCategory& colliderCategory);
+
 	// サイズのセット
 	void SetSize(const float& size);
 
@@ -29,6 +33,9 @@ public:
 
 	// コライダータイプのゲッター
 	ColliderType GetColliderType()const;
+
+	// コライダーカテゴリーのゲッター
+	ColliderCategory GetColliderCategory()const;
 
 	// サイズの取得
 	float GetSize()const;
@@ -39,5 +46,7 @@ private:
 	// サイズ
 	float size_ = 1.0f;
 	// コライダータイプ
-	ColliderType colliderType_ = kSphere;
+	ColliderType colliderType_ = ColliderType::kSphere;
+	// コライダーカテゴリ
+	ColliderCategory colliderCategory_ = ColliderCategory::kNone;
 };

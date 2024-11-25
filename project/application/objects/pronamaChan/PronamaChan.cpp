@@ -1,5 +1,5 @@
 #include "PronamaChan.h"
 
-void PronamaChan::OnCollision(Collider* other) {
-	
+void PronamaChan::OnCollision([[maybe_unused]] Collider* other) {
+
 }
