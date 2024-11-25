@@ -11,10 +11,12 @@ void CollisionManager::Update() {
 }
 
 void CollisionManager::Finalize() {
+	// コンテナをクリア
 	ClearContainer();
 }
 
 void CollisionManager::AddCollider(EntityController* controller) {
+	// コンテナに追加
 	controllers_.push_back(controller);
 }
 
