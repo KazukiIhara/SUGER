@@ -52,7 +52,7 @@ void SampleScene::Initialize() {
 	emitter_.SetCount(5);
 
 	emitter_.SetIsRandom(true);
-	emitter_.SetIsRepeat(true);
+	emitter_.SetIsRepeat(false);
 
 	//
 	// GrobalData

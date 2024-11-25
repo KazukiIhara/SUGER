@@ -64,9 +64,9 @@ protected:
 	PunctualLight* punctualLight_ = nullptr;
 
 	// マテリアルリソース
-	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
+	ComPtr<ID3D12Resource> materialResource_ = nullptr;
 	// マテリアルデータ
-	Material3D* materialData_;
+	Material3D* materialData_ = nullptr;
 	// マテリアル
 	Material3D material_;
 

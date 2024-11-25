@@ -13,8 +13,6 @@
 // MyHedder
 #include "Structs/ObjectStructs.h"
 
-
-
 // ノード
 struct Node {
 	QuaternionTransform3D transform;
@@ -26,8 +24,15 @@ struct Node {
 // マテリアルデータ
 struct MaterialData {
 	std::string textureFilePath;
+	Matrix4x4 uvMatrix;
 	Vector4 color;
 	bool haveUV_;
+};
+
+// GPUに送るマテリアルデータ
+struct MaterialForGPU {
+	Vector4 color;
+	Matrix4x4 uvMatrix;
 };
 
 // メッシュデータ

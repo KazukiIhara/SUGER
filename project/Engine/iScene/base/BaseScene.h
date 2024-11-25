@@ -26,6 +26,9 @@ public: // 仮想関数
 	// 更新
 	void Update();
 
+	// シーンチェンジ
+	void ChangeScene(const std::string& nextScene);
+
 	// シーンマネージャのセット
 	virtual void SetSceneManager(SceneManager* sceneManager);
 

@@ -16,6 +16,7 @@
 // MyHedder
 #include "structs/ObjectStructs.h"
 #include "structs/ModelStructs.h"
+#include "directX/includes/ComPtr.h"
 
 /*球の分割数*/
 static const uint32_t kSubdivision = 16;
@@ -55,12 +56,6 @@ public: // メンバ関数
 	// 板ポリ作成
 	void CreatePlane(const std::string& textureFilePath);
 
-	// カラーのセット
-	void SetColor(const Vector4& color);
-
-	// ライトオンオフ
-	void SetEnableLight(const bool& enbleLightning);
-
 	// スキニングアニメーションがあるかどうかのゲッター
 	const bool& GetHaveAnimation() const;
 
@@ -84,7 +79,10 @@ private: // メンバ関数
 #pragma endregion
 
 #pragma region Material
-	
+	// マテリアルリソースの作成
+	void CreateMaterialResource();
+	// マテリアルデータの書き込み
+	void MapMaterialData();
 #pragma endregion
 
 #pragma region Node
@@ -140,7 +138,7 @@ private: // メンバ変数
 
 #pragma region 頂点
 	/*頂点リソース*/
-	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> vertexResources_;
+	std::vector<ComPtr<ID3D12Resource>> vertexResources_;
 	// UVあり頂点データ
 	std::vector<VertexData3D*> vertexData_;
 	// UVなし頂点データ
@@ -151,11 +149,18 @@ private: // メンバ変数
 
 #pragma region インデックス
 	/*インデックスリソース*/
-	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> indexResources_;
+	std::vector<ComPtr<ID3D12Resource>> indexResources_;
 	/*インデックスデータ*/
 	std::vector<uint32_t*> indexData_;
 	/*インデックスバッファビュー*/
 	std::vector<D3D12_INDEX_BUFFER_VIEW> indexBufferViews_{};
+#pragma endregion
+
+#pragma region Material
+	// マテリアルリソース
+	std::vector<ComPtr<ID3D12Resource>> materialResources_;
+	// マテリアルデータ
+	std::vector<MaterialForGPU*> materialData_;
 #pragma endregion
 
 #pragma region Animation

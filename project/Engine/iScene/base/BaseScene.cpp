@@ -3,6 +3,7 @@
 #include "framework/SUGER.h"
 #include "imgui.h"
 #include "debugTools/logger/Logger.h"
+#include "manager/scene/SceneManager.h"
 
 void BaseScene::Initialize() {
 	// オブジェクトコンテナのクリア
@@ -38,9 +39,9 @@ void BaseScene::Initialize() {
 	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
 
 	// レベルデータをロード
-	SUGER::LoadJsonLevelData("");
+	SUGER::LoadJsonLevelData("baseScene");
 	// レベルデータをシーンにインポート
-	levelDataImporter_.Import("");
+	levelDataImporter_.Import("baseScene");
 
 }
 
@@ -55,6 +56,10 @@ void BaseScene::Update() {
 	SceneStatusInitizlize();
 	// シーンステータスのリクエスト更新処理
 	SceneStatusUpdate();
+}
+
+void BaseScene::ChangeScene(const std::string& nextScene) {
+	sceneManager_->ChangeScene(nextScene);
 }
 
 void BaseScene::SetSceneManager(SceneManager* sceneManager) {

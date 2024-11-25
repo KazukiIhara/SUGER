@@ -39,9 +39,21 @@ void Model::Initialize(const std::string& filename) {
 	/*インデックスリソースにデータを書き込む*/
 	MapIndexData();
 #pragma endregion
+
+#pragma region マテリアルデータ
+	/*マテリアル用のリソース作成*/
+	CreateMaterialResource();
+	/*マテリアルにデータを書き込む*/
+	MapMaterialData();
+#pragma endregion
 }
 
 void Model::Update() {
+	// マテリアルの更新
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		materialData_[i]->color = modelData_.meshes[i].material.color;
+		materialData_[i]->uvMatrix = modelData_.meshes[i].material.uvMatrix;
+	}
 	// スキニングアニメーションがある場合アニメーション更新
 	if (haveSkinningAnimation_) {
 		animationTime += 1.0f / 60.0f;
@@ -62,6 +74,8 @@ void Model::Draw() {
 		if (modelData_.meshes[i].material.haveUV_) {
 			// SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
+			// ModelMaterial用CBufferの場所を設定
+			SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(5, materialResources_[i]->GetGPUVirtualAddress());
 			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
 		} else {
@@ -164,16 +178,45 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
 		aiMaterial* material = scene->mMaterials[materialIndex];
 		MaterialData materialData;
+
+		// Diffuseテクスチャがある場合の処理
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
 			aiString textureFilePath;
 			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
 			materialData.textureFilePath = fileDirectoryPath + "/" + textureFilePath.C_Str();
 			SUGER::LoadTexture(materialData.textureFilePath);
 			materialData.haveUV_ = true;
+
+			// UVスケール情報の取得
+			aiUVTransform uvTransform;
+			if (material->Get(AI_MATKEY_UVTRANSFORM(aiTextureType_DIFFUSE, 0), uvTransform) == AI_SUCCESS) {
+				Vector2 scale = { uvTransform.mScaling.x, uvTransform.mScaling.y };
+				float rotateZ = uvTransform.mRotation; // Z軸回転
+				Vector2 translate = { uvTransform.mTranslation.x, uvTransform.mTranslation.y };
+
+				// UVマトリックスを構築
+				materialData.uvMatrix = MakeUVMatrix(scale, rotateZ, translate);
+			} else {
+				// UV変換が見つからない場合は単位行列を設定
+				materialData.uvMatrix = MakeIdentityMatrix4x4();
+			}
 		} else {
 			materialData.haveUV_ = false;
 		}
-		materialData.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		aiColor4D baseColor;
+		// PBRマテリアルの BaseColorFactor の取得
+		if (material->Get(AI_MATKEY_BASE_COLOR, baseColor) == AI_SUCCESS) {
+			// BaseColorが存在する場合
+			materialData.color = { baseColor.r, baseColor.g, baseColor.b, baseColor.a };
+		} else if (material->Get(AI_MATKEY_COLOR_DIFFUSE, baseColor) == AI_SUCCESS) {
+			// Fallback: DiffuseColorの取得
+			materialData.color = { baseColor.r, baseColor.g, baseColor.b, baseColor.a };
+		} else {
+			// デフォルト色（白）
+			materialData.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		}
+
 		materials[materialIndex] = materialData;
 	}
 
@@ -347,7 +390,6 @@ void Model::GenerateSphere(const std::string& textureFilePath) {
 }
 
 void Model::CreateSphere(const std::string& textureFilePath) {
-
 	// スフィアの頂点作成
 	GenerateSphere(textureFilePath);
 
@@ -390,7 +432,6 @@ void Model::GeneratePlane(const std::string& textureFilePath) {
 }
 
 void Model::CreatePlane(const std::string& textureFilePath) {
-
 	// 板ポリの頂点作成
 	GeneratePlane(textureFilePath);
 
@@ -498,7 +539,23 @@ void Model::MapIndexData() {
 			// TODO::UVなしの処理
 		}
 	}
+}
 
+void Model::CreateMaterialResource() {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		Microsoft::WRL::ComPtr<ID3D12Resource> materialResource = SUGER::CreateBufferResource(sizeof(MaterialForGPU));
+		materialResources_.push_back(materialResource);
+	}
+}
+
+void Model::MapMaterialData() {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		MaterialForGPU* materialData = nullptr;
+		materialResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+		materialData->color = modelData_.meshes[i].material.color;
+		materialData->uvMatrix = modelData_.meshes[i].material.uvMatrix;
+		materialData_.push_back(materialData);
+	}
 }
 
 Node Model::ReadNode(aiNode* node) {
