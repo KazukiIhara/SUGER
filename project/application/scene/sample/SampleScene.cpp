@@ -32,17 +32,17 @@ void SampleScene::Initialize() {
 	SUGER::CreateEmitter("sampleEmitter");
 
 	// エンティティの作成とエンティティコントローラ初期化
-	entity_.Initialize(SUGER::CreateEntity("sampleEntity", "pronama_chan"));
+	pronamaChan_.Initialize(SUGER::CreateEntity("sampleEntity", "pronama_chan"));
 	// ライトを無効化
-	entity_.SetEnableLight(false);
+	pronamaChan_.SetEnableLight(false);
 
 	// オブジェクト2Dの作成とコントローラの初期化
-	pronama_chan.Initialize(SUGER::Create2DObject("0_pronama_chan", "pronama_chan.png"));
+	pronamaChanTex.Initialize(SUGER::Create2DObject("0_pronama_chan", "pronama_chan.png"));
 
 	// オブジェクト2Dコントローラを使ってポジションとアンカーポイントをセット
-	pronama_chan.SetSize(Vector2(400.0f, 400.0f));
-	pronama_chan.SetPosition(pronama_chan.GetSize() / 2.0f);
-	pronama_chan.SetAnchorPoint(Vector2(0.5f, 0.5f));
+	pronamaChanTex.SetSize(Vector2(400.0f, 400.0f));
+	pronamaChanTex.SetPosition(pronamaChanTex.GetSize() / 2.0f);
+	pronamaChanTex.SetAnchorPoint(Vector2(0.5f, 0.5f));
 
 	// エミッターのコントローラを初期化
 	emitter_.Initialize("sampleEmitter");
@@ -61,7 +61,7 @@ void SampleScene::Initialize() {
 	// プロ生ちゃんのデータグループを作成
 	SUGER::AddGrobalDataGroup("Pronama_Chan");
 	// グローバルデータのプロ生ちゃんグループにトランスレート情報を追加
-	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", entity_.GetTranslate());
+	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_.GetTranslate());
 }
 
 void SampleScene::Finalize() {
@@ -82,7 +82,7 @@ void SampleScene::SceneStatusPlayUpdate() {
 	//
 
 	// 更新処理の初めにグローバルデータクラスに保存されている値を取得
-	entity_.SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
+	pronamaChan_.SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
 
 	// 
 	// シーンの更新処理ここから
@@ -95,12 +95,12 @@ void SampleScene::SceneStatusPlayUpdate() {
 
 	if (SUGER::PushKey(DIK_D)) {
 		// スプライトを回転
-		pronama_chan.SetRotation(pronama_chan.GetRotation() + 0.01f);
-		entity_.SetTranslate(Vector3(entity_.GetTranslate().x + 0.1f, entity_.GetTranslate().y, entity_.GetTranslate().z));
+		pronamaChanTex.SetRotation(pronamaChanTex.GetRotation() + 0.01f);
+		pronamaChan_.SetTranslate(Vector3(pronamaChan_.GetTranslate().x + 0.1f, pronamaChan_.GetTranslate().y, pronamaChan_.GetTranslate().z));
 	} else if (SUGER::PushKey(DIK_A)) {
 		// スプライトを回転
-		pronama_chan.SetRotation(pronama_chan.GetRotation() - 0.01f);
-		entity_.SetTranslate(Vector3(entity_.GetTranslate().x - 0.1f, entity_.GetTranslate().y, entity_.GetTranslate().z));
+		pronamaChanTex.SetRotation(pronamaChanTex.GetRotation() - 0.01f);
+		pronamaChan_.SetTranslate(Vector3(pronamaChan_.GetTranslate().x - 0.1f, pronamaChan_.GetTranslate().y, pronamaChan_.GetTranslate().z));
 	}
 
 
@@ -114,6 +114,6 @@ void SampleScene::SceneStatusPlayUpdate() {
 	//
 
 	// 行列更新の手前でローカルデータをグローバルデータクラスに挿入
-	SUGER::SetGrobalDataValue("Pronama_Chan", "translate", entity_.GetTranslate());
+	SUGER::SetGrobalDataValue("Pronama_Chan", "translate", pronamaChan_.GetTranslate());
 
 }

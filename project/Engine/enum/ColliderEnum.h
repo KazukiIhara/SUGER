@@ -4,10 +4,3 @@
 enum ColliderType {
 	kSphere,
 };
-
-// コライダーのカテゴリ
-enum ColliderCategory {
-	kNone,
-	kPlayerBullet,
-	kBaroon,
-};

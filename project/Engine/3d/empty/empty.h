@@ -6,6 +6,7 @@
 // MyHedder
 #include "worldTransform/WorldTransform.h"
 #include "structs/ObjectStructs.h"
+#include "collider/Collider.h"
 
 // モデルなしの3Dオブジェクト
 class Empty {
@@ -64,6 +65,9 @@ public:
 	// ワールドトランスフォームのポインタのゲッター
 	WorldTransform* GetWorldTransformPtr();
 
+	// コライダーの取得
+	Collider GetCollider()const;
+
 	// 有効フラグのゲット
 	const bool& GetIsActive()const;
 
@@ -75,6 +79,8 @@ protected:
 	std::string name_;
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
+	// コライダー
+	Collider collider_;
 	// 有効フラグ
 	bool isActive_ = true;
 	// 削除フラグ

@@ -9,6 +9,19 @@ void EntityController::Initialize(const std::string& name) {
 	assert(entity_);
 }
 
+void EntityController::OnCollision(Collider* other) {
+	// 衝突相手のカテゴリーを取得
+	ColliderCategory category = other->GetColliderCategory();
+	switch (category) {
+	case kNone:
+		break;
+	default:
+		break;
+	}
+
+
+}
+
 void EntityController::SetScale(const Vector3& scale) {
 	entity_->SetScale(scale);
 }
@@ -55,6 +68,10 @@ WorldTransform* EntityController::GetWorldTransformPtr() {
 
 Camera* EntityController::GetCameraPtr() {
 	return entity_->GetCamera();
+}
+
+Collider EntityController::GetCollider() const {
+	return entity_->GetCollider();
 }
 
 

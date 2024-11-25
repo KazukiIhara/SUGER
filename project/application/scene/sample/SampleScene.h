@@ -1,11 +1,14 @@
 #pragma once
 
-// MyHedder
+// Common
 #include "iScene/base/BaseScene.h"
 #include "2d/controller/Object2dController.h"
 #include "3d/entityController/EntityController.h"
 
 #include "particle/emitterController/EmitterController.h"
+
+// SampleScene
+#include "objects/pronamaChan/PronamaChan.h"
 
 class SampleScene:public BaseScene {
 public: // 公開メンバ関数
@@ -27,9 +30,9 @@ private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 	// エンティティコントローラ
-	EntityController entity_;
+	PronamaChan pronamaChan_;
 	// jeanne用のオブジェクト2Dコントローラ
-	Object2DController pronama_chan;
+	Object2DController pronamaChanTex;
 	// Emitterコントローラ
 	EmitterController emitter_;
 };
