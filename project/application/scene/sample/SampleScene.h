@@ -30,9 +30,9 @@ private: // 非公開メンバ変数
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 	// エンティティコントローラ
-	PronamaChan entity_;
+	PronamaChan pronamaChan_;
 	// jeanne用のオブジェクト2Dコントローラ
-	Object2DController pronama_chan;
+	Object2DController pronamaChanTex;
 	// Emitterコントローラ
 	EmitterController emitter_;
 };
