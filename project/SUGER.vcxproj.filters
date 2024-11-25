@@ -378,6 +378,7 @@
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
+    <ClCompile Include="application\scene\sample\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -563,6 +564,7 @@
     <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="application\colliderCategory\ColliderCategory.h" />
     <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
+    <ClInclude Include="application\scene\sample\SampleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

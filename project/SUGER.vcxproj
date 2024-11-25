@@ -112,6 +112,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
+    <ClCompile Include="application\scene\sample\SampleScene.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\particle\emitterController\EmitterController.cpp" />
@@ -174,6 +175,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
+    <ClInclude Include="application\scene\sample\SampleScene.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="Engine\enum\FadeEnum.h" />
     <ClInclude Include="Engine\enum\SceneEnum.h" />
