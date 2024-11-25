@@ -1,11 +1,19 @@
 #include "Collider.h"
 
-void Collider::Initialize() {
-
+void Collider::Initialize(const Vector3& worldPosition, const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size) {
+	// ワールド座標をセット
+	SetWorldPosition(worldPosition);
+	// コライダーカテゴリーをセット
+	SetColliderCategory(colliderCategory);
+	// コライダータイプをセット
+	SetColliderType(colliderType);
+	// コライダーのサイズをセット
+	SetSize(size);
 }
 
-void Collider::Update() {
-
+void Collider::Update(const Vector3& worldPosition) {
+	// ワールド座標をセット
+	SetWorldPosition(worldPosition);
 }
 
 void Collider::Draw() {

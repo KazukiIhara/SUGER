@@ -232,7 +232,12 @@ public: // クラスメソッド
 #pragma endregion
 
 #pragma region ColliderManager
-	// 
+	// リストにコライダーを追加
+	static void AddColliderList(EntityController* entityController);
+	// コライダーの中身をリセット
+	static void ClearColliderContainer();
+	// コライダーリスト内の全当たり判定をチェック
+	static void CheckAllCollisions();
 #pragma endregion
 
 #pragma region JsonLevelDataManager

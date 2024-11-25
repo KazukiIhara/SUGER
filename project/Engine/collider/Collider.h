@@ -10,9 +10,9 @@ public:
 	~Collider() = default;
 
 	// 初期化
-	void Initialize();
+	void Initialize(const Vector3& worldPosition, const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size);
 	// 更新
-	void Update();
+	void Update(const Vector3& worldPosition);
 	// 描画
 	void Draw();
 
