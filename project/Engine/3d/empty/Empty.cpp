@@ -70,6 +70,10 @@ WorldTransform* Empty::GetWorldTransformPtr() {
 	return &worldTransform_;
 }
 
+Collider Empty::GetCollider() const {
+	return collider_;
+}
+
 const bool& Empty::GetIsActive() const {
 	return isActive_;
 }

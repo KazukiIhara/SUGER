@@ -47,7 +47,9 @@ public:
 
 	// セットされているカメラの取得
 	Camera* GetCameraPtr();
-
+	
+	// コライダーの取得
+	Collider GetCollider()const;
 
 private:
 	// コントロールするエンティティ

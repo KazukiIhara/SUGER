@@ -57,4 +57,8 @@ Camera* EntityController::GetCameraPtr() {
 	return entity_->GetCamera();
 }
 
+Collider EntityController::GetCollider() const {
+	return entity_->GetCollider();
+}
+
 
