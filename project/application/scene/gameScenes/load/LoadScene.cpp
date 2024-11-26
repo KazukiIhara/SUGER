@@ -47,6 +47,15 @@ void LoadScene::LoadSceneStateUpdate() {
 }
 
 void LoadScene::LoadScenePreLoadInitialize() {
+
+
+}
+
+void LoadScene::LoadScenePreLoadUpdate() {
+
+}
+
+void LoadScene::LoadSceneLoadingInitialize() {
 	// サウンド読み込み
 	SUGER::LoadWaveSound("Alarm01.wav");
 
@@ -61,15 +70,6 @@ void LoadScene::LoadScenePreLoadInitialize() {
 	// モデル読み込み
 	const std::string modelDirectoryPath = "resources/models/";
 	SUGER::LoadModel(modelDirectoryPath + "pronama_chan");
-
-}
-
-void LoadScene::LoadScenePreLoadUpdate() {
-
-}
-
-void LoadScene::LoadSceneLoadingInitialize() {
-
 }
 
 void LoadScene::LoadSceneLoadingUpdate() {
