@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdint>
 #include "math/types/Vector2.h"
 #include "math/types/Vector3.h"

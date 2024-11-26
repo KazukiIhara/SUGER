@@ -6,6 +6,47 @@
 void LoadScene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
+
+}
+
+void LoadScene::Finalize() {
+	Logger::Log("AllResources,Loaded");
+}
+
+void LoadScene::SceneStatusPlayInitialize() {
+
+}
+
+void LoadScene::SceneStatusPlayUpdate() {
+
+}
+
+void LoadScene::LoadSceneStateInitialize() {
+	// ロードシーンの状態
+	if (loadSceneStateRequest_) {
+		// 振る舞いを変更
+		loadSceneState_ = loadSceneStateRequest_.value();
+		// 状態ごとの初期化を実行
+		switch (loadSceneState_) {
+		case LoadScene::kPreLoad:
+
+			break;
+		case LoadScene::kLoading:
+
+			break;
+		case LoadScene::kFinished:
+
+			break;
+		}
+
+	}
+}
+
+void LoadScene::LoadSceneStateUpdate() {
+
+}
+
+void LoadScene::LoadScenePreLoadInitialize() {
 	// サウンド読み込み
 	SUGER::LoadWaveSound("Alarm01.wav");
 
@@ -20,51 +61,25 @@ void LoadScene::Initialize() {
 	// モデル読み込み
 	const std::string modelDirectoryPath = "resources/models/";
 	SUGER::LoadModel(modelDirectoryPath + "pronama_chan");
-}
-
-void LoadScene::Finalize() {
-	Logger::Log("AllResources,Loaded");
-}
-
-void LoadScene::SceneStatusPlayInitialize() {
-	
-}
-
-void LoadScene::SceneStatusPlayUpdate() {
 
 }
 
-void LoadScene::LoadSceneStateInitialize() {
-	// ロードシーンの状態
-	if (loadSceneStateRequest_) {
-		// 振る舞いを変更
-		loadSceneState_ = loadSceneStateRequest_.value();
-		// 状態ごとの初期化を実行
-		switch (loadSceneState_) {
-		case LoadScene::kLoad:
-			
-			break;
-		case LoadScene::kFinished:
+void LoadScene::LoadScenePreLoadUpdate() {
 
-			break;
-		}
-
-	}
 }
 
-void LoadScene::LoadSceneStateUpdate() {
-	  
+void LoadScene::LoadSceneLoadingInitialize() {
+
 }
 
-void LoadScene::LoadSceneLoadInitialize() {
-}
+void LoadScene::LoadSceneLoadingUpdate() {
 
-void LoadScene::LoadSceneLoadUpdate() {
 }
 
 void LoadScene::LoadSceneFinishedInitizlize() {
+
 }
 
 void LoadScene::LoadSceneFinishedUpdate() {
+
 }
- 

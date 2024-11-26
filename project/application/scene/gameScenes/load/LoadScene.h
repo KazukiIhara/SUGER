@@ -6,10 +6,11 @@
 #include "3d/entityController/EntityController.h"
 #include "particle/emitterController/EmitterController.h"
 
-class LoadScene:public BaseScene {
+class LoadScene :public BaseScene {
 public:
 	enum LoadSceneState {
-		kLoad,
+		kPreLoad,
+		kLoading,
 		kFinished,
 	};
 	LoadScene() = default;
@@ -30,10 +31,15 @@ public:
 	// ロードシーン状態更新
 	void LoadSceneStateUpdate();
 
-	// ロード状態初期化
-	void LoadSceneLoadInitialize();
-	// ロード状態更新
-	void LoadSceneLoadUpdate();
+	// ロード前状態初期化
+	void LoadScenePreLoadInitialize();
+	// ロード前状態更新
+	void LoadScenePreLoadUpdate();
+
+	// ロード中状態初期化
+	void LoadSceneLoadingInitialize();
+	// ロード中状態更新
+	void LoadSceneLoadingUpdate();
 
 	// ロード終了状態初期化
 	void LoadSceneFinishedInitizlize();
@@ -42,8 +48,8 @@ public:
 
 private:
 	// ロードシーンのフェーズ
-	LoadSceneState loadSceneState_ = LoadSceneState::kLoad;
+	LoadSceneState loadSceneState_ = LoadSceneState::kPreLoad;
 	// 次のロードシーンのフェーズ
-	std::optional<LoadSceneState> loadSceneStateRequest_ =std::nullopt;
+	std::optional<LoadSceneState> loadSceneStateRequest_ = std::nullopt;
 
 };

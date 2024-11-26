@@ -41,14 +41,15 @@ void Emitter::Update() {
 void Emitter::Emit() {
 	// パーティクル発生ポジション
 	emitSetting_.position = GetWorldPosition();
+	Vector3 emitPosition = emitSetting_.position;
 	// 発生個数分ループ
 	for (uint32_t i = 0; i < count_; i++) {
 		// ランダム発生処理
 		if (isRandom_) {
 			// 発生座標
-			emitSetting_.position.x = Random::GenerateFloat(randomMinTranslate_.x, randomMaxTranslate_.x);
-			emitSetting_.position.y = Random::GenerateFloat(randomMinTranslate_.y, randomMaxTranslate_.y);
-			emitSetting_.position.z = Random::GenerateFloat(randomMinTranslate_.z, randomMaxTranslate_.z);
+			emitSetting_.position.x = emitPosition.x + Random::GenerateFloat(randomMinTranslate_.x, randomMaxTranslate_.x);
+			emitSetting_.position.y = emitPosition.y + Random::GenerateFloat(randomMinTranslate_.y, randomMaxTranslate_.y);
+			emitSetting_.position.z = emitPosition.z + Random::GenerateFloat(randomMinTranslate_.z, randomMaxTranslate_.z);
 			// 移動量
 			emitSetting_.velocity.x = Random::GenerateFloat(randomMinVelocity_.x, randomMaxVelocity_.x);
 			emitSetting_.velocity.y = Random::GenerateFloat(randomMinVelocity_.y, randomMaxVelocity_.y);
@@ -78,7 +79,7 @@ void Emitter::SetCount(const uint32_t& count) {
 	count_ = count;
 }
 
-void Emitter::SerFrequency(const float& frequency) {
+void Emitter::SetFrequency(const float& frequency) {
 	frequency_ = frequency;
 }
 
