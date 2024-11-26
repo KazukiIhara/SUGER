@@ -46,6 +46,16 @@ void BaseScene::Initialize() {
 }
 
 void BaseScene::Update() {
+	// キーボード入力でカメラフラグ切り替え
+	if (SUGER::TriggerKey(DIK_P)) {
+		if (isActiveDebugCamera_) {
+			isActiveDebugCamera_ = false;
+			SUGER::SetSceneCamera(sceneCamera_.get());
+		} else {
+			isActiveDebugCamera_ = true;
+			SUGER::SetSceneCamera(debugCamera_.get());
+		}
+	}
 	// ImGuiによるデバッグカメラコントロール
 	ImGuiForDebugCamera();
 	// デバッグカメラのアップデート
@@ -91,15 +101,15 @@ void BaseScene::SceneStatusInitizlize() {
 		sceneStatus_ = sceneStatusRequest_.value();
 		// 各振る舞いごとの初期化を実行
 		switch (sceneStatus_) {
-			case SceneStatus::kFadeIn:
-				SceneStatusFadeInInitialize();
-				break;
-			case SceneStatus::kPlay:
-				SceneStatusPlayInitialize();
-				break;
-			case SceneStatus::kFadeOut:
-				SceneStatusFadeOutInitialize();
-				break;
+		case SceneStatus::kFadeIn:
+			SceneStatusFadeInInitialize();
+			break;
+		case SceneStatus::kPlay:
+			SceneStatusPlayInitialize();
+			break;
+		case SceneStatus::kFadeOut:
+			SceneStatusFadeOutInitialize();
+			break;
 		}
 		// 振る舞いリクエストをリセット
 		sceneStatusRequest_ = std::nullopt;
@@ -108,15 +118,15 @@ void BaseScene::SceneStatusInitizlize() {
 
 void BaseScene::SceneStatusUpdate() {
 	switch (sceneStatus_) {
-		case kFadeIn:
-			SceneStatusFadeInUpdate();
-			break;
-		case kPlay:
-			SceneStatusPlayUpdate();
-			break;
-		case kFadeOut:
-			SceneStatusFadeOutUpdate();
-			break;
+	case kFadeIn:
+		SceneStatusFadeInUpdate();
+		break;
+	case kPlay:
+		SceneStatusPlayUpdate();
+		break;
+	case kFadeOut:
+		SceneStatusFadeOutUpdate();
+		break;
 	}
 }
 
@@ -130,7 +140,7 @@ void BaseScene::SceneStatusFadeInUpdate() {
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
-		sceneStatus_ = SceneStatus::kPlay;
+		sceneStatusRequest_ = SceneStatus::kPlay;
 		fade_->Stop();
 	}
 }
@@ -145,7 +155,6 @@ void BaseScene::SceneStatusFadeOutUpdate() {
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
-		sceneStatus_ = SceneStatus::kPlay;
 		fade_->Stop();
 	}
 }

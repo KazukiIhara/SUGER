@@ -26,8 +26,6 @@ public: // 公開メンバ関数
 	void SceneStatusPlayUpdate()override;
 
 private: // 非公開メンバ変数
-	// シーンのカメラ
-	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 	// エンティティコントローラ
 	std::unique_ptr<PronamaChan> pronamaChan_ = nullptr;
 	// jeanne用のオブジェクト2Dコントローラ

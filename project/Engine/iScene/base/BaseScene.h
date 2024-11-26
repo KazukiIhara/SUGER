@@ -66,14 +66,18 @@ protected:
 	SceneStatus sceneStatus_ = SceneStatus::kFadeIn;
 	// 次のフェーズリスト
 	std::optional<SceneStatus> sceneStatusRequest_ = std::nullopt;
-
+	// シーンのカメラ
+	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 	// デバッグカメラ
-	std::unique_ptr<Camera> debugCamera_;
+	std::unique_ptr<Camera> debugCamera_ = nullptr;
 	// ライト
-	std::unique_ptr<PunctualLight> light_;
+	std::unique_ptr<PunctualLight> light_ = nullptr;
 	// フェード
-	std::unique_ptr<Fade> fade_;
+	std::unique_ptr<Fade> fade_ = nullptr;
 
 	// レベルデータインポータ
 	JsonLevelDataImporter levelDataImporter_;
+
+	// デバッグカメラがアクティブかどうか
+	bool isActiveDebugCamera_ = false;
 };
