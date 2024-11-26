@@ -30,4 +30,41 @@ void LoadScene::SceneStatusPlayInitialize() {
 	
 }
 
-void LoadScene::SceneStatusPlayUpdate() {}
+void LoadScene::SceneStatusPlayUpdate() {
+
+}
+
+void LoadScene::LoadSceneStateInitialize() {
+	// ロードシーンの状態
+	if (loadSceneStateRequest_) {
+		// 振る舞いを変更
+		loadSceneState_ = loadSceneStateRequest_.value();
+		// 状態ごとの初期化を実行
+		switch (loadSceneState_) {
+		case LoadScene::kLoad:
+			
+			break;
+		case LoadScene::kFinished:
+
+			break;
+		}
+
+	}
+}
+
+void LoadScene::LoadSceneStateUpdate() {
+	  
+}
+
+void LoadScene::LoadSceneLoadInitialize() {
+}
+
+void LoadScene::LoadSceneLoadUpdate() {
+}
+
+void LoadScene::LoadSceneFinishedInitizlize() {
+}
+
+void LoadScene::LoadSceneFinishedUpdate() {
+}
+ 

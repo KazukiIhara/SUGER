@@ -8,6 +8,10 @@
 
 class LoadScene:public BaseScene {
 public:
+	enum LoadSceneState {
+		kLoad,
+		kFinished,
+	};
 	LoadScene() = default;
 	~LoadScene() = default;
 
@@ -21,6 +25,25 @@ public:
 	// プレイフェーズ更新
 	void SceneStatusPlayUpdate()override;
 
+	// ロードシーン状態初期化
+	void LoadSceneStateInitialize();
+	// ロードシーン状態更新
+	void LoadSceneStateUpdate();
+
+	// ロード状態初期化
+	void LoadSceneLoadInitialize();
+	// ロード状態更新
+	void LoadSceneLoadUpdate();
+
+	// ロード終了状態初期化
+	void LoadSceneFinishedInitizlize();
+	// ロード終了状態更新
+	void LoadSceneFinishedUpdate();
+
 private:
+	// ロードシーンのフェーズ
+	LoadSceneState loadSceneState_ = LoadSceneState::kLoad;
+	// 次のロードシーンのフェーズ
+	std::optional<LoadSceneState> loadSceneStateRequest_ =std::nullopt;
 
 };
