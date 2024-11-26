@@ -371,6 +371,14 @@ int SUGER::GetRightStickY(int controllerID) {
 	return directInput_->GetRightStickY(controllerID);
 }
 
+int SUGER::GetLeftTrigger(int controllerID) {
+	return directInput_->GetLeftTrigger(controllerID);
+}
+
+int SUGER::GetRightTrigger(int controllerID) {
+	return directInput_->GetRightTrigger(controllerID);
+}
+
 bool SUGER::IsPadUp(int controllerID) {
 	return directInput_->IsPadUp(controllerID);
 }

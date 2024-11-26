@@ -91,6 +91,11 @@ public: // クラスメソッド
 	// 右スティックのY軸位置を取得（-1000～1000の範囲にスケーリング）
 	static int GetRightStickY(int controllerID);
 
+	// 左トリガーの状態を取得
+	static int GetLeftTrigger(int controllerID);
+	// 右トリガーの状態を取得
+	static int GetRightTrigger(int controllerID);
+
 	// 方向キーの取得
 	static bool IsPadUp(int controllerID);
 	static bool IsPadRight(int controllerID);
