@@ -68,6 +68,8 @@ void SampleScene::Initialize() {
 	emitter_.SetEmitType(kRandom);
 	emitter_.SetIsRepeat(false);
 
+
+
 	//
 	// GrobalData
 	//
@@ -101,6 +103,11 @@ void SampleScene::SceneStatePlayUpdate() {
 	// 
 	// シーンの更新処理ここから
 	// 
+
+	// Uキーを押すとBGM再生
+	if (SUGER::TriggerKey(DIK_U)) {
+		SUGER::PlayWaveSound("BGM.wav");
+	}
 
 	// スペースキーを押すと発生
 	if (SUGER::PushKey(DIK_SPACE)) {
