@@ -98,8 +98,10 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadTexture(textureDirectoryPath + "pronama_chan.png");
 
 	// モデル読み込み
-	const std::string modelDirectoryPath = "resources/models/";
-	SUGER::LoadModel(modelDirectoryPath + "pronama_chan");
+	SUGER::LoadModel("pronama_chan");
+
+	// レベルデータ読み込み
+	SUGER::LoadJsonLevelData("baseScene");
 }
 
 void LoadScene::LoadSceneStateLoadingUpdate() {
@@ -115,6 +117,12 @@ void LoadScene::LoadSceneStateFinishedInitizlize() {
 }
 
 void LoadScene::LoadSceneStateFinishedUpdate() {
+#ifdef _DEBUG
+	ImGui::Begin("LoadSceneState");
+	ImGui::Text("AllResources,Loaded");
+	ImGui::End();
+#endif // DEBUG
+
 	// ボタンでフェードアウト処理
 	if (SUGER::TriggerKey(DIK_SPACE)) {
 		sceneStateRequest_ = SceneState::kFadeOut;

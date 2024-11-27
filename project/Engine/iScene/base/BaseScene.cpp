@@ -38,11 +38,6 @@ void BaseScene::Initialize() {
 	// シーンに必要なカメラとライトのセット
 	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
 
-	// レベルデータをロード
-	SUGER::LoadJsonLevelData("baseScene");
-	// レベルデータをシーンにインポート
-	levelDataImporter_.Import("baseScene");
-
 }
 
 void BaseScene::Update() {
@@ -156,5 +151,7 @@ void BaseScene::SceneStateFadeOutUpdate() {
 
 	if (fade_->IsFinished()) {
 		fade_->Stop();
+		// ここに遷移先を指定したシーンチェンジ関数を呼び出す
+
 	}
 }
