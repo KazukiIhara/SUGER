@@ -33,6 +33,9 @@ public:
 
 	// 統一された停止処理
 	void StopAll(const std::string& filename);
+
+	// 停止した音声を再生中コンテナから削除
+	void CleanupFinishedVoices();
 	// 検索
 	SoundData* FindWave(const std::string& filename);
 

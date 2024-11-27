@@ -242,6 +242,8 @@ public: // クラスメソッド
 	static void StopWaveLoopSound(const std::string& filename);
 	// 両再生停止処理
 	static void StopWaveAllSound(const std::string& filename);
+	// 再生が終わっているサウンドを自動的に再生中コンテナから削除
+	static void CreanupFinishedVoices();
 #pragma endregion
 
 #pragma region ColliderManager

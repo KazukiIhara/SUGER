@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 // 通常再生中のVoiceを管理するコンテナ
-std::unordered_map<std::string, IXAudio2SourceVoice*> playingVoices_;
+std::unordered_map<std::string, std::vector<IXAudio2SourceVoice*>> playingVoices_;
 // ループ再生中のVoiceを管理するコンテナ
 std::unordered_map<std::string, IXAudio2SourceVoice*> loopingVoices_;
 
@@ -116,15 +116,19 @@ void SoundManager::PlayWave(const std::string& filename) {
 	result = pSourceVoice->Start();
 	assert(SUCCEEDED(result));
 
-	// 通常再生用コンテナに登録
-	playingVoices_[filename] = pSourceVoice;
+	// 同じ名前の音声を追跡
+	playingVoices_[filename].push_back(pSourceVoice);
 }
 
 void SoundManager::StopWave(const std::string& filename) {
 	auto it = playingVoices_.find(filename);
 	if (it != playingVoices_.end()) {
-		it->second->Stop();
-		it->second->DestroyVoice();
+		// 登録されているすべてのSourceVoiceを停止して破棄
+		for (IXAudio2SourceVoice* voice : it->second) {
+			voice->Stop();
+			voice->DestroyVoice();
+		}
+		// コンテナから削除
 		playingVoices_.erase(it);
 	}
 }
@@ -177,6 +181,27 @@ void SoundManager::StopAll(const std::string& filename) {
 	StopWave(filename);
 	// ループ再生を停止
 	StopWaveLoop(filename);
+}
+
+void SoundManager::CleanupFinishedVoices() {
+	for (auto it = playingVoices_.begin(); it != playingVoices_.end(); ) {
+		auto& voices = it->second;
+		voices.erase(std::remove_if(voices.begin(), voices.end(), [](IXAudio2SourceVoice* voice) {
+			XAUDIO2_VOICE_STATE state;
+			voice->GetState(&state);
+			if (state.BuffersQueued == 0) {
+				voice->DestroyVoice();
+				return true; // 再生が終了したVoiceを削除
+			}
+			return false; // まだ再生中のVoiceは残す
+			}), voices.end());
+
+		if (voices.empty()) {
+			it = playingVoices_.erase(it); // 名前に対応するVoiceリストが空ならエントリごと削除
+		} else {
+			++it;
+		}
+	}
 }
 
 SoundData* SoundManager::FindWave(const std::string& filename) {

@@ -237,19 +237,21 @@ void SUGER::Update() {
 		endRequest_ = true;
 	}
 
+	// 入力の更新
+	directInput_->Update();
 
 	// F11キーでフルスクリーン切り替え処理
 	if (directInput_->TriggerKey(DIK_F11)) {
 		windowManager_->ToggleFullScreen();
 	}
 
-	// 入力の更新
-	directInput_->Update();
-
 	// escキーで終了
 	if (directInput_->PushKey(DIK_ESCAPE)) {
 		endRequest_ = true;
 	}
+
+	// 再生の終わっている音声を再生中コンテナから削除
+	soundManager_->CleanupFinishedVoices();
 
 	// ImGui開始処理
 	imguiManager_->BeginFrame();
@@ -597,6 +599,10 @@ void SUGER::StopWaveLoopSound(const std::string& filename) {
 
 void SUGER::StopWaveAllSound(const std::string& filename) {
 	soundManager_->StopAll(filename);
+}
+
+void SUGER::CreanupFinishedVoices() {
+	soundManager_->CleanupFinishedVoices();
 }
 
 void SUGER::AddColliderList(EntityController* entityController) {
