@@ -254,8 +254,10 @@ void SUGER::Update() {
 	// ImGui開始処理
 	imguiManager_->BeginFrame();
 
+#ifdef _DEBUG
 	// グローバルデータ更新処理
 	grobalDataManager_->Update();
+#endif // _DEBUG
 
 	// FPS表示
 	ShowFPS();

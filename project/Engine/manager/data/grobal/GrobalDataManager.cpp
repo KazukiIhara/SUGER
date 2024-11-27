@@ -18,7 +18,7 @@ void GrobalDataManager::Finalize() {
 }
 
 void GrobalDataManager::Update() {
-	if (!ImGui::Begin("Global Variables", nullptr, ImGuiWindowFlags_MenuBar)) {
+	if (!ImGui::Begin("GlobalDatas", nullptr, ImGuiWindowFlags_MenuBar)) {
 		ImGui::End();
 		return;
 	}

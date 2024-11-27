@@ -60,7 +60,6 @@ void SampleScene::Initialize() {
 	SUGER::AddGrobalDataGroup("Pronama_Chan");
 	// グローバルデータのプロ生ちゃんグループにトランスレート情報を追加
 	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
-	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
 
 	// レベルデータをシーンにインポート
 	levelDataImporter_.Import("baseScene");
