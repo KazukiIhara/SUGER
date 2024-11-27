@@ -11,7 +11,6 @@ void LoadScene::Initialize() {
 
 	// TODO:ロード終了画面用のテクスチャと2dオブジェクトの作成
 
-
 }
 
 void LoadScene::Finalize() {
@@ -19,7 +18,8 @@ void LoadScene::Finalize() {
 }
 
 void LoadScene::SceneStatePlayInitialize() {
-
+	// ロード前状態のリクエストを送る
+	loadSceneStateRequest_ = LoadSceneState::kPreLoad;
 }
 
 void LoadScene::SceneStatePlayUpdate() {
@@ -79,7 +79,7 @@ void LoadScene::LoadSceneStatePreLoadInitialize() {
 }
 
 void LoadScene::LoadSceneStatePreLoadUpdate() {
-	// 操作などあれば
+	// ロード前に操作などあれば
 
 	// 今の実装では操作がないので、即ロード状態のリクエストを送る
 	loadSceneStateRequest_ = LoadSceneState::kLoading;
@@ -107,7 +107,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 void LoadScene::LoadSceneStateLoadingUpdate() {
 	// ロード中に何か操作があれば
 
-	// 今の実装だと、ここを通った時にロードが終了しているはずなので、
+	// 今の実装だと、ここを通った時にロードが終了しているはずなので、即終了画面へ
 	loadSceneStateRequest_ = LoadSceneState::kFinished;
 }
 
