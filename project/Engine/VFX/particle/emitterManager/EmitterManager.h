@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-#include "particle/emitter/Emitter.h"
+#include "VFX/particle/emitter/Emitter.h"
 
 class ParticleManager;
 

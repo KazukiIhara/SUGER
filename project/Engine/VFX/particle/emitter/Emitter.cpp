@@ -42,10 +42,17 @@ void Emitter::Emit() {
 	// パーティクル発生ポジション
 	emitSetting_.position = GetWorldPosition();
 	Vector3 emitPosition = emitSetting_.position;
-	// 発生個数分ループ
-	for (uint32_t i = 0; i < count_; i++) {
-		// ランダム発生処理
-		if (isRandom_) {
+
+	switch (emitType_) {
+	case kDefault:
+		// 発生個数分ループ
+		for (uint32_t i = 0; i < count_; i++) {
+			particle_->AddNewParticle(emitSetting_);
+		}
+		break;
+	case kRandom:
+		// 発生個数分ループ
+		for (uint32_t i = 0; i < count_; i++) {
 			// 発生座標
 			emitSetting_.position.x = emitPosition.x + Random::GenerateFloat(randomMinTranslate_.x, randomMaxTranslate_.x);
 			emitSetting_.position.y = emitPosition.y + Random::GenerateFloat(randomMinTranslate_.y, randomMaxTranslate_.y);
@@ -60,13 +67,13 @@ void Emitter::Emit() {
 			emitSetting_.color.z = Random::GenerateFloat(randomMinColor_.z, randomMaxColor_.z);
 			// 生存時間
 			emitSetting_.lifeTime = Random::GenerateFloat(randomMinLifeTime_, randomMaxLifeTime_);
+
+			particle_->AddNewParticle(emitSetting_);
 		}
+		break;
+	case kRadial:
 
-		//
-		// このクラスを継承して、ここにemitSettingを変更する処理を追加することで、様々なパーティクルを出すことが可能
-		//
-
-		particle_->AddNewParticle(emitSetting_);
+		break;
 	}
 }
 
@@ -87,8 +94,8 @@ void Emitter::SetIsRepeat(const bool& isRepeat) {
 	isRepeat_ = isRepeat;
 }
 
-void Emitter::SetIsRandom(const bool& isRandom) {
-	isRandom_ = isRandom;
+void Emitter::SetEmitType(const EmitType& emitType) {
+	emitType_ = emitType;
 }
 
 void Emitter::SetRandomMinPosition(const Vector3& randomMinPosition) {

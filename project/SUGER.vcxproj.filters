@@ -325,7 +325,7 @@
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp">
       <Filter>engine\manager\object\2d</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\particle\system\ParticleSystem.cpp">
+    <ClCompile Include="Engine\VFX\particle\system\ParticleSystem.cpp">
       <Filter>engine\particle\system</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp">
@@ -368,11 +368,11 @@
     <ClCompile Include="Engine\3d\skiningEntity\SkiningEntity.cpp" />
     <ClCompile Include="Engine\manager\sound\SoundManager.cpp" />
     <ClCompile Include="Engine\manager\data\grobal\GrobalDataManager.cpp" />
-    <ClCompile Include="Engine\particle\emitter\Emitter.cpp" />
-    <ClCompile Include="Engine\particle\emitterManager\EmitterManager.cpp" />
-    <ClCompile Include="Engine\particle\particleManager\ParticleManager.cpp" />
-    <ClCompile Include="Engine\particle\particle\Particle.cpp" />
-    <ClCompile Include="Engine\particle\emitterController\EmitterController.cpp" />
+    <ClCompile Include="Engine\VFX\particle\emitter\Emitter.cpp" />
+    <ClCompile Include="Engine\VFX\particle\emitterManager\EmitterManager.cpp" />
+    <ClCompile Include="Engine\VFX\particle\particleManager\ParticleManager.cpp" />
+    <ClCompile Include="Engine\VFX\particle\particle\Particle.cpp" />
+    <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
     <ClCompile Include="Engine\random\Random.cpp" />
     <ClCompile Include="Engine\transition\fade\Fade.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
@@ -496,7 +496,7 @@
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h">
       <Filter>engine\manager\object\2d</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\particle\system\ParticleSystem.h">
+    <ClInclude Include="Engine\VFX\particle\system\ParticleSystem.h">
       <Filter>engine\particle\system</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h">
@@ -552,11 +552,11 @@
     <ClInclude Include="Engine\manager\sound\SoundManager.h" />
     <ClInclude Include="Engine\structs\SoundStruct.h" />
     <ClInclude Include="Engine\manager\data\grobal\GrobalDataManager.h" />
-    <ClInclude Include="Engine\particle\emitter\Emitter.h" />
-    <ClInclude Include="Engine\particle\emitterManager\EmitterManager.h" />
-    <ClInclude Include="Engine\particle\particleManager\ParticleManager.h" />
-    <ClInclude Include="Engine\particle\particle\Particle.h" />
-    <ClInclude Include="Engine\particle\emitterController\EmitterController.h" />
+    <ClInclude Include="Engine\VFX\particle\emitter\Emitter.h" />
+    <ClInclude Include="Engine\VFX\particle\emitterManager\EmitterManager.h" />
+    <ClInclude Include="Engine\VFX\particle\particleManager\ParticleManager.h" />
+    <ClInclude Include="Engine\VFX\particle\particle\Particle.h" />
+    <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
     <ClInclude Include="Engine\random\Random.h" />
     <ClInclude Include="Engine\transition\fade\Fade.h" />
     <ClInclude Include="Engine\enum\FadeEnum.h" />
@@ -567,6 +567,7 @@
     <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
     <ClInclude Include="application\objects\teapot\Teapot.h" />
+    <ClInclude Include="Engine\enum\EmitterEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "particle/emitter/Emitter.h"
+#include "VFX/particle/emitter/Emitter.h"
 
 class EmitterController {
 public:
@@ -37,8 +37,8 @@ public:
 	// 繰り返し発生フラグセット
 	void SetIsRepeat(const bool& isRepeat);
 
-	// ランダムフラグセット
-	void SetIsRandom(const bool& isRandom);
+	// 発生タイプのセット
+	void SetEmitType(const EmitType& emitType);
 
 	// 発生場所のランダム閾値
 	void SetRandomMinPosition(const Vector3& randomMinPosition);

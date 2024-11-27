@@ -1,8 +1,9 @@
 #pragma once
 #include "3d/empty/empty.h"
-#include "particle/particle/Particle.h"
+#include "enum/EmitterEnum.h"
+#include "VFX/particle/particle/Particle.h"
 
-class Emitter:public Empty {
+class Emitter :public Empty {
 public:
 	Emitter() = default;
 	~Emitter() = default;
@@ -25,8 +26,8 @@ public:
 	void SetFrequency(const float& frequency);
 	// 繰り返し発生フラグのセット
 	void SetIsRepeat(const bool& isRepeat);
-	// ランダムフラグのセット
-	void SetIsRandom(const bool& isRandom);
+	// 発生タイプのセット
+	void SetEmitType(const EmitType& emitType);
 
 	// ランダム発生の閾値設定
 	// 座標最小値
@@ -62,6 +63,10 @@ protected:
 
 	// パーティクル発生設定
 	EmitSetting emitSetting_{};
+
+	// 発生の種類
+	EmitType emitType_ = EmitType::kDefault;
+
 	// 発生数
 	uint32_t count_ = 1;
 	// 発生頻度
@@ -70,9 +75,6 @@ protected:
 	bool isRepeat_ = false;
 	// 頻度用時刻
 	float frequencyTime_ = 0.0f;
-
-	// ランダム値を使用するかどうか
-	bool isRandom_ = false;
 
 	// 発生場所のランダム閾値
 	Vector3 randomMinTranslate_ = { -1.0f,-1.0f,-1.0f };

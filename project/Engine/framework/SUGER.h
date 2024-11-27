@@ -18,15 +18,15 @@
 #include "manager/object/2d/Object2DManager.h"
 #include "manager/emptyManager/EmptyManager.h"
 #include "manager/entityManager/EntityManager.h"
-#include "particle/emitterManager/EmitterManager.h"
-#include "particle/particleManager/ParticleManager.h"
+#include "VFX/particle/emitterManager/EmitterManager.h"
+#include "VFX/particle/particleManager/ParticleManager.h"
 #include "manager/sound/SoundManager.h"
 #include "manager/collision/CollisionManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "manager/data/grobal/GrobalDataManager.h"
 #include "2d/system/Object2dSystem.h"
 #include "3d/system/Object3dSystem.h"
-#include "particle/system/ParticleSystem.h"
+#include "VFX/particle/system/ParticleSystem.h"
 
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"

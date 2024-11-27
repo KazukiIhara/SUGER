@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-#include "particle/particle/Particle.h"
+#include "VFX/particle/particle/Particle.h"
 
 class ModelManager;
 class TextureManager;

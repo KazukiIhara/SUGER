@@ -43,8 +43,8 @@ void EmitterController::SetIsRepeat(const bool& isRepeat) {
 	emitter_->SetIsRepeat(isRepeat);
 }
 
-void EmitterController::SetIsRandom(const bool& isRandom) {
-	emitter_->SetIsRandom(isRandom);
+void EmitterController::SetEmitType(const EmitType& emitType) {
+	emitter_->SetEmitType(emitType);
 }
 
 void EmitterController::SetRandomMinPosition(const Vector3& randomMinPosition) {

@@ -65,7 +65,7 @@ void SampleScene::Initialize() {
 	// エミッターの発生個数を変更
 	emitter_.SetCount(5);
 
-	emitter_.SetIsRandom(true);
+	emitter_.SetEmitType(kRandom);
 	emitter_.SetIsRepeat(false);
 
 	//

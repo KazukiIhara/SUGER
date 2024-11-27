@@ -4,7 +4,7 @@
 #include "iScene/base/BaseScene.h"
 #include "2d/controller/Object2dController.h"
 #include "3d/entityController/EntityController.h"
-#include "particle/emitterController/EmitterController.h"
+#include "VFX/particle/emitterController/EmitterController.h"
 
 // SampleScene
 #include "objects/pronamaChan/PronamaChan.h"
