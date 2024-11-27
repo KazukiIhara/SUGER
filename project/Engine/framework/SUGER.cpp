@@ -583,6 +583,22 @@ void SUGER::PlayWaveSound(const std::string& filename) {
 	soundManager_->PlayWave(filename);
 }
 
+void SUGER::PlayWaveLoopSound(const std::string& filename, uint32_t loopCount) {
+	soundManager_->PlayWaveLoop(filename, loopCount);
+}
+
+void SUGER::StopWaveSound(const std::string& filename) {
+	soundManager_->StopWave(filename);
+}
+
+void SUGER::StopWaveLoopSound(const std::string& filename) {
+	soundManager_->StopWaveLoop(filename);
+}
+
+void SUGER::StopWaveAllSound(const std::string& filename) {
+	soundManager_->StopAll(filename);
+}
+
 void SUGER::AddColliderList(EntityController* entityController) {
 	collisionManager_->AddCollider(entityController);
 }

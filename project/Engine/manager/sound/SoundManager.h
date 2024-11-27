@@ -21,8 +21,18 @@ public:
 	void ClearContainer();
 	// 読み込み
 	void LoadWave(const std::string& filename, const std::string& directoryPath);
-	// 再生
+
+	// 通常再生
 	void PlayWave(const std::string& filename);
+	// 音声停止
+	void StopWave(const std::string& filename);
+	// ループ再生
+	void PlayWaveLoop(const std::string& filename, uint32_t loopCount = XAUDIO2_LOOP_INFINITE);
+	// ループ再生停止
+	void StopWaveLoop(const std::string& filename);
+
+	// 統一された停止処理
+	void StopAll(const std::string& filename);
 	// 検索
 	SoundData* FindWave(const std::string& filename);
 
