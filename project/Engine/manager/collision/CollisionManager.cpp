@@ -27,22 +27,22 @@ void CollisionManager::ClearContainer() {
 
 void CollisionManager::CheckCollisionPair(EntityController* controllerA, EntityController* controllerB) {
 	// A,Bのコライダーを取得
-	Collider colliderA = controllerA->GetCollider();
-	Collider colliderB = controllerB->GetCollider();
+	Collider* colliderA = controllerA->GetCollider();
+	Collider* colliderB = controllerB->GetCollider();
 
 	// A,Bの座標を取得
-	Vector3 positionA = colliderA.GetWorldPosition();
-	Vector3 positionB = colliderB.GetWorldPosition();
+	Vector3 positionA = colliderA->GetWorldPosition();
+	Vector3 positionB = colliderB->GetWorldPosition();
 	// 座標の差分ベクトル
 	Vector3 subtract = positionB - positionA;
 	// 座標AとBの距離を求める
 	float distance = Length(subtract);
 	// 球と球の交差判定
-	if (distance < colliderA.GetSize() + colliderB.GetSize()) {
+	if (distance < colliderA->GetSize() + colliderB->GetSize()) {
 		// コライダーAの衝突時コールバックを呼び出す
-		controllerA->OnCollision(&colliderB);
+		controllerA->OnCollision(colliderB);
 		// コライダーBの衝突時コールバックを呼び出す
-		controllerB->OnCollision(&colliderA);
+		controllerB->OnCollision(colliderA);
 	}
 }
 

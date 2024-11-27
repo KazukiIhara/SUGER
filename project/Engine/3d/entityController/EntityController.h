@@ -10,6 +10,9 @@ public:
 	// 初期化
 	void Initialize(const std::string& name);
 
+	// コライダー作成
+	void CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size);
+
 	// 衝突コールバック関数
 	virtual void OnCollision([[maybe_unused]] Collider* other);
 
@@ -52,7 +55,7 @@ public:
 	Camera* GetCameraPtr();
 
 	// コライダーの取得
-	Collider GetCollider()const;
+	Collider* GetCollider();
 
 private:
 	// コントロールするエンティティ

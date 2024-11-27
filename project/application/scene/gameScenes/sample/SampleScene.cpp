@@ -16,6 +16,9 @@ void SampleScene::Initialize() {
 	// シーンの初期化処理ここから
 	// 
 
+	// レベルデータをシーンにインポート
+	levelDataImporter_.Import("baseScene");
+
 	// カメラの設定
 	sceneCamera_ = std::make_unique<Camera>();
 	sceneCamera_->Initialize();
@@ -29,10 +32,23 @@ void SampleScene::Initialize() {
 	SUGER::CreateEmitter("sampleEmitter");
 
 	// エンティティの作成とエンティティコントローラ初期化
+	// プロ生ちゃん
 	pronamaChan_ = std::make_unique<PronamaChan>();
-	pronamaChan_->Initialize(SUGER::CreateEntity("sampleEntity", "pronama_chan"));
+	pronamaChan_->Initialize(SUGER::CreateEntity("pronamaChan", "pronama_chan"));
+	pronamaChan_->CreateCollider(kNone, kSphere, 1.0f);
 	// ライトを無効化
 	pronamaChan_->SetEnableLight(false);
+
+	// ティーポット
+	// 初期トランスフォームを設定
+	EulerTransform3D teapotDefaultTransform;
+	teapotDefaultTransform.rotate = { 0.0f,0.0f,0.0f };
+	teapotDefaultTransform.scale = { 1.0f,1.0f,1.0f };
+	teapotDefaultTransform.translate = { 3.0f,0.0f,0.0f };
+	// teapot作成
+	teapot_ = std::make_unique<Teapot>();
+	teapot_->Initialize(SUGER::CreateEntity("teapot", "teapot", teapotDefaultTransform));
+	teapot_->CreateCollider(kNone, kSphere, 1.0f);
 
 	// オブジェクト2Dの作成とコントローラの初期化
 	pronamaChanTex.Initialize(SUGER::Create2DObject("0_pronama_chan", "pronama_chan.png"));
@@ -61,8 +77,6 @@ void SampleScene::Initialize() {
 	// グローバルデータのプロ生ちゃんグループにトランスレート情報を追加
 	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
 
-	// レベルデータをシーンにインポート
-	levelDataImporter_.Import("baseScene");
 }
 
 void SampleScene::Finalize() {
@@ -115,7 +129,10 @@ void SampleScene::SceneStatePlayUpdate() {
 	SUGER::ClearColliderContainer();
 
 	// コライダーリストに追加していく
+	// プロ生ちゃん
 	SUGER::AddColliderList(pronamaChan_.get());
+	// ティーポット
+	SUGER::AddColliderList(teapot_.get());
 
 	//
 	// コライダーの処理ここまで

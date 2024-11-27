@@ -110,6 +110,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="application\myGame\MyGame.cpp" />
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
+    <ClCompile Include="application\objects\teapot\Teapot.cpp" />
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
@@ -173,6 +174,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\colliderCategory\ColliderCategory.h" />
     <ClInclude Include="application\myGame\MyGame.h" />
     <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
+    <ClInclude Include="application\objects\teapot\Teapot.h" />
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />

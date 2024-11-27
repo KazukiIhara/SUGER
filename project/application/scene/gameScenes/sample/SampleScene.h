@@ -8,6 +8,7 @@
 
 // SampleScene
 #include "objects/pronamaChan/PronamaChan.h"
+#include "objects/teapot/Teapot.h"
 
 class SampleScene :public BaseScene {
 public: // 公開メンバ関数
@@ -27,7 +28,10 @@ public: // 公開メンバ関数
 
 private: // 非公開メンバ変数
 	// エンティティコントローラ
+	// プロ生ちゃん
 	std::unique_ptr<PronamaChan> pronamaChan_ = nullptr;
+	// ティーポット
+	std::unique_ptr<Teapot> teapot_ = nullptr;
 	// jeanne用のオブジェクト2Dコントローラ
 	Object2DController pronamaChanTex;
 	// Emitterコントローラ
