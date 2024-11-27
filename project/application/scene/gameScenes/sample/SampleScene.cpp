@@ -21,10 +21,7 @@ void SampleScene::Initialize() {
 	sceneCamera_->Initialize();
 
 	// シーンにカメラをセット
-	//SUGER::SetSceneCamera(sceneCamera_.get());
-
-	// サウンド読み込み
-	SUGER::LoadWaveSound("Alarm01.wav");
+	SUGER::SetSceneCamera(sceneCamera_.get());
 
 	// 板ポリパーティクルの作成
 	SUGER::CreateParticle("sampleParticle", ParticleType::kPlane, "circle.png");
@@ -63,6 +60,10 @@ void SampleScene::Initialize() {
 	SUGER::AddGrobalDataGroup("Pronama_Chan");
 	// グローバルデータのプロ生ちゃんグループにトランスレート情報を追加
 	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
+	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
+
+	// レベルデータをシーンにインポート
+	levelDataImporter_.Import("baseScene");
 }
 
 void SampleScene::Finalize() {
@@ -71,12 +72,11 @@ void SampleScene::Finalize() {
 
 }
 
-void SampleScene::SceneStatusPlayInitialize() {
-
+void SampleScene::SceneStatePlayInitialize() {
 
 }
 
-void SampleScene::SceneStatusPlayUpdate() {
+void SampleScene::SceneStatePlayUpdate() {
 
 	//
 	// GrobalData

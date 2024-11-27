@@ -22,7 +22,7 @@ public:
 	// 発生数のセット
 	void SetCount(const uint32_t& count);
 	// 発生頻度のセット
-	void SerFrequency(const float& frequency);
+	void SetFrequency(const float& frequency);
 	// 繰り返し発生フラグのセット
 	void SetIsRepeat(const bool& isRepeat);
 	// ランダムフラグのセット

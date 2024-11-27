@@ -33,19 +33,24 @@ void BaseScene::Initialize() {
 	// フェード初期化
 	fade_->Initialize();
 	// フェードインリクエスト
-	sceneStatusRequest_ = SceneStatus::kFadeIn;
+	sceneStateRequest_ = SceneState::kFadeIn;
 
 	// シーンに必要なカメラとライトのセット
 	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
 
-	// レベルデータをロード
-	SUGER::LoadJsonLevelData("baseScene");
-	// レベルデータをシーンにインポート
-	levelDataImporter_.Import("baseScene");
-
 }
 
 void BaseScene::Update() {
+	// キーボード入力でカメラフラグ切り替え
+	if (SUGER::TriggerKey(DIK_P)) {
+		if (isActiveDebugCamera_) {
+			isActiveDebugCamera_ = false;
+			SUGER::SetSceneCamera(sceneCamera_.get());
+		} else {
+			isActiveDebugCamera_ = true;
+			SUGER::SetSceneCamera(debugCamera_.get());
+		}
+	}
 	// ImGuiによるデバッグカメラコントロール
 	ImGuiForDebugCamera();
 	// デバッグカメラのアップデート
@@ -54,7 +59,7 @@ void BaseScene::Update() {
 	light_->Update();
 	// シーンステータスのリクエスト初期化処理
 	SceneStatusInitizlize();
-	// シーンステータスのリクエスト更新処理
+	// シーンステータスの更新処理
 	SceneStatusUpdate();
 }
 
@@ -86,66 +91,67 @@ void BaseScene::ImGuiForDebugCamera() {
 
 void BaseScene::SceneStatusInitizlize() {
 	// シーンの状態
-	if (sceneStatusRequest_) {
+	if (sceneStateRequest_) {
 		// 振る舞いを変更する
-		sceneStatus_ = sceneStatusRequest_.value();
+		sceneState_ = sceneStateRequest_.value();
 		// 各振る舞いごとの初期化を実行
-		switch (sceneStatus_) {
-			case SceneStatus::kFadeIn:
-				SceneStatusFadeInInitialize();
-				break;
-			case SceneStatus::kPlay:
-				SceneStatusPlayInitialize();
-				break;
-			case SceneStatus::kFadeOut:
-				SceneStatusFadeOutInitialize();
-				break;
+		switch (sceneState_) {
+		case SceneState::kFadeIn:
+			SceneStateFadeInInitialize();
+			break;
+		case SceneState::kPlay:
+			SceneStatePlayInitialize();
+			break;
+		case SceneState::kFadeOut:
+			SceneStateFadeOutInitialize();
+			break;
 		}
 		// 振る舞いリクエストをリセット
-		sceneStatusRequest_ = std::nullopt;
+		sceneStateRequest_ = std::nullopt;
 	}
 }
 
 void BaseScene::SceneStatusUpdate() {
-	switch (sceneStatus_) {
-		case kFadeIn:
-			SceneStatusFadeInUpdate();
-			break;
-		case kPlay:
-			SceneStatusPlayUpdate();
-			break;
-		case kFadeOut:
-			SceneStatusFadeOutUpdate();
-			break;
+	switch (sceneState_) {
+	case kFadeIn:
+		SceneStateFadeInUpdate();
+		break;
+	case kPlay:
+		SceneStatePlayUpdate();
+		break;
+	case kFadeOut:
+		SceneStateFadeOutUpdate();
+		break;
 	}
 }
 
-void BaseScene::SceneStatusFadeInInitialize() {
+void BaseScene::SceneStateFadeInInitialize() {
 	// フェード開始
 	fade_->Start(FadeStatus::FadeIn, 2.0f);
 }
 
-void BaseScene::SceneStatusFadeInUpdate() {
+void BaseScene::SceneStateFadeInUpdate() {
 	// フェード更新
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
-		sceneStatus_ = SceneStatus::kPlay;
+		sceneStateRequest_ = SceneState::kPlay;
 		fade_->Stop();
 	}
 }
 
-void BaseScene::SceneStatusFadeOutInitialize() {
+void BaseScene::SceneStateFadeOutInitialize() {
 	// フェード開始
 	fade_->Start(FadeStatus::FadeOut, 2.0f);
 }
 
-void BaseScene::SceneStatusFadeOutUpdate() {
+void BaseScene::SceneStateFadeOutUpdate() {
 	// フェード更新
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
-		sceneStatus_ = SceneStatus::kPlay;
 		fade_->Stop();
+		// ここに遷移先を指定したシーンチェンジ関数を呼び出す
+
 	}
 }

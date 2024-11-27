@@ -39,19 +39,19 @@ protected:
 	void SceneStatusUpdate();
 
 	// フェードイン初期化
-	virtual void SceneStatusFadeInInitialize();
+	virtual void SceneStateFadeInInitialize();
 	// フェードイン更新
-	virtual void SceneStatusFadeInUpdate();
+	virtual void SceneStateFadeInUpdate();
 
 	// プレイフェーズ初期化
-	virtual void SceneStatusPlayInitialize() = 0;
+	virtual void SceneStatePlayInitialize() = 0;
 	// プレイフェーズ更新
-	virtual void SceneStatusPlayUpdate() = 0;
+	virtual void SceneStatePlayUpdate() = 0;
 
 	// フェードアウト初期化
-	virtual void SceneStatusFadeOutInitialize();
+	virtual void SceneStateFadeOutInitialize();
 	// フェードアウト更新
-	virtual void SceneStatusFadeOutUpdate();
+	virtual void SceneStateFadeOutUpdate();
 
 private:
 	// カメラのImGui
@@ -63,17 +63,21 @@ private:
 
 protected:
 	// シーンのフェーズ
-	SceneStatus sceneStatus_ = SceneStatus::kFadeIn;
+	SceneState sceneState_ = SceneState::kFadeIn;
 	// 次のフェーズリスト
-	std::optional<SceneStatus> sceneStatusRequest_ = std::nullopt;
-
+	std::optional<SceneState> sceneStateRequest_ = std::nullopt;
+	// シーンのカメラ
+	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 	// デバッグカメラ
-	std::unique_ptr<Camera> debugCamera_;
+	std::unique_ptr<Camera> debugCamera_ = nullptr;
 	// ライト
-	std::unique_ptr<PunctualLight> light_;
+	std::unique_ptr<PunctualLight> light_ = nullptr;
 	// フェード
-	std::unique_ptr<Fade> fade_;
+	std::unique_ptr<Fade> fade_ = nullptr;
 
 	// レベルデータインポータ
 	JsonLevelDataImporter levelDataImporter_;
+
+	// デバッグカメラがアクティブかどうか
+	bool isActiveDebugCamera_ = false;
 };
