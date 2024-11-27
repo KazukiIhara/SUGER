@@ -106,7 +106,10 @@ void SampleScene::SceneStatePlayUpdate() {
 
 	// Uキーを押すとBGM再生
 	if (SUGER::TriggerKey(DIK_U)) {
-		SUGER::PlayWaveSound("BGM.wav");
+		SUGER::PlayWaveSound("Alarm01.wav");
+	}
+	if (SUGER::TriggerKey(DIK_I)) {
+		SUGER::StopWaveSound("Alarm01.wav");
 	}
 
 	// スペースキーを押すと発生

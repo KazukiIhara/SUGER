@@ -2,6 +2,12 @@
 
 // C++
 #include <cassert>
+#include <unordered_map>
+
+// 通常再生中のVoiceを管理するコンテナ
+std::unordered_map<std::string, IXAudio2SourceVoice*> playingVoices_;
+// ループ再生中のVoiceを管理するコンテナ
+std::unordered_map<std::string, IXAudio2SourceVoice*> loopingVoices_;
 
 void SoundManager::Initialize() {
 	HRESULT result;
@@ -89,19 +95,88 @@ void SoundManager::LoadWave(const std::string& filename, const std::string& dire
 
 void SoundManager::PlayWave(const std::string& filename) {
 	SoundData* soundData = FindWave(filename);
+	assert(soundData);
+
 	HRESULT result;
-	// 波形フォーマットを元にSourceVoiceの生成
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
+
+	// SourceVoice生成
 	result = xAudio2->CreateSourceVoice(&pSourceVoice, &soundData->wfex);
 	assert(SUCCEEDED(result));
-	// 再生する波形データの設定
+
+	// バッファ設定
 	XAUDIO2_BUFFER buf{};
 	buf.pAudioData = soundData->pBuffer;
 	buf.AudioBytes = soundData->bufferSize;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
-	// 波形データの再生
+
+	// 再生開始
 	result = pSourceVoice->SubmitSourceBuffer(&buf);
+	assert(SUCCEEDED(result));
 	result = pSourceVoice->Start();
+	assert(SUCCEEDED(result));
+
+	// 通常再生用コンテナに登録
+	playingVoices_[filename] = pSourceVoice;
+}
+
+void SoundManager::StopWave(const std::string& filename) {
+	auto it = playingVoices_.find(filename);
+	if (it != playingVoices_.end()) {
+		it->second->Stop();
+		it->second->DestroyVoice();
+		playingVoices_.erase(it);
+	}
+}
+
+void SoundManager::PlayWaveLoop(const std::string& filename, uint32_t loopCount) {
+	auto it = loopingVoices_.find(filename);
+	if (it != loopingVoices_.end()) {
+		// すでにループ再生中なら再生しない
+		return;
+	}
+
+	SoundData* soundData = FindWave(filename);
+	assert(soundData);
+
+	HRESULT result;
+	IXAudio2SourceVoice* pSourceVoice = nullptr;
+
+	// SourceVoice生成
+	result = xAudio2->CreateSourceVoice(&pSourceVoice, &soundData->wfex);
+	assert(SUCCEEDED(result));
+
+	// バッファ設定
+	XAUDIO2_BUFFER buf{};
+	buf.pAudioData = soundData->pBuffer;
+	buf.AudioBytes = soundData->bufferSize;
+	buf.Flags = XAUDIO2_END_OF_STREAM;
+	buf.LoopCount = loopCount;
+
+	// 再生開始
+	result = pSourceVoice->SubmitSourceBuffer(&buf);
+	assert(SUCCEEDED(result));
+	result = pSourceVoice->Start();
+	assert(SUCCEEDED(result));
+
+	// ループ再生用コンテナに登録
+	loopingVoices_[filename] = pSourceVoice;
+}
+
+void SoundManager::StopWaveLoop(const std::string& filename) {
+	auto it = loopingVoices_.find(filename);
+	if (it != loopingVoices_.end()) {
+		it->second->Stop();
+		it->second->DestroyVoice();
+		loopingVoices_.erase(it);
+	}
+}
+
+void SoundManager::StopAll(const std::string& filename) {
+	// 通常再生を停止
+	StopWave(filename);
+	// ループ再生を停止
+	StopWaveLoop(filename);
 }
 
 SoundData* SoundManager::FindWave(const std::string& filename) {

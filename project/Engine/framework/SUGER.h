@@ -234,6 +234,14 @@ public: // クラスメソッド
 	static void LoadWaveSound(const std::string& filename, const std::string& directoryPath = "resources/sounds");
 	// 音声再生
 	static void PlayWaveSound(const std::string& filename);
+	// 音声ループ再生
+	static void PlayWaveLoopSound(const std::string& filename, uint32_t loopCount = XAUDIO2_LOOP_INFINITE);
+	// 音声停止
+	static void StopWaveSound(const std::string& filename);
+	// 音声ループ再生停止
+	static void StopWaveLoopSound(const std::string& filename);
+	// 両再生停止処理
+	static void StopWaveAllSound(const std::string& filename);
 #pragma endregion
 
 #pragma region ColliderManager

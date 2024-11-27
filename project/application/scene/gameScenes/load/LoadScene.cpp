@@ -87,6 +87,7 @@ void LoadScene::LoadSceneStatePreLoadUpdate() {
 
 void LoadScene::LoadSceneStateLoadingInitialize() {
 	// サウンド読み込み
+	SUGER::LoadWaveSound("Alarm01.wav");
 	SUGER::LoadWaveSound("BGM.wav");
 
 	// テクスチャ読み込み
