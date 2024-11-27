@@ -99,6 +99,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 
 	// モデル読み込み
 	SUGER::LoadModel("pronama_chan");
+	SUGER::LoadModel("teapot");
 
 	// レベルデータ読み込み
 	SUGER::LoadJsonLevelData("baseScene");

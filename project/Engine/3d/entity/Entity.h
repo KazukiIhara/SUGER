@@ -37,6 +37,7 @@ public:
 	void SetEnableLight(const bool& enableLight);
 	// 光沢のセット
 	void SetShininess(const float& shininess);
+
 private:
 	// WVP用のリソース作成
 	void CreateWVPResource();

@@ -2,6 +2,7 @@
 
 // C++
 #include <string>
+#include <memory>
 
 // MyHedder
 #include "worldTransform/WorldTransform.h"
@@ -18,6 +19,9 @@ public:
 	virtual void Initialize();
 	// 更新
 	virtual void Update();
+
+	// コライダー作成
+	void CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size);
 
 	//
 	// Setter
@@ -66,7 +70,7 @@ public:
 	WorldTransform* GetWorldTransformPtr();
 
 	// コライダーの取得
-	Collider GetCollider()const;
+	Collider* GetCollider();
 
 	// 有効フラグのゲット
 	const bool& GetIsActive()const;
@@ -80,7 +84,7 @@ protected:
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	// コライダー
-	Collider collider_;
+	std::unique_ptr<Collider> collider_;
 	// 有効フラグ
 	bool isActive_ = true;
 	// 削除フラグ
