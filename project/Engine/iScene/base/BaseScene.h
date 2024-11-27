@@ -39,19 +39,19 @@ protected:
 	void SceneStatusUpdate();
 
 	// フェードイン初期化
-	virtual void SceneStatusFadeInInitialize();
+	virtual void SceneStateFadeInInitialize();
 	// フェードイン更新
-	virtual void SceneStatusFadeInUpdate();
+	virtual void SceneStateFadeInUpdate();
 
 	// プレイフェーズ初期化
-	virtual void SceneStatusPlayInitialize() = 0;
+	virtual void SceneStatePlayInitialize() = 0;
 	// プレイフェーズ更新
-	virtual void SceneStatusPlayUpdate() = 0;
+	virtual void SceneStatePlayUpdate() = 0;
 
 	// フェードアウト初期化
-	virtual void SceneStatusFadeOutInitialize();
+	virtual void SceneStateFadeOutInitialize();
 	// フェードアウト更新
-	virtual void SceneStatusFadeOutUpdate();
+	virtual void SceneStateFadeOutUpdate();
 
 private:
 	// カメラのImGui
@@ -63,7 +63,7 @@ private:
 
 protected:
 	// シーンのフェーズ
-	SceneStatus sceneStatus_ = SceneStatus::kFadeIn;
+	SceneStatus sceneState_ = SceneStatus::kFadeIn;
 	// 次のフェーズリスト
 	std::optional<SceneStatus> sceneStatusRequest_ = std::nullopt;
 	// シーンのカメラ

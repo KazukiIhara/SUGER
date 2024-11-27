@@ -22,9 +22,9 @@ public:
 	void Finalize()override;
 
 	// プレイフェーズ初期化
-	void SceneStatusPlayInitialize()override;
+	void SceneStatePlayInitialize()override;
 	// プレイフェーズ更新
-	void SceneStatusPlayUpdate()override;
+	void SceneStatePlayUpdate()override;
 
 	// ロードシーン状態初期化
 	void LoadSceneStateInitialize();
@@ -32,19 +32,19 @@ public:
 	void LoadSceneStateUpdate();
 
 	// ロード前状態初期化
-	void LoadScenePreLoadInitialize();
+	void LoadSceneStatePreLoadInitialize();
 	// ロード前状態更新
-	void LoadScenePreLoadUpdate();
+	void LoadSceneStatePreLoadUpdate();
 
 	// ロード中状態初期化
-	void LoadSceneLoadingInitialize();
+	void LoadSceneStateLoadingInitialize();
 	// ロード中状態更新
-	void LoadSceneLoadingUpdate();
+	void LoadSceneStateLoadingUpdate();
 
 	// ロード終了状態初期化
-	void LoadSceneFinishedInitizlize();
+	void LoadSceneStateFinishedInitizlize();
 	// ロード終了状態更新
-	void LoadSceneFinishedUpdate();
+	void LoadSceneStateFinishedUpdate();
 
 private:
 	// ロードシーンのフェーズ

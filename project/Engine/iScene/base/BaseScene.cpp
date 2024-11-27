@@ -64,7 +64,7 @@ void BaseScene::Update() {
 	light_->Update();
 	// シーンステータスのリクエスト初期化処理
 	SceneStatusInitizlize();
-	// シーンステータスのリクエスト更新処理
+	// シーンステータスの更新処理
 	SceneStatusUpdate();
 }
 
@@ -98,17 +98,17 @@ void BaseScene::SceneStatusInitizlize() {
 	// シーンの状態
 	if (sceneStatusRequest_) {
 		// 振る舞いを変更する
-		sceneStatus_ = sceneStatusRequest_.value();
+		sceneState_ = sceneStatusRequest_.value();
 		// 各振る舞いごとの初期化を実行
-		switch (sceneStatus_) {
+		switch (sceneState_) {
 		case SceneStatus::kFadeIn:
-			SceneStatusFadeInInitialize();
+			SceneStateFadeInInitialize();
 			break;
 		case SceneStatus::kPlay:
-			SceneStatusPlayInitialize();
+			SceneStatePlayInitialize();
 			break;
 		case SceneStatus::kFadeOut:
-			SceneStatusFadeOutInitialize();
+			SceneStateFadeOutInitialize();
 			break;
 		}
 		// 振る舞いリクエストをリセット
@@ -117,25 +117,25 @@ void BaseScene::SceneStatusInitizlize() {
 }
 
 void BaseScene::SceneStatusUpdate() {
-	switch (sceneStatus_) {
+	switch (sceneState_) {
 	case kFadeIn:
-		SceneStatusFadeInUpdate();
+		SceneStateFadeInUpdate();
 		break;
 	case kPlay:
-		SceneStatusPlayUpdate();
+		SceneStatePlayUpdate();
 		break;
 	case kFadeOut:
-		SceneStatusFadeOutUpdate();
+		SceneStateFadeOutUpdate();
 		break;
 	}
 }
 
-void BaseScene::SceneStatusFadeInInitialize() {
+void BaseScene::SceneStateFadeInInitialize() {
 	// フェード開始
 	fade_->Start(FadeStatus::FadeIn, 2.0f);
 }
 
-void BaseScene::SceneStatusFadeInUpdate() {
+void BaseScene::SceneStateFadeInUpdate() {
 	// フェード更新
 	fade_->Update();
 
@@ -145,12 +145,12 @@ void BaseScene::SceneStatusFadeInUpdate() {
 	}
 }
 
-void BaseScene::SceneStatusFadeOutInitialize() {
+void BaseScene::SceneStateFadeOutInitialize() {
 	// フェード開始
 	fade_->Start(FadeStatus::FadeOut, 2.0f);
 }
 
-void BaseScene::SceneStatusFadeOutUpdate() {
+void BaseScene::SceneStateFadeOutUpdate() {
 	// フェード更新
 	fade_->Update();
 

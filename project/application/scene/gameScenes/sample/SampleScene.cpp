@@ -69,11 +69,11 @@ void SampleScene::Finalize() {
 
 }
 
-void SampleScene::SceneStatusPlayInitialize() {
+void SampleScene::SceneStatePlayInitialize() {
 
 }
 
-void SampleScene::SceneStatusPlayUpdate() {
+void SampleScene::SceneStatePlayUpdate() {
 
 	//
 	// GrobalData

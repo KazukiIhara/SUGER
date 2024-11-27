@@ -21,9 +21,9 @@ public: // 公開メンバ関数
 	void Finalize()override;
 
 	// プレイフェーズ初期化
-	void SceneStatusPlayInitialize()override;
+	void SceneStatePlayInitialize()override;
 	// プレイフェーズ更新
-	void SceneStatusPlayUpdate()override;
+	void SceneStatePlayUpdate()override;
 
 private: // 非公開メンバ変数
 	// エンティティコントローラ
