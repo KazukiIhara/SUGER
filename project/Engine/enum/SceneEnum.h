@@ -1,6 +1,6 @@
 #pragma once
 
-enum SceneStatus {
+enum SceneState {
 	kFadeIn,
 	kPlay,
 	kFadeOut,

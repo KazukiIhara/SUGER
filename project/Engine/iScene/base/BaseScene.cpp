@@ -33,7 +33,7 @@ void BaseScene::Initialize() {
 	// フェード初期化
 	fade_->Initialize();
 	// フェードインリクエスト
-	sceneStatusRequest_ = SceneStatus::kFadeIn;
+	sceneStateRequest_ = SceneState::kFadeIn;
 
 	// シーンに必要なカメラとライトのセット
 	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
@@ -96,23 +96,23 @@ void BaseScene::ImGuiForDebugCamera() {
 
 void BaseScene::SceneStatusInitizlize() {
 	// シーンの状態
-	if (sceneStatusRequest_) {
+	if (sceneStateRequest_) {
 		// 振る舞いを変更する
-		sceneState_ = sceneStatusRequest_.value();
+		sceneState_ = sceneStateRequest_.value();
 		// 各振る舞いごとの初期化を実行
 		switch (sceneState_) {
-		case SceneStatus::kFadeIn:
+		case SceneState::kFadeIn:
 			SceneStateFadeInInitialize();
 			break;
-		case SceneStatus::kPlay:
+		case SceneState::kPlay:
 			SceneStatePlayInitialize();
 			break;
-		case SceneStatus::kFadeOut:
+		case SceneState::kFadeOut:
 			SceneStateFadeOutInitialize();
 			break;
 		}
 		// 振る舞いリクエストをリセット
-		sceneStatusRequest_ = std::nullopt;
+		sceneStateRequest_ = std::nullopt;
 	}
 }
 
@@ -140,7 +140,7 @@ void BaseScene::SceneStateFadeInUpdate() {
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
-		sceneStatusRequest_ = SceneStatus::kPlay;
+		sceneStateRequest_ = SceneState::kPlay;
 		fade_->Stop();
 	}
 }

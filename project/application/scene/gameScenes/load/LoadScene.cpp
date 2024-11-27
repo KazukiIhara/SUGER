@@ -29,6 +29,16 @@ void LoadScene::SceneStatePlayUpdate() {
 	LoadSceneStateUpdate();
 }
 
+void LoadScene::SceneStateFadeOutUpdate() {
+	// フェード更新
+	fade_->Update();
+
+	if (fade_->IsFinished()) {
+		ChangeScene("SAMPLE");
+		fade_->Stop();
+	}
+}
+
 void LoadScene::LoadSceneStateInitialize() {
 	// ロードシーンの状態
 	if (loadSceneStateRequest_) {
@@ -51,15 +61,15 @@ void LoadScene::LoadSceneStateInitialize() {
 
 void LoadScene::LoadSceneStateUpdate() {
 	switch (loadSceneState_) {
-		case LoadScene::kPreLoad:
-			LoadSceneStatePreLoadUpdate();
-			break;
-		case LoadScene::kLoading:
-			LoadSceneStateLoadingUpdate();
-			break;
-		case LoadScene::kFinished:
-			LoadSceneStateFinishedUpdate();
-			break;
+	case LoadScene::kPreLoad:
+		LoadSceneStatePreLoadUpdate();
+		break;
+	case LoadScene::kLoading:
+		LoadSceneStateLoadingUpdate();
+		break;
+	case LoadScene::kFinished:
+		LoadSceneStateFinishedUpdate();
+		break;
 	}
 }
 
@@ -71,6 +81,8 @@ void LoadScene::LoadSceneStatePreLoadInitialize() {
 void LoadScene::LoadSceneStatePreLoadUpdate() {
 	// 操作などあれば
 
+	// 今の実装では操作がないので、即ロード状態のリクエストを送る
+	loadSceneStateRequest_ = LoadSceneState::kLoading;
 }
 
 void LoadScene::LoadSceneStateLoadingInitialize() {
@@ -93,6 +105,8 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 void LoadScene::LoadSceneStateLoadingUpdate() {
 	// ロード中に何か操作があれば
 
+	// 今の実装だと、ここを通った時にロードが終了しているはずなので、
+	loadSceneStateRequest_ = LoadSceneState::kFinished;
 }
 
 void LoadScene::LoadSceneStateFinishedInitizlize() {
@@ -101,6 +115,8 @@ void LoadScene::LoadSceneStateFinishedInitizlize() {
 }
 
 void LoadScene::LoadSceneStateFinishedUpdate() {
-	// ボタンで次のシーンに行く処理
-
+	// ボタンでフェードアウト処理
+	if (SUGER::TriggerKey(DIK_SPACE)) {
+		sceneStateRequest_ = SceneState::kFadeOut;
+	}
 }

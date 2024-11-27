@@ -26,6 +26,9 @@ public:
 	// プレイフェーズ更新
 	void SceneStatePlayUpdate()override;
 
+	// フェードアウト終了時
+	void SceneStateFadeOutUpdate()override;
+
 	// ロードシーン状態初期化
 	void LoadSceneStateInitialize();
 	// ロードシーン状態更新

@@ -63,9 +63,9 @@ private:
 
 protected:
 	// シーンのフェーズ
-	SceneStatus sceneState_ = SceneStatus::kFadeIn;
+	SceneState sceneState_ = SceneState::kFadeIn;
 	// 次のフェーズリスト
-	std::optional<SceneStatus> sceneStatusRequest_ = std::nullopt;
+	std::optional<SceneState> sceneStateRequest_ = std::nullopt;
 	// シーンのカメラ
 	std::unique_ptr<Camera> sceneCamera_ = nullptr;
 	// デバッグカメラ
