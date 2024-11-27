@@ -102,12 +102,12 @@ void Particle::Draw() {
 	// モデルがある場合描画
 	if (model_) {
 		switch (type_) {
-			case kPlane:
-				model_->DrawPlaneParticle(instanceCount_, textureFileName_);
-				break;
-			case kModel:
-				model_->DrawModelParticle(instanceCount_);
-				break;
+		case kPlane:
+			model_->DrawPlaneParticle(instanceCount_, textureFileName_);
+			break;
+		case kModel:
+			model_->DrawModelParticle(instanceCount_);
+			break;
 		}
 	}
 }
