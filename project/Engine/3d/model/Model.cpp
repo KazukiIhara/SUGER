@@ -65,19 +65,21 @@ void Model::Update() {
 }
 
 void Model::Draw() {
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	// メッシュの個数分ループ
 	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 		// VBVを設定
-		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		commandList->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
 		// IBVを設定
-		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
+		commandList->IASetIndexBuffer(&indexBufferViews_[i]);
 		if (modelData_.meshes[i].material.haveUV_) {
 			// SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
 			// ModelMaterial用CBufferの場所を設定
-			SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(5, materialResources_[i]->GetGPUVirtualAddress());
+			commandList->SetGraphicsRootConstantBufferView(5, materialResources_[i]->GetGPUVirtualAddress());
 			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
+			commandList->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
 		} else {
 			// TODO:UVなしの時の処理
 		}
@@ -85,26 +87,26 @@ void Model::Draw() {
 }
 
 void Model::DrawSkinning() {
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
-
 		D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
 			vertexBufferViews_[i],
 			skinCluster_.influenceBufferView,
 		};
-
 		// VBVを設定
-		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 2, vbvs);
+		commandList->IASetVertexBuffers(0, 2, vbvs);
 		// IBVを設定
-		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
+		commandList->IASetIndexBuffer(&indexBufferViews_[i]);
 		if (modelData_.meshes[i].material.haveUV_) {
 			// SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
 			// Skinning用SRVセット
 			SUGER::SetGraphicsRootDescriptorTable(5, skinCluster_.srvIndex);
 			// ModelMaterial用CBufferの場所を設定
-			SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(6, materialResources_[i]->GetGPUVirtualAddress());
+			commandList->SetGraphicsRootConstantBufferView(6, materialResources_[i]->GetGPUVirtualAddress());
 			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-			SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
+			commandList->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
 		} else {
 			// TODO:UVなしの時の処理
 		}
@@ -112,32 +114,36 @@ void Model::DrawSkinning() {
 }
 
 void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName) {
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 		// VBVを設定
-		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		commandList->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
 		// IBVを設定
-		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
+		commandList->IASetIndexBuffer(&indexBufferViews_[i]);
 		// SRVセット
 		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[textureFileName].srvIndex);
 		// ModelMaterial用CBufferの場所を設定
-		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(3, materialResources_[i]->GetGPUVirtualAddress());
+		commandList->SetGraphicsRootConstantBufferView(3, materialResources_[i]->GetGPUVirtualAddress());
 		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), instanceCount, 0, 0, 0);
+		commandList->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), instanceCount, 0, 0, 0);
 	}
 }
 
 void Model::DrawModelParticle(const uint32_t& instanceCount) {
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 		// VBVを設定
-		SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
+		commandList->IASetVertexBuffers(0, 1, &vertexBufferViews_[i]);
 		// IBVを設定
-		SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferViews_[i]);
+		commandList->IASetIndexBuffer(&indexBufferViews_[i]);
 		// SRVセット
 		SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
 		// ModelMaterial用CBufferの場所を設定
-		SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(3, materialResources_[i]->GetGPUVirtualAddress());
+		commandList->SetGraphicsRootConstantBufferView(3, materialResources_[i]->GetGPUVirtualAddress());
 		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-		SUGER::GetDirectXCommandList()->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), instanceCount, 0, 0, 0);
+		commandList->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), instanceCount, 0, 0, 0);
 	}
 }
 
