@@ -7,6 +7,11 @@ void LoadScene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
 
+	// TODO:ロード画面用のテクスチャと2dオブジェクトの作成
+
+	// TODO:ロード終了画面用のテクスチャと2dオブジェクトの作成
+
+
 }
 
 void LoadScene::Finalize() {
@@ -18,7 +23,6 @@ void LoadScene::SceneStatePlayInitialize() {
 }
 
 void LoadScene::SceneStatePlayUpdate() {
-
 	// ロードシーンにリクエストに応じて初期化
 	LoadSceneStateInitialize();
 	// ロードシーン状態に応じて更新
@@ -42,7 +46,6 @@ void LoadScene::LoadSceneStateInitialize() {
 			LoadSceneStateFinishedInitizlize();
 			break;
 		}
-
 	}
 }
 
@@ -61,11 +64,12 @@ void LoadScene::LoadSceneStateUpdate() {
 }
 
 void LoadScene::LoadSceneStatePreLoadInitialize() {
-
+	// ロード中のテクスチャをアクティブ
 
 }
 
 void LoadScene::LoadSceneStatePreLoadUpdate() {
+	// 操作などあれば
 
 }
 
@@ -87,13 +91,16 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 }
 
 void LoadScene::LoadSceneStateLoadingUpdate() {
+	// ロード中に何か操作があれば
 
 }
 
 void LoadScene::LoadSceneStateFinishedInitizlize() {
+	// ロード終了画面をアクティブにする
 
 }
 
 void LoadScene::LoadSceneStateFinishedUpdate() {
+	// ボタンで次のシーンに行く処理
 
 }
