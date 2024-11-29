@@ -112,6 +112,8 @@ public: // クラスメソッド
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
 	// バッファリソースの作成
 	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
+	// FIXFPS初期化
+	static void FiXFPSInitialize();
 #pragma endregion
 
 #pragma region SRVManager

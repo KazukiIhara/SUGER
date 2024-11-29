@@ -411,6 +411,10 @@ ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes) {
 	return directXManager_->CreateBufferResource(sizeInBytes);
 }
 
+void SUGER::FiXFPSInitialize() {
+	directXManager_->InitializeFixFPS();
+}
+
 D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleCPU(uint32_t index) {
 	return srvManager_->GetDescriptorHandleCPU(index);
 }
