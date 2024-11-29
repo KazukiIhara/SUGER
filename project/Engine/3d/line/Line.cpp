@@ -13,11 +13,6 @@ void Line::Initialize(Camera* camera) {
 	// Instancingデータを書き込む
 	MapInstancingData();
 
-	// マテリアルリソース作成
-	CreateColorResource();
-	// マテリアルデータ書き込み
-	MapColorData();
-
 	// srvのインデックスを割り当て
 	srvIndex_ = SUGER::SrvAllocate();
 	// Srvを作成
@@ -36,6 +31,10 @@ void Line::AddLine() {
 
 }
 
+void Line::ClearLines() {
+	
+}
+
 void Line::SetCamera(Camera* camera) {
 
 }
@@ -49,13 +48,5 @@ void Line::CreateInstancingResource() {
 }
 
 void Line::MapInstancingData() {
-
-}
-
-void Line::CreateColorResource() {
-
-}
-
-void Line::MapColorData() {
 
 }

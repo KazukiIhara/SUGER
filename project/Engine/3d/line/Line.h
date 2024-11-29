@@ -24,6 +24,9 @@ public:
 	// 描画するライン追加
 	void AddLine();
 
+	// ラインのクリア
+	void ClearLines();
+
 	// カメラのセット
 	void SetCamera(Camera* camera);
 
@@ -35,11 +38,6 @@ private:
 	// instancingリソース書き込み
 	void MapInstancingData();
 
-	// マテリアルリソースの作成
-	void CreateColorResource();
-	// マテリアルデータの書き込み
-	void MapColorData();
-
 private:
 	// ラインの最大数
 	static const uint32_t kNumMaxInstance = 512;
@@ -50,11 +48,6 @@ private:
 	ComPtr<ID3D12Resource> instancingResource_ = nullptr;
 	// instancing描画用のデータ
 	LineData3D* instancingData_ = nullptr;
-
-	// 色データ
-	Vector4* colorData_;
-	// 色
-	Vector4 color_;
 
 	// SrvIndex
 	uint32_t srvIndex_ = 0;
