@@ -47,7 +47,7 @@ void SampleScene::Initialize() {
 	teapotDefaultTransform.translate = { 3.0f,0.0f,0.0f };
 	// teapot作成
 	teapot_ = std::make_unique<Teapot>();
-	teapot_->Initialize(SUGER::CreateEntity("teapot", "teapot", teapotDefaultTransform));
+	teapot_->Initialize(SUGER::CreateEntity("teapot", "walk", teapotDefaultTransform));
 	teapot_->CreateCollider(kNone, kSphere, 1.0f);
 
 	// オブジェクト2Dの作成とコントローラの初期化

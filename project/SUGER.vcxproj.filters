@@ -286,10 +286,10 @@
     <ClCompile Include="Engine\math\function\MathFunction.cpp">
       <Filter>engine\math\function</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2d\system\Object2dSystem.cpp">
+    <ClCompile Include="Engine\system\object2d\Object2dSystem.cpp">
       <Filter>engine\2d\system</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.cpp">
+    <ClCompile Include="Engine\graphicsPipeline\object2d\Object2dGraphicsPipeline.cpp">
       <Filter>engine\2d\graphicsPipeline</Filter>
     </ClCompile>
     <ClCompile Include="Engine\worldTransform\WorldTransform.cpp">
@@ -325,16 +325,16 @@
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp">
       <Filter>engine\manager\object\2d</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\VFX\particle\system\ParticleSystem.cpp">
+    <ClCompile Include="Engine\system\particle\ParticleSystem.cpp">
       <Filter>engine\particle\system</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp">
+    <ClCompile Include="Engine\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp">
       <Filter>engine\3d\graphicsPipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp">
+    <ClCompile Include="Engine\system\object3d\Object3dSystem.cpp">
       <Filter>engine\3d\system</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp">
+    <ClCompile Include="Engine\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp">
       <Filter>engine\particle\graphicsPipeline</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp">
@@ -358,7 +358,7 @@
     <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp">
       <Filter>engine\importer\level\json</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\empty\Empty.cpp" />
     <ClCompile Include="Engine\3d\entity\Entity.cpp" />
     <ClCompile Include="Engine\manager\emptyManager\EmptyManager.cpp" />
@@ -369,8 +369,8 @@
     <ClCompile Include="Engine\manager\sound\SoundManager.cpp" />
     <ClCompile Include="Engine\manager\data\grobal\GrobalDataManager.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitter\Emitter.cpp" />
-    <ClCompile Include="Engine\VFX\particle\emitterManager\EmitterManager.cpp" />
-    <ClCompile Include="Engine\VFX\particle\particleManager\ParticleManager.cpp" />
+    <ClCompile Include="Engine\manager\emitter\EmitterManager.cpp" />
+    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp" />
     <ClCompile Include="Engine\VFX\particle\particle\Particle.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
     <ClCompile Include="Engine\random\Random.cpp" />
@@ -381,6 +381,8 @@
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
     <ClCompile Include="application\objects\teapot\Teapot.cpp" />
     <ClCompile Include="Engine\3d\line\Line.cpp" />
+    <ClCompile Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\system\line\LineSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -446,10 +448,10 @@
     <ClInclude Include="Engine\structs\TextureStruct.h">
       <Filter>engine\structs</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2d\system\Object2dSystem.h">
+    <ClInclude Include="Engine\system\object2d\Object2dSystem.h">
       <Filter>engine\2d\system</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.h">
+    <ClInclude Include="Engine\graphicsPipeline\object2d\Object2dGraphicsPipeline.h">
       <Filter>engine\2d\graphicsPipeline</Filter>
     </ClInclude>
     <ClInclude Include="Engine\worldTransform\WorldTransform.h">
@@ -497,19 +499,19 @@
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h">
       <Filter>engine\manager\object\2d</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\VFX\particle\system\ParticleSystem.h">
+    <ClInclude Include="Engine\system\particle\ParticleSystem.h">
       <Filter>engine\particle\system</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h">
+    <ClInclude Include="Engine\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h">
       <Filter>engine\3d\graphicsPipeline</Filter>
     </ClInclude>
     <ClInclude Include="Engine\structs\ParticleStruct.h">
       <Filter>engine\structs</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\system\Object3dSystem.h">
+    <ClInclude Include="Engine\system\object3d\Object3dSystem.h">
       <Filter>engine\3d\system</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.h">
+    <ClInclude Include="Engine\graphicsPipeline\particle\ParticleGraphicsPipeline.h">
       <Filter>engine\particle\graphicsPipeline</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h">
@@ -540,7 +542,7 @@
       <Filter>engine\importer\level\json</Filter>
     </ClInclude>
     <ClInclude Include="Engine\math\types\Quaternion.h" />
-    <ClInclude Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
+    <ClInclude Include="Engine\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
     <ClInclude Include="Engine\enum\DirectInputEnum.h" />
     <ClInclude Include="Engine\enum\ColliderEnum.h" />
     <ClInclude Include="Engine\3d\empty\Empty.h" />
@@ -554,8 +556,8 @@
     <ClInclude Include="Engine\structs\SoundStruct.h" />
     <ClInclude Include="Engine\manager\data\grobal\GrobalDataManager.h" />
     <ClInclude Include="Engine\VFX\particle\emitter\Emitter.h" />
-    <ClInclude Include="Engine\VFX\particle\emitterManager\EmitterManager.h" />
-    <ClInclude Include="Engine\VFX\particle\particleManager\ParticleManager.h" />
+    <ClInclude Include="Engine\manager\emitter\EmitterManager.h" />
+    <ClInclude Include="Engine\manager\particle\ParticleManager.h" />
     <ClInclude Include="Engine\VFX\particle\particle\Particle.h" />
     <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
     <ClInclude Include="Engine\random\Random.h" />
@@ -571,6 +573,8 @@
     <ClInclude Include="Engine\enum\EmitterEnum.h" />
     <ClInclude Include="Engine\3d\line\Line.h" />
     <ClInclude Include="Engine\structs\LineStruct.h" />
+    <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
+    <ClInclude Include="Engine\system\line\LineSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
@@ -593,6 +597,8 @@
     </FxCompile>
     <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.PS.hlsl" />
     <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.VS.hlsl" />
+    <FxCompile Include="resources\shaders\line\line.PS.hlsl" />
+    <FxCompile Include="resources\shaders\line\line.VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
@@ -605,5 +611,6 @@
       <Filter>resources\shaders\objects\3d</Filter>
     </None>
     <None Include="resources\shaders\objects\3dSkinning\object3dSkinning.hlsli" />
+    <None Include="resources\shaders\line\line.hlsli" />
   </ItemGroup>
 </Project>

@@ -157,6 +157,13 @@ void EntityManager::SetSceneCamera(Camera* camera) {
 			pair.second->SetCamera(camera_);
 		}
 	}
+	for (auto& pair : skiningEntities_) {
+		// unique_ptrが有効か確認
+		if (pair.second) {
+			// カメラをセット
+			pair.second->SetCamera(camera_);
+		}
+	}
 }
 
 void EntityManager::SetScenePunctualLight(PunctualLight* punctualLight) {

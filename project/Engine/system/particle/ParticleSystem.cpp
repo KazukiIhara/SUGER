@@ -13,5 +13,4 @@ void ParticleSystem::PreDraw() {
 	directXManager_->GetCommandList()->SetGraphicsRootSignature(pipelineManager_->GetRootSignature(kParticle));
 	// 形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
 	directXManager_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
 }
