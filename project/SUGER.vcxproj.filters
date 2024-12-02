@@ -382,6 +382,7 @@
     <ClCompile Include="application\objects\teapot\Teapot.cpp" />
     <ClCompile Include="Engine\3d\line\Line.cpp" />
     <ClCompile Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\system\line\LineSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -573,6 +574,7 @@
     <ClInclude Include="Engine\3d\line\Line.h" />
     <ClInclude Include="Engine\structs\LineStruct.h" />
     <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
+    <ClInclude Include="Engine\system\line\LineSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
