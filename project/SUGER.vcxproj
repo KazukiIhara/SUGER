@@ -190,7 +190,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\enum\SceneEnum.h" />
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
     <ClInclude Include="Engine\manager\line\LineManager.h" />
-    <ClInclude Include="Engine\structs\LineStruct.h" />
     <ClInclude Include="Engine\system\line\LineSystem.h" />
     <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
     <ClInclude Include="Engine\manager\emitter\EmitterManager.h" />

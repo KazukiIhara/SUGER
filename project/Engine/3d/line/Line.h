@@ -1,10 +1,10 @@
 #pragma once
 
 // C++
-#include <list>
+#include <vector>
 
 #include "directX/includes/ComPtr.h"
-#include "structs/LineStruct.h"
+#include "structs/ObjectStructs.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 
 class Camera;
@@ -22,7 +22,7 @@ public:
 	void Draw();
 
 	// 描画するライン追加
-	void AddLine();
+	void AddLine(const LineData3D& lineData3d);
 
 	// ラインのクリア
 	void ClearLines();
@@ -42,7 +42,9 @@ private:
 	// ラインの最大数
 	static const uint32_t kNumMaxInstance = 512;
 	// ライン
-	std::list<LineData3D> lines_;
+	std::vector<LineData3D> lines_;
+	// ブレンドモード
+	BlendMode blendMode_ = kBlendModeNormal;
 
 	// instancing描画用のリソース
 	ComPtr<ID3D12Resource> instancingResource_ = nullptr;

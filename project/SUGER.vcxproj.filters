@@ -573,7 +573,6 @@
     <ClInclude Include="application\objects\teapot\Teapot.h" />
     <ClInclude Include="Engine\enum\EmitterEnum.h" />
     <ClInclude Include="Engine\3d\line\Line.h" />
-    <ClInclude Include="Engine\structs\LineStruct.h" />
     <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
     <ClInclude Include="Engine\system\line\LineSystem.h" />
     <ClInclude Include="Engine\manager\line\LineManager.h" />

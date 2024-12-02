@@ -67,12 +67,16 @@ private:
 	// RasterizerStateの設定を行う
 	D3D12_RASTERIZER_DESC RasterizerStateSetting();
 
+private: // 静的メンバ変数
+	// ブレンドモードの数
+	static const uint32_t kBlendModeNum = 6;
+
 private:
 	// ルートシグネチャ
 	ComPtr<ID3D12RootSignature> rootSignature_;
 
 	// グラフィックスパイプラインステート (ブレンドモードごとに設定)
-	ComPtr<ID3D12PipelineState> graphicsPipelineState_;
+	ComPtr<ID3D12PipelineState> graphicsPipelineState_[kBlendModeNum];
 
 	// 頂点シェーダーのバイナリデータ
 	ComPtr<ID3DBlob> vertexShaderBlob_;

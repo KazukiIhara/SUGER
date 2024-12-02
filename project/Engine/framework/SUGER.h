@@ -221,16 +221,29 @@ public: // クラスメソッド
 #pragma endregion
 
 #pragma region ParticleManager
-	// FixParticleの作成
+	// Particleの作成
 	static void CreateParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath);
-	// FixParticleの更新
+	// Particleの更新
 	static void UpdateParticles();
-	// FixParticleの描画
+	// Particleの描画
 	static void DrawParticles();
 	// パーティクル検索
 	static Particle* FindParticle(const std::string& name);
 	// パーティクルコンテナのクリア
 	static void ClearParticleContainer();
+#pragma endregion
+
+#pragma region LineManager
+	// Lineの作成
+	static void CreateLine(const std::string& name);
+	// Lineの更新
+	static void UpdateLines();
+	// Lineの描画
+	static void DrawLines();
+	// Line検索
+	static Line* FindLine(const std::string& name);
+	// Lineコンテナのクリア
+	static void ClearLineContainer();
 #pragma endregion
 
 #pragma region SoundManager
@@ -314,7 +327,7 @@ public: // クラスメソッド
 #pragma region LineSystem
 	// LineSystem
 	// Lineの描画前処理
-	static void PreDrawLine();
+	static void PreDrawLine3D();
 
 #pragma endregion
 

@@ -22,6 +22,7 @@ ID3D12PipelineState* ParticleGraphicsPipeline::GetPipelineState(BlendMode blendM
 }
 
 void ParticleGraphicsPipeline::SetDirectXManager(DirectXManager* directX) {
+	assert(directX);
 	directX_ = directX;
 }
 

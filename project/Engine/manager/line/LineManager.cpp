@@ -49,3 +49,16 @@ Line* LineManager::Find(const std::string& name) {
 	// ファイル名一致なし
 	return nullptr;
 }
+
+void LineManager::SetSceneCamera(Camera* camera) {
+	// マネージャにカメラをセット
+	camera_ = camera;
+	// 既に存在するオブジェクトにもセット
+	for (auto& pair : lines_) {
+		// unique_ptrが有効か確認
+		if (pair.second) {
+			// カメラをセット
+			pair.second->SetCamera(camera_);
+		}
+	}
+}

@@ -32,6 +32,10 @@ public:
 	// 作成済みのラインを検索
 	Line* Find(const std::string& name);
 
+	// カメラをセット
+	void SetSceneCamera(Camera* camera);
+
+
 private:
 	// ラインコンテナ
 	std::map<std::string, std::unique_ptr<Line>> lines_;

@@ -1,4 +1,16 @@
-float4 main() : SV_TARGET
+#include "Line.hlsli"
+
+struct PixelShaderOutput
 {
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+    float32_t4 color : SV_TARGET0; // 出力色
+};
+
+PixelShaderOutput main(VertexShaderOutput input)
+{
+    PixelShaderOutput output;
+
+    // 頂点カラーをそのまま出力
+    output.color = input.color;
+
+    return output;
 }

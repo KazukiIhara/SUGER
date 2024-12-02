@@ -28,7 +28,7 @@ std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
-
+std::unique_ptr<LineSystem> SUGER::lineSystem_ = nullptr;
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
@@ -296,6 +296,11 @@ void SUGER::Draw() {
 	PreDrawParticle3D();
 	// 3Dパーティクル描画処理
 	DrawParticles();
+
+	// 3DLine描画前処理
+	PreDrawLine3D();
+	// 3DLine描画処理
+	DrawLines();
 
 	// 2Dオブジェクト描画前処理
 	PreDrawObject2D();
@@ -595,6 +600,26 @@ void SUGER::ClearParticleContainer() {
 	particleManager_->ClearContainer();
 }
 
+void SUGER::CreateLine(const std::string& name) {
+	lineManager_->CreateLine(name);
+}
+
+void SUGER::UpdateLines() {
+	lineManager_->Update();
+}
+
+void SUGER::DrawLines() {
+	lineManager_->Draw();
+}
+
+Line* SUGER::FindLine(const std::string& name) {
+	return lineManager_->Find(name);
+}
+
+void SUGER::ClearLineContainer() {
+	lineManager_->ClearContainer();
+}
+
 void SUGER::LoadWaveSound(const std::string& filename, const std::string& directoryPath) {
 	soundManager_->LoadWave(filename, directoryPath);
 }
@@ -649,6 +674,10 @@ void SUGER::PreDrawObject3DSkinning() {
 
 void SUGER::PreDrawParticle3D() {
 	particleSystem_->PreDraw();
+}
+
+void SUGER::PreDrawLine3D() {
+	lineSystem_->PreDraw();
 }
 
 void SUGER::LoadJsonLevelData(const std::string& fileName) {
@@ -709,10 +738,6 @@ Vector3 SUGER::GetGrobalDataValueVector3(const std::string& groupName, const std
 
 bool SUGER::GetGrobalDataValueBool(const std::string& groupName, const std::string& key) {
 	return grobalDataManager_->GetValueBool(groupName, key);
-}
-
-void SUGER::PreDrawLine() {
-	
 }
 
 void SUGER::ShowFPS() {

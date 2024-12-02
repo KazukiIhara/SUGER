@@ -43,6 +43,8 @@ void MyGame::Update() {
 	SUGER::UpdateEmitters();
 	// Particleの更新
 	SUGER::UpdateParticles();
+	// Lineの更新
+	SUGER::UpdateLines();
 	// コライダーの衝突判定
 	SUGER::CheckAllCollisions();
 }
