@@ -20,6 +20,7 @@
 #include "manager/entityManager/EntityManager.h"
 #include "manager/emitter/EmitterManager.h"
 #include "manager/particle/ParticleManager.h"
+#include "manager/line/LineManager.h"
 #include "manager/sound/SoundManager.h"
 #include "manager/collision/CollisionManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
@@ -27,6 +28,7 @@
 #include "system/object2d/Object2dSystem.h"
 #include "system/object3d/Object3dSystem.h"
 #include "system/particle/ParticleSystem.h"
+#include "system/line/LineSystem.h"
 
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
@@ -287,7 +289,6 @@ public: // クラスメソッド
 	static bool GetGrobalDataValueBool(const std::string& groupName, const std::string& key);
 #pragma endregion
 
-
 #pragma region Object2DSystem
 	// Object2DSystemの機能
 	// 2dオブジェクト描画前処理
@@ -307,6 +308,13 @@ public: // クラスメソッド
 	// ParticleSystemの機能
 	// Particleの描画前処理
 	static void PreDrawParticle3D();
+
+#pragma endregion
+
+#pragma region LineSystem
+	// LineSystem
+	// Lineの描画前処理
+	static void PreDrawLine();
 
 #pragma endregion
 
@@ -336,6 +344,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<EntityManager> entityManager_;
 	static std::unique_ptr<EmitterManager> emitterManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
+	static std::unique_ptr<LineManager> lineManager_;
 	static std::unique_ptr<SoundManager> soundManager_;
 	static std::unique_ptr<CollisionManager> collisionManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
@@ -343,5 +352,6 @@ private: // クラスのポインタ
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
 	static std::unique_ptr<ParticleSystem> particleSystem_;
+	static std::unique_ptr<LineSystem> lineSystem_;
 
 };

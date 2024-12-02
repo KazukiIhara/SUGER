@@ -20,6 +20,7 @@ std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
 std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<EmitterManager> SUGER::emitterManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
+std::unique_ptr<LineManager> SUGER::lineManager_ = nullptr;
 std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
 std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
@@ -80,9 +81,13 @@ void SUGER::Initialize() {
 	emitterManager_ = std::make_unique<EmitterManager>();
 	emitterManager_->Initialize();
 
-	// FixParticleManagerの初期化
+	// ParticleManagerの初期化
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
+
+	// LineManagerの初期化
+	lineManager_ = std::make_unique<LineManager>();
+	lineManager_->Initialize();
 
 	// soundManagerの初期化
 	soundManager_ = std::make_unique<SoundManager>();
@@ -111,12 +116,21 @@ void SUGER::Initialize() {
 	// ParticleSystemの初期化
 	particleSystem_ = std::make_unique<ParticleSystem>();
 	particleSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+
+	// LineSystemの初期化
+	lineSystem_ = std::make_unique<LineSystem>();
+	lineSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
 }
 
 void SUGER::Finalize() {
 	Logger::Log("SUGER,Finalized\n");
 
 	// 各オブジェクトの終了処理を生成した順番とは逆に行う
+
+	// LineSystemの終了処理
+	if (lineSystem_) {
+		lineSystem_.reset();
+	}
 
 	// ParticleSystemの終了処理
 	if (particleSystem_) {
@@ -695,6 +709,10 @@ Vector3 SUGER::GetGrobalDataValueVector3(const std::string& groupName, const std
 
 bool SUGER::GetGrobalDataValueBool(const std::string& groupName, const std::string& key) {
 	return grobalDataManager_->GetValueBool(groupName, key);
+}
+
+void SUGER::PreDrawLine() {
+	
 }
 
 void SUGER::ShowFPS() {
