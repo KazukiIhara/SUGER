@@ -58,9 +58,9 @@ void Camera::UpdateCameraData() {
 	cameraData_->worldPosition.z = worldPos_.z;
 }
 
-void Camera::TransferCamera() {
+void Camera::TransferCamera(const uint32_t& index) {
 	// 定数バッファを転送
-	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(3, cameraResource_->GetGPUVirtualAddress());
+	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(index, cameraResource_->GetGPUVirtualAddress());
 }
 
 Vector3 Camera::GetTranslate() const {
@@ -81,5 +81,21 @@ void Camera::SetRotate(const Vector3& rotate) {
 
 WorldTransform* Camera::GetWorldTransformPtr() {
 	return &transform_;
+}
+
+Matrix4x4* Camera::GetViewProjectionMatrixPtr() {
+	return &viewProjectionMatrix_;
+}
+
+Matrix4x4 Camera::GetViewProjectionMatrix() const {
+	return viewProjectionMatrix_;
+}
+
+Matrix4x4 Camera::GetWorldMatrix() const {
+	return transform_.worldMatrix_;
+}
+
+Vector3 Camera::GetWorldPos() const {
+	return worldPos_;
 }
 

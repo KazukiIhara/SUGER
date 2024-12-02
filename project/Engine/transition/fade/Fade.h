@@ -34,8 +34,6 @@ private:
 	float duration_ = 0.0f;
 	// 経過時間カウンター
 	float counter_ = 0.0f;
-	// フェード時間
-	float kFadeTime_ = 2.0f;
 	// デルタタイム
 	const float kDeltaTime_ = 1.0f / 60.0f;
 };

@@ -5,6 +5,7 @@
 #include "2d/controller/Object2dController.h"
 #include "3d/entityController/EntityController.h"
 #include "VFX/particle/emitterController/EmitterController.h"
+#include "3d/lineController/LineController.h"
 
 // SampleScene
 #include "objects/pronamaChan/PronamaChan.h"
@@ -36,4 +37,6 @@ private: // 非公開メンバ変数
 	Object2DController pronamaChanTex;
 	// Emitterコントローラ
 	EmitterController emitter_;
+	// Lineコントローラ
+	LineController line_;
 };

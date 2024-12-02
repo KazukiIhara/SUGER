@@ -38,6 +38,12 @@ void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
 	// Particleグラフィックスパイプラインを初期化
 	particleGraphicsPipeline_->Initialize(directXManager);
 
+	// Lineグラフィックスパイプラインを生成
+	lineGraphicsPipeline_ = std::make_unique<LineGraphicsPipeline>();
+
+	// Lineグラフィックスパイプラインを初期化
+	lineGraphicsPipeline_->Initialize(directXManager);
+
 
 	// 2Dオブジェクト描画用のルートシグネチャを設定
 	SetRootSignature(kObject2d);
@@ -63,6 +69,11 @@ void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
 	// Partice描画用のグラフィックスパイプラインステートを設定
 	SetGraphicsPipelineState(kParticle);
 
+	// Line描画用のルートシグネイチャを設定
+	SetRootSignature(kLine);
+
+	// Line描画用のグラフィックスパイプラインステートを設定
+	SetGraphicsPipelineState(kLine);
 }
 
 // 指定されたパイプラインステートに対応するルートシグネチャを取得する
@@ -97,6 +108,13 @@ void GraphicsPipelineManager::SetRootSignature(PipelineState pipelineState) {
 		// パーティクル描画用のルートシグネチャを設定
 		rootSignatures_[pipelineState] = particleGraphicsPipeline_->GetRootSignature();
 		break;
+
+	case kLine:
+		// ライン描画用のルートシグネイチャを設定
+		rootSignatures_[pipelineState] = lineGraphicsPipeline_->GetRootSignature();
+		break;
+
+
 		// 他のパイプラインステートが追加された場合はここに追加
 	}
 }
@@ -125,7 +143,13 @@ void GraphicsPipelineManager::SetGraphicsPipelineState(PipelineState pipelineSta
 			graphicsPipelineStates_[pipelineState][mode] = particleGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
 		}
 		break;
-		// 他のパイプラインステートが追加された場合はここに追加
+	case kLine:
+		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+			graphicsPipelineStates_[pipelineState][mode] = lineGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
+		}
+		break;
 
+
+		// 他のパイプラインステートが追加された場合はここに追加
 	}
 }

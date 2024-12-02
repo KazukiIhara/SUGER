@@ -52,6 +52,19 @@ struct VertexData3D {
 	Vector3 normal;
 };
 
+// 3Dのラインデータ
+struct LineData3D {
+	Vector3 start;
+	Vector3 end;
+	Vector4 color;
+};
+
+// 3Dライン頂点データ用構造体
+struct VertexDataLine3D {
+	Vector4 position;
+	Vector4 color;
+};
+
 // 3D用マテリアル構造体
 struct Material3D {
 	Vector4 color;

@@ -20,6 +20,7 @@ std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
 std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<EmitterManager> SUGER::emitterManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
+std::unique_ptr<LineManager> SUGER::lineManager_ = nullptr;
 std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
 std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
@@ -27,7 +28,7 @@ std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
-
+std::unique_ptr<LineSystem> SUGER::lineSystem_ = nullptr;
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
@@ -80,9 +81,13 @@ void SUGER::Initialize() {
 	emitterManager_ = std::make_unique<EmitterManager>();
 	emitterManager_->Initialize();
 
-	// FixParticleManagerの初期化
+	// ParticleManagerの初期化
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
+
+	// LineManagerの初期化
+	lineManager_ = std::make_unique<LineManager>();
+	lineManager_->Initialize();
 
 	// soundManagerの初期化
 	soundManager_ = std::make_unique<SoundManager>();
@@ -111,12 +116,21 @@ void SUGER::Initialize() {
 	// ParticleSystemの初期化
 	particleSystem_ = std::make_unique<ParticleSystem>();
 	particleSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+
+	// LineSystemの初期化
+	lineSystem_ = std::make_unique<LineSystem>();
+	lineSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
 }
 
 void SUGER::Finalize() {
 	Logger::Log("SUGER,Finalized\n");
 
 	// 各オブジェクトの終了処理を生成した順番とは逆に行う
+
+	// LineSystemの終了処理
+	if (lineSystem_) {
+		lineSystem_.reset();
+	}
 
 	// ParticleSystemの終了処理
 	if (particleSystem_) {
@@ -282,6 +296,11 @@ void SUGER::Draw() {
 	PreDrawParticle3D();
 	// 3Dパーティクル描画処理
 	DrawParticles();
+
+	// 3DLine描画前処理
+	PreDrawLine3D();
+	// 3DLine描画処理
+	DrawLines();
 
 	// 2Dオブジェクト描画前処理
 	PreDrawObject2D();
@@ -526,11 +545,13 @@ void SUGER::ClearEntityContainer() {
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	entityManager_->SetRequiredObjects(camera, punctualLight);
 	particleManager_->SetSceneCamera(camera);
+	lineManager_->SetSceneCamera(camera);
 }
 
 void SUGER::SetSceneCamera(Camera* camera) {
 	entityManager_->SetSceneCamera(camera);
 	particleManager_->SetSceneCamera(camera);
+	lineManager_->SetSceneCamera(camera);
 }
 
 void SUGER::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {
@@ -579,6 +600,26 @@ Particle* SUGER::FindParticle(const std::string& name) {
 
 void SUGER::ClearParticleContainer() {
 	particleManager_->ClearContainer();
+}
+
+void SUGER::CreateLine(const std::string& name) {
+	lineManager_->CreateLine(name);
+}
+
+void SUGER::UpdateLines() {
+	lineManager_->Update();
+}
+
+void SUGER::DrawLines() {
+	lineManager_->Draw();
+}
+
+Line* SUGER::FindLine(const std::string& name) {
+	return lineManager_->Find(name);
+}
+
+void SUGER::ClearLineContainer() {
+	lineManager_->ClearContainer();
 }
 
 void SUGER::LoadWaveSound(const std::string& filename, const std::string& directoryPath) {
@@ -635,6 +676,10 @@ void SUGER::PreDrawObject3DSkinning() {
 
 void SUGER::PreDrawParticle3D() {
 	particleSystem_->PreDraw();
+}
+
+void SUGER::PreDrawLine3D() {
+	lineSystem_->PreDraw();
 }
 
 void SUGER::LoadJsonLevelData(const std::string& fileName) {

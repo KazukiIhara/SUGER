@@ -93,12 +93,14 @@ void Particle::Update() {
 }
 
 void Particle::Draw() {
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	// PSOを設定
-	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kParticle, blendMode_));
+	commandList->SetPipelineState(SUGER::GetPipelineState(kParticle, blendMode_));
 	// StructuredBufferのSRVを設定する
-	SUGER::GetDirectXCommandList()->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVDescriptorHandleGPU(srvIndex_));
+	commandList->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVDescriptorHandleGPU(srvIndex_));
 	// マテリアルCBufferの場所を設定
-	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	// モデルがある場合描画
 	if (model_) {
 		switch (type_) {
