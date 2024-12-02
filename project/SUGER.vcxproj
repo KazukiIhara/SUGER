@@ -119,9 +119,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
-    <ClCompile Include="Engine\VFX\particle\emitterManager\EmitterManager.cpp" />
+    <ClCompile Include="Engine\manager\emitter\EmitterManager.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitter\Emitter.cpp" />
-    <ClCompile Include="Engine\VFX\particle\particleManager\ParticleManager.cpp" />
+    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp" />
     <ClCompile Include="Engine\VFX\particle\particle\Particle.cpp" />
     <ClCompile Include="Engine\3d\emptyController\EmptyController.cpp" />
     <ClCompile Include="Engine\manager\emptyManager\EmptyManager.cpp" />
@@ -133,7 +133,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\2d\controller\Object2dController.cpp" />
     <ClCompile Include="Engine\graphicsPipeline\object2d\Object2dGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\2d\sprite\Sprite.cpp" />
-    <ClCompile Include="Engine\2d\system\Object2dSystem.cpp" />
+    <ClCompile Include="Engine\system\object2d\Object2dSystem.cpp" />
     <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp" />
     <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp" />
     <ClCompile Include="Engine\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
@@ -147,7 +147,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp" />
     <ClCompile Include="Engine\manager\data\level\json\JsonLevelDataManager.cpp" />
     <ClCompile Include="Engine\manager\sound\SoundManager.cpp" />
-    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp" />
+    <ClCompile Include="Engine\system\object3d\Object3dSystem.cpp" />
     <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp" />
     <ClCompile Include="Engine\directX\command\DirectXCommand.cpp" />
     <ClCompile Include="Engine\framework\SUGER.cpp" />
@@ -162,7 +162,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\manager\texture\TextureManager.cpp" />
     <ClCompile Include="Engine\math\function\MathFunction.cpp" />
     <ClCompile Include="Engine\math\operator\MathOperator.cpp" />
-    <ClCompile Include="Engine\VFX\particle\system\ParticleSystem.cpp" />
+    <ClCompile Include="Engine\system\particle\ParticleSystem.cpp" />
     <ClCompile Include="Engine\random\Random.cpp" />
     <ClCompile Include="Engine\transition\fade\Fade.cpp" />
     <ClCompile Include="Engine\worldTransform\WorldTransform.cpp" />
@@ -189,9 +189,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
     <ClInclude Include="Engine\structs\LineStruct.h" />
     <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
-    <ClInclude Include="Engine\VFX\particle\emitterManager\EmitterManager.h" />
+    <ClInclude Include="Engine\manager\emitter\EmitterManager.h" />
     <ClInclude Include="Engine\VFX\particle\emitter\Emitter.h" />
-    <ClInclude Include="Engine\VFX\particle\particleManager\ParticleManager.h" />
+    <ClInclude Include="Engine\manager\particle\ParticleManager.h" />
     <ClInclude Include="Engine\VFX\particle\particle\Particle.h" />
     <ClInclude Include="Engine\3d\emptyController\EmptyController.h" />
     <ClInclude Include="Engine\manager\emptyManager\EmptyManager.h" />
@@ -203,7 +203,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\2d\controller\Object2dController.h" />
     <ClInclude Include="Engine\graphicsPipeline\object2d\Object2dGraphicsPipeline.h" />
     <ClInclude Include="Engine\2d\sprite\Sprite.h" />
-    <ClInclude Include="Engine\2d\system\Object2dSystem.h" />
+    <ClInclude Include="Engine\system\object2d\Object2dSystem.h" />
     <ClInclude Include="Engine\3d\cameras\camera\Camera.h" />
     <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h" />
     <ClInclude Include="Engine\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
@@ -221,7 +221,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\data\level\json\JsonLevelDataManager.h" />
     <ClInclude Include="Engine\manager\sound\SoundManager.h" />
     <ClInclude Include="Engine\math\types\Quaternion.h" />
-    <ClInclude Include="Engine\3d\system\Object3dSystem.h" />
+    <ClInclude Include="Engine\system\object3d\Object3dSystem.h" />
     <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h" />
     <ClInclude Include="Engine\directX\command\DirectXCommand.h" />
     <ClInclude Include="Engine\framework\SUGER.h" />
@@ -247,7 +247,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\iScene\abstractFactory\AbstractSceneFactory.h" />
     <ClInclude Include="Engine\iScene\base\BaseScene.h" />
     <ClInclude Include="Engine\enum\GraphicsPipelineEnum.h" />
-    <ClInclude Include="Engine\VFX\particle\system\ParticleSystem.h" />
+    <ClInclude Include="Engine\system\particle\ParticleSystem.h" />
     <ClInclude Include="Engine\random\Random.h" />
     <ClInclude Include="Engine\structs\CameraStruct.h" />
     <ClInclude Include="Engine\structs\ModelStructs.h" />
