@@ -12,10 +12,10 @@
 #include "directX/includes/ComPtr.h"
 #include "enum/GraphicsPipelineEnum.h"
 
-#include "2d/graphicsPipeline/Object2dGraphicsPipeline.h"
-#include "3d/graphicsPipeline/ocject3d/Object3dGraphicsPipeline.h"
-#include "3d/graphicsPipeline/object3dSkinning/Object3dSkinningGraphicsPipeline.h"
-#include "3d/graphicsPipeline/particle/ParticleGraphicsPipeline.h"
+#include "graphicsPipeline/object2d/Object2dGraphicsPipeline.h"
+#include "graphicsPipeline/ocject3d/Object3dGraphicsPipeline.h"
+#include "graphicsPipeline/object3dSkinning/Object3dSkinningGraphicsPipeline.h"
+#include "graphicsPipeline/particle/ParticleGraphicsPipeline.h"
 
 class DirectXManager;
 
