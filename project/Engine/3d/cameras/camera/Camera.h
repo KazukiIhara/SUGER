@@ -34,18 +34,17 @@ public:
 	// ワールドトランスフォームを送る
 	WorldTransform* GetWorldTransformPtr();
 
+	// ビュープロジェクションマトリックスのポインタを送る
+	Matrix4x4* GetViewProjectionMatrixPtr();
+
 	// ビュープロジェクションマトリックスを送る関数
-	Matrix4x4 GetViewProjectionMatrix()const {
-		return viewProjectionMatrix_;
-	}
+	Matrix4x4 GetViewProjectionMatrix()const;
+
 	// ワールド行列を送る関数
-	Matrix4x4 GetWorldMatrix()const {
-		return transform_.worldMatrix_;
-	}
+	Matrix4x4 GetWorldMatrix()const;
+
 	// ワールド座標を送る関数
-	Vector3 GetWorldPos()const {
-		return worldPos_;
-	}
+	Vector3 GetWorldPos()const;
 
 private:
 

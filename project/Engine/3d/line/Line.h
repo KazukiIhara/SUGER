@@ -5,6 +5,7 @@
 
 #include "directX/includes/ComPtr.h"
 #include "structs/ObjectStructs.h"
+#include "structs/CameraStruct.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 
 class Camera;
@@ -58,8 +59,7 @@ private:
 	// ViewProjection用のリソース
 	ComPtr<ID3D12Resource> viewProjectionResource_ = nullptr;
 	// シェーダーに送るWVPデータ
-	TransformationMatrix* viewProjectionData_ = nullptr;
-
+	ViewProjectionForGPU* viewProjectionData_ = nullptr;
 
 	// SrvIndex
 	uint32_t srvIndex_ = 0;

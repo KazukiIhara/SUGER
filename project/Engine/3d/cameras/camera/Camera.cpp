@@ -83,3 +83,19 @@ WorldTransform* Camera::GetWorldTransformPtr() {
 	return &transform_;
 }
 
+Matrix4x4* Camera::GetViewProjectionMatrixPtr() {
+	return &viewProjectionMatrix_;
+}
+
+Matrix4x4 Camera::GetViewProjectionMatrix() const {
+	return viewProjectionMatrix_;
+}
+
+Matrix4x4 Camera::GetWorldMatrix() const {
+	return transform_.worldMatrix_;
+}
+
+Vector3 Camera::GetWorldPos() const {
+	return worldPos_;
+}
+

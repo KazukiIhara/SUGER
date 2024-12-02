@@ -7,3 +7,7 @@ struct CameraForGPU {
 	Vector3 worldPosition;
 	float padding;
 };
+
+struct ViewProjectionForGPU {
+	Matrix4x4 viewProjection;
+};

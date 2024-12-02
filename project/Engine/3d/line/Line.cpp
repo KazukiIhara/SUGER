@@ -12,7 +12,7 @@ void Line::Initialize(Camera* camera) {
 	CreateInstancingResource();
 	// Instancingデータを書き込む
 	MapInstancingData();
-	
+
 	// ViewProjectionリソースを作成
 	CreateViewProjectionResource();
 	// ViewProjectionデータを書き込む
@@ -25,6 +25,9 @@ void Line::Initialize(Camera* camera) {
 }
 
 void Line::Update() {
+	// ビュープロジェクションの更新
+	viewProjectionData_->viewProjection = camera_->GetViewProjectionMatrix();
+
 	// 描画すべきインスタンス数
 	instanceCount_ = static_cast<uint32_t>(lines_.size());
 
@@ -34,6 +37,7 @@ void Line::Update() {
 		}
 	}
 
+	lines_.clear();
 }
 
 void Line::Draw() {
@@ -92,8 +96,12 @@ void Line::MapInstancingData() {
 
 void Line::CreateViewProjectionResource() {
 	// ViewProjection用のリソースを作る
-	viewProjectionResource_ = SUGER::CreateBufferResource(sizeof(Matrix4x4));
+	viewProjectionResource_ = SUGER::CreateBufferResource(sizeof(ViewProjectionForGPU));
 }
 
 void Line::MapViewProjectionData() {
+	// ViewProjection用のデータを書き込む
+	viewProjectionData_ = nullptr;
+	viewProjectionResource_->Map(0, nullptr, reinterpret_cast<void**>(&viewProjectionData_));
+	viewProjectionData_->viewProjection = camera_->GetViewProjectionMatrix();
 }

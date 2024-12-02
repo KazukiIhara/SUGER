@@ -7,6 +7,6 @@ void LineController::Initialize(const std::string& name) {
 	assert(line_);
 }
 
-void LineController::AddLine(const Vector3& start, const Vector3& end, const Vector4& color) {
+void LineController::DrawLine(const Vector3& start, const Vector3& end, const Vector4& color) {
 	line_->AddLine(start, end, color);
 }

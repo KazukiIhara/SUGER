@@ -11,7 +11,7 @@ public:
 	void Initialize(const std::string& name);
 
 	// 描画するラインを追加
-	void AddLine(const Vector3& start, const Vector3& end, const Vector4& color);
+	void DrawLine(const Vector3& start, const Vector3& end, const Vector4& color);
 
 private:
 	// Line

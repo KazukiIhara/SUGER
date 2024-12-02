@@ -68,10 +68,9 @@ void SampleScene::Initialize() {
 	emitter_.SetEmitType(kRandom);
 	emitter_.SetIsRepeat(false);
 
-	// ラインを作成
+	// ライングループを作成
 	SUGER::CreateLine("sample");
 	line_.Initialize("sample");
-
 
 	//
 	// GrobalData
@@ -107,7 +106,9 @@ void SampleScene::SceneStatePlayUpdate() {
 	// シーンの更新処理ここから
 	// 
 
-	line_.AddLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+	// お試しに盾に線を引いてみた
+	line_.DrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 2.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+
 
 	// Uキーを押すとBGM再生
 	if (SUGER::TriggerKey(DIK_U)) {
