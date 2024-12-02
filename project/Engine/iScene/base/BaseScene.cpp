@@ -38,6 +38,9 @@ void BaseScene::Initialize() {
 	// シーンに必要なカメラとライトのセット
 	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
 
+	// FixFPSを初期化
+	SUGER::FiXFPSInitialize();
+
 }
 
 void BaseScene::Update() {
@@ -127,7 +130,7 @@ void BaseScene::SceneStatusUpdate() {
 
 void BaseScene::SceneStateFadeInInitialize() {
 	// フェード開始
-	fade_->Start(FadeStatus::FadeIn, 2.0f);
+	fade_->Start(FadeStatus::FadeIn, 0.5f);
 }
 
 void BaseScene::SceneStateFadeInUpdate() {
@@ -142,7 +145,7 @@ void BaseScene::SceneStateFadeInUpdate() {
 
 void BaseScene::SceneStateFadeOutInitialize() {
 	// フェード開始
-	fade_->Start(FadeStatus::FadeOut, 2.0f);
+	fade_->Start(FadeStatus::FadeOut, 0.5f);
 }
 
 void BaseScene::SceneStateFadeOutUpdate() {
