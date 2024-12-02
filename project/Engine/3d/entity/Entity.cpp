@@ -50,7 +50,7 @@ void Entity::Draw() {
 	// ライトを転送
 	punctualLight_->TransferLight();
 	// カメラ情報を転送
-	camera_->TransferCamera();
+	camera_->TransferCamera(3);
 	// 3Dモデル描画
 	model_->Draw();
 }

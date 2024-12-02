@@ -22,7 +22,7 @@ public:
 	void Draw();
 
 	// 描画するライン追加
-	void AddLine(const LineData3D& lineData3d);
+	void AddLine(const Vector3& start, const Vector3& end, const Vector4& color);
 
 	// ラインのクリア
 	void ClearLines();
@@ -35,9 +35,13 @@ public:
 private:
 	// instancingリソース作成
 	void CreateInstancingResource();
-	// instancingリソース書き込み
+	// instancingデータ書き込み
 	void MapInstancingData();
 
+	// ViewProjectionリソース作成
+	void CreateViewProjectionResource();
+	// ViewProjectionデータ書き込み
+	void MapViewProjectionData();
 private:
 	// ラインの最大数
 	static const uint32_t kNumMaxInstance = 512;
@@ -50,6 +54,12 @@ private:
 	ComPtr<ID3D12Resource> instancingResource_ = nullptr;
 	// instancing描画用のデータ
 	LineData3D* instancingData_ = nullptr;
+
+	// ViewProjection用のリソース
+	ComPtr<ID3D12Resource> viewProjectionResource_ = nullptr;
+	// シェーダーに送るWVPデータ
+	TransformationMatrix* viewProjectionData_ = nullptr;
+
 
 	// SrvIndex
 	uint32_t srvIndex_ = 0;

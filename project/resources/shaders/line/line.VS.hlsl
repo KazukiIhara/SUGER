@@ -1,5 +1,9 @@
 #include "Line.hlsli"
 
+ConstantBuffer<Camera> gCamera : register(b0);
+StructuredBuffer<LineData3D> gLines : register(t0);
+
+
 VertexShaderOutput main(VertexShaderInput input)
 {
     VertexShaderOutput output;
@@ -9,7 +13,7 @@ VertexShaderOutput main(VertexShaderInput input)
     float3 position = (input.vertexId == 0) ? lineData.start : lineData.end;
 
     // ƒ[ƒ‹ƒh•ÏŠ·
-    output.position = mul(float4(position, 1.0f), WVP);
+    output.position = mul(float4(position, 1.0f), gCamera.viewProjection);
 
     output.color = lineData.color;
     return output;

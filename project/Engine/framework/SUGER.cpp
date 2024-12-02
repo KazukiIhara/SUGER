@@ -545,11 +545,13 @@ void SUGER::ClearEntityContainer() {
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
 	entityManager_->SetRequiredObjects(camera, punctualLight);
 	particleManager_->SetSceneCamera(camera);
+	lineManager_->SetSceneCamera(camera);
 }
 
 void SUGER::SetSceneCamera(Camera* camera) {
 	entityManager_->SetSceneCamera(camera);
 	particleManager_->SetSceneCamera(camera);
+	lineManager_->SetSceneCamera(camera);
 }
 
 void SUGER::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {

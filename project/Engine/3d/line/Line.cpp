@@ -12,6 +12,11 @@ void Line::Initialize(Camera* camera) {
 	CreateInstancingResource();
 	// Instancingデータを書き込む
 	MapInstancingData();
+	
+	// ViewProjectionリソースを作成
+	CreateViewProjectionResource();
+	// ViewProjectionデータを書き込む
+	MapViewProjectionData();
 
 	// srvのインデックスを割り当て
 	srvIndex_ = SUGER::SrvAllocate();
@@ -28,6 +33,7 @@ void Line::Update() {
 			instancingData_[i] = lines_[i]; // CPU側のデータをGPU側に転送
 		}
 	}
+
 }
 
 void Line::Draw() {
@@ -35,19 +41,24 @@ void Line::Draw() {
 	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	// PSOを設定
 	commandList->SetPipelineState(SUGER::GetPipelineState(kLine, blendMode_));
+	// ViewProjectionを転送
+	commandList->SetGraphicsRootConstantBufferView(0, viewProjectionResource_->GetGPUVirtualAddress());
 	// StructuredBufferのSRVを設定する
 	commandList->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVDescriptorHandleGPU(srvIndex_));
 	// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	commandList->DrawInstanced(2, instanceCount_, 0, 0);
 }
 
-void Line::AddLine(const LineData3D& lineData3d) {
+void Line::AddLine(const Vector3& start, const Vector3& end, const Vector4& color) {
 	// 最大数を超えていたら追加しない
 	if (lines_.size() >= kNumMaxInstance) {
 		return;
 	}
 	// 追加するLine
-	LineData3D newLineData = lineData3d;
+	LineData3D newLineData;
+	newLineData.start = start;
+	newLineData.end = end;
+	newLineData.color = color;
 	// コンテナに挿入
 	lines_.push_back(newLineData);
 }
@@ -77,4 +88,12 @@ void Line::MapInstancingData() {
 	for (uint32_t index = 0; index < kNumMaxInstance; ++index) {
 		instancingData_[index].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
+}
+
+void Line::CreateViewProjectionResource() {
+	// ViewProjection用のリソースを作る
+	viewProjectionResource_ = SUGER::CreateBufferResource(sizeof(Matrix4x4));
+}
+
+void Line::MapViewProjectionData() {
 }

@@ -19,7 +19,7 @@ public:
 	virtual void Update();
 
 	// 定数バッファに転送
-	void TransferCamera();
+	void TransferCamera(const uint32_t& index);
 
 	// translateのゲッター
 	Vector3 GetTranslate()const;

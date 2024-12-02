@@ -10,6 +10,11 @@ struct VertexShaderOutput
     float32_t4 color : COLOR0; // ラインの色
 };
 
+struct PixelShaderOutput
+{
+    float32_t4 color : SV_TARGET0; // 出力色
+};
+
 // 3Dラインデータ
 struct LineData3D
 {
@@ -18,11 +23,7 @@ struct LineData3D
     float32_t4 color;
 };
 
-// 定数バッファ
-cbuffer TransformBuffer : register(b0)
+struct Camera
 {
-    float32_t4x4 WVP; // ワールド・ビュー・プロジェクション行列
+    float32_t4x4 viewProjection;
 };
-
-// インスタンシングバッファ
-StructuredBuffer<LineData3D> gLines : register(t0);

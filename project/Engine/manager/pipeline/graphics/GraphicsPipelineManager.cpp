@@ -68,6 +68,12 @@ void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
 
 	// Partice描画用のグラフィックスパイプラインステートを設定
 	SetGraphicsPipelineState(kParticle);
+
+	// Line描画用のルートシグネイチャを設定
+	SetRootSignature(kLine);
+
+	// Line描画用のグラフィックスパイプラインステートを設定
+	SetGraphicsPipelineState(kLine);
 }
 
 // 指定されたパイプラインステートに対応するルートシグネチャを取得する

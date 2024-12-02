@@ -12,7 +12,7 @@ void SkiningEntity::Draw() {
 	// ライトを転送
 	punctualLight_->TransferLight();
 	// カメラ情報を転送
-	camera_->TransferCamera();
+	camera_->TransferCamera(3);
 	// スキニング付きモデル描画
 	model_->DrawSkinning();
 }
