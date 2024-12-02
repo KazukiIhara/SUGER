@@ -114,6 +114,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\line\Line.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
@@ -179,6 +180,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\line\LineGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\line\Line.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
     <ClInclude Include="Engine\enum\EmitterEnum.h" />

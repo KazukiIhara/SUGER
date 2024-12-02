@@ -381,6 +381,7 @@
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
     <ClCompile Include="application\objects\teapot\Teapot.cpp" />
     <ClCompile Include="Engine\3d\line\Line.cpp" />
+    <ClCompile Include="Engine\3d\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -571,6 +572,7 @@
     <ClInclude Include="Engine\enum\EmitterEnum.h" />
     <ClInclude Include="Engine\3d\line\Line.h" />
     <ClInclude Include="Engine\structs\LineStruct.h" />
+    <ClInclude Include="Engine\3d\graphicsPipeline\line\LineGraphicsPipeline.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
