@@ -16,16 +16,10 @@ float DegreesToRadians(const float& degrees) {
 	return degrees * (std::numbers::pi_v<float> / 180.0f);
 }
 
-/// <summary>
-/// 3次元ベクトルの長さを計算
-/// </summary>
 float Length(const Vector3& a) {
 	return std::sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
 }
 
-/// <summary>
-/// 3次元ベクトルを正規化
-/// </summary>
 Vector3 Normalize(const Vector3& a) {
 	float length = Length(a);
 	Vector3 normalizedVector;
@@ -76,9 +70,6 @@ Vector3 Forward(const Vector3& rotate) {
 	return Normalize(forward);
 }
 
-/// <summary>
-/// ワールド座標の平行移動成分を取得
-/// </summary>
 Vector3 ExtractionWorldPos(const Matrix4x4& m) {
 	Vector3 worldPos{};
 	worldPos.x = m.m[3][0];
@@ -149,9 +140,6 @@ Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix) {
 	return result;
 }
 
-/// <summary>
-/// 単位行列を作成
-/// </summary>
 Matrix4x4 MakeIdentityMatrix4x4() {
 	Matrix4x4 result{};
 	result.m[0][0] = 1.0f; result.m[0][1] = 0.0f; result.m[0][2] = 0.0f; result.m[0][3] = 0.0f;
@@ -161,9 +149,6 @@ Matrix4x4 MakeIdentityMatrix4x4() {
 	return result;
 }
 
-/// <summary>
-/// 逆行列を作成
-/// </summary>
 Matrix4x4 Inverse(const Matrix4x4& a) {
 	Matrix4x4 A = a;
 	Matrix4x4 B = MakeIdentityMatrix4x4();
@@ -194,9 +179,6 @@ Matrix4x4 Inverse(const Matrix4x4& a) {
 	return B;
 }
 
-/// <summary>
-/// 転置行列を作成
-/// </summary>
 Matrix4x4 Transpose(const Matrix4x4& a) {
 	Matrix4x4 result;
 	for (int i = 0; i < 4; ++i) {
@@ -207,18 +189,12 @@ Matrix4x4 Transpose(const Matrix4x4& a) {
 	return result;
 }
 
-/// <summary>
-/// 逆転置行列を作成
-/// </summary>
 Matrix4x4 MakeInverseTransposeMatrix(const Matrix4x4& a) {
 	Matrix4x4 result = Inverse(a);
 	result = Transpose(result);
 	return result;
 }
 
-/// <summary>
-/// スケール行列を作成
-/// </summary>
 Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
 	Matrix4x4 result = {
 		 scale.x, 0.0f, 0.0f, 0.0f,
@@ -229,9 +205,6 @@ Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
 	return result;
 }
 
-/// <summary>
-/// X軸回転行列を作成
-/// </summary>
 Matrix4x4 MakeRotateXMatrix(float radian) {
 	Matrix4x4 rotateX{
 		1.0f, 0.0f, 0.0f, 0.0f,
@@ -242,9 +215,6 @@ Matrix4x4 MakeRotateXMatrix(float radian) {
 	return rotateX;
 }
 
-/// <summary>
-/// Y軸回転行列を作成
-/// </summary>
 Matrix4x4 MakeRotateYMatrix(float radian) {
 	Matrix4x4 rotateY{
 		std::cos(radian), 0.0f, -std::sin(radian), 0.0f,
@@ -255,9 +225,6 @@ Matrix4x4 MakeRotateYMatrix(float radian) {
 	return rotateY;
 }
 
-/// <summary>
-/// Z軸回転行列を作成
-/// </summary>
 Matrix4x4 MakeRotateZMatrix(float radian) {
 	Matrix4x4 rotateZ{
 		std::cos(radian), std::sin(radian), 0.0f, 0.0f,
@@ -268,9 +235,6 @@ Matrix4x4 MakeRotateZMatrix(float radian) {
 	return rotateZ;
 }
 
-/// <summary>
-/// XYZ軸回転行列を作成
-/// </summary>
 Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate) {
 	Matrix4x4 rotateX = MakeRotateXMatrix(rotate.x);
 	Matrix4x4 rotateY = MakeRotateYMatrix(rotate.y);
@@ -280,9 +244,6 @@ Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate) {
 	return result;
 }
 
-/// <summary>
-/// 平行移動行列を作成
-/// </summary>
 Matrix4x4 MakeTranslateMatrix(const Vector3& translate) {
 	Matrix4x4 result = {
 		1.0f, 0.0f, 0.0f, 0.0f,
@@ -293,9 +254,6 @@ Matrix4x4 MakeTranslateMatrix(const Vector3& translate) {
 	return result;
 }
 
-/// <summary>
-/// アフィン変換行列を作成
-/// </summary>
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
 	Matrix4x4 result = MakeScaleMatrix(scale) * MakeRotateXYZMatrix(rotate) * MakeTranslateMatrix(translate);
 	return result;
@@ -313,9 +271,6 @@ Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, f
 	return result;
 }
 
-/// <summary>
-/// パースペクティブ行列を作成
-/// </summary>
 Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRaito, float nearClip, float farClip) {
 	Matrix4x4 result =
 	{
@@ -327,9 +282,6 @@ Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRaito, float nearClip
 	return result;
 }
 
-/// <summary>
-/// 投影行列を作成
-/// </summary>
 Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip) {
 	Matrix4x4 result =
 	{
@@ -341,9 +293,6 @@ Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float botto
 	return result;
 }
 
-/// <summary>
-/// UVマトリックスを作成
-/// </summary>
 Matrix4x4 MakeUVMatrix(const Vector2& scale, const float& rotateZ, const Vector2& translate) {
 	Matrix4x4 rotateZMatrix = MakeRotateZMatrix(rotateZ);
 	Matrix4x4 scaleMatrix = MakeScaleMatrix(Vector3(scale.x, scale.y, 1.0f));
@@ -389,9 +338,6 @@ Matrix4x4 QuaternionToMatrix4x4(const Quaternion& q) {
 	return mat;
 }
 
-/// <summary>
-/// UVマトリックスを分解
-/// </summary>
 void DecomposeUVMatrix(const Matrix4x4& matrix, Vector3& scale, float& rotateZ, Vector2& translate) {
 	// 平行移動成分を抽出
 	translate.x = matrix.m[3][0];
@@ -406,9 +352,6 @@ void DecomposeUVMatrix(const Matrix4x4& matrix, Vector3& scale, float& rotateZ, 
 	scale.z = 1.0f; // UV マトリックスは 2D なので z スケールは 1.0 と仮定
 }
 
-/// <summary>
-/// UVマトリックスを合成
-/// </summary>
 Matrix4x4 ComposeUVMatrix(const Vector3& scale, float rotateZ, const Vector2& translate) {
 	Matrix4x4 matrix;
 
