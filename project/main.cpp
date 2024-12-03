@@ -19,13 +19,13 @@
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-	Logger::Log("Hello,DirectX!\n");
+	Logger::Log("Hello,SUGER!\n");
 
 	static std::unique_ptr<SUGER> game = std::make_unique<MyGame>();
 	game->Run();
 
 
-	Logger::Log("Bye,DirectX...\n");
+	Logger::Log("Bye,SUGER...\n");
 
 	return 0;
 }
