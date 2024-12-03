@@ -1,7 +1,8 @@
 #pragma once
 
+#include <string>
+
 class JsonLevelData;
-class RailCamera;
 
 class JsonLevelDataImporter {
 public:
@@ -9,10 +10,7 @@ public:
 	~JsonLevelDataImporter() = default;
 
 	// LevelDataをシーンにインポート
-	void Import(JsonLevelData* jsonLevelData);
-
-	// railDataをシーンにインポート
-	void ImportLevelwithRailControllPoint(JsonLevelData* jsonRailData, RailCamera* railCamera);
+	void Import(const std::string& levelDataName);
 
 private:
 

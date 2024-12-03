@@ -16,12 +16,19 @@ std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
 std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
-std::unique_ptr<Object3DManager> SUGER::object3dManager_ = nullptr;
+std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
+std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
+std::unique_ptr<EmitterManager> SUGER::emitterManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
+std::unique_ptr<LineManager> SUGER::lineManager_ = nullptr;
+std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
+std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
+std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
+std::unique_ptr<LineSystem> SUGER::lineSystem_ = nullptr;
 
 void SUGER::Initialize() {
 	Logger::Log("SUGER,Initialize\n");
@@ -58,21 +65,45 @@ void SUGER::Initialize() {
 	modelManager_ = std::make_unique<ModelManager>();
 	modelManager_->Initialize();
 
-	// object3dManagerの初期化
-	object3dManager_ = std::make_unique<Object3DManager>();
-	object3dManager_->Initialize(modelManager_.get());
-
 	// object2dManagerの初期化
 	object2dManager_ = std::make_unique<Object2DManager>();
 	object2dManager_->Initialize();
 
-	// particleManagerの初期化
+	// emptyManagerの初期化
+	emptyManager_ = std::make_unique<EmptyManager>();
+	emptyManager_->Initialize();
+
+	// entityManagerの初期化
+	entityManager_ = std::make_unique<EntityManager>();
+	entityManager_->Initialize(modelManager_.get());
+
+	// emitterManagerの初期化
+	emitterManager_ = std::make_unique<EmitterManager>();
+	emitterManager_->Initialize();
+
+	// ParticleManagerの初期化
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
+
+	// LineManagerの初期化
+	lineManager_ = std::make_unique<LineManager>();
+	lineManager_->Initialize();
+
+	// soundManagerの初期化
+	soundManager_ = std::make_unique<SoundManager>();
+	soundManager_->Initialize();
+
+	// collisionManager
+	collisionManager_ = std::make_unique<CollisionManager>();
+	collisionManager_->Initialize();
 
 	// JsonLevelDataManagerの初期化
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
 	jsonLevelDataManager_->Initialize();
+
+	// grobalDataManagerの初期化
+	grobalDataManager_ = std::make_unique<GrobalDataManager>();
+	grobalDataManager_->Initialize(directXManager_.get());
 
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
@@ -85,12 +116,21 @@ void SUGER::Initialize() {
 	// ParticleSystemの初期化
 	particleSystem_ = std::make_unique<ParticleSystem>();
 	particleSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+
+	// LineSystemの初期化
+	lineSystem_ = std::make_unique<LineSystem>();
+	lineSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
 }
 
 void SUGER::Finalize() {
 	Logger::Log("SUGER,Finalized\n");
 
 	// 各オブジェクトの終了処理を生成した順番とは逆に行う
+
+	// LineSystemの終了処理
+	if (lineSystem_) {
+		lineSystem_.reset();
+	}
 
 	// ParticleSystemの終了処理
 	if (particleSystem_) {
@@ -107,14 +147,39 @@ void SUGER::Finalize() {
 		object2dSystem_.reset();
 	}
 
+	// grobalDataManagerの終了処理
+	if (grobalDataManager_) {
+		grobalDataManager_->Finalize();
+		grobalDataManager_.reset();
+	}
+
 	// JsonLevelDataManagerの終了処理
 	if (jsonLevelDataManager_) {
 		jsonLevelDataManager_->Finalize();
 		jsonLevelDataManager_.reset();
 	}
 
-	// ParticleManagerの終了処理
+	// collisionManagerの終了処理
+	if (collisionManager_) {
+		collisionManager_->Finalize();
+		collisionManager_.reset();
+	}
+
+	// soundManagerの終了処理
+	if (soundManager_) {
+		soundManager_->Finalize();
+		soundManager_.reset();
+	}
+
+	// emitterManagerの終了処理
+	if (emitterManager_) {
+		emitterManager_->Finalize();
+		emitterManager_.reset();
+	}
+
+	// FixParticleManagerの終了処理
 	if (particleManager_) {
+		particleManager_->Finalize();
 		particleManager_.reset();
 	}
 
@@ -124,10 +189,16 @@ void SUGER::Finalize() {
 		object2dManager_.reset();
 	}
 
-	// Object3DManagerの終了処理
-	if (object3dManager_) {
-		object3dManager_->Finalize();
-		object3dManager_.reset();
+	// EmptyManagerの終了処理
+	if (emptyManager_) {
+		emptyManager_->Finalize();
+		emptyManager_.reset();
+	}
+
+	// EntityManagerの終了処理
+	if (entityManager_) {
+		entityManager_->Finalize();
+		entityManager_.reset();
 	}
 
 	// ModelManagerの終了処理
@@ -180,22 +251,29 @@ void SUGER::Update() {
 		endRequest_ = true;
 	}
 
+	// 入力の更新
+	directInput_->Update();
 
 	// F11キーでフルスクリーン切り替え処理
 	if (directInput_->TriggerKey(DIK_F11)) {
 		windowManager_->ToggleFullScreen();
 	}
 
-	// 入力の更新
-	directInput_->Update();
-
 	// escキーで終了
 	if (directInput_->PushKey(DIK_ESCAPE)) {
 		endRequest_ = true;
 	}
 
+	// 再生の終わっている音声を再生中コンテナから削除
+	soundManager_->CleanupFinishedVoices();
+
 	// ImGui開始処理
 	imguiManager_->BeginFrame();
+
+#ifdef _DEBUG
+	// グローバルデータ更新処理
+	grobalDataManager_->Update();
+#endif // _DEBUG
 
 	// FPS表示
 	ShowFPS();
@@ -205,18 +283,24 @@ void SUGER::Update() {
 void SUGER::Draw() {
 	// 3Dオブジェクト描画前処理
 	PreDrawObject3D();
-	// 3Dオブジェクト描画処理
-	Draw3DObjects();
+	// Entity描画処理
+	DrawEntiteis();
 
 	// Skinningあり3Dオブジェクト描画前処理
 	PreDrawObject3DSkinning();
-	// Skinningあり3Dオブジェクト描画処理
-	DrawSkinning3DObjects();
+	// Skining付きEntity描画処理
+	DrawSkiningEntities();
+
 
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
 	// 3Dパーティクル描画処理
-	DrawParticle();
+	DrawParticles();
+
+	// 3DLine描画前処理
+	PreDrawLine3D();
+	// 3DLine描画処理
+	DrawLines();
 
 	// 2Dオブジェクト描画前処理
 	PreDrawObject2D();
@@ -266,7 +350,7 @@ bool SUGER::PushKey(BYTE keyNumber) {
 	return directInput_->PushKey(keyNumber);
 }
 
-bool SUGER::TrrigerKey(BYTE keyNumber) {
+bool SUGER::TriggerKey(BYTE keyNumber) {
 	return directInput_->TriggerKey(keyNumber);
 }
 
@@ -276,6 +360,62 @@ bool SUGER::HoldKey(BYTE keyNumber) {
 
 bool SUGER::ReleaseKey(BYTE keyNumber) {
 	return directInput_->ReleaseKey(keyNumber);
+}
+
+bool SUGER::PushButton(int controllerID, int buttonNumber) {
+	return directInput_->PushButton(controllerID, buttonNumber);
+}
+
+bool SUGER::TriggerButton(int controllerID, int buttonNumber) {
+	return directInput_->TriggerButton(controllerID, buttonNumber);
+}
+
+bool SUGER::HoldButton(int controllerID, int buttonNumber) {
+	return directInput_->HoldButton(controllerID, buttonNumber);
+}
+
+bool SUGER::ReleaseButton(int controllerID, int buttonNumber) {
+	return directInput_->ReleaseButton(controllerID, buttonNumber);
+}
+
+int SUGER::GetLeftStickX(int controllerID) {
+	return directInput_->GetLeftStickX(controllerID);
+}
+
+int SUGER::GetLeftStickY(int controllerID) {
+	return directInput_->GetLeftStickY(controllerID);
+}
+
+int SUGER::GetRightStickX(int controllerID) {
+	return directInput_->GetRightStickX(controllerID);
+}
+
+int SUGER::GetRightStickY(int controllerID) {
+	return directInput_->GetRightStickY(controllerID);
+}
+
+int SUGER::GetLeftTrigger(int controllerID) {
+	return directInput_->GetLeftTrigger(controllerID);
+}
+
+int SUGER::GetRightTrigger(int controllerID) {
+	return directInput_->GetRightTrigger(controllerID);
+}
+
+bool SUGER::IsPadUp(int controllerID) {
+	return directInput_->IsPadUp(controllerID);
+}
+
+bool SUGER::IsPadRight(int controllerID) {
+	return directInput_->IsPadRight(controllerID);
+}
+
+bool SUGER::IsPadDown(int controllerID) {
+	return directInput_->IsPadDown(controllerID);
+}
+
+bool SUGER::IsPadLeft(int controllerID) {
+	return directInput_->IsPadLeft(controllerID);
 }
 
 ID3D12Device* SUGER::GetDirectXDevice() {
@@ -288,6 +428,10 @@ ID3D12GraphicsCommandList* SUGER::GetDirectXCommandList() {
 
 ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes) {
 	return directXManager_->CreateBufferResource(sizeInBytes);
+}
+
+void SUGER::FiXFPSInitialize() {
+	directXManager_->InitializeFixFPS();
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleCPU(uint32_t index) {
@@ -338,8 +482,8 @@ Model* SUGER::FindModel(const std::string& filePath) {
 	return modelManager_->Find(filePath);
 }
 
-void SUGER::Create2DObject(const std::string& name, const std::string& filePath) {
-	object2dManager_->Create(name, filePath);
+std::string SUGER::Create2DObject(const std::string& name, const std::string& filePath) {
+	return object2dManager_->Create(name, filePath);
 }
 
 void SUGER::Update2DObjects() {
@@ -354,52 +498,168 @@ Sprite* SUGER::FindObject2D(const std::string& name) {
 	return object2dManager_->Find(name);
 }
 
-void SUGER::Create3DObject(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
-	object3dManager_->Create(name, filePath, transform);
+void SUGER::Clear2DObjectContainer() {
+	object2dManager_->ClearContainer();
 }
 
-void SUGER::Update3DObjects() {
-	object3dManager_->Update();
+std::string SUGER::CreateEmpty(const std::string& name, const EulerTransform3D& transform) {
+	return emptyManager_->Create(name, transform);
 }
 
-void SUGER::Draw3DObjects() {
-	object3dManager_->Draw();
+void SUGER::UpdateEmpties() {
+	emptyManager_->Update();
 }
 
-void SUGER::DrawSkinning3DObjects() {
-	object3dManager_->DrawSkinning();
+Empty* SUGER::FindEmpty(const std::string& name) {
+	return emptyManager_->Find(name);
 }
 
-Object3D* SUGER::FindObject3D(const std::string& name) {
-	return object3dManager_->Find(name);
+void SUGER::ClearEmptyContainer() {
+	emptyManager_->ClearContainer();
+}
+
+std::string SUGER::CreateEntity(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
+	return entityManager_->Create(name, filePath, transform);
+}
+
+void SUGER::UpdateEntities() {
+	entityManager_->Update();
+}
+
+void SUGER::DrawEntiteis() {
+	entityManager_->Draw();
+}
+
+void SUGER::DrawSkiningEntities() {
+	entityManager_->DrawSkining();
+}
+
+Entity* SUGER::FindEntity(const std::string& name) {
+	return entityManager_->Find(name);
+}
+
+void SUGER::ClearEntityContainer() {
+	entityManager_->ClearContainer();
 }
 
 void SUGER::SetRequiredObjects(Camera* camera, PunctualLight* punctualLight) {
-	object3dManager_->SetRequiredObjects(camera, punctualLight);
+	entityManager_->SetRequiredObjects(camera, punctualLight);
 	particleManager_->SetSceneCamera(camera);
+	lineManager_->SetSceneCamera(camera);
 }
 
 void SUGER::SetSceneCamera(Camera* camera) {
-	object3dManager_->SetSceneCamera(camera);
+	entityManager_->SetSceneCamera(camera);
 	particleManager_->SetSceneCamera(camera);
+	lineManager_->SetSceneCamera(camera);
 }
 
-void SUGER::CreatePlaneParticle(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
-	// 規定のディレクトリパス
-	const std::string& directoryPath = "resources/images/";
-	particleManager_->CreatePlane(name, directoryPath + filePath, transform);
+void SUGER::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {
+	emitterManager_->CreateEmitter(name, transform);
 }
 
-void SUGER::UpdateParticle() {
+void SUGER::UpdateEmitters() {
+	emitterManager_->Update();
+}
+
+Emitter* SUGER::FindEmitter(const std::string& name) {
+	return emitterManager_->Find(name);
+}
+
+void SUGER::ClearEmitterContainer() {
+	emitterManager_->ClearContainer();
+}
+
+void SUGER::CreateParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath) {
+	// 既定のディレクトリパス
+	const std::string& textureDirectoryPath = "resources/images/";
+	// パーティクルタイプに応じてパーティクルを作成
+	switch (particleType) {
+	case kPlane:
+		// 板ポリパーティクルを作成
+		particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
+		break;
+	case kModel:
+		// モデルパーティクルを作成
+		particleManager_->CreateModelParticle(name, filePath);
+		break;
+	}
+}
+
+void SUGER::UpdateParticles() {
 	particleManager_->Update();
 }
 
-void SUGER::DrawParticle() {
+void SUGER::DrawParticles() {
 	particleManager_->Draw();
 }
 
-RandomParticle* SUGER::FindParticle(const std::string& name) {
+Particle* SUGER::FindParticle(const std::string& name) {
 	return particleManager_->Find(name);
+}
+
+void SUGER::ClearParticleContainer() {
+	particleManager_->ClearContainer();
+}
+
+void SUGER::CreateLine(const std::string& name) {
+	lineManager_->CreateLine(name);
+}
+
+void SUGER::UpdateLines() {
+	lineManager_->Update();
+}
+
+void SUGER::DrawLines() {
+	lineManager_->Draw();
+}
+
+Line* SUGER::FindLine(const std::string& name) {
+	return lineManager_->Find(name);
+}
+
+void SUGER::ClearLineContainer() {
+	lineManager_->ClearContainer();
+}
+
+void SUGER::LoadWaveSound(const std::string& filename, const std::string& directoryPath) {
+	soundManager_->LoadWave(filename, directoryPath);
+}
+
+void SUGER::PlayWaveSound(const std::string& filename) {
+	soundManager_->PlayWave(filename);
+}
+
+void SUGER::PlayWaveLoopSound(const std::string& filename, uint32_t loopCount) {
+	soundManager_->PlayWaveLoop(filename, loopCount);
+}
+
+void SUGER::StopWaveSound(const std::string& filename) {
+	soundManager_->StopWave(filename);
+}
+
+void SUGER::StopWaveLoopSound(const std::string& filename) {
+	soundManager_->StopWaveLoop(filename);
+}
+
+void SUGER::StopWaveAllSound(const std::string& filename) {
+	soundManager_->StopAll(filename);
+}
+
+void SUGER::CreanupFinishedVoices() {
+	soundManager_->CleanupFinishedVoices();
+}
+
+void SUGER::AddColliderList(EntityController* entityController) {
+	collisionManager_->AddCollider(entityController);
+}
+
+void SUGER::ClearColliderContainer() {
+	collisionManager_->ClearContainer();
+}
+
+void SUGER::CheckAllCollisions() {
+	collisionManager_->CheckAllCollisions();
 }
 
 void SUGER::PreDrawObject2D() {
@@ -418,12 +678,68 @@ void SUGER::PreDrawParticle3D() {
 	particleSystem_->PreDraw();
 }
 
+void SUGER::PreDrawLine3D() {
+	lineSystem_->PreDraw();
+}
+
 void SUGER::LoadJsonLevelData(const std::string& fileName) {
 	jsonLevelDataManager_->Load(fileName);
 }
 
 JsonLevelData* SUGER::FindJsonLevelData(const std::string& levelDataName) {
 	return jsonLevelDataManager_->Find(levelDataName);
+}
+
+void SUGER::AddGrobalDataGroup(const std::string& groupname) {
+	grobalDataManager_->CreateGroup(groupname);
+}
+
+void SUGER::AddGrobalDataItem(const std::string& groupname, const std::string& itemname, int32_t value) {
+	grobalDataManager_->AddItem(groupname, itemname, value);
+}
+
+void SUGER::AddGrobalDataItem(const std::string& groupname, const std::string& itemname, float value) {
+	grobalDataManager_->AddItem(groupname, itemname, value);
+}
+
+void SUGER::AddGrobalDataItem(const std::string& groupname, const std::string& itemname, Vector3 value) {
+	grobalDataManager_->AddItem(groupname, itemname, value);
+}
+
+void SUGER::AddGrobalDataItem(const std::string& groupname, const std::string& itemname, bool value) {
+	grobalDataManager_->AddItem(groupname, itemname, value);
+}
+
+void SUGER::SetGrobalDataValue(const std::string& groupname, const std::string& itemname, int32_t value) {
+	grobalDataManager_->SetValue(groupname, itemname, value);
+}
+
+void SUGER::SetGrobalDataValue(const std::string& groupname, const std::string& itemname, float value) {
+	grobalDataManager_->SetValue(groupname, itemname, value);
+}
+
+void SUGER::SetGrobalDataValue(const std::string& groupname, const std::string& itemname, Vector3 value) {
+	grobalDataManager_->SetValue(groupname, itemname, value);
+}
+
+void SUGER::SetGrobalDataValue(const std::string& groupname, const std::string& itemname, bool value) {
+	grobalDataManager_->SetValue(groupname, itemname, value);
+}
+
+int32_t SUGER::GetGrobalDataValueInt(const std::string& groupName, const std::string& key) {
+	return grobalDataManager_->GetValueInt(groupName, key);
+}
+
+float SUGER::GetGrobalDataValueFloat(const std::string& groupName, const std::string& key) {
+	return grobalDataManager_->GetValueFloat(groupName, key);
+}
+
+Vector3 SUGER::GetGrobalDataValueVector3(const std::string& groupName, const std::string& key) {
+	return grobalDataManager_->GetValueVector3(groupName, key);
+}
+
+bool SUGER::GetGrobalDataValueBool(const std::string& groupName, const std::string& key) {
+	return grobalDataManager_->GetValueBool(groupName, key);
 }
 
 void SUGER::ShowFPS() {

@@ -2,10 +2,14 @@
 
 // C++
 #include <memory>
+#include <optional>
 
 // MyHedder
 #include "3d/cameras/camera/Camera.h"
 #include "3d/lights/punctualLight/PunctualLight.h"
+#include "transition/fade/Fade.h"
+#include "enum/SceneEnum.h"
+#include "importer/level/json/JsonLevelDataImporter.h"
 
 // 前方宣言
 class SceneManager;
@@ -20,12 +24,34 @@ public: // 仮想関数
 	// 終了
 	virtual void Finalize() = 0;
 	// 更新
-	virtual void Update();
+	void Update();
+
+	// シーンチェンジ
+	void ChangeScene(const std::string& nextScene);
 
 	// シーンマネージャのセット
-	virtual void SetSceneManager(SceneManager* sceneManager) {
-		sceneManager_ = sceneManager;
-	}
+	virtual void SetSceneManager(SceneManager* sceneManager);
+
+protected:
+	// ベースシーンの状態初期化処理
+	void SceneStatusInitizlize();
+	// ベースシーンの状態更新処理
+	void SceneStatusUpdate();
+
+	// フェードイン初期化
+	virtual void SceneStateFadeInInitialize();
+	// フェードイン更新
+	virtual void SceneStateFadeInUpdate();
+
+	// プレイフェーズ初期化
+	virtual void SceneStatePlayInitialize() = 0;
+	// プレイフェーズ更新
+	virtual void SceneStatePlayUpdate() = 0;
+
+	// フェードアウト初期化
+	virtual void SceneStateFadeOutInitialize();
+	// フェードアウト更新
+	virtual void SceneStateFadeOutUpdate();
 
 private:
 	// カメラのImGui
@@ -36,12 +62,22 @@ private:
 	SceneManager* sceneManager_ = nullptr;
 
 protected:
-	// カメラ
-	std::unique_ptr<Camera> debugCamera_;
+	// シーンのフェーズ
+	SceneState sceneState_ = SceneState::kFadeIn;
+	// 次のフェーズリスト
+	std::optional<SceneState> sceneStateRequest_ = std::nullopt;
+	// シーンのカメラ
+	std::unique_ptr<Camera> sceneCamera_ = nullptr;
+	// デバッグカメラ
+	std::unique_ptr<Camera> debugCamera_ = nullptr;
 	// ライト
-	std::unique_ptr<PunctualLight> light_;
+	std::unique_ptr<PunctualLight> light_ = nullptr;
+	// フェード
+	std::unique_ptr<Fade> fade_ = nullptr;
 
-	// カメラ制御用のトランスフォーム
-	Vector3 cameraRotate_;
-	Vector3 cameraTranslate_;
+	// レベルデータインポータ
+	JsonLevelDataImporter levelDataImporter_;
+
+	// デバッグカメラがアクティブかどうか
+	bool isActiveDebugCamera_ = false;
 };

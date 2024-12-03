@@ -10,11 +10,11 @@ void ParticleManager::Initialize(ModelManager* modelManager, TextureManager* tex
 	// テクスチャマネージャのセット
 	SetTextureManager(textureManager);
 	// コンテナをクリア
-	objects_.clear();
+	ClearContainer();
 }
 
 void ParticleManager::Update() {
-	for (auto& pair : objects_) {
+	for (auto& pair : particles_) {
 		if (pair.second && pair.second->GetIsActive()) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
 			pair.second->Update();
@@ -23,7 +23,7 @@ void ParticleManager::Update() {
 }
 
 void ParticleManager::Draw() {
-	for (auto& pair : objects_) {
+	for (auto& pair : particles_) {
 		if (pair.second && pair.second->GetIsActive()) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
 			pair.second->Draw();
@@ -32,43 +32,62 @@ void ParticleManager::Draw() {
 }
 
 void ParticleManager::Finalize() {
-	// 配列をクリア
-	objects_.clear();
+	// コンテナをクリア
+	ClearContainer();
 }
 
-RandomParticle* ParticleManager::Find(const std::string& name) {
-	// 作成済みオブジェクトを検索
-	if (objects_.contains(name)) {
+void ParticleManager::ClearContainer() {
+	particles_.clear();
+}
+
+void ParticleManager::CreatePlaneParticle(const std::string& name, const std::string& filePath) {
+	// テクスチャを読み込み
+	textureManager_->Load(filePath);
+	// 新規パーティクル作成、初期化
+	std::unique_ptr<Particle> newParticle = std::make_unique<Particle>();
+	newParticle->Initialize(modelManager_->Find("Plane"), camera_, filePath);
+	// 板ポリタイプ
+	newParticle->SetType(kPlane);
+	// 生成したパーティクルをmapコンテナに格納
+	particles_.insert(std::make_pair(name, std::move(newParticle)));
+}
+
+void ParticleManager::CreateModelParticle(const std::string& name, const std::string& filePath) {
+	// モデルを読み込み
+	modelManager_->Load(filePath);
+	// 新規パーティクル作成、初期化
+	std::unique_ptr<Particle> newParticle = std::make_unique<Particle>();
+	newParticle->Initialize(modelManager_->Find(filePath), camera_);
+	// 板ポリタイプ
+	newParticle->SetType(kModel);
+	// 生成したパーティクルをmapコンテナに格納
+	particles_.insert(std::make_pair(name, std::move(newParticle)));
+}
+
+Particle* ParticleManager::Find(const std::string& name) {
+	// 作成済みパーティクルを検索
+	if (particles_.contains(name)) {
 		// オブジェクトを戻り値としてreturn
-		return objects_.at(name).get();
+		return particles_.at(name).get();
 	}
 	// ファイル名一致なし
 	return nullptr;
 }
 
-void ParticleManager::CreatePlane(const std::string& name, const std::string& filePath, const EulerTransform3D& transform) {
-	// 板ポリ生成
-	textureManager_->Load(filePath);
-	// パーティクルエミッタの生成と初期化
-	std::unique_ptr<RandomParticle> newObject = std::make_unique<RandomParticle>();
-	newObject->Initialize(modelManager_->Find("Plane"), camera_, filePath, transform);
-	// 板ポリタイプ
-	newObject->SetType(kPlane);
-	// 生成したパーティクルをmapコンテナに格納
-	objects_.insert(std::make_pair(name, std::move(newObject)));
-}
-
 void ParticleManager::SetModelManager(ModelManager* modelManager) {
+	assert(modelManager);
 	modelManager_ = modelManager;
 }
 
 void ParticleManager::SetTextureManager(TextureManager* textureManager) {
+	assert(textureManager);
 	textureManager_ = textureManager;
 }
 
 void ParticleManager::SetSceneCamera(Camera* camera) {
+	assert(camera);
 	camera_ = camera;
-	for (auto& pair : objects_) {
+	for (auto& pair : particles_) {
 		if (pair.second) {  // unique_ptrが有効か確認
 			// カメラをセット
 			pair.second->SetCamera(camera_);

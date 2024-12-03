@@ -5,8 +5,9 @@
 #include <memory>
 #include <vector>
 
-#include "3d/object/Object3d.h"
+#include "3d/entity/Entity.h"
 
+// TODO:レベルデータの既定クラスを作る
 class JsonLevelData {
 public:
 	JsonLevelData() = default;
@@ -16,14 +17,9 @@ public:
 	void Load(const std::string& fullpath);
 
 	// 3Dオブジェクトコンテナのゲッター
-	std::vector<ObjectData3D> Get3DObjects()const;
-	// レールのコントロールポイントコンテナのゲッター
-	std::vector<Vector3> GetControlPoints()const;
+	std::vector<EntityData> GetEntities()const;
 
 private:
 	// このレベルに存在するobject3dのデータコンテナ
-	std::vector<ObjectData3D> objects_;
-	// このレベルに存在するレールのコントロールポイントのデータコンテナ
-	std::vector<Vector3> controlPoints_;
-
+	std::vector<EntityData> objects_;
 };

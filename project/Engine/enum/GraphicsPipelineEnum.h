@@ -16,4 +16,5 @@
 		kObject3d,
 		kObject3dSkinning,
 		kParticle,
+		kLine,
 	};

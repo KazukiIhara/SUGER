@@ -5,8 +5,7 @@
 #include "debugTools/logger/Logger.h"
 
 
-MyGame::~MyGame() {
-}
+MyGame::~MyGame() {}
 
 void MyGame::Initialize() {
 	// 基底システムの初期化
@@ -19,7 +18,7 @@ void MyGame::Initialize() {
 	// シーンマネージャにシーンファクトリをセット
 	sceneManager_->SetSceneFactory(sceneFactory_.get());
 	// 初期シーンのセット
-	sceneManager_->ChangeScene("SAMPLE");
+	sceneManager_->ChangeScene("LOAD");
 }
 
 void MyGame::Finalize() {
@@ -36,10 +35,18 @@ void MyGame::Update() {
 	sceneManager_->Update();
 	// 2DObjectの更新
 	SUGER::Update2DObjects();
-	// 3DObjectの更新
-	SUGER::Update3DObjects();
+	// Emptyの更新
+	SUGER::UpdateEmpties();
+	// Entityの更新
+	SUGER::UpdateEntities();
+	// Emitterの更新
+	SUGER::UpdateEmitters();
 	// Particleの更新
-	SUGER::UpdateParticle();
+	SUGER::UpdateParticles();
+	// Lineの更新
+	SUGER::UpdateLines();
+	// コライダーの衝突判定
+	SUGER::CheckAllCollisions();
 }
 
 void MyGame::Draw() {

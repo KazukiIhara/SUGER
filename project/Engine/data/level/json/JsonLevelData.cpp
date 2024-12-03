@@ -47,7 +47,7 @@ void JsonLevelData::Load(const std::string& fullpath) {
 		if (type.compare("MESH") == 0) {
 
 			// object3Dの場合
-			if (object["object_name"] == "object3d") {
+			if (object["object_type"] == "entity") {
 				// トランスフォームのパラメータ読み込み
 				nlohmann::json& transform = object["transform"];
 
@@ -67,7 +67,7 @@ void JsonLevelData::Load(const std::string& fullpath) {
 				objectData.scale.y = static_cast<float>(transform["scaling"][2]);
 				objectData.scale.z = static_cast<float>(transform["scaling"][1]);
 
-				ObjectData3D newObject;
+				EntityData newObject;
 
 				// トランスフォームのセット
 				newObject.transform.scale = objectData.scale;
@@ -87,20 +87,6 @@ void JsonLevelData::Load(const std::string& fullpath) {
 				// 3Dオブジェクトをコンテナに格納する
 				objects_.push_back(newObject);
 
-			} else if (object["object_name"] == "controlPoint") {
-				// トランスフォームのパラメータ読み込み
-				nlohmann::json& transform = object["transform"];
-
-				// 追加するコントロールポイント
-				Vector3 newControlPoint_;
-				// データ受け取り
-				newControlPoint_.x = static_cast<float>(transform["translation"][0]);
-				newControlPoint_.y = static_cast<float>(transform["translation"][2]);
-				newControlPoint_.z = static_cast<float>(transform["translation"][1]);
-
-				// コントロールポイントコンテナに格納
-				controlPoints_.push_back(newControlPoint_);
-
 			}
 		}
 
@@ -108,10 +94,6 @@ void JsonLevelData::Load(const std::string& fullpath) {
 
 }
 
-std::vector<ObjectData3D> JsonLevelData::Get3DObjects()const {
+std::vector<EntityData> JsonLevelData::GetEntities()const {
 	return objects_;
-}
-
-std::vector<Vector3> JsonLevelData::GetControlPoints() const {
-	return controlPoints_;
 }

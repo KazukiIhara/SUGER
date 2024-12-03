@@ -19,7 +19,7 @@ public:
 	virtual void Update();
 
 	// 定数バッファに転送
-	void TransferCamera();
+	void TransferCamera(const uint32_t& index);
 
 	// translateのゲッター
 	Vector3 GetTranslate()const;
@@ -31,18 +31,20 @@ public:
 	// カメラのrotateをセット
 	void SetRotate(const Vector3& rotate);
 
+	// ワールドトランスフォームを送る
+	WorldTransform* GetWorldTransformPtr();
+
+	// ビュープロジェクションマトリックスのポインタを送る
+	Matrix4x4* GetViewProjectionMatrixPtr();
+
 	// ビュープロジェクションマトリックスを送る関数
-	Matrix4x4 GetViewProjectionMatrix()const {
-		return viewProjectionMatrix_;
-	}
+	Matrix4x4 GetViewProjectionMatrix()const;
+
 	// ワールド行列を送る関数
-	Matrix4x4 GetWorldMatrix()const {
-		return worldMatrix_;
-	}
+	Matrix4x4 GetWorldMatrix()const;
+
 	// ワールド座標を送る関数
-	Vector3 GetWorldPos()const {
-		return worldPos_;
-	}
+	Vector3 GetWorldPos()const;
 
 private:
 
@@ -56,24 +58,24 @@ private:
 protected:
 	// カメラのトランスフォームを受け取る箱
 	WorldTransform transform_{};
-	// カメラのワールドマトリックス
-	Matrix4x4 worldMatrix_{};
 	// カメラのワールドポジション
 	Vector3 worldPos_{};
 	// ビュープロジェクションマトリックス
 	Matrix4x4 viewProjectionMatrix_{};
+	// 水平視野角(度数法)
+	float fovYDegrees_ = 60.0f;
 	// 水平方向視野角
-	float fovY_ = 0.45f;
+	float fovY_ = fovYDegrees_ * (std::numbers::pi_v<float> / 180.0f);
 	// アスペクト比
 	float aspectRaito_ = 16.0f / 9.0f;
 	// ニアクリップ距離
 	float nearClipRange_ = 0.1f;
 	// ファークリップ距離
-	float farClipRange_ = 100.0f;
+	float farClipRange_ = 1000.0f;
 
 	// カメラの初期トランスフォーム
 	const Vector3 kDefaultCameraRotate_ = { 0.45f,0.0f,0.0f };
-	const Vector3 kDefaultCameraTranslate_ = { 0.0f,5.0f,-10.0f };
+	const Vector3 kDefaultCameraTranslate_ = { 0.0f,1.8f,-2.5f };
 
 	// Camera用リソース
 	ComPtr<ID3D12Resource> cameraResource_ = nullptr;

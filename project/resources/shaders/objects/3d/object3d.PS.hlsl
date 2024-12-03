@@ -4,6 +4,7 @@
 ConstantBuffer<Material> gMaterial : register(b0);
 ConstantBuffer<PunctualLight> gPunctualLight : register(b1);
 ConstantBuffer<Camera> gCamera : register(b2);
+ConstantBuffer<ModelMaterial> gModelMaterial : register(b3);
 Texture2D<float32_t4> gTexture : register(t0);
 SamplerState gSampler : register(s0);
 
@@ -12,7 +13,8 @@ PixelShaderOutput main(VertexShaderOutput input)
 {
     PixelShaderOutput output;
     
-    float4 transformedUV = mul(float32_t4(input.texcoord, 0.0f, 1.0f), gMaterial.uvTransform);
+    float4 transformedUV = mul(float4(input.texcoord, 0.0f, 1.0f), mul(gMaterial.uvTransform, gModelMaterial.uvTransform));
+
     float32_t4 textureColor = gTexture.Sample(gSampler, transformedUV.xy);
 
     float32_t3 toEye = normalize(gCamera.worldPosition - input.worldPosition);
@@ -20,16 +22,16 @@ PixelShaderOutput main(VertexShaderOutput input)
     // DirectionalLight    
     float32_t3 halfVector = normalize(-gPunctualLight.directionalLight.direction + toEye);
     float NDotH = dot(normalize(input.normal), halfVector);
-    float specularPow = pow(saturate(NDotH), gMaterial.shininess);
-    
+    float specularPow = 0.0f;
+
     // PointLight
     float32_t3 pointLightDirection = normalize(input.worldPosition - gPunctualLight.pointLight.position);
     float32_t pointLightDistance = length(gPunctualLight.pointLight.position - input.worldPosition);
     float32_t pointLightFactor = pow(saturate(-pointLightDistance / gPunctualLight.pointLight.radius + 1.0), gPunctualLight.pointLight.decay);
     float32_t3 halfVectorPointLight = normalize(-pointLightDirection + toEye);
     float NDotHPoint = dot(normalize(input.normal), halfVectorPointLight);
-    float specularPowPointLight = pow(saturate(NDotHPoint), gMaterial.shininess);
-    
+    float specularPowPointLight = 0.0f;
+
     // SpotLight
     float32_t3 spotLightDirectionOnSurface = normalize(input.worldPosition - gPunctualLight.spotLight.position);
     float32_t spotLightDistance = length(gPunctualLight.spotLight.position - input.worldPosition);
@@ -37,8 +39,8 @@ PixelShaderOutput main(VertexShaderOutput input)
     
     float32_t3 spotLightHalfVector = normalize(-spotLightDirectionOnSurface + toEye);
     float spotLightNDotH = dot(normalize(input.normal), spotLightHalfVector);
-    float specularPowSpotLight = pow(saturate(spotLightNDotH), gMaterial.shininess);
-    
+    float specularPowSpotLight = 0.0f;
+
     float32_t cosAngle = dot(spotLightDirectionOnSurface, gPunctualLight.spotLight.direction);
     float32_t falloffFactor = saturate((cosAngle - gPunctualLight.spotLight.cosAngle) / (gPunctualLight.spotLight.cosFalloffStart - gPunctualLight.spotLight.cosAngle));
     
@@ -47,9 +49,17 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         discard;
     }
-    
+
     if (gMaterial.enbleLighting != 0)
     {
+        if (gMaterial.shininess >= 1.0f)
+        {
+            // ãæñ îΩéÀÇÃåvéZ
+            specularPow = pow(saturate(NDotH), gMaterial.shininess);
+            specularPowPointLight = pow(saturate(NDotHPoint), gMaterial.shininess);
+            specularPowSpotLight = pow(saturate(spotLightNDotH), gMaterial.shininess);
+        }
+
         // DirectionLight
         float nDotL = dot(normalize(input.normal), -gPunctualLight.directionalLight.direction);
         float cos = pow(nDotL * 0.5f + 0.5f, 2.0f);
@@ -63,13 +73,14 @@ PixelShaderOutput main(VertexShaderOutput input)
         // ägéUîΩéÀ
         // DirectionalLight
         float32_t3 diffuseDirectionalLight =
-        gMaterial.color.rgb * textureColor.rgb * gPunctualLight.directionalLight.color.rgb * cos * gPunctualLight.directionalLight.intensity;
+        gModelMaterial.color.rgb * gMaterial.color.rgb * textureColor.rgb * gPunctualLight.directionalLight.color.rgb * cos * gPunctualLight.directionalLight.intensity;
         // PointLight
         float32_t3 diffusePointLight =
-        gMaterial.color.rgb * textureColor.rgb * gPunctualLight.pointLight.color.rgb * cosPointLight * gPunctualLight.pointLight.intensity * pointLightFactor;
+        gModelMaterial.color.rgb * gMaterial.color.rgb * textureColor.rgb * gPunctualLight.pointLight.color.rgb * cosPointLight * gPunctualLight.pointLight.intensity * pointLightFactor;
         // SpotLight
         float32_t3 diffuseSpotLight =
-        gMaterial.color.rgb * textureColor.rgb * gPunctualLight.spotLight.color.rgb * spotLightCos * gPunctualLight.spotLight.intensity * spotLightAttenuationFactor * falloffFactor;
+        gModelMaterial.color.rgb * gMaterial.color.rgb * textureColor.rgb * gPunctualLight.spotLight.color.rgb * spotLightCos * gPunctualLight.spotLight.intensity * spotLightAttenuationFactor * falloffFactor;
+        
         // ãæñ îΩéÀ
         // DirectionalLight
         float32_t3 specularDirectionalLight = gPunctualLight.directionalLight.color.rgb * gPunctualLight.directionalLight.intensity * specularPow * float32_t3(1.0f, 1.0f, 1.0f);
@@ -81,14 +92,13 @@ PixelShaderOutput main(VertexShaderOutput input)
         // ägéUîΩéÀÅAãæñ îΩéÀ
         output.color.rgb = diffuseDirectionalLight + specularDirectionalLight + diffusePointLight + specularPointLight + diffuseSpotLight + specularSpotLight;
         
-
         // ÉAÉãÉtÉ@ílÇÕç°Ç‹Ç≈í ÇË
-        output.color.a = gMaterial.color.a * textureColor.a;
+        output.color.a = gModelMaterial.color.a * gMaterial.color.a * textureColor.a;
    
     }
     else
     {
-        output.color = gMaterial.color * textureColor;
+        output.color = gModelMaterial.color * gMaterial.color * textureColor;
     }
     
     // output.colorÇÃaílÇ™0ÇÃéûÇ…PixelÇîpãp

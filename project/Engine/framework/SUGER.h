@@ -16,26 +16,23 @@
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "manager/model/ModelManager.h"
 #include "manager/object/2d/Object2DManager.h"
-#include "manager/object/3d/Object3DManager.h"
+#include "manager/emptyManager/EmptyManager.h"
+#include "manager/entityManager/EntityManager.h"
+#include "manager/emitter/EmitterManager.h"
 #include "manager/particle/ParticleManager.h"
+#include "manager/line/LineManager.h"
+#include "manager/sound/SoundManager.h"
+#include "manager/collision/CollisionManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
-#include "2d/system/Object2dSystem.h"
-#include "3d/system/Object3dSystem.h"
-#include "particle/system/ParticleSystem.h"
+#include "manager/data/grobal/GrobalDataManager.h"
+#include "system/object2d/Object2dSystem.h"
+#include "system/object3d/Object3dSystem.h"
+#include "system/particle/ParticleSystem.h"
+#include "system/line/LineSystem.h"
 
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
 #endif // _DEBUG
-
-
-class WorldTransform;
-class Sprite;
-class Object3D;
-class Model;
-class RandomParticle;
-class Camera;
-class PunctualLight;
-class JsonLevelData;
 
 class SUGER {
 public:
@@ -71,11 +68,42 @@ public: // クラスメソッド
 	// キーを押している
 	static bool PushKey(BYTE keyNumber);
 	// キーを押した
-	static bool TrrigerKey(BYTE keyNumber);
+	static bool TriggerKey(BYTE keyNumber);
 	// キーを押し続けている
 	static bool HoldKey(BYTE keyNumber);
 	// キーを離した
 	static bool ReleaseKey(BYTE keyNumber);
+
+	// ボタンを押している
+	static bool PushButton(int controllerID, int buttonNumber);
+	// ボタンを押した
+	static bool TriggerButton(int controllerID, int buttonNumber);
+	// ボタンを押し続けている
+	static bool HoldButton(int controllerID, int buttonNumber);
+	// ボタンを離した
+	static bool ReleaseButton(int controllerID, int buttonNumber);
+
+	// 左スティックのX軸位置を取得（-1000～1000の範囲にスケーリング）
+	static int GetLeftStickX(int controllerID);
+	// 左スティックのY軸位置を取得（-1000～1000の範囲にスケーリング）
+	static int GetLeftStickY(int controllerID);
+
+	// 右スティックのX軸位置を取得（-1000～1000の範囲にスケーリング）
+	static int GetRightStickX(int controllerID);
+	// 右スティックのY軸位置を取得（-1000～1000の範囲にスケーリング）
+	static int GetRightStickY(int controllerID);
+
+	// 左トリガーの状態を取得
+	static int GetLeftTrigger(int controllerID);
+	// 右トリガーの状態を取得
+	static int GetRightTrigger(int controllerID);
+
+	// 方向キーの取得
+	static bool IsPadUp(int controllerID);
+	static bool IsPadRight(int controllerID);
+	static bool IsPadDown(int controllerID);
+	static bool IsPadLeft(int controllerID);
+
 #pragma endregion
 
 #pragma region DirectXManager
@@ -86,6 +114,8 @@ public: // クラスメソッド
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
 	// バッファリソースの作成
 	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
+	// FIXFPS初期化
+	static void FiXFPSInitialize();
 #pragma endregion
 
 #pragma region SRVManager
@@ -137,46 +167,109 @@ public: // クラスメソッド
 
 #pragma region Object2DManager
 	// 2Dオブジェクトの作成
-	static void Create2DObject(const std::string& name, const std::string& filePath);
+	static std::string Create2DObject(const std::string& name, const std::string& filePath);
 	// 2Dオブジェクトの更新
 	static void Update2DObjects();
 	// 2Dオブジェクトの描画
 	static void Draw2DObjects();
-
 	// 2Dオブジェクト検索
 	static Sprite* FindObject2D(const std::string& name);
+	// 2Dオブジェクトコンテナのクリア
+	static void Clear2DObjectContainer();
 #pragma endregion
 
-#pragma region Object3DManager
-	// 3Dオブジェクトの作成
-	static void Create3DObject(const std::string& name, const std::string& filePath = "", const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
-	// 3Dオブジェクトの更新
-	static void Update3DObjects();
-	// 3Dオブジェクトの描画
-	static void Draw3DObjects();
-	// スキニングありモデルを持っている3Dオブジェクトの描画
-	static void DrawSkinning3DObjects();
-	// 3Dオブジェクト検索
-	static Object3D* FindObject3D(const std::string& name);
+#pragma region EmptyManager
+	// エンプティの作成
+	static std::string CreateEmpty(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	// エンプティの更新
+	static void UpdateEmpties();
+	// エンプティの検索
+	static Empty* FindEmpty(const std::string& name);
+	// エンプティコンテナのクリア
+	static void ClearEmptyContainer();
+#pragma endregion
+
+#pragma region EntityManager
+	// エンティティの作成
+	static std::string CreateEntity(const std::string& name, const std::string& filePath, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	// エンティティの更新
+	static void UpdateEntities();
+	// エンティティの描画
+	static void DrawEntiteis();
+	// スキニング付きエンティティの描画
+	static void DrawSkiningEntities();
+	// エンティティ検索
+	static Entity* FindEntity(const std::string& name);
+	// エンティティコンテナのクリア
+	static void ClearEntityContainer();
 
 	// シーンのカメラとライトをセット
 	static void SetRequiredObjects(Camera* camera, PunctualLight* punctualLight);
-
 	// シーンのカメラをセット
 	static void SetSceneCamera(Camera* camera);
 #pragma endregion
 
+#pragma region EmitterManager
+	// Emitterの作成
+	static void CreateEmitter(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	// Emitterの更新
+	static void UpdateEmitters();
+	// Emitterの検索
+	static Emitter* FindEmitter(const std::string& name);
+	// エミッターコンテナのクリア
+	static void ClearEmitterContainer();
+#pragma endregion
+
 #pragma region ParticleManager
 	// Particleの作成
-	static void CreatePlaneParticle(const std::string& name, const std::string& filePath = "", const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	static void CreateParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath);
 	// Particleの更新
-	static void UpdateParticle();
+	static void UpdateParticles();
 	// Particleの描画
-	static void DrawParticle();
-
+	static void DrawParticles();
 	// パーティクル検索
-	static RandomParticle* FindParticle(const std::string& name);
+	static Particle* FindParticle(const std::string& name);
+	// パーティクルコンテナのクリア
+	static void ClearParticleContainer();
+#pragma endregion
 
+#pragma region LineManager
+	// Lineの作成
+	static void CreateLine(const std::string& name);
+	// Lineの更新
+	static void UpdateLines();
+	// Lineの描画
+	static void DrawLines();
+	// Line検索
+	static Line* FindLine(const std::string& name);
+	// Lineコンテナのクリア
+	static void ClearLineContainer();
+#pragma endregion
+
+#pragma region SoundManager
+	// 音声読み込み
+	static void LoadWaveSound(const std::string& filename, const std::string& directoryPath = "resources/sounds");
+	// 音声再生
+	static void PlayWaveSound(const std::string& filename);
+	// 音声ループ再生
+	static void PlayWaveLoopSound(const std::string& filename, uint32_t loopCount = XAUDIO2_LOOP_INFINITE);
+	// 音声停止
+	static void StopWaveSound(const std::string& filename);
+	// 音声ループ再生停止
+	static void StopWaveLoopSound(const std::string& filename);
+	// 両再生停止処理
+	static void StopWaveAllSound(const std::string& filename);
+	// 再生が終わっているサウンドを自動的に再生中コンテナから削除
+	static void CreanupFinishedVoices();
+#pragma endregion
+
+#pragma region ColliderManager
+	// リストにコライダーを追加
+	static void AddColliderList(EntityController* entityController);
+	// コライダーの中身をリセット
+	static void ClearColliderContainer();
+	// コライダーリスト内の全当たり判定をチェック
+	static void CheckAllCollisions();
 #pragma endregion
 
 #pragma region JsonLevelDataManager
@@ -185,6 +278,28 @@ public: // クラスメソッド
 	static void LoadJsonLevelData(const std::string& fileName);
 	// Json形式のLevelDataの検索
 	static JsonLevelData* FindJsonLevelData(const std::string& levelDataName);
+#pragma endregion
+
+#pragma region GrobalDataManager
+	// グループの追加
+	static void AddGrobalDataGroup(const std::string& groupname);
+	// アイテムの追加
+	static void AddGrobalDataItem(const std::string& groupname, const std::string& itemname, int32_t value);
+	static void AddGrobalDataItem(const std::string& groupname, const std::string& itemname, float value);
+	static void AddGrobalDataItem(const std::string& groupname, const std::string& itemname, Vector3 value);
+	static void AddGrobalDataItem(const std::string& groupname, const std::string& itemname, bool value);
+
+	// グループとキーから値をセット
+	static void SetGrobalDataValue(const std::string& groupname, const std::string& itemname, int32_t value);
+	static void SetGrobalDataValue(const std::string& groupname, const std::string& itemname, float value);
+	static void SetGrobalDataValue(const std::string& groupname, const std::string& itemname, Vector3 value);
+	static void SetGrobalDataValue(const std::string& groupname, const std::string& itemname, bool value);
+
+	// グループとキーから値の取得
+	static int32_t GetGrobalDataValueInt(const std::string& groupName, const std::string& key);
+	static float GetGrobalDataValueFloat(const std::string& groupName, const std::string& key);
+	static Vector3 GetGrobalDataValueVector3(const std::string& groupName, const std::string& key);
+	static bool GetGrobalDataValueBool(const std::string& groupName, const std::string& key);
 #pragma endregion
 
 #pragma region Object2DSystem
@@ -209,6 +324,13 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region LineSystem
+	// LineSystem
+	// Lineの描画前処理
+	static void PreDrawLine3D();
+
+#pragma endregion
+
 #pragma region ImGuiDebug
 	// FPSの表示
 	void ShowFPS();
@@ -219,7 +341,9 @@ private: // メンバ変数
 	// 終了リクエスト
 	bool endRequest_ = false;
 private: // クラスのポインタ
+#ifdef _DEBUG
 	static std::unique_ptr<D3DResourceLeakChecker> leakCheck_;
+#endif // _DEBUG
 	static std::unique_ptr<WindowManager> windowManager_;
 	static std::unique_ptr<DirectInput> directInput_;
 	static std::unique_ptr<DirectXManager> directXManager_;
@@ -229,10 +353,18 @@ private: // クラスのポインタ
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
 	static std::unique_ptr<ModelManager> modelManager_;
 	static std::unique_ptr<Object2DManager> object2dManager_;
-	static std::unique_ptr<Object3DManager> object3dManager_;
+	static std::unique_ptr<EmptyManager> emptyManager_;
+	static std::unique_ptr<EntityManager> entityManager_;
+	static std::unique_ptr<EmitterManager> emitterManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
+	static std::unique_ptr<LineManager> lineManager_;
+	static std::unique_ptr<SoundManager> soundManager_;
+	static std::unique_ptr<CollisionManager> collisionManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
+	static std::unique_ptr<GrobalDataManager> grobalDataManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
 	static std::unique_ptr<ParticleSystem> particleSystem_;
+	static std::unique_ptr<LineSystem> lineSystem_;
+
 };

@@ -1,4 +1,11 @@
+#define NOMINMAX
+
 #include "RailCamera.h"
+
+#include "imgui.h"
+
+#include <cmath> 
+#include <algorithm>
 
 void RailCamera::Initialize() {
 	// 基本的なカメラの初期化
@@ -14,6 +21,15 @@ void RailCamera::Initialize() {
 }
 
 void RailCamera::Update() {
+#ifdef _DEBUG
+	ImGui::Begin("RailCamera");
+	ImGui::DragFloat("t_ ", &t_, 0.001f, 0.0f, 1.0f);
+	ImGui::Text("AngleDifferenceX: %f", angleDifferenceX_);
+	ImGui::DragFloat3("rotate ", &transform_.rotate_.x);
+	ImGui::End();
+#endif // _DEBUG
+
+
 	// レールを走らせる
 	RunRail();
 
@@ -22,38 +38,31 @@ void RailCamera::Update() {
 }
 
 void RailCamera::RunRail() {
-	// 1.0にたどり着くまで補間変数に加算
-	if (t_ < 1.0f) {
-		t_ += speed_;
-	}
-	// １.0fを超えないようにする
-	if (t_ > 1.0f) {
-		t_ = 1.0f;
-	}
+	// 世界の上方向ベクトル
+	constexpr Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
+	static Vector3 currentUp_ = worldUp;
 
-	// 現在座標を求める
+	// t_の更新
+	t_ = std::min(t_ + speed_, 1.0f);
+
+	// 現在位置と次の位置を計算して進行方向ベクトルを取得
 	transform_.translate_ = CatmullRomSpline(controlPoints_, t_);
+	Vector3 nextPosition = CatmullRomSpline(controlPoints_, std::min(t_ + targetOffset_, 1.0f));
+	Vector3 forward = Normalize(nextPosition - transform_.translate_);
 
-	// 目標のtの値を求める
-	float targetT = t_ + targetOffset_;
-	// 目標のtの値が1.0fを超えるときは修正
-	if (targetT > 1.0f) {
-		targetT = 1.0f;
-	}
+	// 進行方向に基づく右方向と上方向を計算
+	Vector3 right = Normalize(Cross(currentUp_, forward));
+	Vector3 calculatedUp = Cross(forward, right);
 
-	// target 座標を求める
-	Vector3 target = CatmullRomSpline(controlPoints_, targetT); // 少し先の位置をターゲットに設定
+	// X軸の角度差を計算して補正
+	angleDifferenceX_ = std::fabs(std::atan2(calculatedUp.y, calculatedUp.z) - std::atan2(worldUp.y, worldUp.z)) * (180.0f / std::numbers::pi_v<float>);
+	// X軸の回転角が60度を越えている場合、進行方向から上方向を算出してカメラの回転を決める
+	currentUp_ = (angleDifferenceX_ < 60.0f) ? Lerp(currentUp_, worldUp, 0.1f) : calculatedUp;
 
-	// 差分ベクトルを計算
-	Vector3 direction = Normalize(target - worldPos_);
-
-
-	// 回転を適用
-	transform_.rotate_.y = std::atan2(direction.x, direction.z);
-	transform_.rotate_.x = std::atan2(-direction.y, std::sqrtf(direction.x * direction.x + direction.z * direction.z)) + rotateXOffset_;
-
-
+	// クォータニオンで回転を設定し、オイラー角に変換
+	transform_.rotate_ = QuaternionToEulerAngles(QuaternionLookRotation(forward, currentUp_));
 }
+
 
 void RailCamera::PushBackControlPoint(const Vector3& point) {
 	controlPoints_.push_back(point);

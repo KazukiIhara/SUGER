@@ -13,8 +13,6 @@
 // MyHedder
 #include "Structs/ObjectStructs.h"
 
-
-
 // ノード
 struct Node {
 	QuaternionTransform3D transform;
@@ -26,8 +24,15 @@ struct Node {
 // マテリアルデータ
 struct MaterialData {
 	std::string textureFilePath;
+	Matrix4x4 uvMatrix;
 	Vector4 color;
 	bool haveUV_;
+};
+
+// GPUに送るマテリアルデータ
+struct MaterialForGPU {
+	Vector4 color;
+	Matrix4x4 uvMatrix;
 };
 
 // メッシュデータ
@@ -119,4 +124,5 @@ struct SkinCluster {
 	Microsoft::WRL::ComPtr<ID3D12Resource> paletteResources;
 	std::span<WellForGPU> mappedPalette;
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> paletteSrvHandle;
+	uint32_t srvIndex;
 };

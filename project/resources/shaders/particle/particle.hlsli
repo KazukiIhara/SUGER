@@ -20,6 +20,12 @@ struct Material
     float32_t4x4 uvTransform;
 };
 
+struct ModelMaterial
+{
+    float32_t4 color;
+    float32_t4x4 uvTransform;
+};
+
 struct PixelShaderOutput
 {
     float32_t4 color : SV_TARGET0;

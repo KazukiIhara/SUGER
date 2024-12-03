@@ -277,7 +277,7 @@
     <ClCompile Include="application\scene\factory\SceneFactory.cpp">
       <Filter>application\scene\factory</Filter>
     </ClCompile>
-    <ClCompile Include="application\scene\sample\SampleScene.cpp">
+    <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp">
       <Filter>application\scene\sample</Filter>
     </ClCompile>
     <ClCompile Include="Engine\math\operator\MathOperator.cpp">
@@ -286,10 +286,10 @@
     <ClCompile Include="Engine\math\function\MathFunction.cpp">
       <Filter>engine\math\function</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2d\system\Object2dSystem.cpp">
+    <ClCompile Include="Engine\system\object2d\Object2dSystem.cpp">
       <Filter>engine\2d\system</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.cpp">
+    <ClCompile Include="Engine\graphicsPipeline\object2d\Object2dGraphicsPipeline.cpp">
       <Filter>engine\2d\graphicsPipeline</Filter>
     </ClCompile>
     <ClCompile Include="Engine\worldTransform\WorldTransform.cpp">
@@ -325,38 +325,20 @@
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp">
       <Filter>engine\manager\object\2d</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\object\3d\Object3DManager.cpp">
-      <Filter>engine\manager\object\3d</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3d\object\Object3d.cpp">
-      <Filter>engine\3d\object</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3d\controller\Object3dController.cpp">
-      <Filter>engine\controller\object3d</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\particle\random\RandomParticle.cpp">
-      <Filter>engine\particle\3d</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\particle\system\ParticleSystem.cpp">
+    <ClCompile Include="Engine\system\particle\ParticleSystem.cpp">
       <Filter>engine\particle\system</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp">
+    <ClCompile Include="Engine\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp">
       <Filter>engine\3d\graphicsPipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp">
-      <Filter>engine\manager\particle</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3d\system\Object3dSystem.cpp">
+    <ClCompile Include="Engine\system\object3d\Object3dSystem.cpp">
       <Filter>engine\3d\system</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp">
+    <ClCompile Include="Engine\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp">
       <Filter>engine\particle\graphicsPipeline</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp">
       <Filter>engine\3d\lights\punctualLight</Filter>
-    </ClCompile>
-    <ClCompile Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.cpp">
-      <Filter>application\scene\ShootingCoaster</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp">
       <Filter>engine\3d\cameras\camera</Filter>
@@ -367,9 +349,6 @@
     <ClCompile Include="Engine\2d\controller\Object2dController.cpp">
       <Filter>engine\controller\object2d</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\particle\controller\ParticleController.cpp">
-      <Filter>engine\particle\controller</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp">
       <Filter>engine\data\level\json</Filter>
     </ClCompile>
@@ -379,7 +358,33 @@
     <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp">
       <Filter>engine\importer\level\json</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\3d\empty\Empty.cpp" />
+    <ClCompile Include="Engine\3d\entity\Entity.cpp" />
+    <ClCompile Include="Engine\manager\emptyManager\EmptyManager.cpp" />
+    <ClCompile Include="Engine\manager\entityManager\EntityManager.cpp" />
+    <ClCompile Include="Engine\3d\entityController\EntityController.cpp" />
+    <ClCompile Include="Engine\3d\emptyController\EmptyController.cpp" />
+    <ClCompile Include="Engine\3d\skiningEntity\SkiningEntity.cpp" />
+    <ClCompile Include="Engine\manager\sound\SoundManager.cpp" />
+    <ClCompile Include="Engine\manager\data\grobal\GrobalDataManager.cpp" />
+    <ClCompile Include="Engine\VFX\particle\emitter\Emitter.cpp" />
+    <ClCompile Include="Engine\manager\emitter\EmitterManager.cpp" />
+    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp" />
+    <ClCompile Include="Engine\VFX\particle\particle\Particle.cpp" />
+    <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
+    <ClCompile Include="Engine\random\Random.cpp" />
+    <ClCompile Include="Engine\transition\fade\Fade.cpp" />
+    <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
+    <ClCompile Include="Engine\collider\Collider.cpp" />
+    <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
+    <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
+    <ClCompile Include="application\objects\teapot\Teapot.cpp" />
+    <ClCompile Include="Engine\3d\line\Line.cpp" />
+    <ClCompile Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\system\line\LineSystem.cpp" />
+    <ClCompile Include="Engine\manager\line\LineManager.cpp" />
+    <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -418,7 +423,7 @@
     <ClInclude Include="application\scene\factory\SceneFactory.h">
       <Filter>application\scene\factory</Filter>
     </ClInclude>
-    <ClInclude Include="application\scene\sample\SampleScene.h">
+    <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h">
       <Filter>application\scene\sample</Filter>
     </ClInclude>
     <ClInclude Include="Engine\math\operator\MathOperator.h">
@@ -445,10 +450,10 @@
     <ClInclude Include="Engine\structs\TextureStruct.h">
       <Filter>engine\structs</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2d\system\Object2dSystem.h">
+    <ClInclude Include="Engine\system\object2d\Object2dSystem.h">
       <Filter>engine\2d\system</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2d\graphicsPipeline\Object2dGraphicsPipeline.h">
+    <ClInclude Include="Engine\graphicsPipeline\object2d\Object2dGraphicsPipeline.h">
       <Filter>engine\2d\graphicsPipeline</Filter>
     </ClInclude>
     <ClInclude Include="Engine\worldTransform\WorldTransform.h">
@@ -496,34 +501,19 @@
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h">
       <Filter>engine\manager\object\2d</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\object\3d\Object3DManager.h">
-      <Filter>engine\manager\object\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3d\object\Object3d.h">
-      <Filter>engine\3d\object</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3d\controller\Object3dController.h">
-      <Filter>engine\controller\object3d</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\particle\random\RandomParticle.h">
-      <Filter>engine\particle\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\particle\system\ParticleSystem.h">
+    <ClInclude Include="Engine\system\particle\ParticleSystem.h">
       <Filter>engine\particle\system</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h">
+    <ClInclude Include="Engine\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h">
       <Filter>engine\3d\graphicsPipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\manager\particle\ParticleManager.h">
-      <Filter>engine\manager\particle</Filter>
     </ClInclude>
     <ClInclude Include="Engine\structs\ParticleStruct.h">
       <Filter>engine\structs</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\system\Object3dSystem.h">
+    <ClInclude Include="Engine\system\object3d\Object3dSystem.h">
       <Filter>engine\3d\system</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\graphicsPipeline\particle\ParticleGraphicsPipeline.h">
+    <ClInclude Include="Engine\graphicsPipeline\particle\ParticleGraphicsPipeline.h">
       <Filter>engine\particle\graphicsPipeline</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h">
@@ -531,9 +521,6 @@
     </ClInclude>
     <ClInclude Include="Engine\structs\PunctualLightStruct.h">
       <Filter>engine\structs</Filter>
-    </ClInclude>
-    <ClInclude Include="application\scene\AL4\shootingCoaster\ShootingCoasterScene.h">
-      <Filter>application\scene\ShootingCoaster</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\cameras\camera\Camera.h">
       <Filter>engine\3d\cameras\camera</Filter>
@@ -547,9 +534,6 @@
     <ClInclude Include="Engine\2d\controller\Object2dController.h">
       <Filter>engine\controller\object2d</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\particle\controller\ParticleController.h">
-      <Filter>engine\particle\controller</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\data\level\json\JsonLevelData.h">
       <Filter>engine\data\level\json</Filter>
     </ClInclude>
@@ -560,7 +544,40 @@
       <Filter>engine\importer\level\json</Filter>
     </ClInclude>
     <ClInclude Include="Engine\math\types\Quaternion.h" />
-    <ClInclude Include="Engine\3d\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
+    <ClInclude Include="Engine\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
+    <ClInclude Include="Engine\enum\DirectInputEnum.h" />
+    <ClInclude Include="Engine\enum\ColliderEnum.h" />
+    <ClInclude Include="Engine\3d\empty\Empty.h" />
+    <ClInclude Include="Engine\3d\entity\Entity.h" />
+    <ClInclude Include="Engine\manager\emptyManager\EmptyManager.h" />
+    <ClInclude Include="Engine\manager\entityManager\EntityManager.h" />
+    <ClInclude Include="Engine\3d\entityController\EntityController.h" />
+    <ClInclude Include="Engine\3d\emptyController\EmptyController.h" />
+    <ClInclude Include="Engine\3d\skiningEntity\SkiningEntity.h" />
+    <ClInclude Include="Engine\manager\sound\SoundManager.h" />
+    <ClInclude Include="Engine\structs\SoundStruct.h" />
+    <ClInclude Include="Engine\manager\data\grobal\GrobalDataManager.h" />
+    <ClInclude Include="Engine\VFX\particle\emitter\Emitter.h" />
+    <ClInclude Include="Engine\manager\emitter\EmitterManager.h" />
+    <ClInclude Include="Engine\manager\particle\ParticleManager.h" />
+    <ClInclude Include="Engine\VFX\particle\particle\Particle.h" />
+    <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
+    <ClInclude Include="Engine\random\Random.h" />
+    <ClInclude Include="Engine\transition\fade\Fade.h" />
+    <ClInclude Include="Engine\enum\FadeEnum.h" />
+    <ClInclude Include="Engine\enum\SceneEnum.h" />
+    <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
+    <ClInclude Include="Engine\collider\Collider.h" />
+    <ClInclude Include="application\colliderCategory\ColliderCategory.h" />
+    <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
+    <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
+    <ClInclude Include="application\objects\teapot\Teapot.h" />
+    <ClInclude Include="Engine\enum\EmitterEnum.h" />
+    <ClInclude Include="Engine\3d\line\Line.h" />
+    <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
+    <ClInclude Include="Engine\system\line\LineSystem.h" />
+    <ClInclude Include="Engine\manager\line\LineManager.h" />
+    <ClInclude Include="Engine\3d\lineController\LineController.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
@@ -583,6 +600,8 @@
     </FxCompile>
     <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.PS.hlsl" />
     <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.VS.hlsl" />
+    <FxCompile Include="resources\shaders\line\line.PS.hlsl" />
+    <FxCompile Include="resources\shaders\line\line.VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
@@ -595,5 +614,6 @@
       <Filter>resources\shaders\objects\3d</Filter>
     </None>
     <None Include="resources\shaders\objects\3dSkinning\object3dSkinning.hlsli" />
+    <None Include="resources\shaders\line\line.hlsli" />
   </ItemGroup>
 </Project>
