@@ -55,7 +55,7 @@ protected:
 
 private:
 	// カメラのImGui
-	void DebugCameraState();
+	void DebugCameraOperation();
 
 private:
 	// シーンマネージャ

@@ -44,18 +44,8 @@ void BaseScene::Initialize() {
 }
 
 void BaseScene::Update() {
-	// キーボード入力でカメラフラグ切り替え
-	if (SUGER::TriggerKey(DIK_P)) {
-		if (isActiveDebugCamera_) {
-			isActiveDebugCamera_ = false;
-			SUGER::SetSceneCamera(sceneCamera_.get());
-		} else {
-			isActiveDebugCamera_ = true;
-			SUGER::SetSceneCamera(debugCamera_.get());
-		}
-	}
-	// ImGuiによるデバッグカメラコントロール
-	DebugCameraState();
+	// デバッグカメラコントロール
+	DebugCameraOperation();
 	// デバッグカメラのアップデート
 	debugCamera_->Update();
 	// ライトの更新
@@ -74,14 +64,30 @@ void BaseScene::SetSceneManager(SceneManager* sceneManager) {
 	sceneManager_ = sceneManager;
 }
 
-void BaseScene::DebugCameraState() {
+void BaseScene::DebugCameraOperation() {
 #ifdef _DEBUG
+	// キーボード入力でカメラフラグ切り替え
+	if (SUGER::TriggerKey(DIK_P)) {
+		if (isActiveDebugCamera_) {
+			isActiveDebugCamera_ = false;
+			SUGER::SetSceneCamera(sceneCamera_.get());
+		} else {
+			isActiveDebugCamera_ = true;
+			SUGER::SetSceneCamera(debugCamera_.get());
+		}
+	}
+
+	// マウス入力の取得
+	POINT cursorPos;
+	GetCursorPos(&cursorPos);
+
 	// 回転と移動量を持ってくる
 	Vector3 cameraRotate_ = debugCamera_->GetRotate();
 	Vector3 cameraTranslate_ = debugCamera_->GetTranslate();
 
 	// ImGuiの処理
 	ImGui::Begin("DebugCamera");
+	ImGui::Text("Push P Toggle Camera");
 	// デバッグカメラが有効なら
 	if (isActiveDebugCamera_) {
 		ImGui::Text("State: Enable");

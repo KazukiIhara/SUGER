@@ -24,16 +24,12 @@ public: // 公開メンバ関数
 	void ToggleFullScreen();
 
 	// ウィンドウハンドルの取得
-	HWND GetHwnd() const {
-		return hwnd_;
-	}
+	HWND GetHwnd() const;
 	// ウィンドウクラスの取得
-	WNDCLASS GetWndClass() const {
-		return wc_;
-	}
+	WNDCLASS GetWndClass() const;
 private:
 	// ゲームウィンドウの作成
-	void CreateGameWindow(const wchar_t* title = L"DirectXGame", UINT windowStyle = WS_OVERLAPPEDWINDOW,
+	void CreateGameWindow(const wchar_t* title = L"SUGER", UINT windowStyle = WS_OVERLAPPEDWINDOW,
 		int32_t clientWidth = kClientWidth, int32_t clientHeight = kClientHeight);
 	// ゲームウィンドウの破棄
 	void TerminateGameWindow();

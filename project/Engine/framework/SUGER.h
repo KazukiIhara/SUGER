@@ -61,6 +61,7 @@ public: // クラスメソッド
 
 #pragma region WindowManager
 	// WindowManagerの機能
+	
 #pragma endregion
 
 #pragma region DirectInput
