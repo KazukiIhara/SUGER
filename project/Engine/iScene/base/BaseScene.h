@@ -62,7 +62,7 @@ private:
 	// カメラ回転操作
 	void HandleCameraRotation(Vector3& cameraRotate, const POINT& delta);
 	// カメラ移動操作
-	void HandleCameraTranslation(Vector3& cameraTranslate, const POINT& delta);
+	void HandleCameraTranslation(Vector3& cameraTranslate, Vector3& cameraRotate, const POINT& delta);
 	// カメラズーム操作
 	void HandleCameraZoom(Vector3& cameraTranslate, Vector3& cameraRotate, int64_t wheelDelta);
 

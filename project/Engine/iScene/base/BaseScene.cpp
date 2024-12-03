@@ -101,7 +101,7 @@ void BaseScene::DebugCameraOperation() {
 		// カメラ回転処理
 		HandleCameraRotation(cameraRotate, delta);
 		// カメラ移動処理
-		HandleCameraTranslation(cameraTranslate, delta);
+		HandleCameraTranslation(cameraTranslate, cameraRotate, delta);
 		// カメラズーム処理
 		HandleCameraZoom(cameraTranslate, cameraRotate, wheelDelta);
 
@@ -153,11 +153,27 @@ void BaseScene::HandleCameraRotation(Vector3& cameraRotate, const POINT& delta) 
 	}
 }
 
-void BaseScene::HandleCameraTranslation(Vector3& cameraTranslate, const POINT& delta) {
+void BaseScene::HandleCameraTranslation(Vector3& cameraTranslate, Vector3& cameraRotate, const POINT& delta) {
 	// 中ボタンドラッグで移動
 	if (GetAsyncKeyState(VK_MBUTTON) & 0x8000) {
-		cameraTranslate.x -= delta.x * 0.001f; // 横方向
-		cameraTranslate.y += delta.y * 0.001f; // 縦方向
+		// 回転からカメラの右方向ベクトルを計算
+		Vector3 right;
+		right.x = std::cosf(cameraRotate.y);
+		right.y = 0.0f;
+		right.z = -std::sinf(cameraRotate.y);
+
+		// 回転からカメラの上方向ベクトルを計算
+		Vector3 up;
+		up.x = std::sinf(cameraRotate.x) * std::sinf(cameraRotate.y);
+		up.y = std::cosf(cameraRotate.x);
+		up.z = std::sinf(cameraRotate.x) * std::cosf(cameraRotate.y);
+
+		// 移動量をローカル座標系で計算
+		const float moveSpeed = 0.002f;
+		Vector3 moveDelta = (right * static_cast<float> (-delta.x) + up * static_cast<float> (delta.y)) * moveSpeed;
+
+		// カメラ位置を更新
+		cameraTranslate += moveDelta;
 	}
 }
 
