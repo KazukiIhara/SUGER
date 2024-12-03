@@ -120,20 +120,22 @@ void Sprite::Update() {
 }
 
 void Sprite::Draw(BlendMode blendMode) {
-	//PSOを設定
-	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kObject2d, blendMode));
-	/*VBVの設定*/
-	SUGER::GetDirectXCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
-	/*IBVの設定*/
-	SUGER::GetDirectXCommandList()->IASetIndexBuffer(&indexBufferView_);
-	/*マテリアルCBufferの場所を設定*/
-	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-	/*wvp用のCBufferの場所を設定*/
-	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(1, transformationResource_->GetGPUVirtualAddress());
-	/*SRVのDescriptorTableの先頭を設定*/
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
+	// PSOを設定
+	commandList->SetPipelineState(SUGER::GetPipelineState(kObject2d, blendMode));
+	// VBVの設定
+	commandList->IASetVertexBuffers(0, 1, &vertexBufferView_);
+	// IBVの設定
+	commandList->IASetIndexBuffer(&indexBufferView_);
+	// マテリアルCBufferの場所を設定
+	commandList->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	// wvp用のCBufferの場所を設定
+	commandList->SetGraphicsRootConstantBufferView(1, transformationResource_->GetGPUVirtualAddress());
+	// SRVのDescriptorTableの先頭を設定
 	SUGER::SetGraphicsRootDescriptorTable(2, SUGER::GetTexture()[textureFilePath_].srvIndex);
-	//描画！(DrawCall/ドローコール)
-	SUGER::GetDirectXCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
+	// 描画！(DrawCall/ドローコール)
+	commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 
 void Sprite::CreateVertexResource() {
