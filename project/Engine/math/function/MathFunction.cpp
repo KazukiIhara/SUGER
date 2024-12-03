@@ -12,6 +12,10 @@ float Dot(const Vector3& a, const Vector3& b) {
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
+float DegreesToRadians(const float& degrees) {
+	return degrees * (std::numbers::pi_v<float> / 180.0f);
+}
+
 /// <summary>
 /// 3次元ベクトルの長さを計算
 /// </summary>
@@ -37,6 +41,39 @@ Vector3 Normalize(const Vector3& a) {
 	}
 
 	return normalizedVector;
+}
+
+Vector3 DegreesToRadians(const Vector3& degrees) {
+	Vector3 result{};
+	result.x = DegreesToRadians(degrees.x);
+	result.y = DegreesToRadians(degrees.y);
+	result.z = DegreesToRadians(degrees.z);
+	return result;
+}
+
+Vector3 Forward(const Vector3& rotate) {
+	// 基準の前方向ベクトル (ワールド座標系の Z 軸正方向)
+	Vector3 baseForward = { 0.0f, 0.0f, 1.0f };
+
+	// XYZ軸の回転行列を作成
+	Matrix4x4 rotationMatrix = MakeRotateXYZMatrix(rotate);
+
+	// 回転行列で基準ベクトルを変換
+	Vector3 forward;
+	forward.x = rotationMatrix.m[0][0] * baseForward.x +
+		rotationMatrix.m[1][0] * baseForward.y +
+		rotationMatrix.m[2][0] * baseForward.z;
+
+	forward.y = rotationMatrix.m[0][1] * baseForward.x +
+		rotationMatrix.m[1][1] * baseForward.y +
+		rotationMatrix.m[2][1] * baseForward.z;
+
+	forward.z = rotationMatrix.m[0][2] * baseForward.x +
+		rotationMatrix.m[1][2] * baseForward.y +
+		rotationMatrix.m[2][2] * baseForward.z;
+
+	// 単位ベクトル化
+	return Normalize(forward);
 }
 
 /// <summary>

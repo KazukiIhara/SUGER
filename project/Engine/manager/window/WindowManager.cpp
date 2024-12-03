@@ -2,11 +2,18 @@
 
 #include "manager/imgui/ImGuiManager.h"
 
+int64_t WindowManager::wheelDelta_ = 0;
+
 void WindowManager::Initialize() {
 	// システムタイマー分解能をあげる
 	timeBeginPeriod(1);
 	// ゲームウィンドウの作成
 	CreateGameWindow();
+}
+
+void WindowManager::Update() {
+	// マウスホイールの値をリセット
+	wheelDelta_ = 0;
 }
 
 void WindowManager::CreateGameWindow(const wchar_t* title, UINT windowStyle, int32_t clientWidth, int32_t clientHeight) {
@@ -27,16 +34,16 @@ void WindowManager::CreateGameWindow(const wchar_t* title, UINT windowStyle, int
 	RegisterClass(&wc_);
 
 	// ウィンドウサイズを表す構造体にクライアント領域を入れる
-	RECT wrc{ 0,0,kClientWidth,kClientHeight };
+	RECT wrc{ 0,0,clientWidth,clientHeight };
 
 	// クライアント領域を元に実際のサイズにwrcを変更してもらう
-	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+	AdjustWindowRect(&wrc, windowStyle, false);
 
 	// ウィンドウの生成
 	hwnd_ = CreateWindow
 	(
 		wc_.lpszClassName,		// 利用するクラス名
-		L"DirectXGame",			// タイトルバーの文字
+		title,					// タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	// よく見るウィンドウスタイル
 		CW_USEDEFAULT,			// 表示X座標
 		CW_USEDEFAULT,			// 表示Y座標
@@ -117,20 +124,36 @@ void WindowManager::ToggleFullScreen() {
 	}
 }
 
+HWND WindowManager::GetHwnd() const {
+	return hwnd_;
+}
+
+WNDCLASS WindowManager::GetWndClass() const {
+	return wc_;
+}
+
+int64_t WindowManager::GetMouseWheelDelta() {
+	return wheelDelta_;
+}
+
 LRESULT WindowManager::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
-	/*ImGuiでもマウス操作ができるようになるやつ*/
+	// ImGuiでもマウス操作ができるようになるやつ
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {
 		return true;
 	}
-
 	// メッセージに応じてゲーム固有の処理を行う
 	switch (msg) {
 		// ウィンドウが破棄された
-		case WM_DESTROY:
-			// OSに対してアプリの終了を伝える
-			PostQuitMessage(0);
-			return 0;
+	case WM_DESTROY:
+		// OSに対してアプリの終了を伝える
+		PostQuitMessage(0);
+		return 0;
+	case WM_MOUSEWHEEL:
+		// マウスホイールの回転量を取得
+		wheelDelta_ = GET_WHEEL_DELTA_WPARAM(wparam);
+		return 0;
 	}
+
 	// 標準のメッセージ処理を行う
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }

@@ -54,8 +54,17 @@ protected:
 	virtual void SceneStateFadeOutUpdate();
 
 private:
-	// カメラのImGui
-	void ImGuiForDebugCamera();
+	// カメラの操作
+	void DebugCameraOperation();
+	// UIによるカメラの操作
+	void DebugCameraUI(Vector3& cameraRotate, Vector3& cameraTranslate);
+
+	// カメラ回転操作
+	void HandleCameraRotation(Vector3& cameraRotate, const POINT& delta);
+	// カメラ移動操作
+	void HandleCameraTranslation(Vector3& cameraTranslate, Vector3& cameraRotate, const POINT& delta);
+	// カメラズーム操作
+	void HandleCameraZoom(Vector3& cameraTranslate, Vector3& cameraRotate, int64_t wheelDelta);
 
 private:
 	// シーンマネージャ
