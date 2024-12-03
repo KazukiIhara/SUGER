@@ -33,11 +33,12 @@ void Line::Update() {
 
 	if (instancingData_ != nullptr) {
 		for (uint32_t i = 0; i < instanceCount_; ++i) {
-			instancingData_[i] = lines_[i]; // CPU側のデータをGPU側に転送
+			// GPUにデータを転送
+			instancingData_[i] = lines_[i];
 		}
 	}
-
-	lines_.clear();
+	// ラインのコンテナをクリア
+	ClearLines();
 }
 
 void Line::Draw() {
