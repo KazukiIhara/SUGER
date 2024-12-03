@@ -55,7 +55,7 @@ void BaseScene::Update() {
 		}
 	}
 	// ImGuiによるデバッグカメラコントロール
-	ImGuiForDebugCamera();
+	DebugCameraState();
 	// デバッグカメラのアップデート
 	debugCamera_->Update();
 	// ライトの更新
@@ -74,7 +74,7 @@ void BaseScene::SetSceneManager(SceneManager* sceneManager) {
 	sceneManager_ = sceneManager;
 }
 
-void BaseScene::ImGuiForDebugCamera() {
+void BaseScene::DebugCameraState() {
 #ifdef _DEBUG
 	// 回転と移動量を持ってくる
 	Vector3 cameraRotate_ = debugCamera_->GetRotate();
@@ -82,8 +82,20 @@ void BaseScene::ImGuiForDebugCamera() {
 
 	// ImGuiの処理
 	ImGui::Begin("DebugCamera");
-	ImGui::DragFloat3("Rotate", &cameraRotate_.x, 0.01f);
-	ImGui::DragFloat3("Translate", &cameraTranslate_.x, 0.01f);
+	// デバッグカメラが有効なら
+	if (isActiveDebugCamera_) {
+		ImGui::Text("State: Enable");
+		if (ImGui::Button("DisableDebugCamera")) {
+			isActiveDebugCamera_ = false;
+		}
+		ImGui::DragFloat3("Rotate", &cameraRotate_.x, 0.01f);
+		ImGui::DragFloat3("Translate", &cameraTranslate_.x, 0.01f);
+	} else {
+		ImGui::Text("State: Disable");
+		if (ImGui::Button("EnableDebugCamera")) {
+			isActiveDebugCamera_ = true;
+		}
+	}
 	ImGui::End();
 
 	// 回転と移動量を返す
