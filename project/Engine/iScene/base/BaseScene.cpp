@@ -131,6 +131,7 @@ void BaseScene::DebugCameraUI(Vector3& cameraRotate, Vector3& cameraTranslate) {
 	if (isActiveDebugCamera_) {
 		ImGui::Text("State: Enable");
 		if (ImGui::Button("DisableDebugCamera")) {
+			SUGER::SetSceneCamera(sceneCamera_.get());
 			isActiveDebugCamera_ = false;
 		}
 		ImGui::DragFloat3("Rotate", &cameraRotate.x, 0.01f);
@@ -138,6 +139,7 @@ void BaseScene::DebugCameraUI(Vector3& cameraRotate, Vector3& cameraTranslate) {
 	} else {
 		ImGui::Text("State: Disable");
 		if (ImGui::Button("EnableDebugCamera")) {
+			SUGER::SetSceneCamera(debugCamera_.get());
 			isActiveDebugCamera_ = true;
 		}
 	}
