@@ -2,11 +2,18 @@
 
 #include "manager/imgui/ImGuiManager.h"
 
+int64_t WindowManager::wheelDelta_ = 0;
+
 void WindowManager::Initialize() {
 	// システムタイマー分解能をあげる
 	timeBeginPeriod(1);
 	// ゲームウィンドウの作成
 	CreateGameWindow();
+}
+
+void WindowManager::Update() {
+	// マウスホイールの値をリセット
+	wheelDelta_ = 0;
 }
 
 void WindowManager::CreateGameWindow(const wchar_t* title, UINT windowStyle, int32_t clientWidth, int32_t clientHeight) {
@@ -125,12 +132,15 @@ WNDCLASS WindowManager::GetWndClass() const {
 	return wc_;
 }
 
+int64_t WindowManager::GetMouseWheelDelta() {
+	return wheelDelta_;
+}
+
 LRESULT WindowManager::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
-	/*ImGuiでもマウス操作ができるようになるやつ*/
+	// ImGuiでもマウス操作ができるようになるやつ
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {
 		return true;
 	}
-
 	// メッセージに応じてゲーム固有の処理を行う
 	switch (msg) {
 		// ウィンドウが破棄された
@@ -138,7 +148,12 @@ LRESULT WindowManager::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpa
 		// OSに対してアプリの終了を伝える
 		PostQuitMessage(0);
 		return 0;
+	case WM_MOUSEWHEEL:
+		// マウスホイールの回転量を取得
+		wheelDelta_ = GET_WHEEL_DELTA_WPARAM(wparam);
+		return 0;
 	}
+
 	// 標準のメッセージ処理を行う
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }

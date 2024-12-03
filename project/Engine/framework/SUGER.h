@@ -61,7 +61,10 @@ public: // クラスメソッド
 
 #pragma region WindowManager
 	// WindowManagerの機能
-	
+	// Windowハンドルの取得
+	static HWND GetWindowHandle();
+	// マウスホイールの回転量取得
+	static int64_t GetMouseWheelDelta();
 #pragma endregion
 
 #pragma region DirectInput
