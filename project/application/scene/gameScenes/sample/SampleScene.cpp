@@ -17,7 +17,7 @@ void SampleScene::Initialize() {
 	// 
 
 	// レベルデータをシーンにインポート
-	levelDataImporter_.Import("baseScene");
+	//levelDataImporter_.Import("baseScene");
 
 	// シーンにカメラをセット
 	SUGER::SetSceneCamera(sceneCamera_.get());

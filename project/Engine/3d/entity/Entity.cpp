@@ -60,7 +60,6 @@ void Entity::Draw() {
 	camera_->TransferCamera(3);
 	// 3Dモデル描画
 	model_->Draw();
-
 	// コライダーがあれば描画
 	if (collider_) {
 		collider_->Draw();

@@ -21,7 +21,7 @@ void Collider::Update(const Vector3& worldPosition) {
 }
 
 void Collider::Draw() {
-	DrawSphere(worldPosition_, size_, 4);
+	DrawSphere(worldPosition_, size_, 8);
 }
 
 void Collider::DrawSphere(const Vector3& center, float radius, uint32_t segments) {
