@@ -65,7 +65,7 @@ void SampleScene::Initialize() {
 	// エミッターの発生個数を変更
 	emitter_.SetCount(5);
 	// エミッターの発生タイプを設定
-	emitter_.SetEmitType(kRandom);
+	emitter_.SetEmitType(kRadialRandom);
 	// 繰り返し発生オフ
 	emitter_.SetIsRepeat(false);
 

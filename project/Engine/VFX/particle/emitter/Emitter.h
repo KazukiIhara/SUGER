@@ -15,7 +15,7 @@ public:
 	void Update()override;
 
 	// パーティクル発生
-	void Emit();
+	virtual void Emit();
 
 	// パーティクルのセット
 	void SetParticle(const std::string& particleName);
@@ -101,6 +101,7 @@ protected:
 	// 放射発生用の変数
 	//
 
-
+	// 発生速度
+	float speed_ = 1.0f;
 
 };

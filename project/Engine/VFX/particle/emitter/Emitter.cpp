@@ -43,13 +43,16 @@ void Emitter::Emit() {
 	emitSetting_.position = GetWorldPosition();
 	Vector3 emitPosition = emitSetting_.position;
 
+	// 発生タイプごとの処理
 	switch (emitType_) {
+		// その場に発生
 	case kDefault:
 		// 発生個数分ループ
 		for (uint32_t i = 0; i < count_; i++) {
 			particle_->AddNewParticle(emitSetting_);
 		}
 		break;
+		// 完全ランダム 
 	case kRandom:
 		// 発生個数分ループ
 		for (uint32_t i = 0; i < count_; i++) {
@@ -71,10 +74,85 @@ void Emitter::Emit() {
 			particle_->AddNewParticle(emitSetting_);
 		}
 		break;
-	case kRadial:
+		// X軸方向に放射状に発生
+	case kRadialX:
+		// 発生個数分ループ
+		for (uint32_t i = 0; i < count_; i++) {
+			float angle = 2.0f * std::numbers::pi_v<float> *i / count_;
+			emitSetting_.position = emitPosition;
+
+			emitSetting_.velocity.x = 0.0f; // X軸方向への速度は不要
+			emitSetting_.velocity.y = speed_ * std::sin(angle); // Y軸速度
+			emitSetting_.velocity.z = speed_ * std::cos(angle); // Z軸速度
+
+			emitSetting_.color.x = Random::GenerateFloat(randomMinColor_.x, randomMaxColor_.x);
+			emitSetting_.color.y = Random::GenerateFloat(randomMinColor_.y, randomMaxColor_.y);
+			emitSetting_.color.z = Random::GenerateFloat(randomMinColor_.z, randomMaxColor_.z);
+			emitSetting_.lifeTime = Random::GenerateFloat(randomMinLifeTime_, randomMaxLifeTime_);
+
+			particle_->AddNewParticle(emitSetting_);
+		}
+		break;
+		// Y軸方向に放射状に発生
+	case kRadialY:
+		// 発生個数分ループ
+		for (uint32_t i = 0; i < count_; i++) {
+			float angle = 2.0f * std::numbers::pi_v<float> *i / count_;
+			emitSetting_.position = emitPosition;
+
+			emitSetting_.velocity.x = speed_ * std::cos(angle); // X軸速度
+			emitSetting_.velocity.y = 0.0f; // Y軸方向への速度は不要
+			emitSetting_.velocity.z = speed_ * std::sin(angle); // Z軸速度
+
+			emitSetting_.color.x = Random::GenerateFloat(randomMinColor_.x, randomMaxColor_.x);
+			emitSetting_.color.y = Random::GenerateFloat(randomMinColor_.y, randomMaxColor_.y);
+			emitSetting_.color.z = Random::GenerateFloat(randomMinColor_.z, randomMaxColor_.z);
+			emitSetting_.lifeTime = Random::GenerateFloat(randomMinLifeTime_, randomMaxLifeTime_);
+
+			particle_->AddNewParticle(emitSetting_);
+		}
+		break;
+		// Z軸方向に放射状に発生
+	case kRadialZ:
+		// 発生個数分ループ
+		for (uint32_t i = 0; i < count_; i++) {
+			float angle = 2.0f * std::numbers::pi_v<float> *i / count_;
+			emitSetting_.position = emitPosition;
+
+			emitSetting_.velocity.x = speed_ * std::cos(angle); // X軸速度
+			emitSetting_.velocity.y = speed_ * std::sin(angle); // Y軸速度
+			emitSetting_.velocity.z = 0.0f; // Z軸方向への速度は不要
+
+			emitSetting_.color.x = Random::GenerateFloat(randomMinColor_.x, randomMaxColor_.x);
+			emitSetting_.color.y = Random::GenerateFloat(randomMinColor_.y, randomMaxColor_.y);
+			emitSetting_.color.z = Random::GenerateFloat(randomMinColor_.z, randomMaxColor_.z);
+			emitSetting_.lifeTime = Random::GenerateFloat(randomMinLifeTime_, randomMaxLifeTime_);
+
+			particle_->AddNewParticle(emitSetting_);
+		}
+		break;
+		// ランダムに放射状に発生
+	case kRadialRandom:
+		// 発生個数分ループ
+		for (uint32_t i = 0; i < count_; i++) {
+			// 移動量
+			emitSetting_.velocity.x = Random::GenerateFloat(randomMinVelocity_.x, randomMaxVelocity_.x);
+			emitSetting_.velocity.y = Random::GenerateFloat(randomMinVelocity_.y, randomMaxVelocity_.y);
+			emitSetting_.velocity.z = Random::GenerateFloat(randomMinVelocity_.z, randomMaxVelocity_.z);
+			// 色
+			emitSetting_.color.x = Random::GenerateFloat(randomMinColor_.x, randomMaxColor_.x);
+			emitSetting_.color.y = Random::GenerateFloat(randomMinColor_.y, randomMaxColor_.y);
+			emitSetting_.color.z = Random::GenerateFloat(randomMinColor_.z, randomMaxColor_.z);
+			// 生存時間
+			emitSetting_.lifeTime = Random::GenerateFloat(randomMinLifeTime_, randomMaxLifeTime_);
+
+			particle_->AddNewParticle(emitSetting_);
+		}
 
 		break;
 	}
+
+
 }
 
 void Emitter::SetParticle(const std::string& particleName) {
