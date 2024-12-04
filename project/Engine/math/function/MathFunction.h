@@ -17,6 +17,8 @@ float Lerp(float a, float b, float t);
 // 内積
 float Dot(const Vector3& a, const Vector3& b);
 
+// 度数法をラジアンに変換
+float DegreesToRadians(const float& degrees);
 
 ///
 /// Vector2
@@ -33,6 +35,12 @@ float Length(const Vector3& a);
 
 // 正規化
 Vector3 Normalize(const Vector3& a);
+
+// 度数法をラジアンに変換
+Vector3 DegreesToRadians(const Vector3& degrees);
+
+// ベクトルの向きを取得
+Vector3 Forward(const Vector3& rotate);
 
 // ワールド行列からワールド座標取得
 Vector3 ExtractionWorldPos(const Matrix4x4& m);

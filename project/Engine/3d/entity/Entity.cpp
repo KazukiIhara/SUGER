@@ -41,12 +41,14 @@ void Entity::Update() {
 }
 
 void Entity::Draw() {
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	// PSOを設定
-	SUGER::GetDirectXCommandList()->SetPipelineState(SUGER::GetPipelineState(kObject3d, blendMode_));
+	commandList->SetPipelineState(SUGER::GetPipelineState(kObject3d, blendMode_));
 	// マテリアルCBufferの場所を設定
-	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	// wvp用のCBufferの場所を設定
-	SUGER::GetDirectXCommandList()->SetGraphicsRootConstantBufferView(1, transformationResource_->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(1, transformationResource_->GetGPUVirtualAddress());
 	// ライトを転送
 	punctualLight_->TransferLight();
 	// カメラ情報を転送

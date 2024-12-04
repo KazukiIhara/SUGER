@@ -246,6 +246,9 @@ void SUGER::Finalize() {
 
 void SUGER::Update() {
 
+	// ウィンドウマネージャの更新処理(本当はよくない気がする)
+	windowManager_->Update();
+
 	// ウィンドウにメッセージが来ていたら最優先で処理
 	if (windowManager_->ProcessMessage()) {
 		endRequest_ = true;
@@ -273,10 +276,9 @@ void SUGER::Update() {
 #ifdef _DEBUG
 	// グローバルデータ更新処理
 	grobalDataManager_->Update();
-#endif // _DEBUG
-
 	// FPS表示
 	ShowFPS();
+#endif // _DEBUG
 
 }
 
@@ -344,6 +346,14 @@ void SUGER::PostDraw() {
 	imguiManager_->Draw();
 	// DirectX描画後処理
 	directXManager_->PostDraw();
+}
+
+HWND SUGER::GetWindowHandle() {
+	return windowManager_->GetHwnd();
+}
+
+int64_t SUGER::GetMouseWheelDelta() {
+	return windowManager_->GetMouseWheelDelta();
 }
 
 bool SUGER::PushKey(BYTE keyNumber) {

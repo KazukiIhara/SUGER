@@ -44,18 +44,8 @@ void BaseScene::Initialize() {
 }
 
 void BaseScene::Update() {
-	// キーボード入力でカメラフラグ切り替え
-	if (SUGER::TriggerKey(DIK_P)) {
-		if (isActiveDebugCamera_) {
-			isActiveDebugCamera_ = false;
-			SUGER::SetSceneCamera(sceneCamera_.get());
-		} else {
-			isActiveDebugCamera_ = true;
-			SUGER::SetSceneCamera(debugCamera_.get());
-		}
-	}
-	// ImGuiによるデバッグカメラコントロール
-	ImGuiForDebugCamera();
+	// デバッグカメラコントロール
+	DebugCameraOperation();
 	// デバッグカメラのアップデート
 	debugCamera_->Update();
 	// ライトの更新
@@ -74,22 +64,131 @@ void BaseScene::SetSceneManager(SceneManager* sceneManager) {
 	sceneManager_ = sceneManager;
 }
 
-void BaseScene::ImGuiForDebugCamera() {
+void BaseScene::DebugCameraOperation() {
 #ifdef _DEBUG
 	// 回転と移動量を持ってくる
-	Vector3 cameraRotate_ = debugCamera_->GetRotate();
-	Vector3 cameraTranslate_ = debugCamera_->GetTranslate();
+	Vector3 cameraRotate = debugCamera_->GetRotate();
+	Vector3 cameraTranslate = debugCamera_->GetTranslate();
 
-	// ImGuiの処理
-	ImGui::Begin("DebugCamera");
-	ImGui::DragFloat3("Rotate", &cameraRotate_.x, 0.01f);
-	ImGui::DragFloat3("Translate", &cameraTranslate_.x, 0.01f);
-	ImGui::End();
+	// キーボード入力でカメラフラグ切り替え
+	if (SUGER::TriggerKey(DIK_P)) {
+		if (isActiveDebugCamera_) {
+			isActiveDebugCamera_ = false;
+			SUGER::SetSceneCamera(sceneCamera_.get());
+		} else {
+			isActiveDebugCamera_ = true;
+			SUGER::SetSceneCamera(debugCamera_.get());
+		}
+	}
+
+	// デバッグカメラが有効の場合
+	if (isActiveDebugCamera_) {
+
+		// マウス入力の取得
+		POINT cursorPos;
+		GetCursorPos(&cursorPos);
+		// ウィンドウ座標系へ変換
+		ScreenToClient(SUGER::GetWindowHandle(), &cursorPos);
+
+		static POINT lastCursorPos = cursorPos;
+		POINT delta;
+		delta.x = cursorPos.x - lastCursorPos.x;
+		delta.y = cursorPos.y - lastCursorPos.y;
+
+		// マウスホイールの値を取得してズーム操作
+		int64_t wheelDelta = SUGER::GetMouseWheelDelta();
+
+		// カメラ回転処理
+		HandleCameraRotation(cameraRotate, delta);
+		// カメラ移動処理
+		HandleCameraTranslation(cameraTranslate, cameraRotate, delta);
+		// カメラズーム処理
+		HandleCameraZoom(cameraTranslate, cameraRotate, wheelDelta);
+
+		// 更新された値をカメラに反映
+		debugCamera_->SetRotate(cameraRotate);
+		debugCamera_->SetTranslate(cameraTranslate);
+
+		// 現在のカーソル位置を保存
+		lastCursorPos = cursorPos;
+	}
+
+	// ImGuiによるカメラ操作
+	DebugCameraUI(cameraRotate, cameraTranslate);
 
 	// 回転と移動量を返す
-	debugCamera_->SetRotate(cameraRotate_);
-	debugCamera_->SetTranslate(cameraTranslate_);
+	debugCamera_->SetRotate(cameraRotate);
+	debugCamera_->SetTranslate(cameraTranslate);
+
 #endif // _DEBUG
+}
+
+void BaseScene::DebugCameraUI(Vector3& cameraRotate, Vector3& cameraTranslate) {
+	// ImGuiの処理
+	ImGui::Begin("DebugCamera");
+	ImGui::Text("Push P Toggle Camera");
+	// デバッグカメラが有効なら
+	if (isActiveDebugCamera_) {
+		ImGui::Text("State: Enable");
+		if (ImGui::Button("DisableDebugCamera")) {
+			SUGER::SetSceneCamera(sceneCamera_.get());
+			isActiveDebugCamera_ = false;
+		}
+		ImGui::DragFloat3("Rotate", &cameraRotate.x, 0.01f);
+		ImGui::DragFloat3("Translate", &cameraTranslate.x, 0.01f);
+	} else {
+		ImGui::Text("State: Disable");
+		if (ImGui::Button("EnableDebugCamera")) {
+			SUGER::SetSceneCamera(debugCamera_.get());
+			isActiveDebugCamera_ = true;
+		}
+	}
+	ImGui::End();
+}
+
+void BaseScene::HandleCameraRotation(Vector3& cameraRotate, const POINT& delta) {
+	// マウスの右ボタンが押されているか確認
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000) {
+		// カメラの回転を更新
+		cameraRotate.x -= delta.y * 0.001f; // 縦方向
+		cameraRotate.y -= delta.x * 0.001f; // 横方向
+	}
+}
+
+void BaseScene::HandleCameraTranslation(Vector3& cameraTranslate, Vector3& cameraRotate, const POINT& delta) {
+	// 中ボタンドラッグで移動
+	if (GetAsyncKeyState(VK_MBUTTON) & 0x8000) {
+		// 回転からカメラの右方向ベクトルを計算
+		Vector3 right;
+		right.x = std::cosf(cameraRotate.y);
+		right.y = 0.0f;
+		right.z = -std::sinf(cameraRotate.y);
+
+		// 回転からカメラの上方向ベクトルを計算
+		Vector3 up;
+		up.x = std::sinf(cameraRotate.x) * std::sinf(cameraRotate.y);
+		up.y = std::cosf(cameraRotate.x);
+		up.z = std::sinf(cameraRotate.x) * std::cosf(cameraRotate.y);
+
+		// 移動量をローカル座標系で計算
+		const float moveSpeed = 0.002f;
+		Vector3 moveDelta = (right * static_cast<float> (-delta.x) + up * static_cast<float> (delta.y)) * moveSpeed;
+
+		// カメラ位置を更新
+		cameraTranslate += moveDelta;
+	}
+}
+
+void BaseScene::HandleCameraZoom(Vector3& cameraTranslate, Vector3& cameraRotate, int64_t wheelDelta) {
+	if (wheelDelta != 0) {
+		const float zoomSpeed = 0.001f; // ズーム速度スケール
+
+		// カメラの forward ベクトルを取得
+		Vector3 forward = Forward(cameraRotate);
+
+		// forward に沿ってカメラの位置を更新
+		cameraTranslate += forward * (wheelDelta * zoomSpeed);
+	}
 }
 
 void BaseScene::SceneStatusInitizlize() {
