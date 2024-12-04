@@ -3,8 +3,10 @@
 #include "math/function/MathFunction.h"
 #include "enum/ColliderEnum.h"
 #include "colliderCategory/ColliderCategory.h"
+#include "3d/empty/empty.h"
+#include "3d/lineController/LineController.h"
 
-class Collider {
+class Collider :public Empty {
 public:
 	Collider() = default;
 	~Collider() = default;
@@ -15,6 +17,9 @@ public:
 	void Update(const Vector3& worldPosition);
 	// 描画
 	void Draw();
+
+	// スフィアの描画
+	void DrawSphere(const Vector3& center, float radius, uint32_t segments);
 
 	// ワールド座標のセッター
 	void SetWorldPosition(const Vector3& worldPosition);
@@ -39,6 +44,9 @@ public:
 
 	// サイズの取得
 	float GetSize()const;
+private:
+	// ラインコントローラのセット
+	void SetLineController(LineController* lineController);
 
 private:
 	// ワールド座標
@@ -49,4 +57,6 @@ private:
 	ColliderType colliderType_ = ColliderType::kSphere;
 	// コライダーカテゴリ
 	ColliderCategory colliderCategory_ = ColliderCategory::kNone;
+	// ライン描画コントローラ
+	LineController* line_;
 };
