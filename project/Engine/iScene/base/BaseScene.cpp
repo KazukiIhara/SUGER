@@ -24,6 +24,10 @@ void BaseScene::Initialize() {
 	debugCamera_ = std::make_unique<Camera>();
 	debugCamera_->Initialize();
 
+	// シーンカメラ作成
+	sceneCamera_ = std::make_unique<Camera>();
+	sceneCamera_->Initialize();
+
 	// ライト作成
 	light_ = std::make_unique<PunctualLight>();
 	light_->Initialize();

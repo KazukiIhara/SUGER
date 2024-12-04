@@ -94,7 +94,7 @@ protected:
 	Vector3	randomMaxColor_ = { 1.0f,1.0f,1.0f };
 
 	// 生存時間のランダム閾値
-	float randomMinLifeTime_ = 0.0f;
+	float randomMinLifeTime_ = 1.0f;
 	float randomMaxLifeTime_ = 5.0f;
 
 	//

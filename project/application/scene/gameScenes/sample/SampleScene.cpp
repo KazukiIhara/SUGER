@@ -19,10 +19,6 @@ void SampleScene::Initialize() {
 	// レベルデータをシーンにインポート
 	levelDataImporter_.Import("baseScene");
 
-	// カメラの設定
-	sceneCamera_ = std::make_unique<Camera>();
-	sceneCamera_->Initialize();
-
 	// シーンにカメラをセット
 	SUGER::SetSceneCamera(sceneCamera_.get());
 
@@ -65,7 +61,7 @@ void SampleScene::Initialize() {
 	// エミッターの発生個数を変更
 	emitter_.SetCount(4);
 	// エミッターの発生タイプを設定
-	emitter_.SetEmitType(kRadialRandom);
+	emitter_.SetEmitType(kRadialY);
 	// 繰り返し発生オフ
 	emitter_.SetIsRepeat(true);
 
