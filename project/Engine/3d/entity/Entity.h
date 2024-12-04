@@ -5,6 +5,7 @@
 #include "3d/cameras/camera/Camera.h"
 #include "3d/lights/punctualLight/PunctualLight.h"
 #include "3d/empty/empty.h"
+#include "collider/Collider.h"
 
 #include "enum/GraphicsPipelineEnum.h"
 
@@ -20,6 +21,12 @@ public:
 	void Update()override;
 	// 描画
 	virtual void Draw();
+
+	// コライダー作成
+	void CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size);
+
+	// コライダーの取得
+	Collider* GetCollider();
 
 	// セットされているカメラを取得
 	Camera* GetCamera();
@@ -50,6 +57,9 @@ private:
 protected:
 	// モデルを受け取る箱
 	Model* model_ = nullptr;
+
+	// コライダー
+	std::unique_ptr<Collider> collider_;
 
 	// ブレンドモード
 	BlendMode blendMode_ = kBlendModeNormal;

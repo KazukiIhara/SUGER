@@ -15,4 +15,9 @@ void SkiningEntity::Draw() {
 	camera_->TransferCamera(3);
 	// スキニング付きモデル描画
 	model_->DrawSkinning();
+
+	// コライダーがあれば描画
+	if (collider_) {
+		collider_->Draw();
+	}
 }

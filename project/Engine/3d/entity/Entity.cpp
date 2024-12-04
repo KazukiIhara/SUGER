@@ -27,6 +27,12 @@ void Entity::Update() {
 	model_->Update();
 	// 基底クラスの更新処理
 	Empty::Update();
+
+	// コライダーが有効ならコライダーの更新
+	if (collider_) {
+		collider_->Update(GetWorldPosition());
+	}
+
 	// WVPマトリックス作成
 	transformationData_->World = worldTransform_.worldMatrix_;
 	transformationData_->ViewProjection = camera_->GetViewProjectionMatrix();
@@ -37,7 +43,6 @@ void Entity::Update() {
 	materialData_->enableLighting = material_.enableLighting;
 	materialData_->shininess = material_.shininess;
 	materialData_->uvTransformMatrix = material_.uvTransformMatrix;
-
 }
 
 void Entity::Draw() {
@@ -55,6 +60,19 @@ void Entity::Draw() {
 	camera_->TransferCamera(3);
 	// 3Dモデル描画
 	model_->Draw();
+	// コライダーがあれば描画
+	if (collider_) {
+		collider_->Draw();
+	}
+}
+
+void Entity::CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size) {
+	collider_ = std::make_unique<Collider>();
+	collider_->Initialize(GetWorldPosition(), colliderCategory, colliderType, size);
+}
+
+Collider* Entity::GetCollider() {
+	return collider_.get();
 }
 
 Camera* Entity::GetCamera() {

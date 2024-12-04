@@ -17,7 +17,7 @@ void SampleScene::Initialize() {
 	// 
 
 	// レベルデータをシーンにインポート
-	levelDataImporter_.Import("baseScene");
+	//levelDataImporter_.Import("baseScene");
 
 	// シーンにカメラをセット
 	SUGER::SetSceneCamera(sceneCamera_.get());
@@ -44,7 +44,7 @@ void SampleScene::Initialize() {
 	// teapot作成
 	teapot_ = std::make_unique<Teapot>();
 	teapot_->Initialize(SUGER::CreateEntity("teapot", "walk", teapotDefaultTransform));
-	teapot_->CreateCollider(kNone, kSphere, 1.0f);
+	teapot_->CreateCollider(kNone, kSphere, 0.5f);
 
 	// オブジェクト2Dの作成とコントローラの初期化
 	pronamaChanTex.Initialize(SUGER::Create2DObject("0_pronama_chan", "pronama_chan.png"));

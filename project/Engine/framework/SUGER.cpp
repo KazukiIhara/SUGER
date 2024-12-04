@@ -95,7 +95,7 @@ void SUGER::Initialize() {
 
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
-	collisionManager_->Initialize();
+	collisionManager_->Initialize(lineManager_.get());
 
 	// JsonLevelDataManagerの初期化
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
@@ -670,6 +670,14 @@ void SUGER::ClearColliderContainer() {
 
 void SUGER::CheckAllCollisions() {
 	collisionManager_->CheckAllCollisions();
+}
+
+void SUGER::InitializeColliderLineGroup() {
+	collisionManager_->InitializeColliderLineGroup();
+}
+
+LineController* SUGER::GetColliderLineController() {
+	return collisionManager_->GetLineController();
 }
 
 void SUGER::PreDrawObject2D() {

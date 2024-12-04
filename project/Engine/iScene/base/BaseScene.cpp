@@ -6,7 +6,11 @@
 #include "manager/scene/SceneManager.h"
 
 void BaseScene::Initialize() {
-	// オブジェクトコンテナのクリア
+	// 各コンテナのクリア
+	// Collider
+	SUGER::ClearColliderContainer();
+	// Line
+	SUGER::ClearLineContainer();
 	// Emitter
 	SUGER::ClearEmitterContainer();
 	// Particle
@@ -42,9 +46,11 @@ void BaseScene::Initialize() {
 	// シーンに必要なカメラとライトのセット
 	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
 
+	// コライダーデバッグ描画用のライングループを作成
+	SUGER::InitializeColliderLineGroup();
+
 	// FixFPSを初期化
 	SUGER::FiXFPSInitialize();
-
 }
 
 void BaseScene::Update() {

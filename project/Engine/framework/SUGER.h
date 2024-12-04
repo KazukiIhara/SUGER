@@ -274,6 +274,10 @@ public: // クラスメソッド
 	static void ClearColliderContainer();
 	// コライダーリスト内の全当たり判定をチェック
 	static void CheckAllCollisions();
+	// デバッグ描画用のライングループとコントローラを作成
+	static void InitializeColliderLineGroup();
+	// デバッグ描画用のラインコントローラを取得
+	static LineController* GetColliderLineController();
 #pragma endregion
 
 #pragma region JsonLevelDataManager
