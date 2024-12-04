@@ -112,6 +112,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
     <ClCompile Include="application\objects\teapot\Teapot.cpp" />
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
+    <ClCompile Include="application\scene\gameScenes\evaluation\EvaluationTaskScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
@@ -181,6 +182,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
     <ClInclude Include="application\objects\teapot\Teapot.h" />
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
+    <ClInclude Include="application\scene\gameScenes\evaluation\EvaluationTaskScene.h" />
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
