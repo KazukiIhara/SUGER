@@ -15,7 +15,7 @@ public:
 	void Update()override;
 
 	// パーティクル発生
-	virtual void Emit();
+	void Emit();
 
 	// パーティクルのセット
 	void SetParticle(const std::string& particleName);
@@ -29,46 +29,43 @@ public:
 	// 発生タイプのセット
 	void SetEmitType(const EmitType& emitType);
 
+	// 
 	// ランダム発生の閾値設定
+	// 
+
 	// 座標最小値
 	void SetRandomMinPosition(const Vector3& randomMinPosition);
-
 	// 座標最大値
 	void SetRandomMaxPosition(const Vector3& randomMaxPosition);
-
 	// 移動量最小値
 	void SetRandomMinVelocity(const Vector3& randomMinVelocity);
-
 	// 移動量最大値
 	void SetRandomMaxVelocity(const Vector3& randomMaxVelocity);
-
 	// 色最小値
 	void SetRandomMinColor(const Vector3& randomMinColor);
-
 	// 色最大値
 	void SetRandomMaxColor(const Vector3& randomMaxColor);
-
 	// 生存時間最小値
 	void SetRandomMinLifeTime(float randomMinLifeTime);
-
 	// 生存時間最大値
 	void SetRandomMaxLifeTime(float randomMaxLifeTime);
 
 protected:
 	// デルタタイム
 	const float kDeltaTime_ = 1.0f / 60.0f;
-
 	// セットするパーティクル
 	Particle* particle_ = nullptr;
-
 	// パーティクル発生設定
 	EmitSetting emitSetting_{};
-
 	// 発生の種類
 	EmitType emitType_ = EmitType::kDefault;
-
 	// 発生数
 	uint32_t count_ = 1;
+
+	//
+	// 繰り返し発生用の処理
+	//
+
 	// 発生頻度
 	float frequency_ = 0.5f;
 	// 繰り返し発生させるかどうか

@@ -121,6 +121,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\manager\line\LineManager.cpp" />
     <ClCompile Include="Engine\system\line\LineSystem.cpp" />
+    <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
     <ClCompile Include="Engine\manager\emitter\EmitterManager.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitter\Emitter.cpp" />
@@ -193,6 +194,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
     <ClInclude Include="Engine\manager\line\LineManager.h" />
     <ClInclude Include="Engine\system\line\LineSystem.h" />
+    <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
     <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
     <ClInclude Include="Engine\manager\emitter\EmitterManager.h" />
     <ClInclude Include="Engine\VFX\particle\emitter\Emitter.h" />

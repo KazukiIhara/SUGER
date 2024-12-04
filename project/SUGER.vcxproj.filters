@@ -385,6 +385,7 @@
     <ClCompile Include="Engine\system\line\LineSystem.cpp" />
     <ClCompile Include="Engine\manager\line\LineManager.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
+    <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -578,6 +579,7 @@
     <ClInclude Include="Engine\system\line\LineSystem.h" />
     <ClInclude Include="Engine\manager\line\LineManager.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
+    <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
