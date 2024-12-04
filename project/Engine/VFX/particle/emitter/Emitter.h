@@ -51,6 +51,10 @@ public:
 	void SetRandomMaxLifeTime(float randomMaxLifeTime);
 
 protected:
+	// 
+	// 基本的な変数
+	//
+
 	// デルタタイム
 	const float kDeltaTime_ = 1.0f / 60.0f;
 	// セットするパーティクル
@@ -63,7 +67,7 @@ protected:
 	uint32_t count_ = 1;
 
 	//
-	// 繰り返し発生用の処理
+	// 繰り返し発生用の変数
 	//
 
 	// 発生頻度
@@ -72,6 +76,10 @@ protected:
 	bool isRepeat_ = false;
 	// 頻度用時刻
 	float frequencyTime_ = 0.0f;
+
+	//
+	// ランダム発生用の変数
+	//
 
 	// 発生場所のランダム閾値
 	Vector3 randomMinTranslate_ = { -1.0f,-1.0f,-1.0f };
@@ -88,5 +96,11 @@ protected:
 	// 生存時間のランダム閾値
 	float randomMinLifeTime_ = 0.0f;
 	float randomMaxLifeTime_ = 5.0f;
+
+	//
+	// 放射発生用の変数
+	//
+
+
 
 };

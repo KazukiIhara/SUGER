@@ -16,7 +16,7 @@ private:
 	// デルタタイム
 	const float kDeltaTime_ = 1.0f / 60.0f;
 
-	// エミッター
+	// エミッターコントローラ
 	EmitterController sparkEmitter_;
 	EmitterController flashEmitter_;
 	EmitterController fireEmitter_;
