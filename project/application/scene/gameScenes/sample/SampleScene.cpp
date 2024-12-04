@@ -63,11 +63,11 @@ void SampleScene::Initialize() {
 	// エミッターにパーティクルをセット
 	emitter_.SetParticle("sampleParticle");
 	// エミッターの発生個数を変更
-	emitter_.SetCount(5);
+	emitter_.SetCount(4);
 	// エミッターの発生タイプを設定
 	emitter_.SetEmitType(kRadialRandom);
 	// 繰り返し発生オフ
-	emitter_.SetIsRepeat(false);
+	emitter_.SetIsRepeat(true);
 
 	// ライングループを作成
 	SUGER::CreateLine("sample");
@@ -111,7 +111,6 @@ void SampleScene::SceneStatePlayUpdate() {
 	line_.DrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 2.0f, 0.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
 	// 横に赤線
 	line_.DrawLine(Vector3(-1.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-
 
 	// Uキーを押すとBGM再生
 	if (SUGER::TriggerKey(DIK_U)) {

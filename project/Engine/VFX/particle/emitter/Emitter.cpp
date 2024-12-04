@@ -151,8 +151,6 @@ void Emitter::Emit() {
 
 		break;
 	}
-
-
 }
 
 void Emitter::SetParticle(const std::string& particleName) {
