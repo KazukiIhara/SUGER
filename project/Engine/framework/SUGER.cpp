@@ -624,7 +624,7 @@ void SUGER::DrawLines() {
 	lineManager_->Draw();
 }
 
-Line* SUGER::FindLine(const std::string& name) {
+LineGroup* SUGER::FindLine(const std::string& name) {
 	return lineManager_->Find(name);
 }
 

@@ -245,7 +245,7 @@ public: // クラスメソッド
 	// Lineの描画
 	static void DrawLines();
 	// Line検索
-	static Line* FindLine(const std::string& name);
+	static LineGroup* FindLine(const std::string& name);
 	// Lineコンテナのクリア
 	static void ClearLineContainer();
 #pragma endregion

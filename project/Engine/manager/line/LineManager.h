@@ -30,7 +30,7 @@ public:
 	void CreateLine(const std::string& name);
 
 	// 作成済みのラインを検索
-	Line* Find(const std::string& name);
+	LineGroup* Find(const std::string& name);
 
 	// カメラをセット
 	void SetSceneCamera(Camera* camera);
@@ -38,7 +38,7 @@ public:
 
 private:
 	// ラインコンテナ
-	std::map<std::string, std::unique_ptr<Line>> lines_;
+	std::map<std::string, std::unique_ptr<LineGroup>> lines_;
 
 private:
 	// カメラのインスタンス

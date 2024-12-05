@@ -15,6 +15,6 @@ public:
 
 private:
 	// Line
-	Line* line_ = nullptr;
+	LineGroup* line_ = nullptr;
 
 };

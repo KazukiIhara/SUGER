@@ -10,10 +10,10 @@
 
 class Camera;
 
-class Line {
+class LineGroup {
 public:
-	Line() = default;
-	~Line() = default;
+	LineGroup() = default;
+	~LineGroup() = default;
 
 	// 初期化
 	void Initialize(Camera* camera);
