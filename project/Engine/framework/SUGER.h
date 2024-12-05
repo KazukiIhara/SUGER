@@ -365,7 +365,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<EntityManager> entityManager_;
 	static std::unique_ptr<EmitterManager> emitterManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
-	static std::unique_ptr<LineManager> lineManager_;
+	static std::unique_ptr<LineGroupManager> lineManager_;
 	static std::unique_ptr<SoundManager> soundManager_;
 	static std::unique_ptr<CollisionManager> collisionManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;

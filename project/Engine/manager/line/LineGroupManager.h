@@ -9,10 +9,10 @@
 
 class Camera;
 
-class LineManager {
+class LineGroupManager {
 public:
-	LineManager() = default;
-	~LineManager() = default;
+	LineGroupManager() = default;
+	~LineGroupManager() = default;
 
 	// 初期化処理
 	void Initialize();

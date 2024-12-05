@@ -1,4 +1,3 @@
-
 #include "Object3D.hlsli"
 
 ConstantBuffer<Material> gMaterial : register(b0);
@@ -50,7 +49,7 @@ PixelShaderOutput main(VertexShaderOutput input)
         discard;
     }
 
-    if (gMaterial.enbleLighting != 0)
+    if (gMaterial.enableLighting != 0)
     {
         if (gMaterial.shininess >= 1.0f)
         {
@@ -106,6 +105,8 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         discard;
     }
+    
+     output.color = pow(output.color, 2.2f);
     
     return output;
 }

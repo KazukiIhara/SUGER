@@ -8,7 +8,7 @@
 #include "3d/lineController/LineController.h"
 
 // 前方宣言
-class LineManager;
+class LineGroupManager;
 
 class CollisionManager {
 public:
@@ -16,7 +16,7 @@ public:
 	~CollisionManager() = default;
 
 	// 初期化
-	void Initialize(LineManager* lineManager);
+	void Initialize(LineGroupManager* lineManager);
 	// デバッグ描画用のライングループを作成
 	void InitializeColliderLineGroup();
 	// 更新
@@ -37,11 +37,11 @@ public:
 
 private:
 	// ラインマネージャをセット
-	void SetLineManager(LineManager* lineManager);
+	void SetLineManager(LineGroupManager* lineManager);
 
 private:
 	// ラインマネージャを受ける箱
-	LineManager* lineManager_ = nullptr;
+	LineGroupManager* lineManager_ = nullptr;
 
 private:
 	// コントローラコンテナ

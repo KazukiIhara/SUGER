@@ -4,7 +4,7 @@
 
 #include "manager/line/LineGroupManager.h"
 
-void CollisionManager::Initialize(LineManager* lineManager) {
+void CollisionManager::Initialize(LineGroupManager* lineManager) {
 	// コンテナをクリア
 	ClearContainer();
 	// ラインマネージャをセット
@@ -80,7 +80,7 @@ LineController* CollisionManager::GetLineController() {
 	return lineController_.get();
 }
 
-void CollisionManager::SetLineManager(LineManager* lineManager) {
+void CollisionManager::SetLineManager(LineGroupManager* lineManager) {
 	assert(lineManager);
 	lineManager_ = lineManager;
 }

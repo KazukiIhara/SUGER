@@ -20,7 +20,7 @@ std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
 std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<EmitterManager> SUGER::emitterManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
-std::unique_ptr<LineManager> SUGER::lineManager_ = nullptr;
+std::unique_ptr<LineGroupManager> SUGER::lineManager_ = nullptr;
 std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
 std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
@@ -86,7 +86,7 @@ void SUGER::Initialize() {
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
 
 	// LineManagerの初期化
-	lineManager_ = std::make_unique<LineManager>();
+	lineManager_ = std::make_unique<LineGroupManager>();
 	lineManager_->Initialize();
 
 	// soundManagerの初期化

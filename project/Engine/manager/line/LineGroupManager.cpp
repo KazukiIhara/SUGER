@@ -1,11 +1,11 @@
 #include "LineGroupManager.h"
 
-void LineManager::Initialize() {
+void LineGroupManager::Initialize() {
 	// コンテナをクリア
 	ClearContainer();
 }
 
-void LineManager::Update() {
+void LineGroupManager::Update() {
 	for (auto& pair : lines_) {
 		if (pair.second) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
@@ -14,7 +14,7 @@ void LineManager::Update() {
 	}
 }
 
-void LineManager::Draw() {
+void LineGroupManager::Draw() {
 	for (auto& pair : lines_) {
 		if (pair.second) {  // unique_ptr、有効フラグが有効か確認
 			// 全オブジェクトを更新
@@ -23,16 +23,16 @@ void LineManager::Draw() {
 	}
 }
 
-void LineManager::Finalize() {
+void LineGroupManager::Finalize() {
 	// コンテナをクリア
 	ClearContainer();
 }
 
-void LineManager::ClearContainer() {
+void LineGroupManager::ClearContainer() {
 	lines_.clear();
 }
 
-void LineManager::CreateLine(const std::string& name) {
+void LineGroupManager::CreateLine(const std::string& name) {
 	// 新規ライン作成
 	std::unique_ptr<LineGroup> newLine = std::make_unique<LineGroup>();
 	newLine->Initialize(camera_);
@@ -40,7 +40,7 @@ void LineManager::CreateLine(const std::string& name) {
 	lines_.insert(std::make_pair(name, std::move(newLine)));
 }
 
-LineGroup* LineManager::Find(const std::string& name) {
+LineGroup* LineGroupManager::Find(const std::string& name) {
 	// 作成済みラインを検索
 	if (lines_.contains(name)) {
 		// ラインを戻り値としてreturn
@@ -50,7 +50,7 @@ LineGroup* LineManager::Find(const std::string& name) {
 	return nullptr;
 }
 
-void LineManager::SetSceneCamera(Camera* camera) {
+void LineGroupManager::SetSceneCamera(Camera* camera) {
 	// マネージャにカメラをセット
 	camera_ = camera;
 	// 既に存在するオブジェクトにもセット
