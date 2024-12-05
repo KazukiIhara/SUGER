@@ -15,6 +15,12 @@ PixelShaderOutput main(VertexShaderOutput input)
     float4 transformedUV = mul(float4(input.texcoord, 0.0f, 1.0f), mul(gMaterial.uvTransform, gModelMaterial.uvTransform));
 
     float32_t4 textureColor = gTexture.Sample(gSampler, transformedUV.xy);
+    
+    // Texture‚Ìa‚Ì’l‚ª0.5ˆÈ‰º‚ÌŽž‚ÉPixel‚ð”p‹p
+    if (textureColor.a <= 0.5)
+    {
+        discard;
+    }
 
     if (gMaterial.enableLighting != 0)
     {
@@ -44,11 +50,7 @@ PixelShaderOutput main(VertexShaderOutput input)
         float32_t cosAngle = dot(spotLightDirectionOnSurface, gPunctualLight.spotLight.direction);
         float32_t falloffFactor = saturate((cosAngle - gPunctualLight.spotLight.cosAngle) / (gPunctualLight.spotLight.cosFalloffStart - gPunctualLight.spotLight.cosAngle));
     
-        // Texture‚Ìa‚Ì’l‚ª0.5ˆÈ‰º‚ÌŽž‚ÉPixel‚ð”p‹p
-        if (textureColor.a <= 0.5)
-        {
-            discard;
-        }
+       
         if (gMaterial.shininess >= 1.0f)
         {
             // ‹¾–Ê”½ŽË‚ÌŒvŽZ

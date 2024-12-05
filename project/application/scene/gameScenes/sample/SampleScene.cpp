@@ -30,10 +30,10 @@ void SampleScene::Initialize() {
 	// エンティティの作成とエンティティコントローラ初期化
 	// プロ生ちゃん
 	pronamaChan_ = std::make_unique<PronamaChan>();
-	pronamaChan_->Initialize(SUGER::CreateEntity("pronamaChan", "pronama_chan"));
+	pronamaChan_->Initialize(SUGER::CreateEntity("pronamaChan", "walk"));
 	pronamaChan_->CreateCollider(kNone, kSphere, 1.0f);
 	// ライトを無効化
-	pronamaChan_->SetEnableLight(false);
+	pronamaChan_->SetEnableLight(true);
 
 	// ティーポット
 	// 初期トランスフォームを設定
