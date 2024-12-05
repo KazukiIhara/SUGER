@@ -239,7 +239,7 @@ public: // クラスメソッド
 
 #pragma region LineManager
 	// Lineの作成
-	static void CreateLine(const std::string& name);
+	static void CreateLineGroup(const std::string& name);
 	// Lineの更新
 	static void UpdateLines();
 	// Lineの描画

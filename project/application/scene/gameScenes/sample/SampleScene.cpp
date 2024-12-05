@@ -66,7 +66,7 @@ void SampleScene::Initialize() {
 	emitter_.SetIsRepeat(true);
 
 	// ライングループを作成
-	SUGER::CreateLine("sample");
+	SUGER::CreateLineGroup("sample");
 	line_.Initialize("sample");
 
 	//

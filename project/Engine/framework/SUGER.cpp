@@ -612,7 +612,7 @@ void SUGER::ClearParticleContainer() {
 	particleManager_->ClearContainer();
 }
 
-void SUGER::CreateLine(const std::string& name) {
+void SUGER::CreateLineGroup(const std::string& name) {
 	lineManager_->CreateLine(name);
 }
 
