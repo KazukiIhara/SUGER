@@ -1,9 +1,9 @@
-#include "Line.h"
+#include "LineGroup.h"
 #include <cassert>
 
 #include "framework/SUGER.h"
 
-void Line::Initialize(Camera* camera) {
+void LineGroup::Initialize(Camera* camera) {
 	// カメラがなければassert
 	assert(camera);
 	SetCamera(camera);
@@ -24,7 +24,7 @@ void Line::Initialize(Camera* camera) {
 	SUGER::CreateSrvStructured(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(LineData3D));
 }
 
-void Line::Update() {
+void LineGroup::Update() {
 	// ビュープロジェクションの更新
 	viewProjectionData_->viewProjection = camera_->GetViewProjectionMatrix();
 
@@ -41,7 +41,7 @@ void Line::Update() {
 	ClearLines();
 }
 
-void Line::Draw() {
+void LineGroup::Draw() {
 	// コマンドリストを取得
 	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	// PSOを設定
@@ -54,7 +54,7 @@ void Line::Draw() {
 	commandList->DrawInstanced(2, instanceCount_, 0, 0);
 }
 
-void Line::AddLine(const Vector3& start, const Vector3& end, const Vector4& color) {
+void LineGroup::AddLine(const Vector3& start, const Vector3& end, const Vector4& color) {
 	// 最大数を超えていたら追加しない
 	if (lines_.size() >= kNumMaxInstance) {
 		return;
@@ -68,25 +68,25 @@ void Line::AddLine(const Vector3& start, const Vector3& end, const Vector4& colo
 	lines_.push_back(newLineData);
 }
 
-void Line::ClearLines() {
+void LineGroup::ClearLines() {
 	lines_.clear();
 }
 
-void Line::SetCamera(Camera* camera) {
+void LineGroup::SetCamera(Camera* camera) {
 	assert(camera);
 	camera_ = camera;
 }
 
-void Line::SetIsActive(const bool& isActive) {
+void LineGroup::SetIsActive(const bool& isActive) {
 	isActive_ = isActive;
 }
 
-void Line::CreateInstancingResource() {
+void LineGroup::CreateInstancingResource() {
 	// instancing用のリソースを作る
 	instancingResource_ = SUGER::CreateBufferResource(sizeof(LineData3D) * kNumMaxInstance);
 }
 
-void Line::MapInstancingData() {
+void LineGroup::MapInstancingData() {
 	instancingData_ = nullptr;
 	instancingResource_->Map(0, nullptr, reinterpret_cast<void**>(&instancingData_));
 
@@ -95,12 +95,12 @@ void Line::MapInstancingData() {
 	}
 }
 
-void Line::CreateViewProjectionResource() {
+void LineGroup::CreateViewProjectionResource() {
 	// ViewProjection用のリソースを作る
 	viewProjectionResource_ = SUGER::CreateBufferResource(sizeof(ViewProjectionForGPU));
 }
 
-void Line::MapViewProjectionData() {
+void LineGroup::MapViewProjectionData() {
 	// ViewProjection用のデータを書き込む
 	viewProjectionData_ = nullptr;
 	viewProjectionResource_->Map(0, nullptr, reinterpret_cast<void**>(&viewProjectionData_));

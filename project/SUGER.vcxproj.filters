@@ -380,10 +380,10 @@
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
     <ClCompile Include="application\objects\teapot\Teapot.cpp" />
-    <ClCompile Include="Engine\3d\line\Line.cpp" />
+    <ClCompile Include="Engine\3d\line\LineGroup.cpp" />
     <ClCompile Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\system\line\LineSystem.cpp" />
-    <ClCompile Include="Engine\manager\line\LineManager.cpp" />
+    <ClCompile Include="Engine\manager\line\LineGroupManager.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
     <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
   </ItemGroup>
@@ -574,10 +574,10 @@
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
     <ClInclude Include="application\objects\teapot\Teapot.h" />
     <ClInclude Include="Engine\enum\EmitterEnum.h" />
-    <ClInclude Include="Engine\3d\line\Line.h" />
+    <ClInclude Include="Engine\3d\line\LineGroup.h" />
     <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
     <ClInclude Include="Engine\system\line\LineSystem.h" />
-    <ClInclude Include="Engine\manager\line\LineManager.h" />
+    <ClInclude Include="Engine\manager\line\LineGroupManager.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
     <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "3d/line/Line.h"
+#include "3d/line/LineGroup.h"
 
 class LineController {
 public:
@@ -15,6 +15,6 @@ public:
 
 private:
 	// Line
-	Line* line_ = nullptr;
+	LineGroup* line_ = nullptr;
 
 };
