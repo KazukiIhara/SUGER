@@ -1,4 +1,4 @@
-#include "LineManager.h"
+#include "LineGroupManager.h"
 
 void LineManager::Initialize() {
 	// コンテナをクリア

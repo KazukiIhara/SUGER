@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-#include "3d/line/Line.h"
+#include "3d/line/LineGroup.h"
 
 class Camera;
 

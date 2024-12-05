@@ -20,7 +20,7 @@
 #include "manager/entityManager/EntityManager.h"
 #include "manager/emitter/EmitterManager.h"
 #include "manager/particle/ParticleManager.h"
-#include "manager/line/LineManager.h"
+#include "manager/line/LineGroupManager.h"
 #include "manager/sound/SoundManager.h"
 #include "manager/collision/CollisionManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"

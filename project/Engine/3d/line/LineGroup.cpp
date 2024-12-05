@@ -1,4 +1,4 @@
-#include "Line.h"
+#include "LineGroup.h"
 #include <cassert>
 
 #include "framework/SUGER.h"

@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include "manager/line/LineManager.h"
+#include "manager/line/LineGroupManager.h"
 
 void CollisionManager::Initialize(LineManager* lineManager) {
 	// コンテナをクリア
