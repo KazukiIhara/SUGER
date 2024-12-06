@@ -37,6 +37,9 @@ public:
 	// ライトのオンオフ
 	void SetEnableLight(const bool& enbleLight);
 
+	// コライダーのトランスレートセット
+	void SetColliderTranslate(const Vector3& colliderTranslate);
+
 	//
 	// Getter
 	//

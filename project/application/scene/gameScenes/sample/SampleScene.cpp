@@ -32,6 +32,7 @@ void SampleScene::Initialize() {
 	pronamaChan_ = std::make_unique<PronamaChan>();
 	pronamaChan_->Initialize(SUGER::CreateEntity("pronamaChan", "walk"));
 	pronamaChan_->CreateCollider(kNone, kSphere, 1.0f);
+	pronamaChan_->SetColliderTranslate(Vector3(0.0f, 1.0f, 0.0f));
 	// ライトを無効化
 	pronamaChan_->SetEnableLight(true);
 
@@ -77,6 +78,10 @@ void SampleScene::Initialize() {
 	SUGER::AddGrobalDataGroup("Pronama_Chan");
 	// グローバルデータのプロ生ちゃんグループにトランスレート情報を追加
 	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
+	// グローバルデータのプロ生ちゃんグループにRotate情報を追加
+	SUGER::AddGrobalDataItem("Pronama_Chan", "rotate", pronamaChan_->GetRotate());
+	// グローバルデータのプロ生ちゃんグループにScale情報を追加
+	SUGER::AddGrobalDataItem("Pronama_Chan", "scale", pronamaChan_->GetScale());
 
 }
 
@@ -98,6 +103,8 @@ void SampleScene::SceneStatePlayUpdate() {
 
 	// 更新処理の初めにグローバルデータクラスに保存されている値を取得
 	pronamaChan_->SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
+	pronamaChan_->SetRotate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "rotate"));
+	pronamaChan_->SetScale(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "scale"));
 
 	// 
 	// シーンの更新処理ここから
@@ -158,5 +165,7 @@ void SampleScene::SceneStatePlayUpdate() {
 
 	// 行列更新の手前でローカルデータをグローバルデータクラスに挿入
 	SUGER::SetGrobalDataValue("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
+	SUGER::SetGrobalDataValue("Pronama_Chan", "rotate", pronamaChan_->GetRotate());
+	SUGER::SetGrobalDataValue("Pronama_Chan", "scale", pronamaChan_->GetScale());
 
 }
