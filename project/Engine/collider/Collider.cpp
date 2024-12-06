@@ -1,9 +1,11 @@
 #include "Collider.h"
 #include "framework/SUGER.h"
 
-void Collider::Initialize(const Vector3& worldPosition, const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size) {
-	// ワールド座標をセット
-	SetWorldPosition(worldPosition);
+void Collider::Initialize(WorldTransform* worldTransform, const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size) {
+	// 基底クラスの初期化
+	Empty::Initialize();
+	// 親トランスフォームのセット
+	SetParent(worldTransform);
 	// コライダーカテゴリーをセット
 	SetColliderCategory(colliderCategory);
 	// コライダータイプをセット
@@ -12,16 +14,11 @@ void Collider::Initialize(const Vector3& worldPosition, const ColliderCategory& 
 	SetSize(size);
 
 	// コリジョンマネージャからラインコントローラをセット
-	SetLineController(SUGER::GetColliderLineController());	
-}
-
-void Collider::Update(const Vector3& worldPosition) {
-	// ワールド座標をセット
- 	SetWorldPosition(worldPosition);
+	SetLineController(SUGER::GetColliderLineController());
 }
 
 void Collider::Draw() {
-	DrawSphere(worldPosition_, size_, 8);
+	DrawSphere(ExtractionWorldPos(worldTransform_.worldMatrix_), size_, 8);
 }
 
 void Collider::DrawSphere(const Vector3& center, float radius, uint32_t segments) {
@@ -67,8 +64,9 @@ void Collider::DrawSphere(const Vector3& center, float radius, uint32_t segments
 	}
 }
 
-void Collider::SetWorldPosition(const Vector3& worldPosition) {
-	worldPosition_ = worldPosition;
+void Collider::SetParent(WorldTransform* worldTransform) {
+	assert(worldTransform);
+	worldTransform_.parent_ = worldTransform;
 }
 
 void Collider::SetColliderType(const ColliderType& colliderType) {
@@ -84,7 +82,7 @@ void Collider::SetSize(const float& size) {
 }
 
 Vector3 Collider::GetWorldPosition() const {
-	return worldPosition_;
+	return ExtractionWorldPos(worldTransform_.worldMatrix_);
 }
 
 ColliderType Collider::GetColliderType() const {

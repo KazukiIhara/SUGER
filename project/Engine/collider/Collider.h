@@ -6,23 +6,21 @@
 #include "3d/empty/empty.h"
 #include "3d/lineController/LineController.h"
 
-class Collider :public Empty {
+class Collider:public Empty {
 public:
 	Collider() = default;
 	~Collider() = default;
 
 	// 初期化
-	void Initialize(const Vector3& worldPosition, const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size);
-	// 更新
-	void Update(const Vector3& worldPosition);
+	void Initialize(WorldTransform* worldTransform, const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size);
 	// 描画
 	void Draw();
 
 	// スフィアの描画
 	void DrawSphere(const Vector3& center, float radius, uint32_t segments);
 
-	// ワールド座標のセッター
-	void SetWorldPosition(const Vector3& worldPosition);
+	// 親トランスフォームのセット
+	void SetParent(WorldTransform* worldTransform);
 
 	// コライダータイプのセッター
 	void SetColliderType(const ColliderType& colliderType);
@@ -49,8 +47,6 @@ private:
 	void SetLineController(LineController* lineController);
 
 private:
-	// ワールド座標
-	Vector3 worldPosition_{};
 	// サイズ
 	float size_ = 1.0f;
 	// コライダータイプ
