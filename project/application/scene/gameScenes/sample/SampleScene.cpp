@@ -30,11 +30,11 @@ void SampleScene::Initialize() {
 	// エンティティの作成とエンティティコントローラ初期化
 	// プロ生ちゃん
 	pronamaChan_ = std::make_unique<PronamaChan>();
-	pronamaChan_->Initialize(SUGER::CreateEntity("pronamaChan", "walk"));
+	pronamaChan_->Initialize(SUGER::CreateEntity("pronamaChan", "pronama_chan"));
 	pronamaChan_->CreateCollider(kNone, kSphere, 1.0f);
 	pronamaChan_->SetColliderTranslate(Vector3(0.0f, 1.0f, 0.0f));
 	// ライトを無効化
-	pronamaChan_->SetEnableLight(true);
+	pronamaChan_->SetEnableLight(false);
 
 	// ティーポット
 	// 初期トランスフォームを設定
@@ -64,7 +64,7 @@ void SampleScene::Initialize() {
 	// エミッターの発生タイプを設定
 	emitter_.SetEmitType(kRadialY);
 	// 繰り返し発生オフ
-	emitter_.SetIsRepeat(true);
+	emitter_.SetIsRepeat(false);
 
 	// ライングループを作成
 	SUGER::CreateLineGroup("sample");
@@ -137,6 +137,17 @@ void SampleScene::SceneStatePlayUpdate() {
 		pronamaChanTex.SetRotation(pronamaChanTex.GetRotation() - 0.01f);
 		pronamaChan_->SetTranslate(Vector3(pronamaChan_->GetTranslate().x - 0.1f, pronamaChan_->GetTranslate().y, pronamaChan_->GetTranslate().z));
 	}
+
+	// 
+	// エンティティの更新処理ここから
+	// 
+
+	// プロ生ちゃんの更新処理
+	pronamaChan_->Update();
+
+	//
+	// エンティティの更新処理ここまで
+	//
 
 	//
 	// シーンの更新処理ここまで
