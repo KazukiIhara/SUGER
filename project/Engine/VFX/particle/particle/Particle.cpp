@@ -60,10 +60,7 @@ void Particle::Update() {
 			Matrix4x4 scaleMatrix = MakeScaleMatrix((*particleIterator).transform.scale);
 			// billboard(rotate)
 			Matrix4x4 billboardMatrix = camera_->GetBillboardMatrix();
-			// 平行移動成分を削除
-			billboardMatrix.m[3][0] = 0.0f;
-			billboardMatrix.m[3][1] = 0.0f;
-			billboardMatrix.m[3][2] = 0.0f;
+			
 			// translate
 			Matrix4x4 translateMatrix = MakeTranslateMatrix((*particleIterator).transform.translate);
 

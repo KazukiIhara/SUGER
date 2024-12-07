@@ -35,6 +35,10 @@ void Camera::Update() {
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
 	worldPos_ = ExtractionWorldPos(transform_.worldMatrix_);
 	billboardMatrix_ = backFrontMatrix_ * transform_.worldMatrix_;
+	// 平行移動成分を削除
+	billboardMatrix_.m[3][0] = 0.0f;
+	billboardMatrix_.m[3][1] = 0.0f;
+	billboardMatrix_.m[3][2] = 0.0f;
 
 	UpdateCameraData();
 }

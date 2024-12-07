@@ -66,12 +66,8 @@ void SampleScene::Initialize() {
 	// 繰り返し発生オフ
 	emitter_.SetIsRepeat(true);
 
-	emitter_.SetRandomMaxVelocity(Vector3(3.0f, 3.0f, 3.0f));
-	emitter_.SetRandomMinVelocity(Vector3(-3.0f, -3.0f, -3.0f));
-
-	// ライングループを作成
-	SUGER::CreateLineGroup("sample");
-	line_.Initialize("sample");
+	emitter_.SetRandomMaxVelocity(Vector3(2.0f, 2.0f, 2.0f));
+	emitter_.SetRandomMinVelocity(Vector3(-2.0f, -2.0f, -2.0f));
 
 	//
 	// GrobalData
@@ -112,11 +108,6 @@ void SampleScene::SceneStatePlayUpdate() {
 	// 
 	// シーンの更新処理ここから
 	// 
-
-	// お試しに縦に青線を引いてみた
-	line_.DrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 2.0f, 0.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-	// 横に赤線
-	line_.DrawLine(Vector3(-1.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 
 	// Uキーを押すとBGM再生
 	if (SUGER::TriggerKey(DIK_U)) {
