@@ -17,7 +17,7 @@ void SampleScene::Initialize() {
 	// 
 
 	// レベルデータをシーンにインポート
-	levelDataImporter_.Import("baseScene");
+	// levelDataImporter_.Import("baseScene");
 
 	// シーンにカメラをセット
 	SUGER::SetSceneCamera(sceneCamera_.get());
@@ -60,11 +60,14 @@ void SampleScene::Initialize() {
 	// エミッターにパーティクルをセット
 	emitter_.SetParticle("sampleParticle");
 	// エミッターの発生個数を変更
-	emitter_.SetCount(4);
+	emitter_.SetCount(10);
 	// エミッターの発生タイプを設定
-	emitter_.SetEmitType(kRadialY);
+	emitter_.SetEmitType(kRadialRandom);
 	// 繰り返し発生オフ
-	emitter_.SetIsRepeat(false);
+	emitter_.SetIsRepeat(true);
+
+	emitter_.SetRandomMaxVelocity(Vector3(3.0f, 3.0f, 3.0f));
+	emitter_.SetRandomMinVelocity(Vector3(-3.0f, -3.0f, -3.0f));
 
 	// ライングループを作成
 	SUGER::CreateLineGroup("sample");

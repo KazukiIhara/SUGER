@@ -58,6 +58,8 @@ void BaseScene::Update() {
 	DebugCameraOperation();
 	// デバッグカメラのアップデート
 	debugCamera_->Update();
+	// シーンカメラの更新
+	sceneCamera_->Update();
 	// ライトの更新
 	light_->Update();
 	// シーンステータスのリクエスト初期化処理

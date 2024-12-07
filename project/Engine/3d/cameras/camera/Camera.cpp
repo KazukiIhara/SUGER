@@ -22,6 +22,8 @@ void Camera::Initialize() {
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
 	worldPos_ = ExtractionWorldPos(transform_.worldMatrix_);
 
+	backFrontMatrix_ = MakeRotateYMatrix(std::numbers::pi_v<float>);
+
 	CreateCameraResource();
 	MapCameraData();
 }
@@ -32,6 +34,7 @@ void Camera::Update() {
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(fovY_, aspectRaito_, nearClipRange_, farClipRange_);
 	viewProjectionMatrix_ = viewMatrix * projectionMatrix;
 	worldPos_ = ExtractionWorldPos(transform_.worldMatrix_);
+	billboardMatrix_ = backFrontMatrix_ * transform_.worldMatrix_;
 
 	UpdateCameraData();
 }
@@ -97,5 +100,9 @@ Matrix4x4 Camera::GetWorldMatrix() const {
 
 Vector3 Camera::GetWorldPos() const {
 	return worldPos_;
+}
+
+Matrix4x4 Camera::GetBillboardMatrix() const {
+	return billboardMatrix_;
 }
 

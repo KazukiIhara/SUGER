@@ -112,6 +112,8 @@ void DecomposeUVMatrix(const Matrix4x4& matrix, Vector3& scale, float& rotateZ, 
 
 Matrix4x4 ComposeUVMatrix(const Vector3& scale, float rotateZ, const Vector2& translate);
 
+Matrix4x4 MakeStretchScaleMatrix(const Vector3& baseScale, const Vector3& velocityDir, float stretchFactor);
+
 
 ///
 /// Quaternion
