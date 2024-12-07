@@ -90,7 +90,7 @@ protected:
 	Vector3	randomMaxVelocity_ = { 1.0f,1.0f,1.0f };
 
 	// 色のランダム閾値
-	Vector3 randomMinColor_ = { 0.0f,0.0f,0.0f };
+	Vector3 randomMinColor_ = { 0.1f,0.1f,0.1f };
 	Vector3	randomMaxColor_ = { 1.0f,1.0f,1.0f };
 
 	// 生存時間のランダム閾値

@@ -8,7 +8,10 @@ public:
 	~EntityController() = default;
 
 	// 初期化
-	void Initialize(const std::string& name);
+	virtual void Initialize(const std::string& name);
+
+	// 更新
+	virtual void Update() {};
 
 	// コライダー作成
 	void CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size);
@@ -36,6 +39,9 @@ public:
 
 	// ライトのオンオフ
 	void SetEnableLight(const bool& enbleLight);
+
+	// コライダーのトランスレートセット
+	void SetColliderTranslate(const Vector3& colliderTranslate);
 
 	//
 	// Getter

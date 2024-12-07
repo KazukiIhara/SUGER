@@ -88,6 +88,9 @@ private:
 	// SrvIndex
 	uint32_t srvIndex_ = 0;
 
+	// ストレッチビルボード作成時のスケール
+	float stretchScale_ = 0.2f;
+
 	// 有効フラグ
 	bool isActive_ = true;
 

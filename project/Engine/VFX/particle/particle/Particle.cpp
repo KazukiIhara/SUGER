@@ -55,24 +55,18 @@ void Particle::Update() {
 		float alpha = 1.0f - ((*particleIterator).currentTime / (*particleIterator).lifeTime);
 
 		if (instanceCount_ < kNumMaxInstance) {
-			// 180度回す回転行列を作成する
-			Matrix4x4 backFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
-
 			// WVPマトリックスを求める
+			// Scale
 			Matrix4x4 scaleMatrix = MakeScaleMatrix((*particleIterator).transform.scale);
-			Matrix4x4 billboardMatrix = backFrontMatrix * camera_->GetWorldMatrix();
-			// 平行移動成分を削除
-			billboardMatrix.m[3][0] = 0.0f;
-			billboardMatrix.m[3][1] = 0.0f;
-			billboardMatrix.m[3][2] = 0.0f;
-
+			// billboard(rotate)
+			Matrix4x4 billboardMatrix = camera_->GetBillboardMatrix();
+			
+			// translate
 			Matrix4x4 translateMatrix = MakeTranslateMatrix((*particleIterator).transform.translate);
-
-			// ビルボード無効
-			// billboardMatrix = MakeIdentityMatrix4x4();
 
 			// ワールド行列を作成
 			Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
+
 			// WVP行列を作成
 			Matrix4x4 worldViewProjectionMatrix = worldMatrix * camera_->GetViewProjectionMatrix();
 
@@ -104,12 +98,12 @@ void Particle::Draw() {
 	// モデルがある場合描画
 	if (model_) {
 		switch (type_) {
-		case kPlane:
-			model_->DrawPlaneParticle(instanceCount_, textureFileName_);
-			break;
-		case kModel:
-			model_->DrawModelParticle(instanceCount_);
-			break;
+			case kPlane:
+				model_->DrawPlaneParticle(instanceCount_, textureFileName_);
+				break;
+			case kModel:
+				model_->DrawModelParticle(instanceCount_);
+				break;
 		}
 	}
 }

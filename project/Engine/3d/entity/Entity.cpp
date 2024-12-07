@@ -30,7 +30,7 @@ void Entity::Update() {
 
 	// コライダーが有効ならコライダーの更新
 	if (collider_) {
-		collider_->Update(GetWorldPosition());
+		collider_->Update();
 	}
 
 	// WVPマトリックス作成
@@ -68,7 +68,7 @@ void Entity::Draw() {
 
 void Entity::CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size) {
 	collider_ = std::make_unique<Collider>();
-	collider_->Initialize(GetWorldPosition(), colliderCategory, colliderType, size);
+	collider_->Initialize(&worldTransform_, colliderCategory, colliderType, size);
 }
 
 Collider* Entity::GetCollider() {

@@ -37,6 +37,4 @@ private: // 非公開メンバ変数
 	Object2DController pronamaChanTex;
 	// Emitterコントローラ
 	EmitterController emitter_;
-	// Lineコントローラ
-	LineController line_;
 };

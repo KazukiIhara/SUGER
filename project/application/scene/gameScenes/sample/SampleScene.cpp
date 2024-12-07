@@ -17,7 +17,7 @@ void SampleScene::Initialize() {
 	// 
 
 	// レベルデータをシーンにインポート
-	levelDataImporter_.Import("baseScene");
+	// levelDataImporter_.Import("baseScene");
 
 	// シーンにカメラをセット
 	SUGER::SetSceneCamera(sceneCamera_.get());
@@ -30,10 +30,11 @@ void SampleScene::Initialize() {
 	// エンティティの作成とエンティティコントローラ初期化
 	// プロ生ちゃん
 	pronamaChan_ = std::make_unique<PronamaChan>();
-	pronamaChan_->Initialize(SUGER::CreateEntity("pronamaChan", "walk"));
+	pronamaChan_->Initialize(SUGER::CreateEntity("pronamaChan", "pronama_chan"));
 	pronamaChan_->CreateCollider(kNone, kSphere, 1.0f);
+	pronamaChan_->SetColliderTranslate(Vector3(0.0f, 1.0f, 0.0f));
 	// ライトを無効化
-	pronamaChan_->SetEnableLight(true);
+	pronamaChan_->SetEnableLight(false);
 
 	// ティーポット
 	// 初期トランスフォームを設定
@@ -59,15 +60,14 @@ void SampleScene::Initialize() {
 	// エミッターにパーティクルをセット
 	emitter_.SetParticle("sampleParticle");
 	// エミッターの発生個数を変更
-	emitter_.SetCount(4);
+	emitter_.SetCount(10);
 	// エミッターの発生タイプを設定
-	emitter_.SetEmitType(kRadialY);
+	emitter_.SetEmitType(kRadialRandom);
 	// 繰り返し発生オフ
 	emitter_.SetIsRepeat(true);
 
-	// ライングループを作成
-	SUGER::CreateLineGroup("sample");
-	line_.Initialize("sample");
+	emitter_.SetRandomMaxVelocity(Vector3(2.0f, 2.0f, 2.0f));
+	emitter_.SetRandomMinVelocity(Vector3(-2.0f, -2.0f, -2.0f));
 
 	//
 	// GrobalData
@@ -77,6 +77,10 @@ void SampleScene::Initialize() {
 	SUGER::AddGrobalDataGroup("Pronama_Chan");
 	// グローバルデータのプロ生ちゃんグループにトランスレート情報を追加
 	SUGER::AddGrobalDataItem("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
+	// グローバルデータのプロ生ちゃんグループにRotate情報を追加
+	SUGER::AddGrobalDataItem("Pronama_Chan", "rotate", pronamaChan_->GetRotate());
+	// グローバルデータのプロ生ちゃんグループにScale情報を追加
+	SUGER::AddGrobalDataItem("Pronama_Chan", "scale", pronamaChan_->GetScale());
 
 }
 
@@ -98,15 +102,12 @@ void SampleScene::SceneStatePlayUpdate() {
 
 	// 更新処理の初めにグローバルデータクラスに保存されている値を取得
 	pronamaChan_->SetTranslate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "translate"));
+	pronamaChan_->SetRotate(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "rotate"));
+	pronamaChan_->SetScale(SUGER::GetGrobalDataValueVector3("Pronama_Chan", "scale"));
 
 	// 
 	// シーンの更新処理ここから
 	// 
-
-	// お試しに縦に青線を引いてみた
-	line_.DrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 2.0f, 0.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-	// 横に赤線
-	line_.DrawLine(Vector3(-1.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 0.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 
 	// Uキーを押すとBGM再生
 	if (SUGER::TriggerKey(DIK_U)) {
@@ -130,6 +131,17 @@ void SampleScene::SceneStatePlayUpdate() {
 		pronamaChanTex.SetRotation(pronamaChanTex.GetRotation() - 0.01f);
 		pronamaChan_->SetTranslate(Vector3(pronamaChan_->GetTranslate().x - 0.1f, pronamaChan_->GetTranslate().y, pronamaChan_->GetTranslate().z));
 	}
+
+	// 
+	// エンティティの更新処理ここから
+	// 
+
+	// プロ生ちゃんの更新処理
+	pronamaChan_->Update();
+
+	//
+	// エンティティの更新処理ここまで
+	//
 
 	//
 	// シーンの更新処理ここまで
@@ -158,5 +170,7 @@ void SampleScene::SceneStatePlayUpdate() {
 
 	// 行列更新の手前でローカルデータをグローバルデータクラスに挿入
 	SUGER::SetGrobalDataValue("Pronama_Chan", "translate", pronamaChan_->GetTranslate());
+	SUGER::SetGrobalDataValue("Pronama_Chan", "rotate", pronamaChan_->GetRotate());
+	SUGER::SetGrobalDataValue("Pronama_Chan", "scale", pronamaChan_->GetScale());
 
 }

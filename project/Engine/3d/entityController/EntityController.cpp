@@ -52,6 +52,10 @@ void EntityController::SetEnableLight(const bool& enbleLight) {
 	entity_->SetEnableLight(enbleLight);
 }
 
+void EntityController::SetColliderTranslate(const Vector3& colliderTranslate) {
+	entity_->GetCollider()->SetTranslate(colliderTranslate);
+}
+
 const Vector3& EntityController::GetScale() const {
 	return entity_->GetScale();
 }

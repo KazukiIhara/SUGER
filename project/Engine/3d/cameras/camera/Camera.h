@@ -46,6 +46,9 @@ public:
 	// ワールド座標を送る関数
 	Vector3 GetWorldPos()const;
 
+	// ビルボード行列を送る関数
+	Matrix4x4 GetBillboardMatrix()const;
+
 private:
 
 	// カメラのリソースを作成
@@ -72,6 +75,10 @@ protected:
 	float nearClipRange_ = 0.1f;
 	// ファークリップ距離
 	float farClipRange_ = 1000.0f;
+	// 180度回す回転行列を作成する
+	Matrix4x4 backFrontMatrix_{};
+	// ビルボード行列
+	Matrix4x4 billboardMatrix_{};
 
 	// カメラの初期トランスフォーム
 	const Vector3 kDefaultCameraRotate_ = { 0.45f,0.0f,0.0f };

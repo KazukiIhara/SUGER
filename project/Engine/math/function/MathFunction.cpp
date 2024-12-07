@@ -378,6 +378,18 @@ Matrix4x4 ComposeUVMatrix(const Vector3& scale, float rotateZ, const Vector2& tr
 	return matrix;
 }
 
+Matrix4x4 MakeStretchScaleMatrix(const Vector3& baseScale, const Vector3& velocityDir, float stretchFactor) {
+	// 通常スケール行列
+	Matrix4x4 scaleMatrix = MakeScaleMatrix(baseScale);
+
+	// ストレッチ方向にスケールを追加
+	scaleMatrix.m[0][0] += velocityDir.x * stretchFactor;
+	scaleMatrix.m[1][1] += velocityDir.y * stretchFactor;
+	scaleMatrix.m[2][2] += velocityDir.z * stretchFactor;
+
+	return scaleMatrix;
+}
+
 Quaternion Normalize(const Quaternion& q) {
 	// クォータニオンの長さを計算
 	float length = std::sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
