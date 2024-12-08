@@ -8,6 +8,9 @@ void CG3Scene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
 
+	SUGER::LoadJsonLevelData("CG3LevelData");
+	levelDataImporter_.Import("CG3LevelData");
+
 	// 
 	// シーンの初期化処理ここから
 	// 
