@@ -20,9 +20,12 @@ private:
 	const float kDeltaTime_ = 1.0f / 60.0f;
 
 	// エミッターコントローラ
-	EmitterController sparkEmitter_;
 	EmitterController flashEmitter_;
 	EmitterController fireEmitter_;
-	EmitterController smokeEmitter_;
+
+	// エミッターの設定
+	EmitterSetting fire;
 
 };
+
+void ShowEmitterSettingsUI(EmitterSetting& emitterSetting);

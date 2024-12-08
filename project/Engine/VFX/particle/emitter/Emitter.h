@@ -35,6 +35,9 @@ public:
 	// ランダム発生の閾値設定
 	// 
 
+	// エミッター設定のセット
+	void SetEmitterSetting(const EmitterSetting&emitterSetting);
+
 	// サイズ最小値
 	void SetMinSize(float minSize);
 	// サイズ最大値
@@ -67,53 +70,15 @@ protected:
 	Particle* particle_ = nullptr;
 	// パーティクル発生設定
 	EmitParamater emitParamater_{};
-	// 発生の種類
-	EmitType emitType_ = EmitType::kDefault;
 	// ブレンドモード
-	BlendMode blendMode_= BlendMode::kBlendModeAdd;
-	// 発生数
-	uint32_t count_ = 1;
+	BlendMode blendMode_= BlendMode::kBlendModeAdd;	
+	// エミッターの設定
+	EmitterSetting emitterSetting_{};
 
 	//
 	// 繰り返し発生用の変数
 	//
 
-	// 発生頻度
-	float frequency_ = 0.5f;
-	// 繰り返し発生させるかどうか
-	bool isRepeat_ = false;
 	// 頻度用時刻
 	float frequencyTime_ = 0.0f;
-
-	//
-	// ランダム発生用の変数
-	//
-
-	// 発生場所のランダム閾値
-	Vector3 minTranslate_ = { 0.0f,0.0f,0.0f };
-	Vector3 maxTranslate_ = { 0.0f,0.0f,0.0f };
-
-	// サイズのランダム閾値
-	float minSize_ = 1.0f;
-	float maxSize_ = 1.0f;
-
-	// 移動量のランダム閾値
-	Vector3	minVelocity_ = { 0.0f,0.0f,0.0f };
-	Vector3	maxVelocity_ = { 0.0f,0.0f,0.0f };
-
-	// 色のランダム閾値
-	Vector3 minColor_ = { 1.0f,1.0f,1.0f };
-	Vector3	maxColor_ = { 1.0f,1.0f,1.0f };
-
-	// 生存時間のランダム閾値
-	float minLifeTime_ = 3.0f;
-	float maxLifeTime_ = 3.0f;
-
-	//
-	// 放射発生用の変数
-	//
-
-	// 発生速度
-	float speed_ = 1.0f;
-
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include "structs/ObjectStructs.h"
+#include "enum/EmitterEnum.h"
 
 struct EmitParamater {
 	Vector3 position;
@@ -24,9 +25,31 @@ struct ParticleForGPU {
 	Vector4 color;
 };
 
-struct EmitterData {
-	EulerTransform3D transform;	// エミッターのTransform
-	uint32_t count;			// 発生数
-	float frequency;		// 発生頻度
-	float frequencyTime;	// 頻度用時刻
+// エミッターの設定構造体
+struct EmitterSetting {
+	// 発生のタイプ
+	EmitType emitType = kDefault;
+	// 発生場所
+	Vector3 minTranslate{};
+	Vector3 maxTranslate{};
+	// 移動量
+	Vector3	minVelocity{};
+	Vector3 maxVelocity{};
+	// サイズ
+	float minSize;
+	float maxSize;
+	// 色
+	Vector3 minColor{};
+	Vector3 maxColor{};
+	// 生存時間
+	float minLifeTime;
+	float maxLifeTime;
+	// 発生個数
+	uint32_t count;
+	// 繰り返し発生するかどうか
+	bool isRepeat;
+	// 発生頻度
+	float frequency;
+	// 発生速度(radius発生時のパラメータ)
+	float speed;
 };
