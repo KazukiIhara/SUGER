@@ -8,6 +8,8 @@ void CG3Scene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
 
+
+
 	// 
 	// シーンの初期化処理ここから
 	// 

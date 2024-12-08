@@ -10,6 +10,10 @@ void Emitter::Initialize() {
 	// 発生設定の初期化
 	// 発生数は1
 	count_ = 1;
+	// 座標は0,0,0
+	emitParamater_.position = { 0.0f,0.0f,0.0f };
+	// サイズは1.0
+	emitParamater_.scale = { 1.0f,1.0f,1.0f };
 	// 移動量は0
 	emitParamater_.velocity = { 0.0f,0.0f,0.0f };
 	// 色は白
@@ -50,6 +54,12 @@ void Emitter::Emit() {
 		case kDefault:
 			// 発生個数分ループ
 			for (uint32_t i = 0; i < count_; i++) {
+				// サイズ
+				float size = Random::GenerateFloat(minSize_, maxSize_);
+				emitParamater_.scale.x = size;
+				emitParamater_.scale.y = size;
+				emitParamater_.scale.z = size;
+				// 座標
 				emitParamater_.position.x = emitterPosition.x + i * 0.1f;
 				emitParamater_.position.y = emitterPosition.y + i * 0.1f;
 				particle_->AddNewParticle(emitParamater_);

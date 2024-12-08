@@ -33,8 +33,6 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 
 	// デフォルトフォントを明示的に追加
 	io.Fonts->AddFontDefault();
-	// 赤ずきんポップフォントを追加
-	ImFont* loadFont = io.Fonts->AddFontFromFileTTF("resources/fonts/AkazukiPOP.otf", 16.0f);
 }
 
 void ImGuiManager::BeginFrame() {
@@ -44,16 +42,9 @@ void ImGuiManager::BeginFrame() {
 
 	// ImGuiをダークテーマにする
 	SetImGuiDarkTheme();
-
-	// フォントを赤ずきんフォントに変更
-	ImGuiIO& io = ImGui::GetIO();
-	ImFont* akazukinFont = io.Fonts->Fonts[1];
-	ImGui::PushFont(akazukinFont);
 }
 
 void ImGuiManager::EndFrame() {
-	// フォントを元に戻す
-	ImGui::PopFont();
 	// ImGui内部コマンドの生成
 	ImGui::Render();
 }

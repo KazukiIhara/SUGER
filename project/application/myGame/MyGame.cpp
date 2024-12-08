@@ -18,7 +18,7 @@ void MyGame::Initialize() {
 	// シーンマネージャにシーンファクトリをセット
 	sceneManager_->SetSceneFactory(sceneFactory_.get());
 	// 初期シーンのセット
-	sceneManager_->ChangeScene("CG3");
+	sceneManager_->ChangeScene("EVALUATION");
 }
 
 void MyGame::Finalize() {
