@@ -20,6 +20,9 @@ public:
 	// パーティクルのセット
 	void SetParticle(const std::string& particleName);
 
+	// 発生設定初期化
+	void InitializeEmitterSetting();
+
 	// 発生数のセット
 	void SetCount(const uint32_t& count);
 	// 発生頻度のセット

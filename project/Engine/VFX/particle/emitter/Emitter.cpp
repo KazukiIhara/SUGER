@@ -7,22 +7,8 @@ void Emitter::Initialize() {
 	// 基底クラスの初期化
 	Empty::Initialize();
 
-	// 発生設定の初期化
-	// 発生数は1
-	emitterSetting_.count = 1;
-	emitterSetting_.emitType = kDefault;
-	emitterSetting_.frequency = 1.0f;
-	emitterSetting_.isRepeat = false;
-	emitterSetting_.minColor = { 1.0f,1.0f,1.0f };
-	emitterSetting_.maxColor = { 1.0f,1.0f,1.0f };
-	emitterSetting_.minScale = 1.0f;
-	emitterSetting_.maxScale = 1.0f;
-	emitterSetting_.minVelocity = { 0.0f,0.0f,0.0f };
-	emitterSetting_.maxVelocity = { 0.0f,0.0f,0.0f };
-	emitterSetting_.minTranslate = { 0.0f,0.0f,0.0f };
-	emitterSetting_.maxTranslate = { 0.0f,0.0f,0.0f };
-	emitterSetting_.minLifeTime = 1.0f;
-	emitterSetting_.maxLifeTime = 1.0f;
+	// エミッターの設定初期化
+	InitializeEmitterSetting();
 
 	// 座標は0,0,0
 	emitParamater_.position = { 0.0f,0.0f,0.0f };
@@ -193,6 +179,24 @@ void Emitter::Emit() {
 void Emitter::SetParticle(const std::string& particleName) {
 	// パーティクルがなければassert
 	particle_ = SUGER::FindParticle(particleName);
+}
+
+void Emitter::InitializeEmitterSetting() {
+	// 発生設定の初期化
+	emitterSetting_.count = 1;
+	emitterSetting_.emitType = kDefault;
+	emitterSetting_.frequency = 1.0f;
+	emitterSetting_.isRepeat = false;
+	emitterSetting_.minColor = { 1.0f,1.0f,1.0f };
+	emitterSetting_.maxColor = { 1.0f,1.0f,1.0f };
+	emitterSetting_.minScale = 1.0f;
+	emitterSetting_.maxScale = 1.0f;
+	emitterSetting_.minVelocity = { 0.0f,0.0f,0.0f };
+	emitterSetting_.maxVelocity = { 0.0f,0.0f,0.0f };
+	emitterSetting_.minTranslate = { 0.0f,0.0f,0.0f };
+	emitterSetting_.maxTranslate = { 0.0f,0.0f,0.0f };
+	emitterSetting_.minLifeTime = 1.0f;
+	emitterSetting_.maxLifeTime = 1.0f;
 }
 
 void Emitter::SetCount(const uint32_t& count) {
