@@ -8,7 +8,8 @@ void CG3Scene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
 
-
+	sceneCamera_->SetRotate(Vector3(0.0f, 0.0f, 0.0f));
+	sceneCamera_->SetTranslate(Vector3(0.0f, 0.0f, -2.5f));
 
 	// 
 	// シーンの初期化処理ここから
@@ -29,6 +30,11 @@ void CG3Scene::SceneStatePlayInitialize() {
 }
 
 void CG3Scene::SceneStatePlayUpdate() {
+
+	ImGui::Begin("CG3Scene");
+	ImGui::Text("PUSH SPACE To Emit");
+	ImGui::End();
+
 	// スペースを押したら発生
 	if (SUGER::TriggerKey(DIK_SPACE)) {
 		explosion_.Emit();
