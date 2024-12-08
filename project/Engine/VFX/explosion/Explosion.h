@@ -22,9 +22,11 @@ private:
 	// エミッターコントローラ
 	EmitterController flashEmitter_;
 	EmitterController fireEmitter_;
+	EmitterController fireEmitter2_;
 
 	// エミッターの設定
 	EmitterSetting fire;
+	EmitterSetting fire2;
 
 };
 

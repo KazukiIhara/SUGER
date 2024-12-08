@@ -6,7 +6,6 @@ void Explosion::Initialize() {
 
 	// 必要なエミッターとパーティクル作成
 	SUGER::CreateParticle("fire", kPlane, "circle.png");
-	SUGER::CreateParticle("smoke", kPlane, "circle.png");
 	// fire
 	fireEmitter_.Initialize(SUGER::CreateEmitter("fire"));
 	fireEmitter_.SetParticle("fire");
@@ -15,32 +14,57 @@ void Explosion::Initialize() {
 	fire.emitType = kRandom;
 	fire.minColor = { 0.0f,0.0f,0.2f };
 	fire.maxColor = { 0.0f,0.1f,1.0f };
-	fire.minSize = 0.2f;
+	fire.minSize = 0.1f;
 	fire.maxSize = 0.75f;
-	fire.minTranslate = { -0.1f,0.0f,0.0f };
-	fire.maxTranslate = { 0.1f,0.4f,0.0f };
+	fire.minTranslate = { -0.1f, -0.4f,0.0f };
+	fire.maxTranslate = { 0.01f,0.8f,0.0f };
 	fire.minVelocity = { -0.1f,0.1f,0.0f };
 	fire.maxVelocity = { 0.1f,0.8f,0.0f };
 	fire.minLifeTime = 0.2f;
 	fire.maxLifeTime = 2.0f;
-	fire.count = 300;
+	fire.count = 100;
 	fire.isRepeat = false;
 	fire.frequency = 0.0f;
 
 	fireEmitter_.SetEmitterSetting(fire);
+
+	// fire
+	fireEmitter2_.Initialize(SUGER::CreateEmitter("fire"));
+	fireEmitter2_.SetParticle("fire");
+	fireEmitter2_.SetIsRepeat(false);
+
+	fire2.emitType = kRandom;
+	fire2.minColor = { 0.0f,0.0f,0.2f };
+	fire2.maxColor = { 0.0f,0.1f,1.0f };
+	fire2.minSize = 0.07f;
+	fire2.maxSize = 0.9f;
+	fire2.minTranslate = { -0.23f,-0.4f,0.0f };
+	fire2.maxTranslate = { 0.36f,0.35f,0.0f };
+	fire2.minVelocity = { -0.1f,0.1f,0.0f };
+	fire2.maxVelocity = { 0.1f,0.8f,0.0f };
+	fire2.minLifeTime = 0.2f;
+	fire2.maxLifeTime = 2.0f;
+	fire2.count = 100;
+	fire2.isRepeat = false;
+	fire2.frequency = 0.0f;
+
+	fireEmitter2_.SetEmitterSetting(fire2);
+
 }
 
 void Explosion::Update() {
-	ShowEmitterSettingsUI(fire);
 	fireEmitter_.SetEmitterSetting(fire);
+	fireEmitter2_.SetEmitterSetting(fire2);
 }
 
 void Explosion::Emit() {
 	fireEmitter_.Emit();
+	fireEmitter2_.Emit();
+
 }
 
 void ShowEmitterSettingsUI(EmitterSetting& emitterSetting) {
-	if (ImGui::Begin("Fire Settings")) {
+	if (ImGui::Begin("EmitterSettings")) {
 		// 色設定
 		ImGui::Text("Color");
 		ImGui::ColorEdit3("Min Color", reinterpret_cast<float*>(&emitterSetting.minColor));
