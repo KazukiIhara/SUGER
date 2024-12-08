@@ -17,15 +17,7 @@ void SampleScene::Initialize() {
 	// 
 
 	// レベルデータをシーンにインポート
-	// levelDataImporter_.Import("baseScene");
-
-	// シーンにカメラをセット
-	SUGER::SetSceneCamera(sceneCamera_.get());
-
-	// 板ポリパーティクルの作成
-	SUGER::CreateParticle("sampleParticle", ParticleType::kPlane, "circle.png");
-	// エミッターの作成
-	SUGER::CreateEmitter("sampleEmitter");
+	levelDataImporter_.Import("baseScene");
 
 	// エンティティの作成とエンティティコントローラ初期化
 	// プロ生ちゃん
@@ -55,6 +47,11 @@ void SampleScene::Initialize() {
 	pronamaChanTex.SetPosition(pronamaChanTex.GetSize() / 2.0f);
 	pronamaChanTex.SetAnchorPoint(Vector2(0.5f, 0.5f));
 
+	// 板ポリパーティクルの作成
+	SUGER::CreateParticle("sampleParticle", ParticleType::kPlane, "circle.png");
+	// エミッターの作成
+	SUGER::CreateEmitter("sampleEmitter");
+
 	// エミッターのコントローラを初期化
 	emitter_.Initialize("sampleEmitter");
 	// エミッターにパーティクルをセット
@@ -62,12 +59,12 @@ void SampleScene::Initialize() {
 	// エミッターの発生個数を変更
 	emitter_.SetCount(10);
 	// エミッターの発生タイプを設定
-	emitter_.SetEmitType(kRadialRandom);
+	emitter_.SetEmitType(kRandom);
 	// 繰り返し発生オフ
 	emitter_.SetIsRepeat(true);
 
-	emitter_.SetRandomMaxVelocity(Vector3(2.0f, 2.0f, 2.0f));
-	emitter_.SetRandomMinVelocity(Vector3(-2.0f, -2.0f, -2.0f));
+	emitter_.SetMaxVelocity(Vector3(2.0f, 2.0f, 2.0f));
+	emitter_.SetMinVelocity(Vector3(-2.0f, -2.0f, -2.0f));
 
 	//
 	// GrobalData

@@ -7,10 +7,13 @@
 #include "VFX/particle/emitterController/EmitterController.h"
 #include "3d/lineController/LineController.h"
 
-class EvaluationScene:public BaseScene {
+// CG3Scene
+#include "VFX/explosion/Explosion.h"
+
+class CG3Scene:public BaseScene {
 public:
-	EvaluationScene() = default;
-	~EvaluationScene() = default;
+	CG3Scene() = default;
+	~CG3Scene() = default;
 
 	// 初期化
 	void Initialize()override;
@@ -25,5 +28,6 @@ public:
 private:
 	// Emitterコントローラ
 	EmitterController emitter_;
-	bool isRepeat_ = false;
+	// Explosion
+	Explosion explosion_;
 };

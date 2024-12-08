@@ -108,7 +108,7 @@ void Particle::Draw() {
 	}
 }
 
-void Particle::AddNewParticle(const EmitSetting& emitSetting) {
+void Particle::AddNewParticle(const EmitParamater& emitSetting) {
 
 	// 最大数を超えていたら追加しない
 	if (particles_.size() >= kNumMaxInstance) {
@@ -118,7 +118,7 @@ void Particle::AddNewParticle(const EmitSetting& emitSetting) {
 	// 追加するパーティクル
 	ParticleData particle;
 	// トランスフォームの設定
-	particle.transform.scale = { 1.0f,1.0f,1.0f };
+	particle.transform.scale = emitSetting.scale;
 	particle.transform.rotate = { 0.0f,0.0f,0.0f };
 	particle.transform.translate = emitSetting.position;
 	// 移動量の設定

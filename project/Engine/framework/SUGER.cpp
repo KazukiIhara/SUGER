@@ -564,8 +564,8 @@ void SUGER::SetSceneCamera(Camera* camera) {
 	lineManager_->SetSceneCamera(camera);
 }
 
-void SUGER::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {
-	emitterManager_->CreateEmitter(name, transform);
+std::string SUGER::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {
+	return emitterManager_->CreateEmitter(name, transform);
 }
 
 void SUGER::UpdateEmitters() {
@@ -580,19 +580,21 @@ void SUGER::ClearEmitterContainer() {
 	emitterManager_->ClearContainer();
 }
 
-void SUGER::CreateParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath) {
+std::string SUGER::CreateParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath) {
 	// 既定のディレクトリパス
 	const std::string& textureDirectoryPath = "resources/images/";
 	// パーティクルタイプに応じてパーティクルを作成
 	switch (particleType) {
-	case kPlane:
-		// 板ポリパーティクルを作成
-		particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
-		break;
-	case kModel:
-		// モデルパーティクルを作成
-		particleManager_->CreateModelParticle(name, filePath);
-		break;
+		case kPlane:
+			// 板ポリパーティクルを作成
+			return particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
+			break;
+		case kModel:
+			// モデルパーティクルを作成
+			return particleManager_->CreateModelParticle(name, filePath);
+			break;
+		default:
+			return "";
 	}
 }
 

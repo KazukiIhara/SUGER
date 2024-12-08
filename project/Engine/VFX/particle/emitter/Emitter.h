@@ -3,7 +3,7 @@
 #include "enum/EmitterEnum.h"
 #include "VFX/particle/particle/Particle.h"
 
-class Emitter :public Empty {
+class Emitter:public Empty {
 public:
 	Emitter() = default;
 	~Emitter() = default;
@@ -28,27 +28,33 @@ public:
 	void SetIsRepeat(const bool& isRepeat);
 	// 発生タイプのセット
 	void SetEmitType(const EmitType& emitType);
+	// ブレンドモードセット
+	void SetBlendMode(const BlendMode& blendMode);
 
 	// 
 	// ランダム発生の閾値設定
 	// 
 
+	// サイズ最小値
+	void SetMinSize(float minSize);
+	// サイズ最大値
+	void SetMaxSize(float maxSize);
 	// 座標最小値
-	void SetRandomMinPosition(const Vector3& randomMinPosition);
+	void SetMinPosition(const Vector3& randomMinPosition);
 	// 座標最大値
-	void SetRandomMaxPosition(const Vector3& randomMaxPosition);
+	void SetMaxPosition(const Vector3& randomMaxPosition);
 	// 移動量最小値
-	void SetRandomMinVelocity(const Vector3& randomMinVelocity);
+	void SetMinVelocity(const Vector3& randomMinVelocity);
 	// 移動量最大値
-	void SetRandomMaxVelocity(const Vector3& randomMaxVelocity);
+	void SetMaxVelocity(const Vector3& randomMaxVelocity);
 	// 色最小値
-	void SetRandomMinColor(const Vector3& randomMinColor);
+	void SetMinColor(const Vector3& randomMinColor);
 	// 色最大値
-	void SetRandomMaxColor(const Vector3& randomMaxColor);
+	void SetMaxColor(const Vector3& randomMaxColor);
 	// 生存時間最小値
-	void SetRandomMinLifeTime(float randomMinLifeTime);
+	void SetMinLifeTime(float randomMinLifeTime);
 	// 生存時間最大値
-	void SetRandomMaxLifeTime(float randomMaxLifeTime);
+	void SetMaxLifeTime(float randomMaxLifeTime);
 
 protected:
 	// 
@@ -60,9 +66,11 @@ protected:
 	// セットするパーティクル
 	Particle* particle_ = nullptr;
 	// パーティクル発生設定
-	EmitSetting emitSetting_{};
+	EmitParamater emitParamater_{};
 	// 発生の種類
 	EmitType emitType_ = EmitType::kDefault;
+	// ブレンドモード
+	BlendMode blendMode_= BlendMode::kBlendModeAdd;
 	// 発生数
 	uint32_t count_ = 1;
 
@@ -82,20 +90,24 @@ protected:
 	//
 
 	// 発生場所のランダム閾値
-	Vector3 randomMinTranslate_ = { -1.0f,-1.0f,-1.0f };
-	Vector3 randomMaxTranslate_ = { 1.0f,1.0f,1.0f };
+	Vector3 minTranslate_ = { 0.0f,0.0f,0.0f };
+	Vector3 maxTranslate_ = { 0.0f,0.0f,0.0f };
+
+	// サイズのランダム閾値
+	float minSize_ = 1.0f;
+	float maxSize_ = 1.0f;
 
 	// 移動量のランダム閾値
-	Vector3	randomMinVelocity_ = { -1.0f,-1.0f,-1.0f };
-	Vector3	randomMaxVelocity_ = { 1.0f,1.0f,1.0f };
+	Vector3	minVelocity_ = { 0.0f,0.0f,0.0f };
+	Vector3	maxVelocity_ = { 0.0f,0.0f,0.0f };
 
 	// 色のランダム閾値
-	Vector3 randomMinColor_ = { 0.1f,0.1f,0.1f };
-	Vector3	randomMaxColor_ = { 1.0f,1.0f,1.0f };
+	Vector3 minColor_ = { 1.0f,1.0f,1.0f };
+	Vector3	maxColor_ = { 1.0f,1.0f,1.0f };
 
 	// 生存時間のランダム閾値
-	float randomMinLifeTime_ = 1.0f;
-	float randomMaxLifeTime_ = 5.0f;
+	float minLifeTime_ = 3.0f;
+	float maxLifeTime_ = 3.0f;
 
 	//
 	// 放射発生用の変数

@@ -24,7 +24,7 @@ public:
 	void Draw();
 
 	// 新規パーティクル追加
-	void AddNewParticle(const EmitSetting& emitSetting);
+	void AddNewParticle(const EmitParamater& emitSetting);
 
 	// カメラのセット
 	void SetCamera(Camera* camera);

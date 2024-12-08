@@ -1,7 +1,7 @@
 #pragma once
 #include "structs/ObjectStructs.h"
 
-struct EmitSetting {
+struct EmitParamater {
 	Vector3 position;
 	Vector3 rotate;
 	Vector3 scale;

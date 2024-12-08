@@ -47,36 +47,48 @@ void EmitterController::SetEmitType(const EmitType& emitType) {
 	emitter_->SetEmitType(emitType);
 }
 
-void EmitterController::SetRandomMinPosition(const Vector3& randomMinPosition) {
-	emitter_->SetRandomMinPosition(randomMinPosition);
+void EmitterController::SetBlendMode(const BlendMode& blendMode) {
+	emitter_->SetBlendMode(blendMode);
 }
 
-void EmitterController::SetRandomMaxPosition(const Vector3& randomMaxPosition) {
-	emitter_->SetRandomMaxPosition(randomMaxPosition);
+void EmitterController::SetMinPosition(const Vector3& minPosition) {
+	emitter_->SetMinPosition(minPosition);
 }
 
-void EmitterController::SetRandomMinVelocity(const Vector3& randomMinVelocity) {
-	emitter_->SetRandomMinVelocity(randomMinVelocity);
+void EmitterController::SetMaxPosition(const Vector3& maxPosition) {
+	emitter_->SetMaxPosition(maxPosition);
 }
 
-void EmitterController::SetRandomMaxVelocity(const Vector3& randomMaxVelocity) {
-	emitter_->SetRandomMaxVelocity(randomMaxVelocity);
+void EmitterController::SetMinSize(float minSize) {
+	emitter_->SetMinSize(minSize);
 }
 
-void EmitterController::SetRandomMinColor(const Vector3& randomMinColor) {
-	emitter_->SetRandomMinColor(randomMinColor);
+void EmitterController::SetMaxSize(float maxSize) {
+	emitter_->SetMaxSize(maxSize);
 }
 
-void EmitterController::SetRandomMaxColor(const Vector3& randomMaxColor) {
-	emitter_->SetRandomMaxColor(randomMaxColor);
+void EmitterController::SetMinVelocity(const Vector3& minVelocity) {
+	emitter_->SetMinVelocity(minVelocity);
 }
 
-void EmitterController::SetRandomMinLifeTime(float randomMinLifeTime) {
-	emitter_->SetRandomMinLifeTime(randomMinLifeTime);
+void EmitterController::SetMaxVelocity(const Vector3& maxVelocity) {
+	emitter_->SetMaxVelocity(maxVelocity);
 }
 
-void EmitterController::SetRandomMaxLifeTime(float randomMaxLifeTime) {
-	emitter_->SetRandomMaxLifeTime(randomMaxLifeTime);
+void EmitterController::SetMinColor(const Vector3& minColor) {
+	emitter_->SetMinColor(minColor);
+}
+
+void EmitterController::SetMaxColor(const Vector3& maxColor) {
+	emitter_->SetMaxColor(maxColor);
+}
+
+void EmitterController::SetMinLifeTime(float minLifeTime) {
+	emitter_->SetMinLifeTime(minLifeTime);
+}
+
+void EmitterController::SetMaxLifeTime(float maxLifeTime) {
+	emitter_->SetMaxLifeTime(maxLifeTime);
 }
 
 const Vector3& EmitterController::GetScale() const {
