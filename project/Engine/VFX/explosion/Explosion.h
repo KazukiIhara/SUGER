@@ -2,7 +2,7 @@
 #include "3d/empty/empty.h"
 #include "VFX/particle/emitterController/EmitterController.h"
 
-class Explosion :public Empty {
+class Explosion:public Empty {
 public:
 	Explosion() = default;
 	~Explosion() = default;
@@ -15,6 +15,10 @@ public:
 	// 発生
 	void Emit();
 
+
+private:
+	void ShowEmitterSettingsUI(EmitterSetting& emitterSetting);
+
 private:
 	// デルタタイム
 	const float kDeltaTime_ = 1.0f / 60.0f;
@@ -25,9 +29,9 @@ private:
 	EmitterController fireEmitter2_;
 
 	// エミッターの設定
+	EmitterSetting flash;
 	EmitterSetting fire;
 	EmitterSetting fire2;
 
 };
 
-void ShowEmitterSettingsUI(EmitterSetting& emitterSetting);

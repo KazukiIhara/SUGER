@@ -36,7 +36,7 @@ void Explosion::Initialize() {
 	fire2.emitType = kRandom;
 	fire2.minColor = { 0.0f,0.0f,0.2f };
 	fire2.maxColor = { 0.0f,0.1f,1.0f };
-	fire2.minSize = 0.07f;
+	fire2.minSize = 0.2f;
 	fire2.maxSize = 0.9f;
 	fire2.minTranslate = { -0.23f,-0.4f,0.0f };
 	fire2.maxTranslate = { 0.36f,0.35f,0.0f };
@@ -63,7 +63,7 @@ void Explosion::Emit() {
 
 }
 
-void ShowEmitterSettingsUI(EmitterSetting& emitterSetting) {
+void Explosion::ShowEmitterSettingsUI(EmitterSetting& emitterSetting) {
 	if (ImGui::Begin("EmitterSettings")) {
 		// 色設定
 		ImGui::Text("Color");
