@@ -46,8 +46,6 @@ void Emitter::Emit() {
 	// パーティクル発生ポジション
 	Vector3 emitterPosition = GetWorldPosition();
 	emitParamater_.position = emitterPosition;
-	// ブレンドモードセット
-	particle_->SetBlendMode(blendMode_);
 	// 発生タイプごとの処理
 	switch (emitterSetting_.emitType) {
 		// デフォルト
@@ -213,10 +211,6 @@ void Emitter::SetIsRepeat(const bool& isRepeat) {
 
 void Emitter::SetEmitType(const EmitType& emitType) {
 	emitterSetting_.emitType = emitType;
-}
-
-void Emitter::SetBlendMode(const BlendMode& blendMode) {
-	blendMode_ = blendMode;
 }
 
 void Emitter::SetEmitterSetting(const EmitterSetting& emitterSetting) {

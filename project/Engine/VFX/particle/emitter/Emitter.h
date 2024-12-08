@@ -31,8 +31,6 @@ public:
 	void SetIsRepeat(const bool& isRepeat);
 	// 発生タイプのセット
 	void SetEmitType(const EmitType& emitType);
-	// ブレンドモードセット
-	void SetBlendMode(const BlendMode& blendMode);
 
 	// 
 	// ランダム発生の閾値設定
@@ -73,8 +71,6 @@ protected:
 	Particle* particle_ = nullptr;
 	// パーティクル発生設定
 	EmitParamater emitParamater_{};
-	// ブレンドモード
-	BlendMode blendMode_= BlendMode::kBlendModeAdd;	
 	// エミッターの設定
 	EmitterSetting emitterSetting_{};
 

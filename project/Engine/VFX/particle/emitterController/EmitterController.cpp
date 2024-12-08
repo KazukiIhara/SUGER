@@ -51,10 +51,6 @@ void EmitterController::SetEmitType(const EmitType& emitType) {
 	emitter_->SetEmitType(emitType);
 }
 
-void EmitterController::SetBlendMode(const BlendMode& blendMode) {
-	emitter_->SetBlendMode(blendMode);
-}
-
 void EmitterController::SetEmitterSetting(const EmitterSetting& emitterSetting) {
 	emitter_->SetEmitterSetting(emitterSetting);
 }

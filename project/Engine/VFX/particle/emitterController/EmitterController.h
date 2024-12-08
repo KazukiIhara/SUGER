@@ -43,9 +43,6 @@ public:
 	// 発生タイプのセット
 	void SetEmitType(const EmitType& emitType);
 
-	// ブレンドモードのセット
-	void SetBlendMode(const BlendMode& blendMode);
-
 
 	// エミッターの設定のセット
 	void SetEmitterSetting(const EmitterSetting& emitterSetting);

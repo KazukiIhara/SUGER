@@ -56,7 +56,6 @@ void Explosion::Initialize() {
 	flashEmitter_.Initialize(SUGER::CreateEmitter("flash"));
 	flashEmitter_.SetParticle("flash");
 	flashEmitter_.SetIsRepeat(false);
-	flashEmitter_.SetBlendMode(kBlendModeScreen);
 
 	flash.emitType = kRadialZ;
 	flash.minColor = { 0.0f,0.0f,0.0f };
