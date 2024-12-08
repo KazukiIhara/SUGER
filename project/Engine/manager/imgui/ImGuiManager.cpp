@@ -26,13 +26,13 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 		srvManager_->GetDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
 		srvManager_->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart()
 	);
-	srvManager_->Allocate();
 
-	// ImGuiIOの取得
+
+	// フォントのグローバルスケールを変更
 	ImGuiIO& io = ImGui::GetIO();
+	io.FontGlobalScale = 1.2f; // 全体スケールを1.5倍に設定
 
-	// デフォルトフォントを明示的に追加
-	io.Fonts->AddFontDefault();
+	srvManager_->Allocate();
 }
 
 void ImGuiManager::BeginFrame() {

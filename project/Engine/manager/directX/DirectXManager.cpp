@@ -57,7 +57,7 @@ void DirectXManager::PreDraw() {
 	ClearDepthView();
 
 	// 全画面クリア
-	float clearColor[] = { 0.0f,0.0f,0.0f,1.0f };
+	float clearColor[] = { 0.05f,0.05f,0.05f,1.0f };
 	ClearRenderTarget(clearColor);
 
 	// ビューポート設定
