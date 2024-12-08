@@ -26,13 +26,19 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 		srvManager_->GetDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
 		srvManager_->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart()
 	);
-	srvManager_->Allocate();
 
-	// ImGuiIOの取得
+
+	// フォントのサイズ変更処理
 	ImGuiIO& io = ImGui::GetIO();
+	ImFontConfig fontConfig;
+	// サイズを指定
+	fontConfig.SizePixels = 15.0f;
+	// デフォルトフォントを再ロード
+	io.Fonts->AddFontDefault(&fontConfig);
+	// フォントを再構築
+	io.Fonts->Build();
 
-	// デフォルトフォントを明示的に追加
-	io.Fonts->AddFontDefault();
+	srvManager_->Allocate();
 }
 
 void ImGuiManager::BeginFrame() {
