@@ -28,9 +28,15 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 	);
 
 
-	// フォントのグローバルスケールを変更
+	// フォントのサイズ変更処理
 	ImGuiIO& io = ImGui::GetIO();
-	io.FontGlobalScale = 1.2f; // 全体スケールを1.5倍に設定
+	ImFontConfig fontConfig;
+	// サイズを指定
+	fontConfig.SizePixels = 15.0f;
+	// デフォルトフォントを再ロード
+	io.Fonts->AddFontDefault(&fontConfig);
+	// フォントを再構築
+	io.Fonts->Build();
 
 	srvManager_->Allocate();
 }
