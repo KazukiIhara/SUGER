@@ -36,8 +36,8 @@ struct EmitterSetting {
 	Vector3	minVelocity{};
 	Vector3 maxVelocity{};
 	// サイズ
-	float minSize;
-	float maxSize;
+	float minScale;
+	float maxScale;
 	// 色
 	Vector3 minColor{};
 	Vector3 maxColor{};

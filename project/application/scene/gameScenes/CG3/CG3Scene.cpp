@@ -21,7 +21,7 @@ void CG3Scene::Initialize() {
 
 void CG3Scene::Finalize() {
 	// デバッグ用文字
-	Logger::Log("CG3Scene,Finalized\n");
+	Logger::Log("EffectScene,Finalized\n");
 
 }
 
@@ -31,7 +31,7 @@ void CG3Scene::SceneStatePlayInitialize() {
 
 void CG3Scene::SceneStatePlayUpdate() {
 
-	ImGui::Begin("CG3Scene");
+	ImGui::Begin("EffectScene");
 	ImGui::Text("PUSH SPACE To Emit");
 	ImGui::End();
 

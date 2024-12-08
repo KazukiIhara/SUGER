@@ -10,6 +10,20 @@ void Emitter::Initialize() {
 	// 発生設定の初期化
 	// 発生数は1
 	emitterSetting_.count = 1;
+	emitterSetting_.emitType = kDefault;
+	emitterSetting_.frequency = 1.0f;
+	emitterSetting_.isRepeat = false;
+	emitterSetting_.minColor = { 1.0f,1.0f,1.0f };
+	emitterSetting_.maxColor = { 1.0f,1.0f,1.0f };
+	emitterSetting_.minScale = 1.0f;
+	emitterSetting_.maxScale = 1.0f;
+	emitterSetting_.minVelocity = { 0.0f,0.0f,0.0f };
+	emitterSetting_.maxVelocity = { 0.0f,0.0f,0.0f };
+	emitterSetting_.minTranslate = { 0.0f,0.0f,0.0f };
+	emitterSetting_.maxTranslate = { 0.0f,0.0f,0.0f };
+	emitterSetting_.minLifeTime = 1.0f;
+	emitterSetting_.maxLifeTime = 1.0f;
+
 	// 座標は0,0,0
 	emitParamater_.position = { 0.0f,0.0f,0.0f };
 	// サイズは1.0
@@ -55,10 +69,10 @@ void Emitter::Emit() {
 			// 発生個数分ループ
 			for (uint32_t i = 0; i < emitterSetting_.count; i++) {
 				// サイズ
-				float size = Random::GenerateFloat(emitterSetting_.minSize, emitterSetting_.maxSize);
-				emitParamater_.scale.x = size;
-				emitParamater_.scale.y = size;
-				emitParamater_.scale.z = size;
+				float scale = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
+				emitParamater_.scale.x = scale;
+				emitParamater_.scale.y = scale;
+				emitParamater_.scale.z = scale;
 				// 座標
 				emitParamater_.position.x = emitterPosition.x + i * 0.1f;
 				emitParamater_.position.y = emitterPosition.y + i * 0.1f;
@@ -74,7 +88,7 @@ void Emitter::Emit() {
 				emitParamater_.position.y = emitterPosition.y + Random::GenerateFloat(emitterSetting_.minTranslate.y, emitterSetting_.maxTranslate.y);
 				emitParamater_.position.z = emitterPosition.z + Random::GenerateFloat(emitterSetting_.minTranslate.z, emitterSetting_.maxTranslate.z);
 				// サイズ
-				float size = Random::GenerateFloat(emitterSetting_.minSize, emitterSetting_.maxSize);
+				float size = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
 				emitParamater_.scale.x = size;
 				emitParamater_.scale.y = size;
 				emitParamater_.scale.z = size;
@@ -97,7 +111,7 @@ void Emitter::Emit() {
 		case kRadialX:
 			for (uint32_t i = 0; i < emitterSetting_.count; i++) {
 				// サイズ
-				float size = Random::GenerateFloat(emitterSetting_.minSize, emitterSetting_.maxSize);
+				float size = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
 				emitParamater_.scale.x = size;
 				emitParamater_.scale.y = size;
 				emitParamater_.scale.z = size;
@@ -124,7 +138,7 @@ void Emitter::Emit() {
 		case kRadialY:
 			for (uint32_t i = 0; i < emitterSetting_.count; i++) {
 				// サイズ
-				float size = Random::GenerateFloat(emitterSetting_.minSize, emitterSetting_.maxSize);
+				float size = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
 				emitParamater_.scale.x = size;
 				emitParamater_.scale.y = size;
 				emitParamater_.scale.z = size;
@@ -151,7 +165,7 @@ void Emitter::Emit() {
 		case kRadialZ:
 			for (uint32_t i = 0; i < emitterSetting_.count; i++) {
 				// サイズ
-				float size = Random::GenerateFloat(emitterSetting_.minSize, emitterSetting_.maxSize);
+				float size = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
 				emitParamater_.scale.x = size;
 				emitParamater_.scale.y = size;
 				emitParamater_.scale.z = size;
@@ -206,11 +220,11 @@ void Emitter::SetEmitterSetting(const EmitterSetting& emitterSetting) {
 }
 
 void Emitter::SetMinSize(float minSize) {
-	emitterSetting_.minSize = minSize;
+	emitterSetting_.minScale = minSize;
 }
 
 void Emitter::SetMaxSize(float maxSize) {
-	emitterSetting_.maxSize = maxSize;
+	emitterSetting_.maxScale = maxSize;
 }
 
 void Emitter::SetMinPosition(const Vector3& minPosition) {

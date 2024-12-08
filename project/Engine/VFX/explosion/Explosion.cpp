@@ -16,8 +16,8 @@ void Explosion::Initialize() {
 	fire.emitType = kRandom;
 	fire.minColor = { 0.0f,0.0f,0.2f };
 	fire.maxColor = { 0.0f,0.1f,1.0f };
-	fire.minSize = 0.1f;
-	fire.maxSize = 0.75f;
+	fire.minScale = 0.1f;
+	fire.maxScale = 0.75f;
 	fire.minTranslate = { -0.1f, -0.8f,0.0f };
 	fire.maxTranslate = { 0.01f,0.4f,0.0f };
 	fire.minVelocity = { -0.1f,0.1f,0.0f };
@@ -38,8 +38,8 @@ void Explosion::Initialize() {
 	fire2.emitType = kRandom;
 	fire2.minColor = { 0.0f,0.0f,0.2f };
 	fire2.maxColor = { 0.0f,0.1f,1.0f };
-	fire2.minSize = 0.2f;
-	fire2.maxSize = 0.9f;
+	fire2.minScale = 0.2f;
+	fire2.maxScale = 0.9f;
 	fire2.minTranslate = { -0.23f,-0.8f,0.0f };
 	fire2.maxTranslate = { 0.36f,0.0f,0.0f };
 	fire2.minVelocity = { -0.1f,0.1f,0.0f };
@@ -61,8 +61,8 @@ void Explosion::Initialize() {
 	flash.emitType = kRadialZ;
 	flash.minColor = { 0.0f,0.0f,0.0f };
 	flash.maxColor = { 0.0f,0.0f,1.0f };
-	flash.minSize = 0.05f;
-	flash.maxSize = 0.05f;
+	flash.minScale = 0.05f;
+	flash.maxScale = 0.05f;
 	flash.minTranslate = { 0.0f,0.0f,-1.0f };
 	flash.maxTranslate = { 0.0f,0.0f,-1.0f };
 	flash.speed = 4.0f;
@@ -97,8 +97,8 @@ void Explosion::ShowEmitterSettingsUI(EmitterSetting& emitterSetting) {
 
 		// サイズ設定
 		ImGui::Text("Size");
-		ImGui::DragFloat("Min Size", &emitterSetting.minSize, 0.01f, 0.0f, 10.0f, "%.2f");
-		ImGui::DragFloat("Max Size", &emitterSetting.maxSize, 0.01f, 0.0f, 10.0f, "%.2f");
+		ImGui::DragFloat("Min Size", &emitterSetting.minScale, 0.01f, 0.0f, 10.0f, "%.2f");
+		ImGui::DragFloat("Max Size", &emitterSetting.maxScale, 0.01f, 0.0f, 10.0f, "%.2f");
 
 		// 座標範囲設定
 		ImGui::Text("Translation Range");
