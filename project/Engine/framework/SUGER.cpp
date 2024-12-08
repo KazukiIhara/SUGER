@@ -20,7 +20,7 @@ std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
 std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<EmitterManager> SUGER::emitterManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
-std::unique_ptr<LineManager> SUGER::lineManager_ = nullptr;
+std::unique_ptr<LineGroupManager> SUGER::lineManager_ = nullptr;
 std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
 std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
@@ -86,7 +86,7 @@ void SUGER::Initialize() {
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
 
 	// LineManagerの初期化
-	lineManager_ = std::make_unique<LineManager>();
+	lineManager_ = std::make_unique<LineGroupManager>();
 	lineManager_->Initialize();
 
 	// soundManagerの初期化
@@ -95,7 +95,7 @@ void SUGER::Initialize() {
 
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
-	collisionManager_->Initialize();
+	collisionManager_->Initialize(lineManager_.get());
 
 	// JsonLevelDataManagerの初期化
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
@@ -612,7 +612,7 @@ void SUGER::ClearParticleContainer() {
 	particleManager_->ClearContainer();
 }
 
-void SUGER::CreateLine(const std::string& name) {
+void SUGER::CreateLineGroup(const std::string& name) {
 	lineManager_->CreateLine(name);
 }
 
@@ -624,7 +624,7 @@ void SUGER::DrawLines() {
 	lineManager_->Draw();
 }
 
-Line* SUGER::FindLine(const std::string& name) {
+LineGroup* SUGER::FindLine(const std::string& name) {
 	return lineManager_->Find(name);
 }
 
@@ -670,6 +670,14 @@ void SUGER::ClearColliderContainer() {
 
 void SUGER::CheckAllCollisions() {
 	collisionManager_->CheckAllCollisions();
+}
+
+void SUGER::InitializeColliderLineGroup() {
+	collisionManager_->InitializeColliderLineGroup();
+}
+
+LineController* SUGER::GetColliderLineController() {
+	return collisionManager_->GetLineController();
 }
 
 void SUGER::PreDrawObject2D() {

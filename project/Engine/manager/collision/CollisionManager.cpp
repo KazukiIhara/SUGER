@@ -1,8 +1,22 @@
 #include "CollisionManager.h"
 
-void CollisionManager::Initialize() {
+#include <cassert>
+
+#include "manager/line/LineGroupManager.h"
+
+void CollisionManager::Initialize(LineGroupManager* lineManager) {
 	// コンテナをクリア
 	ClearContainer();
+	// ラインマネージャをセット
+	SetLineManager(lineManager);
+}
+
+void CollisionManager::InitializeColliderLineGroup() {
+	// コライダー用のライングループ作成
+	lineManager_->CreateLine("collider");
+	// ラインコントローラを生成して初期化
+	lineController_ = std::make_unique<LineController>();
+	lineController_->Initialize("collider");
 }
 
 void CollisionManager::Update() {
@@ -60,4 +74,13 @@ void CollisionManager::CheckAllCollisions() {
 			CheckCollisionPair(colliderA, colliderB);
 		}
 	}
+}
+
+LineController* CollisionManager::GetLineController() {
+	return lineController_.get();
+}
+
+void CollisionManager::SetLineManager(LineGroupManager* lineManager) {
+	assert(lineManager);
+	lineManager_ = lineManager;
 }

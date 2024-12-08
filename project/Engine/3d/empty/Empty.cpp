@@ -10,15 +10,6 @@ void Empty::Initialize() {
 void Empty::Update() {
 	// ワールドトランスフォームの更新
 	worldTransform_.Update();
-	// コライダーが有効ならコライダーの更新
-	if (collider_) {
-		collider_->Update(GetWorldPosition());
-	}
-}
-
-void Empty::CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size) {
-	collider_ = std::make_unique<Collider>();
-	collider_->Initialize(GetWorldPosition(), colliderCategory, colliderType, size);
 }
 
 void Empty::SetName(const std::string& name) {
@@ -77,10 +68,6 @@ Vector3 Empty::GetWorldPosition()const {
 
 WorldTransform* Empty::GetWorldTransformPtr() {
 	return &worldTransform_;
-}
-
-Collider* Empty::GetCollider() {
-	return collider_.get();
 }
 
 const bool& Empty::GetIsActive() const {

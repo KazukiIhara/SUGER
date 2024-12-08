@@ -6,7 +6,11 @@
 #include "manager/scene/SceneManager.h"
 
 void BaseScene::Initialize() {
-	// オブジェクトコンテナのクリア
+	// 各コンテナのクリア
+	// Collider
+	SUGER::ClearColliderContainer();
+	// Line
+	SUGER::ClearLineContainer();
 	// Emitter
 	SUGER::ClearEmitterContainer();
 	// Particle
@@ -24,6 +28,10 @@ void BaseScene::Initialize() {
 	debugCamera_ = std::make_unique<Camera>();
 	debugCamera_->Initialize();
 
+	// シーンカメラ作成
+	sceneCamera_ = std::make_unique<Camera>();
+	sceneCamera_->Initialize();
+
 	// ライト作成
 	light_ = std::make_unique<PunctualLight>();
 	light_->Initialize();
@@ -38,9 +46,11 @@ void BaseScene::Initialize() {
 	// シーンに必要なカメラとライトのセット
 	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
 
+	// コライダーデバッグ描画用のライングループを作成
+	SUGER::InitializeColliderLineGroup();
+
 	// FixFPSを初期化
 	SUGER::FiXFPSInitialize();
-
 }
 
 void BaseScene::Update() {
@@ -48,6 +58,8 @@ void BaseScene::Update() {
 	DebugCameraOperation();
 	// デバッグカメラのアップデート
 	debugCamera_->Update();
+	// シーンカメラの更新
+	sceneCamera_->Update();
 	// ライトの更新
 	light_->Update();
 	// シーンステータスのリクエスト初期化処理

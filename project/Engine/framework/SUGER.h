@@ -20,7 +20,7 @@
 #include "manager/entityManager/EntityManager.h"
 #include "manager/emitter/EmitterManager.h"
 #include "manager/particle/ParticleManager.h"
-#include "manager/line/LineManager.h"
+#include "manager/line/LineGroupManager.h"
 #include "manager/sound/SoundManager.h"
 #include "manager/collision/CollisionManager.h"
 #include "manager/data/level/json/JsonLevelDataManager.h"
@@ -239,13 +239,13 @@ public: // クラスメソッド
 
 #pragma region LineManager
 	// Lineの作成
-	static void CreateLine(const std::string& name);
+	static void CreateLineGroup(const std::string& name);
 	// Lineの更新
 	static void UpdateLines();
 	// Lineの描画
 	static void DrawLines();
 	// Line検索
-	static Line* FindLine(const std::string& name);
+	static LineGroup* FindLine(const std::string& name);
 	// Lineコンテナのクリア
 	static void ClearLineContainer();
 #pragma endregion
@@ -274,6 +274,10 @@ public: // クラスメソッド
 	static void ClearColliderContainer();
 	// コライダーリスト内の全当たり判定をチェック
 	static void CheckAllCollisions();
+	// デバッグ描画用のライングループとコントローラを作成
+	static void InitializeColliderLineGroup();
+	// デバッグ描画用のラインコントローラを取得
+	static LineController* GetColliderLineController();
 #pragma endregion
 
 #pragma region JsonLevelDataManager
@@ -361,7 +365,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<EntityManager> entityManager_;
 	static std::unique_ptr<EmitterManager> emitterManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
-	static std::unique_ptr<LineManager> lineManager_;
+	static std::unique_ptr<LineGroupManager> lineManager_;
 	static std::unique_ptr<SoundManager> soundManager_;
 	static std::unique_ptr<CollisionManager> collisionManager_;
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;

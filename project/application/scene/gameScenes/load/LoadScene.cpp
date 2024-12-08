@@ -99,6 +99,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadTexture(textureDirectoryPath + "pronama_chan.png");
 
 	// モデル読み込み
+	SUGER::LoadModel("walk");
 	SUGER::LoadModel("pronama_chan");
 	SUGER::LoadModel("teapot");
 

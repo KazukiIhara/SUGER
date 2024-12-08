@@ -10,10 +10,10 @@
 
 class Camera;
 
-class Line {
+class LineGroup {
 public:
-	Line() = default;
-	~Line() = default;
+	LineGroup() = default;
+	~LineGroup() = default;
 
 	// 初期化
 	void Initialize(Camera* camera);
@@ -45,7 +45,7 @@ private:
 	void MapViewProjectionData();
 private:
 	// ラインの最大数
-	static const uint32_t kNumMaxInstance = 512;
+	static const uint32_t kNumMaxInstance = 4096;
 	// ライン
 	std::vector<LineData3D> lines_;
 	// ブレンドモード
