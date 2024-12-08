@@ -40,7 +40,14 @@ void ParticleManager::ClearContainer() {
 	particles_.clear();
 }
 
-void ParticleManager::CreatePlaneParticle(const std::string& name, const std::string& filePath) {
+std::string ParticleManager::CreatePlaneParticle(const std::string& name, const std::string& filePath) {
+	// 重複した名前がある場合、番号を付加してユニークな名前を作成
+	std::string uniqueName = name;
+	int counter = 0;
+	while (particles_.find(uniqueName) != particles_.end()) {
+		counter++;
+		uniqueName = name + "_" + std::to_string(counter);
+	}
 	// テクスチャを読み込み
 	textureManager_->Load(filePath);
 	// 新規パーティクル作成、初期化
@@ -49,10 +56,19 @@ void ParticleManager::CreatePlaneParticle(const std::string& name, const std::st
 	// 板ポリタイプ
 	newParticle->SetType(kPlane);
 	// 生成したパーティクルをmapコンテナに格納
-	particles_.insert(std::make_pair(name, std::move(newParticle)));
+	particles_.insert(std::make_pair(uniqueName, std::move(newParticle)));
+
+	return uniqueName;
 }
 
-void ParticleManager::CreateModelParticle(const std::string& name, const std::string& filePath) {
+std::string ParticleManager::CreateModelParticle(const std::string& name, const std::string& filePath) {
+	// 重複した名前がある場合、番号を付加してユニークな名前を作成
+	std::string uniqueName = name;
+	int counter = 0;
+	while (particles_.find(uniqueName) != particles_.end()) {
+		counter++;
+		uniqueName = name + "_" + std::to_string(counter);
+	}
 	// モデルを読み込み
 	modelManager_->Load(filePath);
 	// 新規パーティクル作成、初期化
@@ -61,7 +77,9 @@ void ParticleManager::CreateModelParticle(const std::string& name, const std::st
 	// 板ポリタイプ
 	newParticle->SetType(kModel);
 	// 生成したパーティクルをmapコンテナに格納
-	particles_.insert(std::make_pair(name, std::move(newParticle)));
+	particles_.insert(std::make_pair(uniqueName, std::move(newParticle)));
+
+	return uniqueName;
 }
 
 Particle* ParticleManager::Find(const std::string& name) {

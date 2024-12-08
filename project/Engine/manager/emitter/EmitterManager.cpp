@@ -22,14 +22,22 @@ void EmitterManager::ClearContainer() {
 	emitters_.clear();
 }
 
-void EmitterManager::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {
+std::string EmitterManager::CreateEmitter(const std::string& name, const EulerTransform3D& transform) {// 重複した名前がある場合、番号を付加してユニークな名前を作成
+	std::string uniqueName = name;
+	int counter = 0;
+	while (emitters_.find(uniqueName) != emitters_.end()) {
+		counter++;
+		uniqueName = name + "_" + std::to_string(counter);
+	}
 	// エミッターを新規作成
 	std::unique_ptr<Emitter> newEmitter = std::make_unique<Emitter>();
 	newEmitter->Initialize();
 	newEmitter->SetTransform(transform);
 
 	// エミッターをコンテナに追加
-	emitters_.insert(std::make_pair(name, std::move(newEmitter)));
+	emitters_.insert(std::make_pair(uniqueName, std::move(newEmitter)));
+
+	return uniqueName;
 }
 
 Emitter* EmitterManager::Find(const std::string& name) {

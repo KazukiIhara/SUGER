@@ -12,6 +12,9 @@ public:
 	// 更新
 	void Update()override;
 
+	// 発生
+	void Emit();
+
 private:
 	// デルタタイム
 	const float kDeltaTime_ = 1.0f / 60.0f;

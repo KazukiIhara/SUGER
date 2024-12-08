@@ -44,7 +44,7 @@ void BaseScene::Initialize() {
 	sceneStateRequest_ = SceneState::kFadeIn;
 
 	// シーンに必要なカメラとライトのセット
-	SUGER::SetRequiredObjects(debugCamera_.get(), light_.get());
+	SUGER::SetRequiredObjects(sceneCamera_.get(), light_.get());
 
 	// コライダーデバッグ描画用のライングループを作成
 	SUGER::InitializeColliderLineGroup();
@@ -210,15 +210,15 @@ void BaseScene::SceneStatusInitizlize() {
 		sceneState_ = sceneStateRequest_.value();
 		// 各振る舞いごとの初期化を実行
 		switch (sceneState_) {
-		case SceneState::kFadeIn:
-			SceneStateFadeInInitialize();
-			break;
-		case SceneState::kPlay:
-			SceneStatePlayInitialize();
-			break;
-		case SceneState::kFadeOut:
-			SceneStateFadeOutInitialize();
-			break;
+			case SceneState::kFadeIn:
+				SceneStateFadeInInitialize();
+				break;
+			case SceneState::kPlay:
+				SceneStatePlayInitialize();
+				break;
+			case SceneState::kFadeOut:
+				SceneStateFadeOutInitialize();
+				break;
 		}
 		// 振る舞いリクエストをリセット
 		sceneStateRequest_ = std::nullopt;
@@ -227,15 +227,15 @@ void BaseScene::SceneStatusInitizlize() {
 
 void BaseScene::SceneStatusUpdate() {
 	switch (sceneState_) {
-	case kFadeIn:
-		SceneStateFadeInUpdate();
-		break;
-	case kPlay:
-		SceneStatePlayUpdate();
-		break;
-	case kFadeOut:
-		SceneStateFadeOutUpdate();
-		break;
+		case kFadeIn:
+			SceneStateFadeInUpdate();
+			break;
+		case kPlay:
+			SceneStatePlayUpdate();
+			break;
+		case kFadeOut:
+			SceneStateFadeOutUpdate();
+			break;
 	}
 }
 

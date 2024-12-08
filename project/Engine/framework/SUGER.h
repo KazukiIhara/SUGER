@@ -215,7 +215,7 @@ public: // クラスメソッド
 
 #pragma region EmitterManager
 	// Emitterの作成
-	static void CreateEmitter(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
+	static std::string CreateEmitter(const std::string& name, const EulerTransform3D& transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} });
 	// Emitterの更新
 	static void UpdateEmitters();
 	// Emitterの検索
@@ -226,7 +226,7 @@ public: // クラスメソッド
 
 #pragma region ParticleManager
 	// Particleの作成
-	static void CreateParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath);
+	static std::string CreateParticle(const std::string& name, const ParticleType& particleType, const std::string& filePath);
 	// Particleの更新
 	static void UpdateParticles();
 	// Particleの描画

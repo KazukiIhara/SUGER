@@ -7,5 +7,4 @@ enum EmitType {
 	kRadialX,
 	kRadialY,
 	kRadialZ,
-	kRadialRandom,
 };
