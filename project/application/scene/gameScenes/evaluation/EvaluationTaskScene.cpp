@@ -41,7 +41,7 @@ void EvaluationScene::SceneStatePlayInitialize() {
 
 void EvaluationScene::SceneStatePlayUpdate() {
 	ImGui::Begin("EvaluationTaskScene");
-	if (ImGui::Button("EffectScene")) {
+	if (ImGui::Button("GotoEffectScene")) {
 		ChangeScene("CG3");
 	}
 	ImGui::End();

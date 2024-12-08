@@ -37,11 +37,18 @@ public:
 	// 繰り返し発生フラグセット
 	void SetIsRepeat(const bool& isRepeat);
 
+	// 発生頻度のセット
+	void SetFrequency(const float& frequency);
+
 	// 発生タイプのセット
 	void SetEmitType(const EmitType& emitType);
 
 	// ブレンドモードのセット
 	void SetBlendMode(const BlendMode& blendMode);
+
+
+	// エミッターの設定のセット
+	void SetEmitterSetting(const EmitterSetting& emitterSetting);
 
 	// 発生場所のランダム閾値
 	void SetMinPosition(const Vector3& minPosition);

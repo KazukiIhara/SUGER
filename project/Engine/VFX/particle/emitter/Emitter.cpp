@@ -9,7 +9,21 @@ void Emitter::Initialize() {
 
 	// 発生設定の初期化
 	// 発生数は1
-	count_ = 1;
+	emitterSetting_.count = 1;
+	emitterSetting_.emitType = kDefault;
+	emitterSetting_.frequency = 1.0f;
+	emitterSetting_.isRepeat = false;
+	emitterSetting_.minColor = { 1.0f,1.0f,1.0f };
+	emitterSetting_.maxColor = { 1.0f,1.0f,1.0f };
+	emitterSetting_.minScale = 1.0f;
+	emitterSetting_.maxScale = 1.0f;
+	emitterSetting_.minVelocity = { 0.0f,0.0f,0.0f };
+	emitterSetting_.maxVelocity = { 0.0f,0.0f,0.0f };
+	emitterSetting_.minTranslate = { 0.0f,0.0f,0.0f };
+	emitterSetting_.maxTranslate = { 0.0f,0.0f,0.0f };
+	emitterSetting_.minLifeTime = 1.0f;
+	emitterSetting_.maxLifeTime = 1.0f;
+
 	// 座標は0,0,0
 	emitParamater_.position = { 0.0f,0.0f,0.0f };
 	// サイズは1.0
@@ -27,17 +41,17 @@ void Emitter::Update() {
 	Empty::Update();
 
 	// 繰り返しフラグがオンなら繰り返し発生
-	if (isRepeat_) {
+	if (emitterSetting_.isRepeat) {
 
 		// エミッターの処理
 		// 時刻を進める
 		frequencyTime_ += kDeltaTime_;
 
 		// 頻度より大きいなら発生
-		if (frequency_ <= frequencyTime_) {
+		if (emitterSetting_.frequency <= frequencyTime_) {
 			Emit();
 			// 余計に過ぎた時間も加味して頻度計算する
-			frequencyTime_ -= frequency_;
+			frequencyTime_ -= emitterSetting_.frequency;
 		}
 	}
 }
@@ -49,16 +63,16 @@ void Emitter::Emit() {
 	// ブレンドモードセット
 	particle_->SetBlendMode(blendMode_);
 	// 発生タイプごとの処理
-	switch (emitType_) {
+	switch (emitterSetting_.emitType) {
 		// デフォルト
 		case kDefault:
 			// 発生個数分ループ
-			for (uint32_t i = 0; i < count_; i++) {
+			for (uint32_t i = 0; i < emitterSetting_.count; i++) {
 				// サイズ
-				float size = Random::GenerateFloat(minSize_, maxSize_);
-				emitParamater_.scale.x = size;
-				emitParamater_.scale.y = size;
-				emitParamater_.scale.z = size;
+				float scale = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
+				emitParamater_.scale.x = scale;
+				emitParamater_.scale.y = scale;
+				emitParamater_.scale.z = scale;
 				// 座標
 				emitParamater_.position.x = emitterPosition.x + i * 0.1f;
 				emitParamater_.position.y = emitterPosition.y + i * 0.1f;
@@ -68,107 +82,107 @@ void Emitter::Emit() {
 			// ランダム 
 		case kRandom:
 			// 発生個数分ループ
-			for (uint32_t i = 0; i < count_; i++) {
+			for (uint32_t i = 0; i < emitterSetting_.count; i++) {
 				// 発生座標
-				emitParamater_.position.x = emitterPosition.x + Random::GenerateFloat(minTranslate_.x, maxTranslate_.x);
-				emitParamater_.position.y = emitterPosition.y + Random::GenerateFloat(minTranslate_.y, maxTranslate_.y);
-				emitParamater_.position.z = emitterPosition.z + Random::GenerateFloat(minTranslate_.z, maxTranslate_.z);
+				emitParamater_.position.x = emitterPosition.x + Random::GenerateFloat(emitterSetting_.minTranslate.x, emitterSetting_.maxTranslate.x);
+				emitParamater_.position.y = emitterPosition.y + Random::GenerateFloat(emitterSetting_.minTranslate.y, emitterSetting_.maxTranslate.y);
+				emitParamater_.position.z = emitterPosition.z + Random::GenerateFloat(emitterSetting_.minTranslate.z, emitterSetting_.maxTranslate.z);
 				// サイズ
-				float size = Random::GenerateFloat(minSize_, maxSize_);
+				float size = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
 				emitParamater_.scale.x = size;
 				emitParamater_.scale.y = size;
 				emitParamater_.scale.z = size;
 				// 移動量
-				emitParamater_.velocity.x = Random::GenerateFloat(minVelocity_.x, maxVelocity_.x);
-				emitParamater_.velocity.y = Random::GenerateFloat(minVelocity_.y, maxVelocity_.y);
-				emitParamater_.velocity.z = Random::GenerateFloat(minVelocity_.z, maxVelocity_.z);
+				emitParamater_.velocity.x = Random::GenerateFloat(emitterSetting_.minVelocity.x, emitterSetting_.maxVelocity.x);
+				emitParamater_.velocity.y = Random::GenerateFloat(emitterSetting_.minVelocity.y, emitterSetting_.maxVelocity.y);
+				emitParamater_.velocity.z = Random::GenerateFloat(emitterSetting_.minVelocity.z, emitterSetting_.maxVelocity.z);
 				// 色
-				emitParamater_.color.x = Random::GenerateFloat(minColor_.x, maxColor_.x);
-				emitParamater_.color.y = Random::GenerateFloat(minColor_.y, maxColor_.y);
-				emitParamater_.color.z = Random::GenerateFloat(minColor_.z, maxColor_.z);
+				emitParamater_.color.x = Random::GenerateFloat(emitterSetting_.minColor.x, emitterSetting_.maxColor.x);
+				emitParamater_.color.y = Random::GenerateFloat(emitterSetting_.minColor.y, emitterSetting_.maxColor.y);
+				emitParamater_.color.z = Random::GenerateFloat(emitterSetting_.minColor.z, emitterSetting_.maxColor.z);
 
 				// 生存時間
-				emitParamater_.lifeTime = Random::GenerateFloat(minLifeTime_, maxLifeTime_);
+				emitParamater_.lifeTime = Random::GenerateFloat(emitterSetting_.minLifeTime, emitterSetting_.maxLifeTime);
 
 				particle_->AddNewParticle(emitParamater_);
 			}
 			break;
 			// X軸方向に放射状に発生
 		case kRadialX:
-			// 発生個数分ループ
-			for (uint32_t i = 0; i < count_; i++) {
+			for (uint32_t i = 0; i < emitterSetting_.count; i++) {
 				// サイズ
-				float size = Random::GenerateFloat(minSize_, maxSize_);
+				float size = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
 				emitParamater_.scale.x = size;
 				emitParamater_.scale.y = size;
 				emitParamater_.scale.z = size;
+
 				// 移動量
-				float angle = 2.0f * std::numbers::pi_v<float> *i / count_;
+				float angle = 2.0f * std::numbers::pi_v<float> *i / emitterSetting_.count;
 				emitParamater_.velocity.x = 0.0f;
-				emitParamater_.velocity.y = speed_ * std::sin(angle);
-				emitParamater_.velocity.z = speed_ * std::cos(angle);
+				emitParamater_.velocity.y = emitterSetting_.speed * std::sin(angle);
+				emitParamater_.velocity.z = emitterSetting_.speed * std::cos(angle);
 
 				// 色
-				emitParamater_.color.x = Random::GenerateFloat(minColor_.x, maxColor_.x);
-				emitParamater_.color.y = Random::GenerateFloat(minColor_.y, maxColor_.y);
-				emitParamater_.color.z = Random::GenerateFloat(minColor_.z, maxColor_.z);
+				emitParamater_.color.x = Random::GenerateFloat(emitterSetting_.minColor.x, emitterSetting_.maxColor.x);
+				emitParamater_.color.y = Random::GenerateFloat(emitterSetting_.minColor.y, emitterSetting_.maxColor.y);
+				emitParamater_.color.z = Random::GenerateFloat(emitterSetting_.minColor.z, emitterSetting_.maxColor.z);
 
 				// 生存時間
-				emitParamater_.lifeTime = Random::GenerateFloat(minLifeTime_, maxLifeTime_);
+				emitParamater_.lifeTime = Random::GenerateFloat(emitterSetting_.minLifeTime, emitterSetting_.maxLifeTime);
 
 				particle_->AddNewParticle(emitParamater_);
 			}
 			break;
+
 			// Y軸方向に放射状に発生
 		case kRadialY:
-			// 発生個数分ループ
-			for (uint32_t i = 0; i < count_; i++) {
+			for (uint32_t i = 0; i < emitterSetting_.count; i++) {
 				// サイズ
-				float size = Random::GenerateFloat(minSize_, maxSize_);
+				float size = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
 				emitParamater_.scale.x = size;
 				emitParamater_.scale.y = size;
 				emitParamater_.scale.z = size;
 
 				// 移動量
-				float angle = 2.0f * std::numbers::pi_v<float> *i / count_;
-				emitParamater_.velocity.x = speed_ * std::cos(angle);
+				float angle = 2.0f * std::numbers::pi_v<float> *i / emitterSetting_.count;
+				emitParamater_.velocity.x = emitterSetting_.speed * std::cos(angle);
 				emitParamater_.velocity.y = 0.0f;
-				emitParamater_.velocity.z = speed_ * std::sin(angle);
+				emitParamater_.velocity.z = emitterSetting_.speed * std::sin(angle);
 
 				// 色
-				emitParamater_.color.x = Random::GenerateFloat(minColor_.x, maxColor_.x);
-				emitParamater_.color.y = Random::GenerateFloat(minColor_.y, maxColor_.y);
-				emitParamater_.color.z = Random::GenerateFloat(minColor_.z, maxColor_.z);
+				emitParamater_.color.x = Random::GenerateFloat(emitterSetting_.minColor.x, emitterSetting_.maxColor.x);
+				emitParamater_.color.y = Random::GenerateFloat(emitterSetting_.minColor.y, emitterSetting_.maxColor.y);
+				emitParamater_.color.z = Random::GenerateFloat(emitterSetting_.minColor.z, emitterSetting_.maxColor.z);
 
 				// 生存時間
-				emitParamater_.lifeTime = Random::GenerateFloat(minLifeTime_, maxLifeTime_);
+				emitParamater_.lifeTime = Random::GenerateFloat(emitterSetting_.minLifeTime, emitterSetting_.maxLifeTime);
 
 				particle_->AddNewParticle(emitParamater_);
 			}
 			break;
+
 			// Z軸方向に放射状に発生
 		case kRadialZ:
-			// 発生個数分ループ
-			for (uint32_t i = 0; i < count_; i++) {
+			for (uint32_t i = 0; i < emitterSetting_.count; i++) {
 				// サイズ
-				float size = Random::GenerateFloat(minSize_, maxSize_);
+				float size = Random::GenerateFloat(emitterSetting_.minScale, emitterSetting_.maxScale);
 				emitParamater_.scale.x = size;
 				emitParamater_.scale.y = size;
 				emitParamater_.scale.z = size;
 
 				// 移動量
-				float angle = 2.0f * std::numbers::pi_v<float> *i / count_;
-				emitParamater_.velocity.x = speed_ * std::cos(angle);
-				emitParamater_.velocity.y = speed_ * std::sin(angle);
+				float angle = 2.0f * std::numbers::pi_v<float> *i / emitterSetting_.count;
+				emitParamater_.velocity.x = emitterSetting_.speed * std::cos(angle);
+				emitParamater_.velocity.y = emitterSetting_.speed * std::sin(angle);
 				emitParamater_.velocity.z = 0.0f;
 
 				// 色
-				emitParamater_.color.x = Random::GenerateFloat(minColor_.x, maxColor_.x);
-				emitParamater_.color.y = Random::GenerateFloat(minColor_.y, maxColor_.y);
-				emitParamater_.color.z = Random::GenerateFloat(minColor_.z, maxColor_.z);
+				emitParamater_.color.x = Random::GenerateFloat(emitterSetting_.minColor.x, emitterSetting_.maxColor.x);
+				emitParamater_.color.y = Random::GenerateFloat(emitterSetting_.minColor.y, emitterSetting_.maxColor.y);
+				emitParamater_.color.z = Random::GenerateFloat(emitterSetting_.minColor.z, emitterSetting_.maxColor.z);
 
 				// 生存時間
-				emitParamater_.lifeTime = Random::GenerateFloat(minLifeTime_, maxLifeTime_);
+				emitParamater_.lifeTime = Random::GenerateFloat(emitterSetting_.minLifeTime, emitterSetting_.maxLifeTime);
 
 				particle_->AddNewParticle(emitParamater_);
 			}
@@ -182,61 +196,65 @@ void Emitter::SetParticle(const std::string& particleName) {
 }
 
 void Emitter::SetCount(const uint32_t& count) {
-	count_ = count;
+	emitterSetting_.count = count;
 }
 
 void Emitter::SetFrequency(const float& frequency) {
-	frequency_ = frequency;
+	emitterSetting_.frequency = frequency;
 }
 
 void Emitter::SetIsRepeat(const bool& isRepeat) {
-	isRepeat_ = isRepeat;
+	emitterSetting_.isRepeat = isRepeat;
 }
 
 void Emitter::SetEmitType(const EmitType& emitType) {
-	emitType_ = emitType;
+	emitterSetting_.emitType = emitType;
 }
 
 void Emitter::SetBlendMode(const BlendMode& blendMode) {
 	blendMode_ = blendMode;
 }
 
+void Emitter::SetEmitterSetting(const EmitterSetting& emitterSetting) {
+	emitterSetting_ = emitterSetting;
+}
+
 void Emitter::SetMinSize(float minSize) {
-	minSize_ = minSize;
+	emitterSetting_.minScale = minSize;
 }
 
 void Emitter::SetMaxSize(float maxSize) {
-	maxSize_ = maxSize;
+	emitterSetting_.maxScale = maxSize;
 }
 
 void Emitter::SetMinPosition(const Vector3& minPosition) {
-	minTranslate_ = minPosition;
+	emitterSetting_.minTranslate = minPosition;
 }
 
 void Emitter::SetMaxPosition(const Vector3& maxPosition) {
-	maxTranslate_ = maxPosition;
+	emitterSetting_.maxTranslate = maxPosition;
 }
 
 void Emitter::SetMinVelocity(const Vector3& minVelocity) {
-	minVelocity_ = minVelocity;
+	emitterSetting_.minVelocity = minVelocity;
 }
 
 void Emitter::SetMaxVelocity(const Vector3& maxVelocity) {
-	maxVelocity_ = maxVelocity;
+	emitterSetting_.maxVelocity = maxVelocity;
 }
 
 void Emitter::SetMinColor(const Vector3& minColor) {
-	minColor_ = minColor;
+	emitterSetting_.minColor = minColor;
 }
 
 void Emitter::SetMaxColor(const Vector3& maxColor) {
-	maxColor_ = maxColor;
+	emitterSetting_.maxColor = maxColor;
 }
 
 void Emitter::SetMinLifeTime(float minLifeTime) {
-	minLifeTime_ = minLifeTime;
+	emitterSetting_.minLifeTime = minLifeTime;
 }
 
 void Emitter::SetMaxLifeTime(float maxLifeTime) {
-	maxLifeTime_ = maxLifeTime;
+	emitterSetting_.maxLifeTime = maxLifeTime;
 }

@@ -43,12 +43,20 @@ void EmitterController::SetIsRepeat(const bool& isRepeat) {
 	emitter_->SetIsRepeat(isRepeat);
 }
 
+void EmitterController::SetFrequency(const float& frequency) {
+	emitter_->SetFrequency(frequency);
+}
+
 void EmitterController::SetEmitType(const EmitType& emitType) {
 	emitter_->SetEmitType(emitType);
 }
 
 void EmitterController::SetBlendMode(const BlendMode& blendMode) {
 	emitter_->SetBlendMode(blendMode);
+}
+
+void EmitterController::SetEmitterSetting(const EmitterSetting& emitterSetting) {
+	emitter_->SetEmitterSetting(emitterSetting);
 }
 
 void EmitterController::SetMinPosition(const Vector3& minPosition) {
