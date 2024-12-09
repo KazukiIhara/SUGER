@@ -115,11 +115,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
+    <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
     <ClCompile Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\line\LineGroup.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\manager\line\LineGroupManager.cpp" />
+    <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
     <ClCompile Include="Engine\system\line\LineSystem.cpp" />
     <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
@@ -185,6 +187,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
+    <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
     <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\line\LineGroup.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
@@ -193,6 +196,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\enum\SceneEnum.h" />
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
     <ClInclude Include="Engine\manager\line\LineGroupManager.h" />
+    <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
     <ClInclude Include="Engine\system\line\LineSystem.h" />
     <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
     <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />

@@ -9,24 +9,22 @@
 
 // ヘッダファイル
 #include "directX/includes/ComPtr.h"
-#include "enum/GraphicsPipelineEnum.h"
 
 class DirectXManager;
 
-class Object3DSkinningGraphicsPipeline {
+class SkinningComputePipeline {
 public:
-	// コンストラクタとデストラクタ
-	Object3DSkinningGraphicsPipeline() = default;
-	~Object3DSkinningGraphicsPipeline() = default;
+	SkinningComputePipeline() = default;
+	~SkinningComputePipeline() = default;
 
-	// 初期化処理
+	// 初期化
 	void Initialize(DirectXManager* directXManager);
 
 	// ルートシグネチャを取得する
 	ID3D12RootSignature* GetRootSignature();
 
-	// 指定されたブレンドモードに対応するパイプラインステートを取得する
-	ID3D12PipelineState* GetPipelineState(BlendMode blendMode);
+	// パイプラインステートを取得する
+	ID3D12PipelineState* GetPipelineState();
 
 private:
 	// DirectXのインスタンスをセット
@@ -56,34 +54,15 @@ private:
 		IDxcIncludeHandler* includeHandler
 	);
 
-	// BlendStateの設定を行う
-	D3D12_BLEND_DESC BlendStateSetting(uint32_t blendModeNum);
-
-	// DepthStencilStateの設定を行う
-	D3D12_DEPTH_STENCIL_DESC DepthStecilDescSetting();
-
-	// InputLayoutの設定を行う
-	D3D12_INPUT_LAYOUT_DESC InputLayoutSetting();
-
-	// RasterizerStateの設定を行う
-	D3D12_RASTERIZER_DESC RasterizerStateSetting();
-
-private: // 静的メンバ変数
-	// ブレンドモードの数
-	static const uint32_t kBlendModeNum = 6;
-
 private:
 	// ルートシグネチャ
 	ComPtr<ID3D12RootSignature> rootSignature_;
 
-	// グラフィックスパイプラインステート (ブレンドモードごとに設定)
-	ComPtr<ID3D12PipelineState> graphicsPipelineState_[kBlendModeNum];
+	// パイプラインステート
+	ComPtr<ID3D12PipelineState> pipelineState_;
 
-	// 頂点シェーダーのバイナリデータ
-	ComPtr<ID3DBlob> vertexShaderBlob_;
-
-	// ピクセルシェーダーのバイナリデータ
-	ComPtr<ID3DBlob> pixelShaderBlob_;
+	// コンピュートシェーダーのバイナリデータ
+	ComPtr<ID3DBlob> computeShaderBlob_;
 
 	// シェーダーコンパイルに使用するオブジェクト
 	IDxcUtils* dxcUtils = nullptr;
