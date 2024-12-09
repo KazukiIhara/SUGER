@@ -604,6 +604,7 @@
     <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.VS.hlsl" />
     <FxCompile Include="resources\shaders\line\line.PS.hlsl" />
     <FxCompile Include="resources\shaders\line\line.VS.hlsl" />
+    <FxCompile Include="resources\shaders\skinning\skinning.CS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
@@ -617,5 +618,6 @@
     </None>
     <None Include="resources\shaders\objects\3dSkinning\object3dSkinning.hlsli" />
     <None Include="resources\shaders\line\line.hlsli" />
+    <None Include="resources\shaders\skinning\skining.hlsli" />
   </ItemGroup>
 </Project>

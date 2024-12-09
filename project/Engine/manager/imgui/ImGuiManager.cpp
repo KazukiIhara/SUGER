@@ -45,6 +45,11 @@ void ImGuiManager::FontSetting() {
 	io.Fonts->Build();
 }
 
+void ImGuiManager::CreatePreviewSrv() {
+	// Srv作成
+	
+}
+
 void ImGuiManager::BeginFrame() {
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
@@ -64,7 +69,10 @@ void ImGuiManager::Draw() {
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), directXManager_->GetCommandList());
 }
 
-void ImGuiManager::ShowPreviewWindow() {}
+void ImGuiManager::ShowPreviewWindow() {
+
+	
+}
 
 void ImGuiManager::Finalize() {
 	ImGui_ImplDX12_Shutdown();

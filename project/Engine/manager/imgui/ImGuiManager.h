@@ -3,6 +3,9 @@
 // WindowsAPI
 #include <Windows.h>
 
+// C++
+#include <cstdint>
+
 // imgui
 #include "externals/imgui/imgui.h"
 #include "externals/imgui/imgui_impl_dx12.h"
@@ -29,6 +32,9 @@ public: // 公開メンバ関数
 
 	// フォント設定
 	void FontSetting();
+
+	// プレビューウィンドウのSRV作成
+	void CreatePreviewSrv();
 
 	// 更新処理の先頭に呼び出す処理
 	void BeginFrame();
