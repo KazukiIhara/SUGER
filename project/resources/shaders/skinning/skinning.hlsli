@@ -12,7 +12,13 @@ struct VertexInfluence
     int4 index;
 };
 
-struct SkiningInformation
+struct SkinningInformation
 {
     int numVertices;
+};
+
+struct Well
+{
+    float4x4 skeletonSpaceMatrix;
+    float4x4 skeletonSpaceInverseTransposeMatrix;
 };

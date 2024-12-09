@@ -1,57 +1,57 @@
 struct VertexShaderInput
 {
-    float32_t4 position : POSITION0;
-    float32_t2 texcoord : TEXCOORD0;
-    float32_t3 normal : NORMAL0;
-    float32_t4 weight : WEIGHT0;
-    int32_t4 index : INDEX0;
+    float4 position : POSITION0;
+    float2 texcoord : TEXCOORD0;
+    float3 normal : NORMAL0;
+    float4 weight : WEIGHT0;
+    int4 index : INDEX0;
 };
 
 struct VertexShaderOutput
 {
-    float32_t4 position : SV_POSITION;
-    float32_t2 texcoord : TEXCOORD0;
-    float32_t3 normal : NORMAL0;
-    float32_t3 worldPosition : POSITION0;
+    float4 position : SV_POSITION;
+    float2 texcoord : TEXCOORD0;
+    float3 normal : NORMAL0;
+    float3 worldPosition : POSITION0;
 };
 
 struct PixelShaderOutput
 {
-    float32_t4 color : SV_TARGET0;
+    float4 color : SV_TARGET0;
 };
 
 struct TransformationMatrix
 {
-    float32_t4x4 World;
-    float32_t4x4 ViewProjection;
-    float32_t4x4 WorldInverseTranspose;
+    float4x4 World;
+    float4x4 ViewProjection;
+    float4x4 WorldInverseTranspose;
 };
 
 struct Material
 {
-    float32_t4 color;
-    int32_t enbleLighting;
-    float32_t4x4 uvTransform;
-    float32_t shininess;
+    float4 color;
+    int enbleLighting;
+    float4x4 uvTransform;
+    float shininess;
 };
 
 struct ModelMaterial
 {
-    float32_t4 color;
-    float32_t4x4 uvTransform;
+    float4 color;
+    float4x4 uvTransform;
 };
 
 struct DirectionalLight
 {
-    float32_t4 color;
-    float32_t3 direction;
+    float4 color;
+    float3 direction;
     float intensity;
 };
 
 struct PointLight
 {
-    float32_t4 color;
-    float32_t3 position;
+    float4 color;
+    float3 position;
     float intensity;
     float radius;
     float decay;
@@ -59,19 +59,19 @@ struct PointLight
 
 struct SpotLight
 {
-    float32_t4 color;
-    float32_t3 position;
-    float32_t intensity;
-    float32_t3 direction;
-    float32_t distance;
-    float32_t decay;
-    float32_t cosAngle;
-    float32_t cosFalloffStart;
+    float4 color;
+    float3 position;
+    float intensity;
+    float3 direction;
+    float distance;
+    float decay;
+    float cosAngle;
+    float cosFalloffStart;
 };
 
 struct Camera
 {
-    float32_t3 worldPosition;
+    float3 worldPosition;
 };
 
 struct PunctualLight
@@ -83,12 +83,12 @@ struct PunctualLight
 
 struct Well
 {
-    float32_t4x4 skeletonSpaceMatrix;
-    float32_t4x4 skeletonSpaceInverseTransposeMatrix;
+    float4x4 skeletonSpaceMatrix;
+    float4x4 skeletonSpaceInverseTransposeMatrix;
 };
 
 struct Skinned
 {
-    float32_t4 position;
-    float32_t3 normal;
+    float4 position;
+    float3 normal;
 };
