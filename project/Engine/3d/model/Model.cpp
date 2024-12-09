@@ -12,6 +12,11 @@ void Model::Initialize(const std::string& filename) {
 	// モデルデータ読み込み
 	LoadModel(filename);
 
+	// 合計頂点数取得
+	for (auto& mesh : modelData_.meshes) {
+		verticesSize += static_cast<uint32_t>(mesh.vertices.size());
+	}
+
 	// アニメーション読み込み
 	animation_ = LoadAnimationFile(filename);
 
@@ -23,6 +28,11 @@ void Model::Initialize(const std::string& filename) {
 
 		// スキニング用の頂点リソースを作成
 		CreateSkinningVertexResources();
+
+		// スキニング用情報のリソースを作成
+		CreateSkinningInformationResource();
+		// スキニング情報用のデータを書き込み
+		MapSkinningInformationData();
 	}
 
 #pragma region 頂点データ
@@ -90,18 +100,24 @@ void Model::Draw() {
 }
 
 void Model::Skinning() {
-	// 計算前処理
-	SUGER::PreCompute();
+
+
 	// コマンドリストを取得
 	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	commandList->SetComputeRootSignature(SUGER::GetRootSignature(ComputePipelineStateType::kSkinning));
 	commandList->SetPipelineState(SUGER::GetPipelineState(ComputePipelineStateType::kSkinning));
 
-	SUGER::SetComputeRootDescriptorTable(0, skinCluster_.paletteSrvIndex);
-	SUGER::SetComputeRootDescriptorTable(1, vertexSrvIndex_[0]);
-	SUGER::SetComputeRootDescriptorTable(2, skinCluster_.influenceSrvIndex);
-	SUGER::SetComputeRootDescriptorTable(3, vertexUavIndex_[0]);
-	commandList->SetComputeRootConstantBufferView(4, );
+	SUGER::PreCommandSRV();
+	SUGER::SetComputeRootDescriptorTableSRV(0, skinCluster_.paletteSrvIndex);
+	SUGER::SetComputeRootDescriptorTableSRV(1, vertexSrvIndex_[0]);
+	SUGER::SetComputeRootDescriptorTableSRV(2, skinCluster_.influenceSrvIndex);
+
+	SUGER::PreCommandUAV();
+
+	SUGER::SetComputeRootDescriptorTableUAV(3, vertexUavIndex_[0]);
+	commandList->SetComputeRootConstantBufferView(4, skinningInformationResource_->GetGPUVirtualAddress());
+
+	SUGER::PreCommandSRV();
 	commandList->Dispatch(UINT(modelData_.meshes[0].vertices.size() + 1023) / 1024, 1, 1);
 }
 
@@ -487,20 +503,6 @@ void Model::CreateVertexResource() {
 		}
 		vertexResources_.push_back(vertexResource);
 	}
-
-	if (haveSkinningAnimation_) {
-		for (size_t i = 0; i < modelData_.meshes.size(); i++) {
-			ComPtr<ID3D12Resource> vertexResource;
-			if (modelData_.meshes[i].material.haveUV_) {
-				vertexResource = SUGER::CreateBufferResourceUAV(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
-				vertexUavIndex_.push_back(SUGER::UavAllocate());
-				SUGER::CreateUavStructured(vertexUavIndex_[i], vertexResource.Get(), static_cast<uint32_t>(modelData_.meshes[i].vertices.size()), sizeof(VertexData3D));
-			} else {
-				// TODO::UVなしの処理
-			}
-			vertexResourcesUav_.push_back(vertexResource);
-		}
-	}
 }
 
 void Model::CreateVertexBufferView() {
@@ -587,7 +589,28 @@ void Model::MapMaterialData() {
 }
 
 void Model::CreateSkinningVertexResources() {
+	for (size_t i = 0; i < modelData_.meshes.size(); i++) {
+		ComPtr<ID3D12Resource> vertexResource;
+		if (modelData_.meshes[i].material.haveUV_) {
+			vertexResource = SUGER::CreateBufferResourceUAV(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
+			vertexUavIndex_.push_back(SUGER::UavAllocate());
+			SUGER::CreateUavStructured(vertexUavIndex_[i], vertexResource.Get(), static_cast<uint32_t>(modelData_.meshes[i].vertices.size()), sizeof(VertexData3D));
+		} else {
+			// TODO::UVなしの処理
+		}
+		vertexResourcesUav_.push_back(vertexResource);
+	}
+}
 
+void Model::CreateSkinningInformationResource() {
+	skinningInformationResource_ = nullptr;
+	skinningInformationResource_ = SUGER::CreateBufferResource(sizeof(SkinningInformationForGPU));
+}
+
+void Model::MapSkinningInformationData() {
+	skiningInformationData_ = nullptr;
+	skinningInformationResource_->Map(0, nullptr, reinterpret_cast<void**>(&skiningInformationData_));
+	skiningInformationData_->numVertices = verticesSize;
 }
 
 Node Model::ReadNode(aiNode* node) {

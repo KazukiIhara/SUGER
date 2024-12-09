@@ -88,6 +88,11 @@ private: // メンバ関数
 #pragma region Skining
 	// スキニング用頂点リソースの作成
 	void CreateSkinningVertexResources();
+
+	// スキニング情報用のリソース作成
+	void CreateSkinningInformationResource();
+	// スキニング情報用のデータ書き込み
+	void MapSkinningInformationData();
 #pragma endregion
 
 #pragma region Node
@@ -143,17 +148,10 @@ private: // メンバ変数
 #pragma region 頂点
 	// 頂点リソース
 	std::vector<ComPtr<ID3D12Resource>> vertexResources_;
-	// UAV用頂点リソース
-	std::vector<ComPtr<ID3D12Resource>> vertexResourcesUav_;
 	// UVあり頂点データ
 	std::vector<VertexData3D*> vertexData_;
 	// VBV
 	std::vector<D3D12_VERTEX_BUFFER_VIEW> vertexBufferViews_;
-
-	// srvIndex
-	std::vector<uint32_t> vertexSrvIndex_;
-	// uavIndex
-	std::vector<uint32_t> vertexUavIndex_;
 #pragma endregion
 
 #pragma region インデックス
@@ -171,6 +169,23 @@ private: // メンバ変数
 	// マテリアルデータ
 	std::vector<MaterialForGPU*> materialData_;
 #pragma endregion
+
+#pragma region Skinning
+	// UAV用頂点リソース
+	std::vector<ComPtr<ID3D12Resource>> vertexResourcesUav_;
+	// srvIndex
+	std::vector<uint32_t> vertexSrvIndex_;
+	// uavIndex
+	std::vector<uint32_t> vertexUavIndex_;
+
+	// スキニング用の情報リソース
+	ComPtr<ID3D12Resource> skinningInformationResource_;
+	// スキニング用の情報データ
+	SkinningInformationForGPU* skiningInformationData_ = nullptr;
+
+	uint32_t verticesSize = 0;
+#pragma endregion
+
 
 #pragma region Animation
 	float animationTime = 0.0f;

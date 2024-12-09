@@ -357,7 +357,7 @@ void SUGER::PreDraw() {
 	// DirectX描画前処理
 	directXManager_->PreDraw();
 	// SrvManager描画前処理
-	srvManager_->PreDraw();
+	srvManager_->PreCommand();
 }
 
 void SUGER::PostDraw() {
@@ -475,6 +475,14 @@ D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleGPU(uint32_t index) {
 	return srvManager_->GetDescriptorHandleGPU(index);
 }
 
+void SUGER::SetComputeRootDescriptorTableSRV(UINT rootParameterIndex, uint32_t srvIndex) {
+	srvManager_->SetComputeRootDescriptorTable(rootParameterIndex, srvIndex);
+}
+
+void SUGER::PreCommandSRV() {
+	srvManager_->PreCommand();
+}
+
 void SUGER::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
 	srvManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
 }
@@ -495,11 +503,11 @@ D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetUAVDescriptorHandleGPU(uint32_t index) {
 	return uavManager_->GetDescriptorHandleGPU(index);
 }
 
-void SUGER::PreCompute() {
-	uavManager_->PreCompute();
+void SUGER::PreCommandUAV() {
+	uavManager_->PreCommand();
 }
 
-void SUGER::SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t uavIndex) {
+void SUGER::SetComputeRootDescriptorTableUAV(UINT rootParameterIndex, uint32_t uavIndex) {
 	uavManager_->SetComputeRootDescriptorTable(rootParameterIndex, uavIndex);
 }
 

@@ -60,10 +60,14 @@ bool SRVManager::IsLowerSrvMax() {
 	return useIndex < kMaxSRVCount;
 }
 
-void SRVManager::PreDraw() {
+void SRVManager::PreCommand() {
 	// 描画用のDescriptorHeapの設定
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { descriptorHeap_ };
 	directX_->GetCommandList()->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
+}
+
+void SRVManager::SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
+	directX_->GetCommandList()->SetComputeRootDescriptorTable(rootParameterIndex, GetDescriptorHandleGPU(srvIndex));
 }
 
 void SRVManager::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {

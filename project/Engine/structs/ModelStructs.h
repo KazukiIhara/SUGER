@@ -126,6 +126,6 @@ struct SkinCluster {
 	uint32_t influenceSrvIndex;
 };
 
-struct SkinningInformation {
+struct SkinningInformationForGPU {
 	uint32_t numVertices;
 };

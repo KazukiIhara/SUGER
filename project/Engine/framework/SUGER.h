@@ -132,7 +132,10 @@ public: // クラスメソッド
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleCPU(uint32_t index);
 	// GPUの特定のインデックスハンドルを取得
 	static D3D12_GPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleGPU(uint32_t index);
-
+	// 計算ディスクリプターテーブルのセット
+	static void SetComputeRootDescriptorTableSRV(UINT rootParameterIndex, uint32_t srvIndex);
+	// コマンド前処理
+	static void PreCommandSRV();
 	// ディスクリプターテーブルのセット
 	static void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 	// Allocate
@@ -149,9 +152,9 @@ public: // クラスメソッド
 	// GPUの特定のインデックスハンドルを取得
 	static D3D12_GPU_DESCRIPTOR_HANDLE GetUAVDescriptorHandleGPU(uint32_t index);
 	// 計算前処理
-	static void PreCompute();
+	static void PreCommandUAV();
 	// ディスクリプターテーブルのセット
-	static void SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t uavIndex);
+	static void SetComputeRootDescriptorTableUAV(UINT rootParameterIndex, uint32_t uavIndex);
 	// Allocate
 	static uint32_t UavAllocate();
 	// Sutuctured用のUav作成

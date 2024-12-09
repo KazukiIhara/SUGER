@@ -31,7 +31,7 @@ public:
 	// Uavの数が最大数を上回っているかどうか
 	bool IsLowerUavMax();
 	// 計算前処理
-	void PreCompute();
+	void PreCommand();
 	// ルートパラメータインデックスと、uav番号に対応したDescriptorTableを取得
 	void SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t uavIndex);
 	// uavディスクリプタヒープを取得

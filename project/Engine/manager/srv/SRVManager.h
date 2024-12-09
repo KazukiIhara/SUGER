@@ -36,7 +36,9 @@ public: // 公開メンバ関数
 	// Srvの数が最大数を上回っているかどうか
 	bool IsLowerSrvMax();
 	// 描画前処理
-	void PreDraw();
+	void PreCommand();
+	// ルートパラメータインデックスと、srv番号に対応したDescriptorTableを取得
+	void SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 	// ルートパラメータインデックスと、srv番号に対応したDescriptorTableを取得
 	void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 
