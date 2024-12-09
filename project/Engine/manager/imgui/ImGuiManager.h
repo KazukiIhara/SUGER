@@ -27,6 +27,9 @@ public: // 公開メンバ関数
 	// 初期化
 	void Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVManager* srvManager);
 
+	// フォント設定
+	void FontSetting();
+
 	// 更新処理の先頭に呼び出す処理
 	void BeginFrame();
 
@@ -35,6 +38,9 @@ public: // 公開メンバ関数
 
 	// 描画
 	void Draw();
+
+	// プレビューウィンドウ描画
+	void ShowPreviewWindow();
 
 	// ImGuiの終了処理
 	void Finalize();
@@ -46,6 +52,10 @@ private:
 	void SetWindowManager(WindowManager* windowManager);
 	void SetDirectXManager(DirectXManager* directXManager);
 	void SetSrvManager(SRVManager* srvManager);
+
+private:
+	// プレビュー描画のSrvIndex
+	uint32_t previewSrvIndex_;
 
 private: // インスタンスを受け取る変数
 	// WinAPI

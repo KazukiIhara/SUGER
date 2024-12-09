@@ -70,6 +70,14 @@ void SRVManager::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_
 	directX_->GetCommandList()->SetGraphicsRootDescriptorTable(rootParameterIndex, GetDescriptorHandleGPU(srvIndex));
 }
 
+ID3D12DescriptorHeap* SRVManager::GetDescriptorHeap() const {
+	return descriptorHeap_.Get();
+}
+
+uint32_t SRVManager::GetDescriptorSize() const {
+	return descriptorSize_;
+}
+
 void SRVManager::SetDirectXManager(DirectXManager* directX) {
 	directX_ = directX;
 }

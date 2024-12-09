@@ -18,20 +18,19 @@ public: // 公開メンバ関数
 	void Load(const std::string& filePath);
 
 	// Textureを渡す
-	std::unordered_map<std::string, Texture>& GetTexture() {
-		return textures_;
-	}
+	std::unordered_map<std::string, Texture>& GetTexture();
+
 	// メタデータを渡す
 	const DirectX::TexMetadata& GetMetaData(const std::string& filePath);
 
 
 private: // 非公開メンバ関数
-
 	// DirectXCommon
 	void SetDirectXCommon(DirectXManager* directX);
 	// SrvManager
 	void SetSrvManager(SRVManager* srvManager);
 
+private:
 	// Texture読み込み
 	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 	// テクスチャリソースを作る

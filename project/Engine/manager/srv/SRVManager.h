@@ -41,14 +41,10 @@ public: // 公開メンバ関数
 	void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 
 	// srvディスクリプタヒープを取得
-	ID3D12DescriptorHeap* GetDescriptorHeap() const {
-		return descriptorHeap_.Get();
-	}
+	ID3D12DescriptorHeap* GetDescriptorHeap() const;
 
 	// srvディスクリプタのサイズを取得
-	uint32_t GetDescriptorSize() const {
-		return descriptorSize_;
-	}
+	uint32_t GetDescriptorSize() const;
 
 private:
 	// DirectX

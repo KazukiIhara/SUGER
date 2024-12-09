@@ -46,6 +46,10 @@ void TextureManager::Load(const std::string& filePath) {
 	assert(srvManager_->IsLowerSrvMax());
 }
 
+std::unordered_map<std::string, Texture>& TextureManager::GetTexture() {
+	return textures_;
+}
+
 const DirectX::TexMetadata& TextureManager::GetMetaData(const std::string& filePath) {
 	assert(&GetTexture()[filePath]);
 	Texture& texture = GetTexture()[filePath];
