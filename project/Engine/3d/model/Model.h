@@ -33,10 +33,12 @@ public: // メンバ関数
 	void Initialize(const std::string& filename);
 	// 更新
 	void Update();
+	// スキニング
+	void Skinning();
 	// 描画
 	void Draw();
 	// スキニング描画
-	void Skinning();
+	void DrawSkinning();
 	// 板ポリパーティクルの場合の描画
 	void DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName);
 	// モデルパーティクルの描画
@@ -185,7 +187,6 @@ private: // メンバ変数
 
 	uint32_t verticesSize = 0;
 #pragma endregion
-
 
 #pragma region Animation
 	float animationTime = 0.0f;

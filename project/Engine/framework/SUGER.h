@@ -121,6 +121,8 @@ public: // クラスメソッド
 	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 	// UAV用のバッファリソースの作成
 	static ComPtr<ID3D12Resource> CreateBufferResourceUAV(size_t sizeInbytes);
+	// コマンド実行後処理
+	static void PostCommand();
 	// FIXFPS初期化
 	static void FiXFPSInitialize();
 #pragma endregion

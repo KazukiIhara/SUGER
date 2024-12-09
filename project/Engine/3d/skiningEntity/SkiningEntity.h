@@ -9,5 +9,7 @@ public:
 
 	// 描画
 	void Update()override;
+	// 描画
+	void Draw()override;
 
 };

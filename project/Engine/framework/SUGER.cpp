@@ -350,6 +350,12 @@ void SUGER::PreDraw() {
 	viewManager_->PreCommand();
 }
 
+void SUGER::PostCommand() {
+	directXManager_->KickCommand();
+	directXManager_->WaitGPU();
+	directXManager_->ResetCommandList();
+}
+
 void SUGER::PostDraw() {
 	// ImGui描画処理
 	imguiManager_->Draw();

@@ -99,6 +99,25 @@ void Model::Draw() {
 	}
 }
 
+void Model::DrawSkinning() {
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
+	// VBVを設定
+	commandList->IASetVertexBuffers(0, 1, &vertexBufferViews_[0]);
+	// IBVを設定
+	commandList->IASetIndexBuffer(&indexBufferViews_[0]);
+	if (modelData_.meshes[0].material.haveUV_) {
+		// SRVセット
+		SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[0].material.textureFilePath].srvIndex);
+		// ModelMaterial用CBufferの場所を設定
+		commandList->SetGraphicsRootConstantBufferView(5, materialResources_[0]->GetGPUVirtualAddress());
+		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+		commandList->DrawIndexedInstanced(UINT(modelData_.meshes[0].indices.size()), 1, 0, 0, 0);
+	} else {
+		// TODO:UVなしの時の処理
+	}
+}
+
 void Model::Skinning() {
 	// コマンドリストを取得
 	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
@@ -113,8 +132,7 @@ void Model::Skinning() {
 	SUGER::SetComputeRootDescriptorTable(3, vertexUavIndex_[0]);
 	commandList->SetComputeRootConstantBufferView(4, skinningInformationResource_->GetGPUVirtualAddress());
 	commandList->Dispatch(UINT(modelData_.meshes[0].vertices.size() + 1023) / 1024, 1, 1);
-
-
+	SUGER::PostCommand();
 }
 
 void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName) {

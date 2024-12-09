@@ -20,7 +20,7 @@ public:
 	// 更新
 	virtual void Update()override;
 	// 描画
-	void Draw();
+	virtual void Draw();
 
 	// コライダー作成
 	void CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size);
