@@ -175,7 +175,7 @@ private: // メンバ変数
 
 #pragma region Skinning
 	// UAV用頂点リソース
-	std::vector<ComPtr<ID3D12Resource>> vertexResourcesUav_;
+	std::vector<ComPtr<ID3D12Resource>> skinningVertexResources_;
 	// VBV
 	std::vector<D3D12_VERTEX_BUFFER_VIEW> skinningVertexBufferViews_;
 	// srvIndex

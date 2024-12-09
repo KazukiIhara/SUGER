@@ -613,14 +613,14 @@ void Model::CreateSkinningVertexResources() {
 		} else {
 			// TODO::UVなしの処理
 		}
-		vertexResourcesUav_.push_back(vertexResource);
+		skinningVertexResources_.push_back(vertexResource);
 	}
 }
 
 void Model::CreateSkinningVertexBufferView() {
 	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
 		D3D12_VERTEX_BUFFER_VIEW vertexBufferView;
-		vertexBufferView.BufferLocation = vertexResourcesUav_[i]->GetGPUVirtualAddress();
+		vertexBufferView.BufferLocation = skinningVertexResources_[i]->GetGPUVirtualAddress();
 		if (modelData_.meshes[i].material.haveUV_) {
 			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
 			vertexBufferView.StrideInBytes = sizeof(VertexData3D);
