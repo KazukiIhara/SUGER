@@ -34,7 +34,6 @@ public:
 
 	void SetGraphicsPipelineState(ComputePipelineStateType pipelineState);
 
-
 private:
 	// パイプラインの種類の数 
 	static const uint32_t kComputePipelineStateNum = 1;

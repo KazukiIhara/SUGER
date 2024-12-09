@@ -36,7 +36,7 @@ public: // メンバ関数
 	// 描画
 	void Draw();
 	// スキニング描画
-	void DrawSkinning();
+	void Skinning();
 	// 板ポリパーティクルの場合の描画
 	void DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName);
 	// モデルパーティクルの描画

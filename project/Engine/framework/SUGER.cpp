@@ -287,12 +287,11 @@ void SUGER::Draw() {
 	PreDrawObject3D();
 	// Entity描画処理
 	DrawEntiteis();
-
-	// Skinningあり3Dオブジェクト描画前処理
-	PreDrawObject3DSkinning();
 	// Skining付きEntity描画処理
 	DrawSkiningEntities();
 
+	// Skinningあり3Dオブジェクト描画前処理
+	PreDrawObject3DSkinning();
 
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
@@ -585,16 +584,16 @@ std::string SUGER::CreateParticle(const std::string& name, const ParticleType& p
 	const std::string& textureDirectoryPath = "resources/images/";
 	// パーティクルタイプに応じてパーティクルを作成
 	switch (particleType) {
-		case kPlane:
-			// 板ポリパーティクルを作成
-			return particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
-			break;
-		case kModel:
-			// モデルパーティクルを作成
-			return particleManager_->CreateModelParticle(name, filePath);
-			break;
-		default:
-			return "";
+	case kPlane:
+		// 板ポリパーティクルを作成
+		return particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
+		break;
+	case kModel:
+		// モデルパーティクルを作成
+		return particleManager_->CreateModelParticle(name, filePath);
+		break;
+	default:
+		return "";
 	}
 }
 
