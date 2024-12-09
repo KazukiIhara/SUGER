@@ -114,6 +114,8 @@ public: // クラスメソッド
 	// DirectXManagerの機能
 	// デバイス取得
 	static ID3D12Device* GetDirectXDevice();
+	// RTVDescの取得
+	static D3D12_RENDER_TARGET_VIEW_DESC GetRTVDesc();
 	// コマンドリスト取得関数
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
 	// バッファリソースの作成

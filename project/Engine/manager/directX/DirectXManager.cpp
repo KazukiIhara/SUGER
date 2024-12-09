@@ -129,6 +129,14 @@ void DirectXManager::InitializeFixFPS() {
 	fixFPS_->Initialize();
 }
 
+DXGI_SWAP_CHAIN_DESC1 DirectXManager::GetSwapChainDesc() const {
+	return swapChainDesc_;
+}
+
+D3D12_RENDER_TARGET_VIEW_DESC DirectXManager::GetRTVDesc() const {
+	return rtvDesc_;
+}
+
 ID3D12Device* DirectXManager::GetDevice() {
 	return dxgi_->GetDevice();
 }

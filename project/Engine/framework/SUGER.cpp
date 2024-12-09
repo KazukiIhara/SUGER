@@ -432,6 +432,10 @@ ID3D12Device* SUGER::GetDirectXDevice() {
 	return directXManager_->GetDevice();
 }
 
+D3D12_RENDER_TARGET_VIEW_DESC SUGER::GetRTVDesc() {
+	return directXManager_->GetRTVDesc();
+}
+
 ID3D12GraphicsCommandList* SUGER::GetDirectXCommandList() {
 	return directXManager_->GetCommandList();
 }

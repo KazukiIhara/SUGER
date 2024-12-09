@@ -47,13 +47,10 @@ public: // 公開メンバ関数
 	void InitializeFixFPS();
 
 	// スワップチェインディスクリプタを取得
-	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const {
-		return swapChainDesc_;
-	}
+	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const;
+
 	// rtvDescを取得
-	D3D12_RENDER_TARGET_VIEW_DESC GetRTVDesc() const {
-		return rtvDesc_;
-	}
+	D3D12_RENDER_TARGET_VIEW_DESC GetRTVDesc() const;
 
 	ID3D12Device* GetDevice();
 
