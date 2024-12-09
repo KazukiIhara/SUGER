@@ -106,7 +106,7 @@ void SkinningComputePipeline::CreateRootSignature() {
 void SkinningComputePipeline::CompileShaders() {
 	computeShaderBlob_ = nullptr;
 	computeShaderBlob_ = CompileShader(L"resources/shaders/skinning/skinning.CS.hlsl",
-		L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+		L"cs_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(computeShaderBlob_ != nullptr);
 }
 

@@ -13,6 +13,7 @@
 #include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
+#include "manager/pipeline/compute/ComputePipelineManager.h"
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "manager/model/ModelManager.h"
 #include "manager/object/2d/Object2DManager.h"
@@ -157,6 +158,13 @@ public: // クラスメソッド
 	// GraphicsPipelineManagerの機能
 	// パイプライン取得関数
 	static ID3D12PipelineState* GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode);
+
+#pragma endregion
+
+#pragma region ComputePipelineManager
+	// ComputePipelineManagerの機能
+	// パイプライン取得関数
+	static ID3D12PipelineState* GetPipelineState(ComputePipelineStateType pipelineState);
 
 #pragma endregion
 
@@ -359,6 +367,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
+	static std::unique_ptr<ComputePipelineManager> computePipelineManager_;
 	static std::unique_ptr<ModelManager> modelManager_;
 	static std::unique_ptr<Object2DManager> object2dManager_;
 	static std::unique_ptr<EmptyManager> emptyManager_;

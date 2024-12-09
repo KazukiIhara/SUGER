@@ -14,6 +14,7 @@ std::unique_ptr<SRVManager> SUGER::srvManager_ = nullptr;
 std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
+std::unique_ptr<ComputePipelineManager> SUGER::computePipelineManager_ = nullptr;
 std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
 std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
@@ -60,6 +61,10 @@ void SUGER::Initialize() {
 	// GraphicsPipelineManagerの初期化
 	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
 	graphicsPipelineManager_->Initialize(directXManager_.get());
+
+	// ComputePipelineManagerの初期化
+	computePipelineManager_ = std::make_unique<ComputePipelineManager>();
+	computePipelineManager_->Initialize(directXManager_.get());
 
 	// ModelManagerの初期化
 	modelManager_ = std::make_unique<ModelManager>();
@@ -204,6 +209,11 @@ void SUGER::Finalize() {
 	// ModelManagerの終了処理
 	if (modelManager_) {
 		modelManager_.reset();
+	}
+
+	// ComputePipelineManagerの終了処理
+	if (computePipelineManager_) {
+		computePipelineManager_.reset();
 	}
 
 	// GraphicsPipelineManagerの終了処理
@@ -477,6 +487,10 @@ const DirectX::TexMetadata& SUGER::GetTextureMetaData(const std::string& filePat
 
 ID3D12PipelineState* SUGER::GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode) {
 	return graphicsPipelineManager_->GetPipelineState(pipelineState, blendMode);
+}
+
+ID3D12PipelineState* SUGER::GetPipelineState(ComputePipelineStateType pipelineState) {
+	return nullptr;
 }
 
 void SUGER::LoadModel(const std::string& filePath) {
