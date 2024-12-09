@@ -90,7 +90,8 @@ private: // メンバ関数
 #pragma region Skining
 	// スキニング用頂点リソースの作成
 	void CreateSkinningVertexResources();
-
+	// スキニング用頂点バッファビュー
+	void CreateSkinningVertexBufferView();
 	// スキニング情報用のリソース作成
 	void CreateSkinningInformationResource();
 	// スキニング情報用のデータ書き込み
@@ -175,6 +176,8 @@ private: // メンバ変数
 #pragma region Skinning
 	// UAV用頂点リソース
 	std::vector<ComPtr<ID3D12Resource>> vertexResourcesUav_;
+	// VBV
+	std::vector<D3D12_VERTEX_BUFFER_VIEW> skinningVertexBufferViews_;
 	// srvIndex
 	std::vector<uint32_t> vertexSrvIndex_;
 	// uavIndex

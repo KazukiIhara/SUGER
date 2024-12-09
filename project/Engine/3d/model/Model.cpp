@@ -28,7 +28,8 @@ void Model::Initialize(const std::string& filename) {
 
 		// スキニング用の頂点リソースを作成
 		CreateSkinningVertexResources();
-
+		// スキニング用の頂点バッファビューを作成
+		CreateSkinningVertexBufferView();
 		// スキニング用情報のリソースを作成
 		CreateSkinningInformationResource();
 		// スキニング情報用のデータを書き込み
@@ -103,7 +104,7 @@ void Model::DrawSkinning() {
 	// コマンドリストを取得
 	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	// VBVを設定
-	commandList->IASetVertexBuffers(0, 1, &vertexBufferViews_[0]);
+	commandList->IASetVertexBuffers(0, 1, &skinningVertexBufferViews_[0]);
 	// IBVを設定
 	commandList->IASetIndexBuffer(&indexBufferViews_[0]);
 	if (modelData_.meshes[0].material.haveUV_) {
@@ -613,6 +614,20 @@ void Model::CreateSkinningVertexResources() {
 			// TODO::UVなしの処理
 		}
 		vertexResourcesUav_.push_back(vertexResource);
+	}
+}
+
+void Model::CreateSkinningVertexBufferView() {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		D3D12_VERTEX_BUFFER_VIEW vertexBufferView;
+		vertexBufferView.BufferLocation = vertexResourcesUav_[i]->GetGPUVirtualAddress();
+		if (modelData_.meshes[i].material.haveUV_) {
+			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
+			vertexBufferView.StrideInBytes = sizeof(VertexData3D);
+		} else {
+			// TODO::UVなしの処理
+		}
+		skinningVertexBufferViews_.push_back(vertexBufferView);
 	}
 }
 
