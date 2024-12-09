@@ -29,9 +29,9 @@ void Particle::Initialize(Model* model, Camera* camera, const std::string& textu
 	MapMaterialData();
 
 	// srvのインデックスを割り当て
-	srvIndex_ = SUGER::SrvAllocate();
+	srvIndex_ = SUGER::ViewAllocate();
 	// Srvを作成
-	SUGER::CreateSrvStructured(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
+	SUGER::CreateSrvStructuredBuffer(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(ParticleForGPU));
 }
 
 void Particle::Update() {

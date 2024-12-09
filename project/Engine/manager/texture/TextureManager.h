@@ -4,7 +4,7 @@
 
 // 前方宣言
 class DirectXManager;
-class SRVManager;
+class ViewManager;
 
 class TextureManager {
 public: // 公開メンバ関数
@@ -12,7 +12,7 @@ public: // 公開メンバ関数
 	~TextureManager() = default;
 
 	// 初期化
-	void Initialize(DirectXManager* directXManager, SRVManager* srvManager);
+	void Initialize(DirectXManager* directXManager, ViewManager* srvManager);
 
 	// テクスチャのロード
 	void Load(const std::string& filePath);
@@ -28,7 +28,7 @@ private: // 非公開メンバ関数
 	// DirectXCommon
 	void SetDirectXCommon(DirectXManager* directX);
 	// SrvManager
-	void SetSrvManager(SRVManager* srvManager);
+	void SetSrvManager(ViewManager* srvManager);
 
 private:
 	// Texture読み込み
@@ -45,5 +45,5 @@ private: // インスタンス受け取り変数
 	// DirectXCommon
 	DirectXManager* directXManager_ = nullptr;
 	// SrvManager
-	SRVManager* srvManager_ = nullptr;
+	ViewManager* srvManager_ = nullptr;
 };

@@ -6,7 +6,7 @@
 #include "directX/command/DirectXCommand.h"
 #include "manager/srv/SRVManager.h"
 
-void TextureManager::Initialize(DirectXManager* directXManager, SRVManager* srvManager) {
+void TextureManager::Initialize(DirectXManager* directXManager, ViewManager* srvManager) {
 	// 必要なインスタンスのポインタを取得
 	SetDirectXCommon(directXManager);
 	SetSrvManager(srvManager);
@@ -43,7 +43,7 @@ void TextureManager::Load(const std::string& filePath) {
 	srvManager_->CreateSrvTexture2d(texture.srvIndex, textures_[filePath].resource.Get(), texture.metaData.format, UINT(texture.metaData.mipLevels));
 
 	// テクスチャ枚数上限チェック
-	assert(srvManager_->IsLowerSrvMax());
+	assert(srvManager_->IsLowerViewMax());
 }
 
 std::unordered_map<std::string, Texture>& TextureManager::GetTexture() {
@@ -60,7 +60,7 @@ void TextureManager::SetDirectXCommon(DirectXManager* directX) {
 	directXManager_ = directX;
 }
 
-void TextureManager::SetSrvManager(SRVManager* srvManager) {
+void TextureManager::SetSrvManager(ViewManager* srvManager) {
 	srvManager_ = srvManager;
 }
 
