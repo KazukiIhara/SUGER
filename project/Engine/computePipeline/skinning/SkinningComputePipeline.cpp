@@ -26,6 +26,80 @@ void SkinningComputePipeline::SetDirectXManager(DirectXManager* directX) {
 }
 
 void SkinningComputePipeline::CreateRootSignature() {
+	HRESULT hr = S_FALSE;
+
+	// Descriptor Ranges
+	// SRV用
+	D3D12_DESCRIPTOR_RANGE srvRanges[1] = {};
+	srvRanges[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	srvRanges[0].NumDescriptors = 3;                 // t0, t1, t2
+	srvRanges[0].BaseShaderRegister = 0;             // t0から始まる
+	srvRanges[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	// UAV用
+	D3D12_DESCRIPTOR_RANGE uavRanges[1] = {};
+	uavRanges[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_UAV;
+	uavRanges[0].NumDescriptors = 1;                 // u0のみ
+	uavRanges[0].BaseShaderRegister = 0;             // u0から始まる
+	uavRanges[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	// Root Parameters
+	// 1) CBV(b0)をRoot Descriptorとして渡す
+	D3D12_ROOT_PARAMETER rootParams[3] = {};
+
+	// CBV用パラメータ (b0)
+	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParams[0].Descriptor.ShaderRegister = 0; // b0
+	rootParams[0].Descriptor.RegisterSpace = 0;
+	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+
+	// SRV Descriptor Table用パラメータ (t0~t2)
+	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParams[1].DescriptorTable.NumDescriptorRanges = _countof(srvRanges);
+	rootParams[1].DescriptorTable.pDescriptorRanges = srvRanges;
+	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+
+	// UAV Descriptor Table用パラメータ (u0)
+	rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParams[2].DescriptorTable.NumDescriptorRanges = _countof(uavRanges);
+	rootParams[2].DescriptorTable.pDescriptorRanges = uavRanges;
+	rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+
+	// Static Samplers
+	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+	// 特にサンプラーを使わない場合は設定しないか、デフォルト設定のサンプラーを用意する
+	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+	staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+	staticSamplers[0].ShaderRegister = 0;
+	staticSamplers[0].RegisterSpace = 0;
+	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
+
+	// Root Signature Description
+	D3D12_ROOT_SIGNATURE_DESC rootSigDesc = {};
+	rootSigDesc.NumParameters = _countof(rootParams);
+	rootSigDesc.pParameters = rootParams;
+	rootSigDesc.NumStaticSamplers = _countof(staticSamplers);
+	rootSigDesc.pStaticSamplers = staticSamplers;
+	rootSigDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_NONE; // Compute用であるためIA関連フラグは不要
+
+	// シリアライズしてバイナリにする
+	ID3DBlob* signatureBlob = nullptr;
+	ID3DBlob* errorBlob = nullptr;
+
+	hr = D3D12SerializeRootSignature(&rootSigDesc,
+		D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
+	if (FAILED(hr)) {
+		Logger::Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
+		assert(false);
+	}
+	// バイナリをもとに生成
+	rootSignature_ = nullptr;
+	hr = directX_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
+		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
+	assert(SUCCEEDED(hr));
 
 }
 
