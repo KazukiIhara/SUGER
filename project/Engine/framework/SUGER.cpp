@@ -11,6 +11,7 @@ std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
 std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
 std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
 std::unique_ptr<SRVManager> SUGER::srvManager_ = nullptr;
+std::unique_ptr<UAVManager> SUGER::uavManager_ = nullptr;
 std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
@@ -49,6 +50,10 @@ void SUGER::Initialize() {
 	// SRVManagerの初期化
 	srvManager_ = std::make_unique<SRVManager>();
 	srvManager_->Initialize(directXManager_.get());
+
+	// UAVManagerの初期化
+	uavManager_ = std::make_unique<UAVManager>();
+	uavManager_->Initialize(directXManager_.get());
 
 	// ImGuiManagerの初期化
 	imguiManager_ = std::make_unique<ImGuiManager>();
@@ -230,6 +235,11 @@ void SUGER::Finalize() {
 	if (imguiManager_) {
 		imguiManager_->Finalize();
 		imguiManager_.reset();
+	}
+
+	// UAVManagerの終了処理
+	if (uavManager_) {
+		uavManager_.reset();
 	}
 
 	// SRVManagerの終了処理
@@ -449,6 +459,10 @@ ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes) {
 	return directXManager_->CreateBufferResource(sizeInBytes);
 }
 
+ComPtr<ID3D12Resource> SUGER::CreateBufferResourceUAV(size_t sizeInbytes) {
+	return directXManager_->CreateUAVBufferResource(sizeInbytes);
+}
+
 void SUGER::FiXFPSInitialize() {
 	directXManager_->InitializeFixFPS();
 }
@@ -471,6 +485,29 @@ uint32_t SUGER::SrvAllocate() {
 
 void SUGER::CreateSrvStructured(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
 	srvManager_->CreateSrvStructuredBuffer(srvIndex, pResource, numElements, structureByteStride);
+}
+
+D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetUAVDescriptorHandleCPU(uint32_t index) {
+	return uavManager_->GetDescriptorHandleCPU(index);
+}
+
+D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetUAVDescriptorHandleGPU(uint32_t index) {
+	return uavManager_->GetDescriptorHandleGPU(index);
+}
+
+void SUGER::PreCompute() {
+	uavManager_->PreCompute();
+}
+
+void SUGER::SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t uavIndex) {
+	uavManager_->SetComputeRootDescriptorTable(rootParameterIndex, uavIndex);
+}
+
+uint32_t SUGER::UavAllocate() {
+	return uavManager_->Allocate();
+}
+
+void SUGER::CreateUavStructured(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
 }
 
 void SUGER::LoadTexture(const std::string& filePath) {

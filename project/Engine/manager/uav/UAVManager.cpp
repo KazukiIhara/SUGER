@@ -50,6 +50,12 @@ bool UAVManager::IsLowerUavMax() {
 	return useIndex < kMaxUAVCount;
 }
 
+void UAVManager::PreCompute() {
+	// 描画用のDescriptorHeapの設定
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { descriptorHeap_ };
+	directX_->GetCommandList()->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
+}
+
 void UAVManager::SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t uavIndex) {
 	directX_->GetCommandList()->SetComputeRootDescriptorTable(rootParameterIndex, GetDescriptorHandleGPU(uavIndex));
 }

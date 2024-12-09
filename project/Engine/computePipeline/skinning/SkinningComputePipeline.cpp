@@ -47,22 +47,22 @@ void SkinningComputePipeline::CreateRootSignature() {
 	// 1) CBV(b0)をRoot Descriptorとして渡す
 	D3D12_ROOT_PARAMETER rootParams[3] = {};
 
-	// CBV用パラメータ (b0)
-	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-	rootParams[0].Descriptor.ShaderRegister = 0; // b0
-	rootParams[0].Descriptor.RegisterSpace = 0;
+	// SRV Descriptor Table用パラメータ (t0~t2)
+	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParams[0].DescriptorTable.NumDescriptorRanges = _countof(srvRanges);
+	rootParams[0].DescriptorTable.pDescriptorRanges = srvRanges;
 	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 
-	// SRV Descriptor Table用パラメータ (t0~t2)
+	// UAV Descriptor Table用パラメータ (u0)
 	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-	rootParams[1].DescriptorTable.NumDescriptorRanges = _countof(srvRanges);
-	rootParams[1].DescriptorTable.pDescriptorRanges = srvRanges;
+	rootParams[1].DescriptorTable.NumDescriptorRanges = _countof(uavRanges);
+	rootParams[1].DescriptorTable.pDescriptorRanges = uavRanges;
 	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 
-	// UAV Descriptor Table用パラメータ (u0)
-	rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-	rootParams[2].DescriptorTable.NumDescriptorRanges = _countof(uavRanges);
-	rootParams[2].DescriptorTable.pDescriptorRanges = uavRanges;
+	// CBV用パラメータ (b0)
+	rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParams[2].Descriptor.ShaderRegister = 0; // b0
+	rootParams[2].Descriptor.RegisterSpace = 0;
 	rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 
 	// Static Samplers

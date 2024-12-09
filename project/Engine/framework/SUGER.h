@@ -10,6 +10,7 @@
 #include "input/direct/DirectInput.h"
 #include "manager/directX/DirectXManager.h"
 #include "manager/srv/SRVManager.h"
+#include "manager/uav/UAVManager.h"
 #include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
@@ -119,6 +120,8 @@ public: // クラスメソッド
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
 	// バッファリソースの作成
 	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
+	// UAV用のバッファリソースの作成
+	static ComPtr<ID3D12Resource> CreateBufferResourceUAV(size_t sizeInbytes);
 	// FIXFPS初期化
 	static void FiXFPSInitialize();
 #pragma endregion
@@ -138,6 +141,24 @@ public: // クラスメソッド
 	static void CreateSrvStructured(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 
 #pragma endregion
+
+#pragma region UAVManager
+	// UAVManagerの機能
+	// CPUの特定のインデックスハンドルを取得
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetUAVDescriptorHandleCPU(uint32_t index);
+	// GPUの特定のインデックスハンドルを取得
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetUAVDescriptorHandleGPU(uint32_t index);
+	// 計算前処理
+	static void PreCompute();
+	// ディスクリプターテーブルのセット
+	static void SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t uavIndex);
+	// Allocate
+	static uint32_t UavAllocate();
+	// Sutuctured用のUav作成
+	static void CreateUavStructured(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
+
+#pragma endregion
+
 
 #pragma region ImGuiManager
 	// ImGuiManagerの機能
@@ -366,6 +387,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<DirectInput> directInput_;
 	static std::unique_ptr<DirectXManager> directXManager_;
 	static std::unique_ptr<SRVManager> srvManager_;
+	static std::unique_ptr<UAVManager> uavManager_;
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;

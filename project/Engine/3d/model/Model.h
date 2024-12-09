@@ -85,6 +85,11 @@ private: // メンバ関数
 	void MapMaterialData();
 #pragma endregion
 
+#pragma region Skining
+	// スキニング用頂点リソースの作成
+	void CreateSkinningVertexResources();
+#pragma endregion
+
 #pragma region Node
 	// ノードの読み込み
 	Node ReadNode(aiNode* node);
@@ -120,7 +125,6 @@ private: // メンバ関数
 	void SkinClusterUpdate(SkinCluster& skinCluster, const Skeleton& skeleton);
 #pragma endregion
 
-
 private: // メンバ変数
 #pragma region モデル
 	// モデルデータ
@@ -139,12 +143,17 @@ private: // メンバ変数
 #pragma region 頂点
 	// 頂点リソース
 	std::vector<ComPtr<ID3D12Resource>> vertexResources_;
+	// UAV用頂点リソース
+	std::vector<ComPtr<ID3D12Resource>> vertexResourcesUav_;
 	// UVあり頂点データ
 	std::vector<VertexData3D*> vertexData_;
-	// UVなし頂点データ
-	std::vector<VertexData3DUnUV*> vertexDataUnUV_;
 	// VBV
 	std::vector<D3D12_VERTEX_BUFFER_VIEW> vertexBufferViews_;
+
+	// srvIndex
+	std::vector<uint32_t> vertexSrvIndex_;
+	// uavIndex
+	std::vector<uint32_t> vertexUavIndex_;
 #pragma endregion
 
 #pragma region インデックス
