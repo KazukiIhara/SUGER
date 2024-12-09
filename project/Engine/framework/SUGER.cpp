@@ -232,11 +232,6 @@ void SUGER::Finalize() {
 		imguiManager_.reset();
 	}
 
-	// UAVManagerの終了処理
-	if (uavManager_) {
-		uavManager_.reset();
-	}
-
 	// ViewManagerの終了処理
 	if (viewManager_) {
 		viewManager_.reset();

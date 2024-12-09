@@ -100,8 +100,6 @@ void Model::Draw() {
 }
 
 void Model::Skinning() {
-
-
 	// コマンドリストを取得
 	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	commandList->SetComputeRootSignature(SUGER::GetRootSignature(ComputePipelineStateType::kSkinning));
@@ -115,6 +113,8 @@ void Model::Skinning() {
 	SUGER::SetComputeRootDescriptorTable(3, vertexUavIndex_[0]);
 	commandList->SetComputeRootConstantBufferView(4, skinningInformationResource_->GetGPUVirtualAddress());
 	commandList->Dispatch(UINT(modelData_.meshes[0].vertices.size() + 1023) / 1024, 1, 1);
+
+
 }
 
 void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName) {

@@ -247,6 +247,10 @@ Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXManager::CreateDescriptorHea
 	return descriptorHeap;
 }
 
+void DirectXManager::SetWindowManager(WindowManager* windowManager) {
+	windowManager_ = windowManager;
+}
+
 void DirectXManager::CreateSwapChain() {
 	swapChainDesc_.Width = WindowManager::kClientWidth;			// 画面の幅、ウィンドウのクライアント領域を同じものにしておく
 	swapChainDesc_.Height = WindowManager::kClientHeight;		// 画面の高さ、ウィンドウのクライアント領域を同じものしておく

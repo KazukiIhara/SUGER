@@ -74,9 +74,7 @@ public: // 公開メンバ関数
 private: // プライベートメンバ関数
 
 	// WinAPIのインスタンスをコピー
-	void SetWindowManager(WindowManager* windowManager) {
-		windowManager_ = windowManager;
-	}
+	void SetWindowManager(WindowManager* windowManager);
 
 	// スワップチェーンを生成する
 	void CreateSwapChain();

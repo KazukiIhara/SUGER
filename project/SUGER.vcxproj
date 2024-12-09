@@ -122,7 +122,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
     <ClCompile Include="Engine\manager\line\LineGroupManager.cpp" />
     <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
-    <ClCompile Include="Engine\manager\uav\UAVManager.cpp" />
     <ClCompile Include="Engine\system\line\LineSystem.cpp" />
     <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
@@ -199,7 +198,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
     <ClInclude Include="Engine\manager\line\LineGroupManager.h" />
     <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
-    <ClInclude Include="Engine\manager\uav\UAVManager.h" />
     <ClInclude Include="Engine\system\line\LineSystem.h" />
     <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
     <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
