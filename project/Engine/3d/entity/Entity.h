@@ -18,9 +18,9 @@ public:
 	// 初期化
 	void Initialize()override;
 	// 更新
-	void Update()override;
+	virtual void Update()override;
 	// 描画
-	virtual void Draw();
+	void Draw();
 
 	// コライダー作成
 	void CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size);

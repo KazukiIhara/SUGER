@@ -163,6 +163,8 @@ public: // クラスメソッド
 
 #pragma region ComputePipelineManager
 	// ComputePipelineManagerの機能
+	// ルートシグネイチャ取得関数
+	static ID3D12RootSignature* GetRootSignature(ComputePipelineStateType pipelineState);
 	// パイプライン取得関数
 	static ID3D12PipelineState* GetPipelineState(ComputePipelineStateType pipelineState);
 

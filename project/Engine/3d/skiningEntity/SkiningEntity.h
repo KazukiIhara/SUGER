@@ -8,6 +8,6 @@ public:
 	~SkiningEntity() = default;
 
 	// 描画
-	void Draw()override;
+	void Update()override;
 
 };

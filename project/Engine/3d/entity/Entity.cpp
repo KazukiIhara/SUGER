@@ -49,7 +49,7 @@ void Entity::Draw() {
 	// コマンドリストを取得
 	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	// PSOを設定
-	commandList->SetPipelineState(SUGER::GetPipelineState(kObject3d, blendMode_));
+	commandList->SetPipelineState(SUGER::GetPipelineState(GraphicsPipelineStateType::kObject3d, blendMode_));
 	// マテリアルCBufferの場所を設定
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	// wvp用のCBufferの場所を設定

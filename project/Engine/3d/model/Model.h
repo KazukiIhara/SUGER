@@ -137,22 +137,22 @@ private: // メンバ変数
 #pragma endregion
 
 #pragma region 頂点
-	/*頂点リソース*/
+	// 頂点リソース
 	std::vector<ComPtr<ID3D12Resource>> vertexResources_;
 	// UVあり頂点データ
 	std::vector<VertexData3D*> vertexData_;
 	// UVなし頂点データ
 	std::vector<VertexData3DUnUV*> vertexDataUnUV_;
-	/*VBV*/
+	// VBV
 	std::vector<D3D12_VERTEX_BUFFER_VIEW> vertexBufferViews_;
 #pragma endregion
 
 #pragma region インデックス
-	/*インデックスリソース*/
+	// インデックスリソース
 	std::vector<ComPtr<ID3D12Resource>> indexResources_;
-	/*インデックスデータ*/
+	// インデックスデータ
 	std::vector<uint32_t*> indexData_;
-	/*インデックスバッファビュー*/
+	// インデックスバッファビュー
 	std::vector<D3D12_INDEX_BUFFER_VIEW> indexBufferViews_{};
 #pragma endregion
 

@@ -489,8 +489,12 @@ ID3D12PipelineState* SUGER::GetPipelineState(GraphicsPipelineStateType pipelineS
 	return graphicsPipelineManager_->GetPipelineState(pipelineState, blendMode);
 }
 
+ID3D12RootSignature* SUGER::GetRootSignature(ComputePipelineStateType pipelineState) {
+	return computePipelineManager_->GetRootSignature(pipelineState);
+}
+
 ID3D12PipelineState* SUGER::GetPipelineState(ComputePipelineStateType pipelineState) {
-	return nullptr;
+	return computePipelineManager_->GetPipelineState(pipelineState);
 }
 
 void SUGER::LoadModel(const std::string& filePath) {

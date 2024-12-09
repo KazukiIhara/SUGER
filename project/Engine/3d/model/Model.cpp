@@ -23,27 +23,27 @@ void Model::Initialize(const std::string& filename) {
 	}
 
 #pragma region 頂点データ
-	/*頂点リソースの作成*/
+	// 頂点リソースの作成
 	CreateVertexResource();
-	/*頂点バッファビューの作成*/
+	// 頂点バッファビューの作成
 	CreateVertexBufferView();
-	/*頂点データの書き込み*/
+	// 頂点データの書き込み
 	MapVertexData();
 #pragma endregion
 
 #pragma region インデックスデータ
-	/*描画用のインデックスリソースを作成*/
+	// 描画用のインデックスリソースを作成
 	CreateIndexResource();
-	/*インデックスバッファビューの作成*/
+	// インデックスバッファビューの作成
 	CreateIndexBufferView();
-	/*インデックスリソースにデータを書き込む*/
+	// インデックスリソースにデータを書き込む
 	MapIndexData();
 #pragma endregion
 
 #pragma region マテリアルデータ
-	/*マテリアル用のリソース作成*/
+	// マテリアル用のリソース作成
 	CreateMaterialResource();
-	/*マテリアルにデータを書き込む*/
+	// マテリアルにデータを書き込む
 	MapMaterialData();
 #pragma endregion
 }
@@ -87,7 +87,11 @@ void Model::Draw() {
 }
 
 void Model::Skinning() {
-	
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
+	commandList->SetComputeRootSignature(SUGER::GetRootSignature(ComputePipelineStateType::kSkinning));
+	commandList->SetPipelineState(SUGER::GetPipelineState(ComputePipelineStateType::kSkinning));
+
 }
 
 void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName) {
@@ -383,11 +387,11 @@ void Model::CreateSphere(const std::string& textureFilePath) {
 	GenerateSphere(textureFilePath);
 
 #pragma region 頂点データ
-	/*頂点リソースの作成*/
+	// 頂点リソースの作成
 	CreateVertexResource();
-	/*頂点バッファビューの作成*/
+	// 頂点バッファビューの作成
 	CreateVertexBufferView();
-	/*頂点データの書き込み*/
+	// 頂点データの書き込み
 	MapVertexData();
 #pragma endregion
 }
@@ -427,26 +431,26 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	GeneratePlane(textureFilePath);
 
 #pragma region 頂点データ
-	/*頂点リソースの作成*/
+	// 頂点リソースの作成
 	CreateVertexResource();
-	/*頂点バッファビューの作成*/
+	// 頂点バッファビューの作成
 	CreateVertexBufferView();
-	/*頂点データの書き込み*/
+	// 頂点データの書き込み
 	MapVertexData();
 #pragma endregion
 
 #pragma region インデックスデータ
-	/*描画用のインデックスリソースを作成*/
+	// 描画用のインデックスリソースを作成
 	CreateIndexResource();
-	/*インデックスバッファビューの作成*/
+	// インデックスバッファビューの作成
 	CreateIndexBufferView();
-	/*インデックスリソースにデータを書き込む*/
+	// インデックスリソースにデータを書き込む
 	MapIndexData();
 #pragma endregion
 #pragma region マテリアルデータ
-	/*マテリアル用のリソース作成*/
+	// マテリアル用のリソース作成
 	CreateMaterialResource();
-	/*マテリアルにデータを書き込む*/
+	// マテリアルにデータを書き込む
 	MapMaterialData();
 #pragma endregion
 }
