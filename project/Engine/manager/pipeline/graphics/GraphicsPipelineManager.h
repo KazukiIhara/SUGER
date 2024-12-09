@@ -29,14 +29,14 @@ public: // 公開メンバ変数
 	void Initialize(DirectXManager* directXManager);
 
 	// ルートシグネイチャのゲッター
-	ID3D12RootSignature* GetRootSignature(PipelineState pipelineState);
+	ID3D12RootSignature* GetRootSignature(GraphicsPipelineStateType pipelineState);
 
 	// パイプラインステイトのゲッター
-	ID3D12PipelineState* GetPipelineState(PipelineState pipelineState, BlendMode blendMode);
+	ID3D12PipelineState* GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode);
 
-	void SetRootSignature(PipelineState pipelineState);
+	void SetRootSignature(GraphicsPipelineStateType pipelineState);
 
-	void SetGraphicsPipelineState(PipelineState pipelineState);
+	void SetGraphicsPipelineState(GraphicsPipelineStateType pipelineState);
 
 private: // 静的メンバ変数
 	// ブレンドモードの数
@@ -50,15 +50,15 @@ private: // メンバ変数
 	// グラフィックスパイプライン
 	ComPtr<ID3D12PipelineState> graphicsPipelineStates_[kGraphicsPipelineStateNum][kBlendModeNum];
 
-private: // インスタンスを受け取るポインタ
-	// 2DGraphicsPipelineManager
+private:
+	// 2DGraphicsPipeline
 	std::unique_ptr<Object2DGraphicsPipeline> object2dGraphicsPipeline_ = nullptr;
-	// 3DGraphicsPipelineManager
+	// 3DGraphicsPipeline
 	std::unique_ptr<Object3DGraphicsPipeline> object3dGraphicsPipeline_ = nullptr;
-	// Skinning3DGraphicsPipelineManager
+	// Skinning3DGraphicsPipeline
 	std::unique_ptr<Object3DSkinningGraphicsPipeline> object3dSkinningGraphicsPipeline_ = nullptr;
-	// ParticlePipelineManager
+	// ParticlePipeline
 	std::unique_ptr<ParticleGraphicsPipeline> particleGraphicsPipeline_ = nullptr;
-	// LinePipelineManager
+	// LinePipeline
 	std::unique_ptr<LineGraphicsPipeline> lineGraphicsPipeline_ = nullptr;
 };

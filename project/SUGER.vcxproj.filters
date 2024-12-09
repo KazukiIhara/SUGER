@@ -584,6 +584,7 @@
     <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
     <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
+    <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

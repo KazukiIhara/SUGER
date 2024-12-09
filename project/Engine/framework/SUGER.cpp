@@ -476,7 +476,7 @@ const DirectX::TexMetadata& SUGER::GetTextureMetaData(const std::string& filePat
 	return textureManager_->GetMetaData(filePath);
 }
 
-ID3D12PipelineState* SUGER::GetPipelineState(PipelineState pipelineState, BlendMode blendMode) {
+ID3D12PipelineState* SUGER::GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode) {
 	return graphicsPipelineManager_->GetPipelineState(pipelineState, blendMode);
 }
 

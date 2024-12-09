@@ -156,7 +156,7 @@ public: // クラスメソッド
 #pragma region GraphicsPipelineManager
 	// GraphicsPipelineManagerの機能
 	// パイプライン取得関数
-	static ID3D12PipelineState* GetPipelineState(PipelineState pipelineState, BlendMode blendMode);
+	static ID3D12PipelineState* GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode);
 
 #pragma endregion
 
