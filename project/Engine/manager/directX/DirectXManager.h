@@ -47,13 +47,10 @@ public: // 公開メンバ関数
 	void InitializeFixFPS();
 
 	// スワップチェインディスクリプタを取得
-	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const {
-		return swapChainDesc_;
-	}
+	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const;
+
 	// rtvDescを取得
-	D3D12_RENDER_TARGET_VIEW_DESC GetRTVDesc() const {
-		return rtvDesc_;
-	}
+	D3D12_RENDER_TARGET_VIEW_DESC GetRTVDesc() const;
 
 	ID3D12Device* GetDevice();
 
@@ -68,6 +65,8 @@ public: // 公開メンバ関数
 
 	// バッファリソースの作成
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
+	// UAV用のバッファリソース作成
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateUAVBufferResource(size_t sizeInBytes);
 
 	// ディスクリプタヒープの作成
 	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
@@ -75,9 +74,7 @@ public: // 公開メンバ関数
 private: // プライベートメンバ関数
 
 	// WinAPIのインスタンスをコピー
-	void SetWindowManager(WindowManager* windowManager) {
-		windowManager_ = windowManager;
-	}
+	void SetWindowManager(WindowManager* windowManager);
 
 	// スワップチェーンを生成する
 	void CreateSwapChain();

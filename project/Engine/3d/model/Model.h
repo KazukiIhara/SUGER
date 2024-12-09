@@ -33,6 +33,8 @@ public: // メンバ関数
 	void Initialize(const std::string& filename);
 	// 更新
 	void Update();
+	// スキニング
+	void Skinning();
 	// 描画
 	void Draw();
 	// スキニング描画
@@ -85,6 +87,17 @@ private: // メンバ関数
 	void MapMaterialData();
 #pragma endregion
 
+#pragma region Skining
+	// スキニング用頂点リソースの作成
+	void CreateSkinningVertexResources();
+	// スキニング用頂点バッファビュー
+	void CreateSkinningVertexBufferView();
+	// スキニング情報用のリソース作成
+	void CreateSkinningInformationResource();
+	// スキニング情報用のデータ書き込み
+	void MapSkinningInformationData();
+#pragma endregion
+
 #pragma region Node
 	// ノードの読み込み
 	Node ReadNode(aiNode* node);
@@ -120,7 +133,6 @@ private: // メンバ関数
 	void SkinClusterUpdate(SkinCluster& skinCluster, const Skeleton& skeleton);
 #pragma endregion
 
-
 private: // メンバ変数
 #pragma region モデル
 	// モデルデータ
@@ -137,22 +149,20 @@ private: // メンバ変数
 #pragma endregion
 
 #pragma region 頂点
-	/*頂点リソース*/
+	// 頂点リソース
 	std::vector<ComPtr<ID3D12Resource>> vertexResources_;
 	// UVあり頂点データ
 	std::vector<VertexData3D*> vertexData_;
-	// UVなし頂点データ
-	std::vector<VertexData3DUnUV*> vertexDataUnUV_;
-	/*VBV*/
+	// VBV
 	std::vector<D3D12_VERTEX_BUFFER_VIEW> vertexBufferViews_;
 #pragma endregion
 
 #pragma region インデックス
-	/*インデックスリソース*/
+	// インデックスリソース
 	std::vector<ComPtr<ID3D12Resource>> indexResources_;
-	/*インデックスデータ*/
+	// インデックスデータ
 	std::vector<uint32_t*> indexData_;
-	/*インデックスバッファビュー*/
+	// インデックスバッファビュー
 	std::vector<D3D12_INDEX_BUFFER_VIEW> indexBufferViews_{};
 #pragma endregion
 
@@ -161,6 +171,24 @@ private: // メンバ変数
 	std::vector<ComPtr<ID3D12Resource>> materialResources_;
 	// マテリアルデータ
 	std::vector<MaterialForGPU*> materialData_;
+#pragma endregion
+
+#pragma region Skinning
+	// UAV用頂点リソース
+	std::vector<ComPtr<ID3D12Resource>> vertexResourcesUav_;
+	// VBV
+	std::vector<D3D12_VERTEX_BUFFER_VIEW> skinningVertexBufferViews_;
+	// srvIndex
+	std::vector<uint32_t> vertexSrvIndex_;
+	// uavIndex
+	std::vector<uint32_t> vertexUavIndex_;
+
+	// スキニング用の情報リソース
+	ComPtr<ID3D12Resource> skinningInformationResource_;
+	// スキニング用の情報データ
+	SkinningInformationForGPU* skiningInformationData_ = nullptr;
+
+	uint32_t verticesSize = 0;
 #pragma endregion
 
 #pragma region Animation

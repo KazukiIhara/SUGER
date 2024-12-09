@@ -7,7 +7,7 @@
 #include "directX/command/DirectXCommand.h"
 #include "manager/srv/SRVManager.h"
 
-void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVManager* srvManager) {
+void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* directXManager, ViewManager* srvManager) {
 
 	// インスタンスのセット
 	SetWindowManager(windowManager);
@@ -27,7 +27,13 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 		srvManager_->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart()
 	);
 
+	// フォントサイズ変更
+	FontSetting();
 
+	srvManager_->Allocate();
+}
+
+void ImGuiManager::FontSetting() {
 	// フォントのサイズ変更処理
 	ImGuiIO& io = ImGui::GetIO();
 	ImFontConfig fontConfig;
@@ -37,8 +43,11 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 	io.Fonts->AddFontDefault(&fontConfig);
 	// フォントを再構築
 	io.Fonts->Build();
+}
 
-	srvManager_->Allocate();
+void ImGuiManager::CreatePreviewSrv() {
+	// Srv作成
+	
 }
 
 void ImGuiManager::BeginFrame() {
@@ -58,6 +67,11 @@ void ImGuiManager::EndFrame() {
 void ImGuiManager::Draw() {
 	// 実際のCommandListのImGuiの描画コマンドを積む
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), directXManager_->GetCommandList());
+}
+
+void ImGuiManager::ShowPreviewWindow() {
+
+	
 }
 
 void ImGuiManager::Finalize() {
@@ -117,6 +131,6 @@ void ImGuiManager::SetDirectXManager(DirectXManager* directXManager) {
 	directXManager_ = directXManager;
 }
 
-void ImGuiManager::SetSrvManager(SRVManager* srvManager) {
+void ImGuiManager::SetSrvManager(ViewManager* srvManager) {
 	srvManager_ = srvManager;
 }

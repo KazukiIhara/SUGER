@@ -11,7 +11,7 @@
 	};
 
 	// パイプラインの種類
-	enum PipelineState {
+	enum GraphicsPipelineStateType {
 		kObject2d,
 		kObject3d,
 		kObject3dSkinning,

@@ -13,6 +13,7 @@
 #include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
+#include "manager/pipeline/compute/ComputePipelineManager.h"
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "manager/model/ModelManager.h"
 #include "manager/object/2d/Object2DManager.h"
@@ -118,25 +119,32 @@ public: // クラスメソッド
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
 	// バッファリソースの作成
 	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
+	// UAV用のバッファリソースの作成
+	static ComPtr<ID3D12Resource> CreateBufferResourceUAV(size_t sizeInbytes);
+	// コマンド実行後処理
+	static void PostCommand();
 	// FIXFPS初期化
 	static void FiXFPSInitialize();
 #pragma endregion
 
-#pragma region SRVManager
-	// SRVManagerの機能
+#pragma region ViewManager
+	// ViewManagerの機能
 	// CPUの特定のインデックスハンドルを取得
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleCPU(uint32_t index);
 	// GPUの特定のインデックスハンドルを取得
 	static D3D12_GPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleGPU(uint32_t index);
-
+	// 計算ディスクリプターテーブルのセット
+	static void SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
+	// コマンド前処理
+	static void PreCommand();
 	// ディスクリプターテーブルのセット
 	static void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 	// Allocate
-	static uint32_t SrvAllocate();
+	static uint32_t ViewAllocate();
 	// instancing用のsrv作成
-	static void CreateSrvStructured(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
-
-#pragma endregion
+	static void CreateSrvStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
+	// UAV作成
+	static void CreateUavStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 
 #pragma region ImGuiManager
 	// ImGuiManagerの機能
@@ -156,7 +164,16 @@ public: // クラスメソッド
 #pragma region GraphicsPipelineManager
 	// GraphicsPipelineManagerの機能
 	// パイプライン取得関数
-	static ID3D12PipelineState* GetPipelineState(PipelineState pipelineState, BlendMode blendMode);
+	static ID3D12PipelineState* GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode);
+
+#pragma endregion
+
+#pragma region ComputePipelineManager
+	// ComputePipelineManagerの機能
+	// ルートシグネイチャ取得関数
+	static ID3D12RootSignature* GetRootSignature(ComputePipelineStateType pipelineState);
+	// パイプライン取得関数
+	static ID3D12PipelineState* GetPipelineState(ComputePipelineStateType pipelineState);
 
 #pragma endregion
 
@@ -355,10 +372,11 @@ private: // クラスのポインタ
 	static std::unique_ptr<WindowManager> windowManager_;
 	static std::unique_ptr<DirectInput> directInput_;
 	static std::unique_ptr<DirectXManager> directXManager_;
-	static std::unique_ptr<SRVManager> srvManager_;
+	static std::unique_ptr<ViewManager> viewManager_;
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
+	static std::unique_ptr<ComputePipelineManager> computePipelineManager_;
 	static std::unique_ptr<ModelManager> modelManager_;
 	static std::unique_ptr<Object2DManager> object2dManager_;
 	static std::unique_ptr<EmptyManager> emptyManager_;

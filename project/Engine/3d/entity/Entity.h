@@ -18,7 +18,7 @@ public:
 	// 初期化
 	void Initialize()override;
 	// 更新
-	void Update()override;
+	virtual void Update()override;
 	// 描画
 	virtual void Draw();
 

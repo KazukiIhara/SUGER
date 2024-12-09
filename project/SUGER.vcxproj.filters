@@ -386,6 +386,8 @@
     <ClCompile Include="Engine\manager\line\LineGroupManager.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
     <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
+    <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
+    <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -580,6 +582,9 @@
     <ClInclude Include="Engine\manager\line\LineGroupManager.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
     <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
+    <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
+    <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
+    <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
@@ -604,6 +609,7 @@
     <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.VS.hlsl" />
     <FxCompile Include="resources\shaders\line\line.PS.hlsl" />
     <FxCompile Include="resources\shaders\line\line.VS.hlsl" />
+    <FxCompile Include="resources\shaders\skinning\skinning.CS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
@@ -617,5 +623,6 @@
     </None>
     <None Include="resources\shaders\objects\3dSkinning\object3dSkinning.hlsli" />
     <None Include="resources\shaders\line\line.hlsli" />
+    <None Include="resources\shaders\skinning\skinning.hlsli" />
   </ItemGroup>
 </Project>

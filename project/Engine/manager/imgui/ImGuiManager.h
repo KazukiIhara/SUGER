@@ -3,6 +3,9 @@
 // WindowsAPI
 #include <Windows.h>
 
+// C++
+#include <cstdint>
+
 // imgui
 #include "externals/imgui/imgui.h"
 #include "externals/imgui/imgui_impl_dx12.h"
@@ -12,7 +15,7 @@
 class WindowManager;
 class DirectXManager;
 class DirectXCommand;
-class SRVManager;
+class ViewManager;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
@@ -25,7 +28,13 @@ public: // 公開メンバ関数
 	~ImGuiManager() = default;
 
 	// 初期化
-	void Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVManager* srvManager);
+	void Initialize(WindowManager* windowManager, DirectXManager* directXManager, ViewManager* srvManager);
+
+	// フォント設定
+	void FontSetting();
+
+	// プレビューウィンドウのSRV作成
+	void CreatePreviewSrv();
 
 	// 更新処理の先頭に呼び出す処理
 	void BeginFrame();
@@ -36,6 +45,9 @@ public: // 公開メンバ関数
 	// 描画
 	void Draw();
 
+	// プレビューウィンドウ描画
+	void ShowPreviewWindow();
+
 	// ImGuiの終了処理
 	void Finalize();
 
@@ -45,7 +57,11 @@ public: // 公開メンバ関数
 private:
 	void SetWindowManager(WindowManager* windowManager);
 	void SetDirectXManager(DirectXManager* directXManager);
-	void SetSrvManager(SRVManager* srvManager);
+	void SetSrvManager(ViewManager* srvManager);
+
+private:
+	// プレビュー描画のSrvIndex
+	uint32_t previewSrvIndex_;
 
 private: // インスタンスを受け取る変数
 	// WinAPI
@@ -53,6 +69,6 @@ private: // インスタンスを受け取る変数
 	// DirectXManager
 	DirectXManager* directXManager_ = nullptr;
 	// SrvManager
-	SRVManager* srvManager_ = nullptr;
+	ViewManager* srvManager_ = nullptr;
 };
 

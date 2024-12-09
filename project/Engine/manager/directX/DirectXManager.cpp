@@ -129,6 +129,14 @@ void DirectXManager::InitializeFixFPS() {
 	fixFPS_->Initialize();
 }
 
+DXGI_SWAP_CHAIN_DESC1 DirectXManager::GetSwapChainDesc() const {
+	return swapChainDesc_;
+}
+
+D3D12_RENDER_TARGET_VIEW_DESC DirectXManager::GetRTVDesc() const {
+	return rtvDesc_;
+}
+
 ID3D12Device* DirectXManager::GetDevice() {
 	return dxgi_->GetDevice();
 }
@@ -178,12 +186,52 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectXManager::CreateBufferResource(size
 
 	// バッファリソースを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource>resource = nullptr;
-	hr = dxgi_->GetDevice()->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
-		&resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&resource));
+	hr = dxgi_->GetDevice()->CreateCommittedResource(
+		&uplodeHeapProperties,
+		D3D12_HEAP_FLAG_NONE,
+		&resourceDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&resource)
+	);
 	assert(SUCCEEDED(hr));
-	return resource;
 
+	return resource;
+}
+
+Microsoft::WRL::ComPtr<ID3D12Resource> DirectXManager::CreateUAVBufferResource(size_t sizeInBytes) {
+	HRESULT hr = S_FALSE;
+
+	// UAVリソース用ヒーププロパティ(一般的なGPU上のデフォルトヒープ)
+	D3D12_HEAP_PROPERTIES defaultHeapProperties{};
+	defaultHeapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
+
+	// UAV用バッファリソース設定
+	D3D12_RESOURCE_DESC resourceDesc{};
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	resourceDesc.Width = sizeInBytes;
+	resourceDesc.Height = 1;
+	resourceDesc.DepthOrArraySize = 1;
+	resourceDesc.MipLevels = 1;
+	resourceDesc.SampleDesc.Count = 1;
+	resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	// UAVを許可するフラグを設定
+	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
+
+	// UAV用リソースを作成
+	Microsoft::WRL::ComPtr<ID3D12Resource> resource = nullptr;
+	hr = dxgi_->GetDevice()->CreateCommittedResource(
+		&defaultHeapProperties,
+		D3D12_HEAP_FLAG_NONE,
+		&resourceDesc,
+		D3D12_RESOURCE_STATE_COMMON,
+		nullptr,
+		IID_PPV_ARGS(&resource)
+	);
+	assert(SUCCEEDED(hr));
+
+	return resource;
 }
 
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXManager::CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible) {
@@ -199,9 +247,13 @@ Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXManager::CreateDescriptorHea
 	return descriptorHeap;
 }
 
+void DirectXManager::SetWindowManager(WindowManager* windowManager) {
+	windowManager_ = windowManager;
+}
+
 void DirectXManager::CreateSwapChain() {
-	swapChainDesc_.Width = WindowManager::kClientWidth;				// 画面の幅、ウィンドウのクライアント領域を同じものにしておく
-	swapChainDesc_.Height = WindowManager::kClientHeight;				// 画面の高さ、ウィンドウのクライアント領域を同じものしておく
+	swapChainDesc_.Width = WindowManager::kClientWidth;			// 画面の幅、ウィンドウのクライアント領域を同じものにしておく
+	swapChainDesc_.Height = WindowManager::kClientHeight;		// 画面の高さ、ウィンドウのクライアント領域を同じものしておく
 	swapChainDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM;			// 色形式
 	swapChainDesc_.SampleDesc.Count = 1;						// マルチサンプルしない
 	swapChainDesc_.BufferCount = 2;								// ダブルバッファ

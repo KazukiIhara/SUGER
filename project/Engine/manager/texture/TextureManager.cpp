@@ -6,7 +6,7 @@
 #include "directX/command/DirectXCommand.h"
 #include "manager/srv/SRVManager.h"
 
-void TextureManager::Initialize(DirectXManager* directXManager, SRVManager* srvManager) {
+void TextureManager::Initialize(DirectXManager* directXManager, ViewManager* srvManager) {
 	// 必要なインスタンスのポインタを取得
 	SetDirectXCommon(directXManager);
 	SetSrvManager(srvManager);
@@ -43,7 +43,11 @@ void TextureManager::Load(const std::string& filePath) {
 	srvManager_->CreateSrvTexture2d(texture.srvIndex, textures_[filePath].resource.Get(), texture.metaData.format, UINT(texture.metaData.mipLevels));
 
 	// テクスチャ枚数上限チェック
-	assert(srvManager_->IsLowerSrvMax());
+	assert(srvManager_->IsLowerViewMax());
+}
+
+std::unordered_map<std::string, Texture>& TextureManager::GetTexture() {
+	return textures_;
 }
 
 const DirectX::TexMetadata& TextureManager::GetMetaData(const std::string& filePath) {
@@ -56,7 +60,7 @@ void TextureManager::SetDirectXCommon(DirectXManager* directX) {
 	directXManager_ = directX;
 }
 
-void TextureManager::SetSrvManager(SRVManager* srvManager) {
+void TextureManager::SetSrvManager(ViewManager* srvManager) {
 	srvManager_ = srvManager;
 }
 
@@ -87,7 +91,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(con
 	resourceDesc.SampleDesc.Count = 1;// サンプリングカウント。1固定
 	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION(metadata.dimension);//textureの次元数。普段使っているのは2次元
 
-	// 利用するHeapの設定。非常に便利な運用。02_04exで一般的なケース版がある
+	// 利用するHeapの設定
 	D3D12_HEAP_PROPERTIES heapProperties{};
 	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
 

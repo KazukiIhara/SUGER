@@ -19,9 +19,9 @@ void LineGroup::Initialize(Camera* camera) {
 	MapViewProjectionData();
 
 	// srvのインデックスを割り当て
-	srvIndex_ = SUGER::SrvAllocate();
+	srvIndex_ = SUGER::ViewAllocate();
 	// Srvを作成
-	SUGER::CreateSrvStructured(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(LineData3D));
+	SUGER::CreateSrvStructuredBuffer(srvIndex_, instancingResource_.Get(), kNumMaxInstance, sizeof(LineData3D));
 }
 
 void LineGroup::Update() {

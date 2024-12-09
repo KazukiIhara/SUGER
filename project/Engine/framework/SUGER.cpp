@@ -10,10 +10,11 @@ std::unique_ptr<D3DResourceLeakChecker> SUGER::leakCheck_ = nullptr;
 std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
 std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
 std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
-std::unique_ptr<SRVManager> SUGER::srvManager_ = nullptr;
+std::unique_ptr<ViewManager> SUGER::viewManager_ = nullptr;
 std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
+std::unique_ptr<ComputePipelineManager> SUGER::computePipelineManager_ = nullptr;
 std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
 std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
 std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
@@ -45,21 +46,25 @@ void SUGER::Initialize() {
 	directXManager_ = std::make_unique<DirectXManager>();
 	directXManager_->Initialize(windowManager_.get());
 
-	// SRVManagerの初期化
-	srvManager_ = std::make_unique<SRVManager>();
-	srvManager_->Initialize(directXManager_.get());
+	// ViewManagerの初期化
+	viewManager_ = std::make_unique<ViewManager>();
+	viewManager_->Initialize(directXManager_.get());
 
 	// ImGuiManagerの初期化
 	imguiManager_ = std::make_unique<ImGuiManager>();
-	imguiManager_->Initialize(windowManager_.get(), directXManager_.get(), srvManager_.get());
+	imguiManager_->Initialize(windowManager_.get(), directXManager_.get(), viewManager_.get());
 
 	// TextureManagerの初期化
 	textureManager_ = std::make_unique<TextureManager>();
-	textureManager_->Initialize(directXManager_.get(), srvManager_.get());
+	textureManager_->Initialize(directXManager_.get(), viewManager_.get());
 
 	// GraphicsPipelineManagerの初期化
 	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
 	graphicsPipelineManager_->Initialize(directXManager_.get());
+
+	// ComputePipelineManagerの初期化
+	computePipelineManager_ = std::make_unique<ComputePipelineManager>();
+	computePipelineManager_->Initialize(directXManager_.get());
 
 	// ModelManagerの初期化
 	modelManager_ = std::make_unique<ModelManager>();
@@ -206,6 +211,11 @@ void SUGER::Finalize() {
 		modelManager_.reset();
 	}
 
+	// ComputePipelineManagerの終了処理
+	if (computePipelineManager_) {
+		computePipelineManager_.reset();
+	}
+
 	// GraphicsPipelineManagerの終了処理
 	if (graphicsPipelineManager_) {
 		graphicsPipelineManager_.reset();
@@ -222,9 +232,9 @@ void SUGER::Finalize() {
 		imguiManager_.reset();
 	}
 
-	// SRVManagerの終了処理
-	if (srvManager_) {
-		srvManager_.reset();
+	// ViewManagerの終了処理
+	if (viewManager_) {
+		viewManager_.reset();
 	}
 
 	// DirectXManagerの終了処理
@@ -287,12 +297,11 @@ void SUGER::Draw() {
 	PreDrawObject3D();
 	// Entity描画処理
 	DrawEntiteis();
-
-	// Skinningあり3Dオブジェクト描画前処理
-	PreDrawObject3DSkinning();
 	// Skining付きEntity描画処理
 	DrawSkiningEntities();
 
+	// Skinningあり3Dオブジェクト描画前処理
+	PreDrawObject3DSkinning();
 
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
@@ -338,7 +347,13 @@ void SUGER::PreDraw() {
 	// DirectX描画前処理
 	directXManager_->PreDraw();
 	// SrvManager描画前処理
-	srvManager_->PreDraw();
+	viewManager_->PreCommand();
+}
+
+void SUGER::PostCommand() {
+	directXManager_->KickCommand();
+	directXManager_->WaitGPU();
+	directXManager_->ResetCommandList();
 }
 
 void SUGER::PostDraw() {
@@ -440,28 +455,44 @@ ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes) {
 	return directXManager_->CreateBufferResource(sizeInBytes);
 }
 
+ComPtr<ID3D12Resource> SUGER::CreateBufferResourceUAV(size_t sizeInbytes) {
+	return directXManager_->CreateUAVBufferResource(sizeInbytes);
+}
+
 void SUGER::FiXFPSInitialize() {
 	directXManager_->InitializeFixFPS();
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleCPU(uint32_t index) {
-	return srvManager_->GetDescriptorHandleCPU(index);
+	return viewManager_->GetDescriptorHandleCPU(index);
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleGPU(uint32_t index) {
-	return srvManager_->GetDescriptorHandleGPU(index);
+	return viewManager_->GetDescriptorHandleGPU(index);
+}
+
+void SUGER::SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
+	viewManager_->SetComputeRootDescriptorTable(rootParameterIndex, srvIndex);
+}
+
+void SUGER::PreCommand() {
+	viewManager_->PreCommand();
 }
 
 void SUGER::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
-	srvManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
+	viewManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
 }
 
-uint32_t SUGER::SrvAllocate() {
-	return srvManager_->Allocate();
+uint32_t SUGER::ViewAllocate() {
+	return viewManager_->Allocate();
 }
 
-void SUGER::CreateSrvStructured(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
-	srvManager_->CreateSrvStructuredBuffer(srvIndex, pResource, numElements, structureByteStride);
+void SUGER::CreateSrvStructuredBuffer(uint32_t viewIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
+	viewManager_->CreateSrvStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
+}
+
+void SUGER::CreateUavStructuredBuffer(uint32_t viewIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
+	viewManager_->CreateUavStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
 }
 
 void SUGER::LoadTexture(const std::string& filePath) {
@@ -476,8 +507,16 @@ const DirectX::TexMetadata& SUGER::GetTextureMetaData(const std::string& filePat
 	return textureManager_->GetMetaData(filePath);
 }
 
-ID3D12PipelineState* SUGER::GetPipelineState(PipelineState pipelineState, BlendMode blendMode) {
+ID3D12PipelineState* SUGER::GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode) {
 	return graphicsPipelineManager_->GetPipelineState(pipelineState, blendMode);
+}
+
+ID3D12RootSignature* SUGER::GetRootSignature(ComputePipelineStateType pipelineState) {
+	return computePipelineManager_->GetRootSignature(pipelineState);
+}
+
+ID3D12PipelineState* SUGER::GetPipelineState(ComputePipelineStateType pipelineState) {
+	return computePipelineManager_->GetPipelineState(pipelineState);
 }
 
 void SUGER::LoadModel(const std::string& filePath) {
@@ -585,16 +624,16 @@ std::string SUGER::CreateParticle(const std::string& name, const ParticleType& p
 	const std::string& textureDirectoryPath = "resources/images/";
 	// パーティクルタイプに応じてパーティクルを作成
 	switch (particleType) {
-		case kPlane:
-			// 板ポリパーティクルを作成
-			return particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
-			break;
-		case kModel:
-			// モデルパーティクルを作成
-			return particleManager_->CreateModelParticle(name, filePath);
-			break;
-		default:
-			return "";
+	case kPlane:
+		// 板ポリパーティクルを作成
+		return particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
+		break;
+	case kModel:
+		// モデルパーティクルを作成
+		return particleManager_->CreateModelParticle(name, filePath);
+		break;
+	default:
+		return "";
 	}
 }
 

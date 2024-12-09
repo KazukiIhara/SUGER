@@ -12,6 +12,11 @@ void Model::Initialize(const std::string& filename) {
 	// モデルデータ読み込み
 	LoadModel(filename);
 
+	// 合計頂点数取得
+	for (auto& mesh : modelData_.meshes) {
+		verticesSize += static_cast<uint32_t>(mesh.vertices.size());
+	}
+
 	// アニメーション読み込み
 	animation_ = LoadAnimationFile(filename);
 
@@ -20,30 +25,39 @@ void Model::Initialize(const std::string& filename) {
 		skeleton_ = CreateSkeleton(modelData_.rootNode);
 		// スキンクラスター作成
 		skinCluster_ = CreateSkinCluster(skeleton_, modelData_);
+
+		// スキニング用の頂点リソースを作成
+		CreateSkinningVertexResources();
+		// スキニング用の頂点バッファビューを作成
+		CreateSkinningVertexBufferView();
+		// スキニング用情報のリソースを作成
+		CreateSkinningInformationResource();
+		// スキニング情報用のデータを書き込み
+		MapSkinningInformationData();
 	}
 
 #pragma region 頂点データ
-	/*頂点リソースの作成*/
+	// 頂点リソースの作成
 	CreateVertexResource();
-	/*頂点バッファビューの作成*/
+	// 頂点バッファビューの作成
 	CreateVertexBufferView();
-	/*頂点データの書き込み*/
+	// 頂点データの書き込み
 	MapVertexData();
 #pragma endregion
 
 #pragma region インデックスデータ
-	/*描画用のインデックスリソースを作成*/
+	// 描画用のインデックスリソースを作成
 	CreateIndexResource();
-	/*インデックスバッファビューの作成*/
+	// インデックスバッファビューの作成
 	CreateIndexBufferView();
-	/*インデックスリソースにデータを書き込む*/
+	// インデックスリソースにデータを書き込む
 	MapIndexData();
 #pragma endregion
 
 #pragma region マテリアルデータ
-	/*マテリアル用のリソース作成*/
+	// マテリアル用のリソース作成
 	CreateMaterialResource();
-	/*マテリアルにデータを書き込む*/
+	// マテリアルにデータを書き込む
 	MapMaterialData();
 #pragma endregion
 }
@@ -89,28 +103,37 @@ void Model::Draw() {
 void Model::DrawSkinning() {
 	// コマンドリストを取得
 	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
-	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
-		D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
-			vertexBufferViews_[i],
-			skinCluster_.influenceBufferView,
-		};
-		// VBVを設定
-		commandList->IASetVertexBuffers(0, 2, vbvs);
-		// IBVを設定
-		commandList->IASetIndexBuffer(&indexBufferViews_[i]);
-		if (modelData_.meshes[i].material.haveUV_) {
-			// SRVセット
-			SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[i].material.textureFilePath].srvIndex);
-			// Skinning用SRVセット
-			SUGER::SetGraphicsRootDescriptorTable(5, skinCluster_.srvIndex);
-			// ModelMaterial用CBufferの場所を設定
-			commandList->SetGraphicsRootConstantBufferView(6, materialResources_[i]->GetGPUVirtualAddress());
-			// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-			commandList->DrawIndexedInstanced(UINT(modelData_.meshes[i].indices.size()), 1, 0, 0, 0);
-		} else {
-			// TODO:UVなしの時の処理
-		}
+	// VBVを設定
+	commandList->IASetVertexBuffers(0, 1, &skinningVertexBufferViews_[0]);
+	// IBVを設定
+	commandList->IASetIndexBuffer(&indexBufferViews_[0]);
+	if (modelData_.meshes[0].material.haveUV_) {
+		// SRVセット
+		SUGER::SetGraphicsRootDescriptorTable(4, SUGER::GetTexture()[modelData_.meshes[0].material.textureFilePath].srvIndex);
+		// ModelMaterial用CBufferの場所を設定
+		commandList->SetGraphicsRootConstantBufferView(5, materialResources_[0]->GetGPUVirtualAddress());
+		// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+		commandList->DrawIndexedInstanced(UINT(modelData_.meshes[0].indices.size()), 1, 0, 0, 0);
+	} else {
+		// TODO:UVなしの時の処理
 	}
+}
+
+void Model::Skinning() {
+	// コマンドリストを取得
+	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
+	commandList->SetComputeRootSignature(SUGER::GetRootSignature(ComputePipelineStateType::kSkinning));
+	commandList->SetPipelineState(SUGER::GetPipelineState(ComputePipelineStateType::kSkinning));
+
+	SUGER::PreCommand();
+	SUGER::SetComputeRootDescriptorTable(0, skinCluster_.paletteSrvIndex);
+	SUGER::SetComputeRootDescriptorTable(1, vertexSrvIndex_[0]);
+	SUGER::SetComputeRootDescriptorTable(2, skinCluster_.influenceSrvIndex);
+
+	SUGER::SetComputeRootDescriptorTable(3, vertexUavIndex_[0]);
+	commandList->SetComputeRootConstantBufferView(4, skinningInformationResource_->GetGPUVirtualAddress());
+	commandList->Dispatch(UINT(modelData_.meshes[0].vertices.size() + 1023) / 1024, 1, 1);
+	SUGER::PostCommand();
 }
 
 void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName) {
@@ -406,11 +429,11 @@ void Model::CreateSphere(const std::string& textureFilePath) {
 	GenerateSphere(textureFilePath);
 
 #pragma region 頂点データ
-	/*頂点リソースの作成*/
+	// 頂点リソースの作成
 	CreateVertexResource();
-	/*頂点バッファビューの作成*/
+	// 頂点バッファビューの作成
 	CreateVertexBufferView();
-	/*頂点データの書き込み*/
+	// 頂点データの書き込み
 	MapVertexData();
 #pragma endregion
 }
@@ -450,26 +473,27 @@ void Model::CreatePlane(const std::string& textureFilePath) {
 	GeneratePlane(textureFilePath);
 
 #pragma region 頂点データ
-	/*頂点リソースの作成*/
+	// 頂点リソースの作成
 	CreateVertexResource();
-	/*頂点バッファビューの作成*/
+	// 頂点バッファビューの作成
 	CreateVertexBufferView();
-	/*頂点データの書き込み*/
+	// 頂点データの書き込み
 	MapVertexData();
 #pragma endregion
 
 #pragma region インデックスデータ
-	/*描画用のインデックスリソースを作成*/
+	// 描画用のインデックスリソースを作成
 	CreateIndexResource();
-	/*インデックスバッファビューの作成*/
+	// インデックスバッファビューの作成
 	CreateIndexBufferView();
-	/*インデックスリソースにデータを書き込む*/
+	// インデックスリソースにデータを書き込む
 	MapIndexData();
 #pragma endregion
+
 #pragma region マテリアルデータ
-	/*マテリアル用のリソース作成*/
+	// マテリアル用のリソース作成
 	CreateMaterialResource();
-	/*マテリアルにデータを書き込む*/
+	// マテリアルにデータを書き込む
 	MapMaterialData();
 #pragma endregion
 }
@@ -479,12 +503,18 @@ const bool& Model::GetHaveAnimation() const {
 }
 
 void Model::CreateVertexResource() {
-	for (auto& mesh : modelData_.meshes) {
-		Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
-		if (mesh.material.haveUV_) {
-			vertexResource = SUGER::CreateBufferResource(sizeof(VertexData3D) * mesh.vertices.size());
+	for (size_t i = 0; i < modelData_.meshes.size(); i++) {
+		ComPtr<ID3D12Resource> vertexResource;
+		if (modelData_.meshes[i].material.haveUV_) {
+			vertexResource = SUGER::CreateBufferResource(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
+
+			if (haveSkinningAnimation_) {
+				vertexSrvIndex_.push_back(SUGER::ViewAllocate());
+				SUGER::CreateSrvStructuredBuffer(vertexSrvIndex_[i], vertexResource.Get(), static_cast<uint32_t>(modelData_.meshes[i].vertices.size()), sizeof(VertexData3D));
+			}
+
 		} else {
-			vertexResource = SUGER::CreateBufferResource(sizeof(VertexData3DUnUV) * mesh.verticesUnUV.size());
+			// TODO::UVなしの処理
 		}
 		vertexResources_.push_back(vertexResource);
 	}
@@ -498,8 +528,7 @@ void Model::CreateVertexBufferView() {
 			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
 			vertexBufferView.StrideInBytes = sizeof(VertexData3D);
 		} else {
-			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3DUnUV) * modelData_.meshes[i].verticesUnUV.size());
-			vertexBufferView.StrideInBytes = sizeof(VertexData3DUnUV);
+			// TODO::UVなしの処理
 		}
 		vertexBufferViews_.push_back(vertexBufferView);
 	}
@@ -513,10 +542,7 @@ void Model::MapVertexData() {
 			std::memcpy(vertexData, modelData_.meshes[i].vertices.data(), sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
 			vertexData_.push_back(vertexData);
 		} else {
-			VertexData3DUnUV* vertexDataUnUV = nullptr;
-			vertexResources_[i]->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataUnUV));
-			std::memcpy(vertexDataUnUV, modelData_.meshes[i].verticesUnUV.data(), sizeof(VertexData3DUnUV) * modelData_.meshes[i].verticesUnUV.size());
-			vertexDataUnUV_.push_back(vertexDataUnUV);
+			// TODO::UVなしの処理
 		}
 	}
 }
@@ -575,6 +601,45 @@ void Model::MapMaterialData() {
 		materialData->uvMatrix = modelData_.meshes[i].material.uvMatrix;
 		materialData_.push_back(materialData);
 	}
+}
+
+void Model::CreateSkinningVertexResources() {
+	for (size_t i = 0; i < modelData_.meshes.size(); i++) {
+		ComPtr<ID3D12Resource> vertexResource;
+		if (modelData_.meshes[i].material.haveUV_) {
+			vertexResource = SUGER::CreateBufferResourceUAV(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
+			vertexUavIndex_.push_back(SUGER::ViewAllocate());
+			SUGER::CreateUavStructuredBuffer(vertexUavIndex_[i], vertexResource.Get(), static_cast<uint32_t>(modelData_.meshes[i].vertices.size()), sizeof(VertexData3D));
+		} else {
+			// TODO::UVなしの処理
+		}
+		vertexResourcesUav_.push_back(vertexResource);
+	}
+}
+
+void Model::CreateSkinningVertexBufferView() {
+	for (size_t i = 0; i < modelData_.meshes.size(); ++i) {
+		D3D12_VERTEX_BUFFER_VIEW vertexBufferView;
+		vertexBufferView.BufferLocation = vertexResourcesUav_[i]->GetGPUVirtualAddress();
+		if (modelData_.meshes[i].material.haveUV_) {
+			vertexBufferView.SizeInBytes = UINT(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
+			vertexBufferView.StrideInBytes = sizeof(VertexData3D);
+		} else {
+			// TODO::UVなしの処理
+		}
+		skinningVertexBufferViews_.push_back(vertexBufferView);
+	}
+}
+
+void Model::CreateSkinningInformationResource() {
+	skinningInformationResource_ = nullptr;
+	skinningInformationResource_ = SUGER::CreateBufferResource(sizeof(SkinningInformationForGPU));
+}
+
+void Model::MapSkinningInformationData() {
+	skiningInformationData_ = nullptr;
+	skinningInformationResource_->Map(0, nullptr, reinterpret_cast<void**>(&skiningInformationData_));
+	skiningInformationData_->numVertices = verticesSize;
 }
 
 Node Model::ReadNode(aiNode* node) {
@@ -787,10 +852,10 @@ SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& 
 	skinCluster.mappedPalette = { mappedPalette, skeleton.joints.size() };
 
 	// srvのインデックスを割り当て
-	skinCluster.srvIndex = SUGER::SrvAllocate();
+	skinCluster.paletteSrvIndex = SUGER::ViewAllocate();
 
 	// Srvを作成
-	SUGER::CreateSrvStructured(skinCluster.srvIndex, skinCluster.paletteResources.Get(), UINT(skeleton.joints.size()), sizeof(WellForGPU));
+	SUGER::CreateSrvStructuredBuffer(skinCluster.paletteSrvIndex, skinCluster.paletteResources.Get(), UINT(skeleton.joints.size()), sizeof(WellForGPU));
 
 	// 合計頂点数を取得
 	size_t totalVertexCount = 0;
@@ -805,10 +870,11 @@ SkinCluster Model::CreateSkinCluster(const Skeleton& skeleton, const ModelData& 
 	std::memset(mappedInfluence, 0, sizeof(VertexInfluence) * totalVertexCount);
 	skinCluster.mappedInfluence = { mappedInfluence,totalVertexCount };
 
-	// Influence用のVBVを作成
-	skinCluster.influenceBufferView.BufferLocation = skinCluster.influenceResource->GetGPUVirtualAddress();
-	skinCluster.influenceBufferView.SizeInBytes = UINT(sizeof(VertexInfluence) * totalVertexCount);
-	skinCluster.influenceBufferView.StrideInBytes = sizeof(VertexInfluence);
+	// srvのインデックスを割り当て
+	skinCluster.influenceSrvIndex = SUGER::ViewAllocate();
+
+	// srv作成
+	SUGER::CreateSrvStructuredBuffer(skinCluster.influenceSrvIndex, skinCluster.influenceResource.Get(), static_cast<uint32_t>(totalVertexCount), sizeof(VertexInfluence));
 
 	// InverseBindPoseMatrixの保存領域を作成
 	skinCluster.inverseBindPoseMatrices.resize(skeleton.joints.size());

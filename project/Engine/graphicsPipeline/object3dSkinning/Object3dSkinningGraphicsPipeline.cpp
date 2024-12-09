@@ -10,7 +10,7 @@ void Object3DSkinningGraphicsPipeline::Initialize(DirectXManager* directXManager
 	InitializeDxCompiler();
 	CreateRootSignature();
 	CompileShaders();
-	CreateGraphicsPipelineObject();
+	CreatePipelineStateObject();
 }
 
 ID3D12RootSignature* Object3DSkinningGraphicsPipeline::GetRootSignature() {
@@ -117,7 +117,7 @@ void Object3DSkinningGraphicsPipeline::CompileShaders() {
 	assert(pixelShaderBlob_ != nullptr);
 }
 
-void Object3DSkinningGraphicsPipeline::CreateGraphicsPipelineObject() {
+void Object3DSkinningGraphicsPipeline::CreatePipelineStateObject() {
 	HRESULT hr;
 
 	assert(rootSignature_);
