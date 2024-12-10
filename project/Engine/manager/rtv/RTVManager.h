@@ -36,6 +36,8 @@ public:
 private:
 	// DescriptorHeap
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap_ = nullptr;
+	// rtvDesc
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_;
 	// Discriptorのサイズ
 	uint32_t descriptorSize_ = 0u;
 	// 使用しているviewのインデックス

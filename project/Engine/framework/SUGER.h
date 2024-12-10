@@ -7,7 +7,7 @@
 #include "d3d12.h"
 
 #include "manager/window/WindowManager.h"
-#include "manager/dxgi/DXGIManager.h"
+#include "directX/dxgi/DXGIManager.h"
 #include "input/direct/DirectInput.h"
 #include "manager/rtv/RTVManager.h"
 #include "manager/directX/DirectXManager.h"
@@ -120,8 +120,14 @@ public: // クラスメソッド
 #pragma endregion
 
 #pragma region RTVManager
-
-
+	// CPUの特定のインデックスハンドルを取得
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetRTVDescriptorHandleCPU(uint32_t index);
+	// GPUの特定のインデックスハンドルを取得
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetRTVDescriptorHandleGPU(uint32_t index);
+	// 割り当て関数
+	static uint32_t RTVAllocate();
+	// RTVの作成
+	static void CreateRTVTexture2d(uint32_t rtvIndex, ID3D12Resource* pResource);
 
 #pragma endregion
 
@@ -142,9 +148,9 @@ public: // クラスメソッド
 #pragma region ViewManager
 	// ViewManagerの機能
 	// CPUの特定のインデックスハンドルを取得
-	static D3D12_CPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleCPU(uint32_t index);
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetSRVUAVDescriptorHandleCPU(uint32_t index);
 	// GPUの特定のインデックスハンドルを取得
-	static D3D12_GPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleGPU(uint32_t index);
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetSRVUAVDescriptorHandleGPU(uint32_t index);
 	// 計算ディスクリプターテーブルのセット
 	static void SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 	// コマンド前処理

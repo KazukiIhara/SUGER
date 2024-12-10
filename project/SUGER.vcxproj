@@ -116,6 +116,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
     <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
+    <ClCompile Include="Engine\directX\fence\Fence.cpp" />
+    <ClCompile Include="Engine\directX\renderTarget\RenderTarget.cpp" />
+    <ClCompile Include="Engine\directX\swapChain\SwapChain.cpp" />
     <ClCompile Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\line\LineGroup.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
@@ -160,7 +163,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\framework\SUGER.cpp" />
     <ClCompile Include="Engine\iScene\base\BaseScene.cpp" />
     <ClCompile Include="Engine\manager\directX\DirectXManager.cpp" />
-    <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp" />
+    <ClCompile Include="Engine\directX\dxgi\DXGIManager.cpp" />
     <ClCompile Include="Engine\input\direct\DirectInput.cpp" />
     <ClCompile Include="Engine\manager\model\ModelManager.cpp" />
     <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp" />
@@ -189,6 +192,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
+    <ClInclude Include="Engine\directX\fence\Fence.h" />
+    <ClInclude Include="Engine\directX\renderTarget\RenderTarget.h" />
+    <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
     <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
     <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\line\LineGroup.h" />
@@ -240,7 +246,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\directX\command\DirectXCommand.h" />
     <ClInclude Include="Engine\framework\SUGER.h" />
     <ClInclude Include="Engine\manager\directX\DirectXManager.h" />
-    <ClInclude Include="Engine\manager\dxgi\DXGIManager.h" />
+    <ClInclude Include="Engine\directX\dxgi\DXGIManager.h" />
     <ClInclude Include="Engine\directX\includes\ComPtr.h" />
     <ClInclude Include="Engine\input\direct\DirectInput.h" />
     <ClInclude Include="Engine\manager\imgui\ImGuiManager.h" />

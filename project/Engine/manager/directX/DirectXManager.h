@@ -14,7 +14,7 @@
 
 // 自作ファイル
 #include "directX/includes/ComPtr.h"
-#include "manager/dxgi/DXGIManager.h"
+#include "directX/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
 #include "FixFPS/FixFPS.h"
 
@@ -49,8 +49,6 @@ public: // 公開メンバ関数
 	// スワップチェインディスクリプタを取得
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const;
 
-	// rtvDescを取得
-	D3D12_RENDER_TARGET_VIEW_DESC GetRTVDesc() const;
 
 	DXGIManager* GetDXGI();
 
@@ -127,18 +125,12 @@ private: // メンバ変数
 	// ディスクリプタヒープ
 	// DSV用
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvDescriptorHeap_ = nullptr;
-	// RTV用
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvDescriptorHeap_ = nullptr;
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
 
 	// スワップチェーンリソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> swapChainResources_[2] = { nullptr };
 
 	// フェンス
 	Microsoft::WRL::ComPtr<ID3D12Fence> fence_ = nullptr;
-
-	// RTVを2つ作るのでディスクリプタを2つ用意
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles_[2] = { 0 };
 
 	// DSVのディスクリプタ
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle_;
@@ -155,6 +147,8 @@ private: // メンバ変数
 	// DescriptorSize取得
 	uint32_t descriptorSizeRTV_ = 0u;
 	uint32_t descriptorSizeDSV_ = 0u;
+
+	uint32_t swapchainIndex_[2]{};
 
 
 private: // インスタンスコピーポインタ

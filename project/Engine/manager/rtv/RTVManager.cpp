@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include "manager/dxgi/DXGIManager.h"
+#include "directX/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
 
 void RTVManager::Initialize(DXGIManager* dxgi) {
@@ -33,10 +33,9 @@ D3D12_GPU_DESCRIPTOR_HANDLE RTVManager::GetDescriptorHandleGPU(uint32_t index) {
 }
 
 void RTVManager::CreateRTVTexture2d(uint32_t rtvIndex, ID3D12Resource* pResource) {
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc;
-	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;		// 出力結果をSRGBに変換して書き込む
-	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;	// 2Dテクスチャとして書き込む
-	dxgi_->GetDevice()->CreateRenderTargetView(pResource, &rtvDesc, GetDescriptorHandleCPU(rtvIndex));
+	rtvDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;		// 出力結果をSRGBに変換して書き込む
+	rtvDesc_.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;	// 2Dテクスチャとして書き込む
+	dxgi_->GetDevice()->CreateRenderTargetView(pResource, &rtvDesc_, GetDescriptorHandleCPU(rtvIndex));
 }
 
 void RTVManager::SetDXGI(DXGIManager* dxgi) {

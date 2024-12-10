@@ -92,7 +92,7 @@ void Particle::Draw() {
 	// PSOを設定
 	commandList->SetPipelineState(SUGER::GetPipelineState(kParticle, blendMode_));
 	// StructuredBufferのSRVを設定する
-	commandList->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVDescriptorHandleGPU(srvIndex_));
+	commandList->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVUAVDescriptorHandleGPU(srvIndex_));
 	// マテリアルCBufferの場所を設定
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	// モデルがある場合描画

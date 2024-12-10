@@ -2,7 +2,7 @@
 
 #include "debugTools/logger/Logger.h"
 #include "manager/directX/DirectXManager.h"
-#include "manager/dxgi/DXGIManager.h"
+#include "directX/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
 #include "manager/view/ViewManager.h"
 

@@ -11,7 +11,7 @@
 
 // 自作ファイル
 #include "directX/includes/ComPtr.h"
-#include "manager/dxgi/DXGIManager.h"
+#include "directX/dxgi/DXGIManager.h"
 
 class DirectXCommand {
 public:

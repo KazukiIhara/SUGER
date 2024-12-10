@@ -7,6 +7,11 @@
 #include "manager/window/WindowManager.h"
 #include "debugTools/logger/Logger.h"
 
+//
+// すぐ消す
+//
+#include "framework/SUGER.h"
+
 void DirectXManager::Initialize(WindowManager* windowManager, DXGIManager* dxgi, bool enableDebugLayer) {
 	// WindowManagerのインスタンスをセット
 	SetWindowManager(windowManager);
@@ -129,9 +134,6 @@ DXGI_SWAP_CHAIN_DESC1 DirectXManager::GetSwapChainDesc() const {
 	return swapChainDesc_;
 }
 
-D3D12_RENDER_TARGET_VIEW_DESC DirectXManager::GetRTVDesc() const {
-	return rtvDesc_;
-}
 
 DXGIManager* DirectXManager::GetDXGI() {
 	return dxgi_;
@@ -257,8 +259,6 @@ void DirectXManager::CreateSwapChain() {
 
 void DirectXManager::CreateRenderTargetView() {
 	// ディスクリプタヒープの生成
-	// RTV用のヒープでディスクリプタの数は２。RTVはShader内で触るものではないので、ShaderVisibleはfalse
-	rtvDescriptorHeap_ = dxgi_->CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
 	// スワップチェーンからリソースを引っ張ってくる
 	hr_ = swapChain_->GetBuffer(0, IID_PPV_ARGS(&swapChainResources_[0]));
 	// うまく取得出来なければ起動できない
@@ -266,19 +266,16 @@ void DirectXManager::CreateRenderTargetView() {
 	hr_ = swapChain_->GetBuffer(1, IID_PPV_ARGS(&swapChainResources_[1]));
 	assert(SUCCEEDED(hr_));
 
-	// RTVの設定
-	rtvDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	// 出力結果をSRGBに変換して書き込む
-	rtvDesc_.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;	// 2Dテクスチャとして書き込む
-	// ディスクリプタの先頭を取得する
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvStartHandle = rtvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 
 	// まず1つを作る
-	rtvHandles_[0] = rtvStartHandle;
-	dxgi_->GetDevice()->CreateRenderTargetView(swapChainResources_[0].Get(), &rtvDesc_, rtvHandles_[0]);
+
+	swapchainIndex_[0] = SUGER::RTVAllocate();
+	SUGER::CreateRTVTexture2d(swapchainIndex_[0], swapChainResources_[0].Get());
 	// 2つ目のディスクリプタハンドルを得る
-	rtvHandles_[1].ptr = rtvHandles_[0].ptr + dxgi_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+
+	swapchainIndex_[1] = SUGER::RTVAllocate();
 	// 2つ目を作る
-	dxgi_->GetDevice()->CreateRenderTargetView(swapChainResources_[1].Get(), &rtvDesc_, rtvHandles_[1]);
+	SUGER::CreateRTVTexture2d(swapchainIndex_[1], swapChainResources_[1].Get());
 }
 
 void DirectXManager::CreateDepthStencilView() {
@@ -312,15 +309,16 @@ void DirectXManager::ClearRenderTarget(float clearColor[]) {
 	// これから書き込むバックバッファインデックスを取得
 	backBufferIndex_ = swapChain_->GetCurrentBackBufferIndex();
 	// 指定した色で画面全体をクリアする
-	dxCommand_->GetList()->ClearRenderTargetView(rtvHandles_[backBufferIndex_], clearColor, 0, nullptr);
+	dxCommand_->GetList()->ClearRenderTargetView(SUGER::GetRTVDescriptorHandleCPU(swapchainIndex_[backBufferIndex_]), clearColor, 0, nullptr);
 }
 
 void DirectXManager::SetRenderTargets() {
 	// これから書き込むバックバッファインデックスを取得
 	backBufferIndex_ = swapChain_->GetCurrentBackBufferIndex();
 	dsvHandle_ = dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
+	auto rtvhandle = SUGER::GetRTVDescriptorHandleCPU(swapchainIndex_[backBufferIndex_]);
 	// 描画先のRTVとDSVをを設定する
-	dxCommand_->GetList()->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex_], false, &dsvHandle_);
+	dxCommand_->GetList()->OMSetRenderTargets(1, &rtvhandle, false, &dsvHandle_);
 }
 
 void DirectXManager::SettingViewport() {

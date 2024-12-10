@@ -462,6 +462,22 @@ ID3D12Device* SUGER::GetDirectXDevice() {
 	return dxgiManager_->GetDevice();
 }
 
+D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetRTVDescriptorHandleCPU(uint32_t index) {
+	return rtvManager_->GetDescriptorHandleCPU(index);
+}
+
+D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetRTVDescriptorHandleGPU(uint32_t index) {
+	return rtvManager_->GetDescriptorHandleGPU(index);
+}
+
+uint32_t SUGER::RTVAllocate() {
+	return rtvManager_->Allocate();
+}
+
+void SUGER::CreateRTVTexture2d(uint32_t rtvIndex, ID3D12Resource* pResource) {
+	rtvManager_->CreateRTVTexture2d(rtvIndex, pResource);
+}
+
 ID3D12GraphicsCommandList* SUGER::GetDirectXCommandList() {
 	return directXManager_->GetCommandList();
 }
@@ -478,11 +494,11 @@ void SUGER::FiXFPSInitialize() {
 	directXManager_->InitializeFixFPS();
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleCPU(uint32_t index) {
+D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVUAVDescriptorHandleCPU(uint32_t index) {
 	return viewManager_->GetDescriptorHandleCPU(index);
 }
 
-D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleGPU(uint32_t index) {
+D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetSRVUAVDescriptorHandleGPU(uint32_t index) {
 	return viewManager_->GetDescriptorHandleGPU(index);
 }
 
