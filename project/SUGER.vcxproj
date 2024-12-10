@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -116,9 +116,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
     <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
+    <ClCompile Include="Engine\directX\barrier\Barrier.cpp" />
     <ClCompile Include="Engine\directX\fence\Fence.cpp" />
     <ClCompile Include="Engine\directX\renderTarget\RenderTarget.cpp" />
+    <ClCompile Include="Engine\directX\scissorRect\ScissorRect.cpp" />
     <ClCompile Include="Engine\directX\swapChain\SwapChain.cpp" />
+    <ClCompile Include="Engine\directX\viewport\ViewPort.cpp" />
     <ClCompile Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\3d\line\LineGroup.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
@@ -192,9 +195,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
+    <ClInclude Include="Engine\directX\barrier\Barrier.h" />
     <ClInclude Include="Engine\directX\fence\Fence.h" />
     <ClInclude Include="Engine\directX\renderTarget\RenderTarget.h" />
+    <ClInclude Include="Engine\directX\scissorRect\ScissorRect.h" />
     <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
+    <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
     <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
     <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\line\LineGroup.h" />

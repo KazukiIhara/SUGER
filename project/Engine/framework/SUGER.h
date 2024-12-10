@@ -8,6 +8,10 @@
 
 #include "manager/window/WindowManager.h"
 #include "directX/dxgi/DXGIManager.h"
+
+#include "directX/command/DirectXCommand.h"
+#include "directX/fence/Fence.h"
+#include "directX/swapChain/SwapChain.h"
 #include "input/direct/DirectInput.h"
 #include "manager/rtv/RTVManager.h"
 #include "manager/directX/DirectXManager.h"
@@ -119,6 +123,19 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region Command
+
+
+
+#pragma endregion
+
+#pragma region Fence
+
+
+
+
+#pragma endregion
+
 #pragma region RTVManager
 	// CPUの特定のインデックスハンドルを取得
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetRTVDescriptorHandleCPU(uint32_t index);
@@ -164,8 +181,17 @@ public: // クラスメソッド
 	// UAV作成
 	static void CreateUavStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 
+#pragma endregion
+
+#pragma region RenderTarget
+
+
+
+#pragma endregion
+
 #pragma region ImGuiManager
 	// ImGuiManagerの機能
+
 #pragma endregion
 
 #pragma region TextureManager

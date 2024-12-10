@@ -7,6 +7,8 @@ public:
 	RenderTarget() = default;
 	~RenderTarget() = default;
 
+
+
 private:
 	// スワップチェーンのインスタンスを受け取る箱
 	SwapChain* swapChain_ = nullptr;

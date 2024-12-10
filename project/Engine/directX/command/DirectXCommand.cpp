@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include "directX/dxgi/DXGIManager.h"
+
 void DirectXCommand::Initialize(DXGIManager* dxgi) {
 	// DXGIのセット
 	SetDXGIManager(dxgi);

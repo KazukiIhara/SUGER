@@ -16,18 +16,18 @@ class DXGIManager;
 class DirectXCommand;
 class WindowManager;
 class RTVManager;
+class DSVManager;
 
 class SwapChain {
 public:
 	SwapChain() = default;
 	~SwapChain() = default;
-
 	// 初期化
 	void Initialize(WindowManager* windowmanager, DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager);
-
-	// 現在のバックバッファインデックスを取得
-	UINT GetCurrentBuckBufferIndex();
-
+	// GPUとOSに画面の交換を行うよう通知する
+	void Present();
+	// 現在のバックバッファのリソースを取得
+	ID3D12Resource* GetCurrentBuckBufferResource();
 private:
 	// スワップチェーン作成
 	void CreateSwapChain();
@@ -49,7 +49,9 @@ private:
 	ComPtr<ID3D12Resource> swapChainResources_[2] = { nullptr };
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_{};
 	// RTVリソースのインデックス
-	uint32_t swapchainIndex_[2]{};
+	uint32_t swapChainIndex_[2]{};
+	// バックバッファインデックス
+	UINT backBufferIndex_ = 0;
 	// エラー判別君
 	HRESULT hr_ = S_FALSE;
 private:

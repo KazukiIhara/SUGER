@@ -20,8 +20,13 @@ void SwapChain::Initialize(WindowManager* windowmanager, DXGIManager* dxgi, Dire
 	CreateSwapChainResources();
 }
 
-UINT SwapChain::GetCurrentBuckBufferIndex() {
-	return swapChain_->GetCurrentBackBufferIndex();
+void SwapChain::Present() {
+	swapChain_->Present(1, 0);
+}
+
+ID3D12Resource* SwapChain::GetCurrentBuckBufferResource() {
+	backBufferIndex_ = swapChain_->GetCurrentBackBufferIndex();
+	return swapChainResources_[backBufferIndex_].Get();
 }
 
 void SwapChain::CreateSwapChain() {
@@ -45,6 +50,13 @@ void SwapChain::CreateSwapChainResources() {
 	assert(SUCCEEDED(hr_));
 	hr_ = swapChain_->GetBuffer(1, IID_PPV_ARGS(&swapChainResources_[1]));
 	assert(SUCCEEDED(hr_));
+
+	// 1つめ
+	swapChainIndex_[0] = rtvManager_->Allocate();
+	rtvManager_->CreateRTVTexture2d(swapChainIndex_[0], swapChainResources_[0].Get());
+	// 2つめ
+	swapChainIndex_[1] = rtvManager_->Allocate();
+	rtvManager_->CreateRTVTexture2d(swapChainIndex_[1], swapChainResources_[1].Get());
 }
 
 void SwapChain::SetDXGI(DXGIManager* dxgi) {
