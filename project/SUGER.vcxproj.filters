@@ -258,7 +258,7 @@
     <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp">
       <Filter>engine\manager\dxgi</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\srv\SRVManager.cpp">
+    <ClCompile Include="Engine\manager\view\ViewManager.cpp">
       <Filter>engine\manager\srv</Filter>
     </ClCompile>
     <ClCompile Include="Engine\directX\command\DirectXCommand.cpp">
@@ -409,7 +409,7 @@
     <ClInclude Include="Engine\manager\dxgi\DXGIManager.h">
       <Filter>engine\manager\dxgi</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\srv\SRVManager.h">
+    <ClInclude Include="Engine\manager\view\ViewManager.h">
       <Filter>engine\manager\srv</Filter>
     </ClInclude>
     <ClInclude Include="Engine\directX\command\DirectXCommand.h">

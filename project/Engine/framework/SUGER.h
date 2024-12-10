@@ -9,8 +9,9 @@
 #include "manager/window/WindowManager.h"
 #include "manager/dxgi/DXGIManager.h"
 #include "input/direct/DirectInput.h"
+#include "manager/rtv/RTVManager.h"
 #include "manager/directX/DirectXManager.h"
-#include "manager/srv/SRVManager.h"
+#include "manager/view/ViewManager.h"
 #include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
@@ -115,6 +116,12 @@ public: // クラスメソッド
 #pragma region DXGI
 	// デバイス取得
 	static ID3D12Device* GetDirectXDevice();
+
+#pragma endregion
+
+#pragma region RTVManager
+
+
 
 #pragma endregion
 
@@ -376,6 +383,7 @@ private: // クラスのポインタ
 #endif // _DEBUG
 	static std::unique_ptr<WindowManager> windowManager_;
 	static std::unique_ptr<DXGIManager> dxgiManager_;
+	static std::unique_ptr<RTVManager> rtvManager_;
 	static std::unique_ptr<DirectInput> directInput_;
 	static std::unique_ptr<DirectXManager> directXManager_;
 	static std::unique_ptr<ViewManager> viewManager_;

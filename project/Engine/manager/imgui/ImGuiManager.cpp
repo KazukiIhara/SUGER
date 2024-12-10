@@ -5,7 +5,7 @@
 #include "manager/window/WindowManager.h"
 #include "manager/directX/DirectXManager.h"
 #include "directX/command/DirectXCommand.h"
-#include "manager/srv/SRVManager.h"
+#include "manager/view/ViewManager.h"
 
 void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* directXManager, ViewManager* srvManager) {
 

@@ -9,6 +9,7 @@ std::unique_ptr<D3DResourceLeakChecker> SUGER::leakCheck_ = nullptr;
 // Staticメンバ変数の初期化
 std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
 std::unique_ptr<DXGIManager> SUGER::dxgiManager_ = nullptr;
+std::unique_ptr<RTVManager> SUGER::rtvManager_ = nullptr;
 std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
 std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
 std::unique_ptr<ViewManager> SUGER::viewManager_ = nullptr;
@@ -42,6 +43,10 @@ void SUGER::Initialize() {
 	// DXGIManagerの初期化
 	dxgiManager_ = std::make_unique<DXGIManager>();
 	dxgiManager_->Initialize();
+
+	// RTVManagerの初期化
+	rtvManager_ = std::make_unique<RTVManager>();
+	rtvManager_->Initialize(dxgiManager_.get());
 
 	// DirectInputの初期化
 	directInput_ = std::make_unique<DirectInput>();

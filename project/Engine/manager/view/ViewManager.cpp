@@ -1,5 +1,5 @@
 // This
-#include "SRVManager.h"
+#include "ViewManager.h"
 
 // MyHedder
 #include "manager/directX/DirectXManager.h"

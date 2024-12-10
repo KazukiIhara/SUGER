@@ -4,7 +4,7 @@
 #include "manager/directX/DirectXManager.h"
 #include "manager/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
-#include "manager/srv/SRVManager.h"
+#include "manager/view/ViewManager.h"
 
 void TextureManager::Initialize(DirectXManager* directXManager, ViewManager* srvManager) {
 	// 必要なインスタンスのポインタを取得
