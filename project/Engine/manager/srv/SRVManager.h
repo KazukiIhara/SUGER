@@ -10,8 +10,6 @@
 
 // 前方宣言
 class DirectXManager;
-class DXGIManager;
-class DirectXCommand;
 
 class ViewManager {
 public: // 公開メンバ関数

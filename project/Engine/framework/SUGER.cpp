@@ -8,6 +8,7 @@ std::unique_ptr<D3DResourceLeakChecker> SUGER::leakCheck_ = nullptr;
 
 // Staticメンバ変数の初期化
 std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
+std::unique_ptr<DXGIManager> SUGER::dxgiManager_ = nullptr;
 std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
 std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
 std::unique_ptr<ViewManager> SUGER::viewManager_ = nullptr;
@@ -38,13 +39,17 @@ void SUGER::Initialize() {
 	windowManager_ = std::make_unique<WindowManager>();
 	windowManager_->Initialize();
 
+	// DXGIManagerの初期化
+	dxgiManager_ = std::make_unique<DXGIManager>();
+	dxgiManager_->Initialize();
+
 	// DirectInputの初期化
 	directInput_ = std::make_unique<DirectInput>();
 	directInput_->Initialize(windowManager_.get());
 
 	// DirectXManagerの初期化
 	directXManager_ = std::make_unique<DirectXManager>();
-	directXManager_->Initialize(windowManager_.get());
+	directXManager_->Initialize(windowManager_.get(),dxgiManager_.get());
 
 	// ViewManagerの初期化
 	viewManager_ = std::make_unique<ViewManager>();
@@ -247,6 +252,11 @@ void SUGER::Finalize() {
 		directInput_.reset();
 	}
 
+	// DXGIManagerの終了処理
+	if (dxgiManager_) {
+		dxgiManager_.reset();
+	}
+
 	// WindowManagerの終了処理
 	if (windowManager_) {
 		windowManager_->Finalize();
@@ -444,7 +454,7 @@ bool SUGER::IsPadLeft(int controllerID) {
 }
 
 ID3D12Device* SUGER::GetDirectXDevice() {
-	return directXManager_->GetDevice();
+	return dxgiManager_->GetDevice();
 }
 
 ID3D12GraphicsCommandList* SUGER::GetDirectXCommandList() {

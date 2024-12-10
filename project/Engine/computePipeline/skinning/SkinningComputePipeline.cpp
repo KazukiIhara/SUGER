@@ -117,7 +117,7 @@ void SkinningComputePipeline::CreateRootSignature() {
 	}
 
 	// Root Signature作成
-	hr = directX_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
+	hr = directX_->GetDXGI()->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 
@@ -143,7 +143,7 @@ void SkinningComputePipeline::CreatePipelineStateObject() {
 	};
 	computePipelineStateDesc.pRootSignature = rootSignature_.Get();
 	pipelineState_ = nullptr;
-	hr = directX_->GetDevice()->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&pipelineState_));
+	hr = directX_->GetDXGI()->GetDevice()->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&pipelineState_));
 	assert(SUCCEEDED(hr));
 }
 
