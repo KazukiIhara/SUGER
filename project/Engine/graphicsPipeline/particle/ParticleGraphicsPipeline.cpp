@@ -89,7 +89,7 @@ void ParticleGraphicsPipeline::CreateRootSignature() {
 	}
 	//バイナリをもとに生成
 	rootSignature_ = nullptr;
-	hr = directX_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
+	hr = directX_->GetDXGI()->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 }
@@ -138,7 +138,7 @@ void ParticleGraphicsPipeline::CreateGraphicsPipelineObject() {
 	for (uint32_t i = 0; i < kBlendModeNum; i++) {
 		graphicsPipelineStateDesc.BlendState = BlendStateSetting(i);
 		graphicsPipelineState_[i] = nullptr;
-		hr = directX_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+		hr = directX_->GetDXGI()->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 			IID_PPV_ARGS(&graphicsPipelineState_[i]));
 		assert(SUCCEEDED(hr));
 	}

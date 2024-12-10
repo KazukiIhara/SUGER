@@ -3,16 +3,15 @@
 
 // MyHedder
 #include "manager/directX/DirectXManager.h"
-#include "manager/dxgi/DXGIManager.h"
-#include "directX/command/DirectXCommand.h"
+
 
 void ViewManager::Initialize(DirectXManager* directX) {
 	// DirectXManagerのインスタンスを取得
 	SetDirectXManager(directX);
 	// デスクリプタヒープの作成
-	descriptorHeap_ = DirectXManager::CreateDescriptorHeap(directX_->GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxViewCount, true);
+	descriptorHeap_ = directX_->GetDXGI()->CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxViewCount, true);
 	// デスクリプタ一個分のサイズを取得して記録
-	descriptorSize_ = directX_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	descriptorSize_ = directX_->GetDXGI()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
 uint32_t ViewManager::Allocate() {
@@ -41,7 +40,7 @@ void ViewManager::CreateSrvTexture2d(uint32_t srvIndex, ID3D12Resource* pResourc
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = mipLevels;
 	// Srvの作成
-	directX_->GetDevice()->CreateShaderResourceView(pResource, &srvDesc, GetDescriptorHandleCPU(srvIndex));
+	directX_->GetDXGI()->GetDevice()->CreateShaderResourceView(pResource, &srvDesc, GetDescriptorHandleCPU(srvIndex));
 }
 
 void ViewManager::CreateSrvStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
@@ -53,7 +52,7 @@ void ViewManager::CreateSrvStructuredBuffer(uint32_t srvIndex, ID3D12Resource* p
 	srvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
 	srvDesc.Buffer.NumElements = numElements;
 	srvDesc.Buffer.StructureByteStride = structureByteStride;
-	directX_->GetDevice()->CreateShaderResourceView(pResource, &srvDesc, GetDescriptorHandleCPU(srvIndex));
+	directX_->GetDXGI()->GetDevice()->CreateShaderResourceView(pResource, &srvDesc, GetDescriptorHandleCPU(srvIndex));
 }
 
 void ViewManager::CreateUavStructuredBuffer(uint32_t viewIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
@@ -66,7 +65,7 @@ void ViewManager::CreateUavStructuredBuffer(uint32_t viewIndex, ID3D12Resource* 
 	uavDesc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
 	uavDesc.Buffer.StructureByteStride = structureByteStride;
 
-	directX_->GetDevice()->CreateUnorderedAccessView(
+	directX_->GetDXGI()->GetDevice()->CreateUnorderedAccessView(
 		pResource, nullptr, &uavDesc, GetDescriptorHandleCPU(viewIndex));
 }
 

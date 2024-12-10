@@ -388,6 +388,7 @@
     <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
     <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
     <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
+    <ClCompile Include="Engine\manager\rtv\RTVManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -585,6 +586,7 @@
     <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
     <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
+    <ClInclude Include="Engine\manager\rtv\RTVManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

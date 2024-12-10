@@ -7,6 +7,7 @@
 #include "d3d12.h"
 
 #include "manager/window/WindowManager.h"
+#include "manager/dxgi/DXGIManager.h"
 #include "input/direct/DirectInput.h"
 #include "manager/directX/DirectXManager.h"
 #include "manager/srv/SRVManager.h"
@@ -111,10 +112,14 @@ public: // クラスメソッド
 
 #pragma endregion
 
-#pragma region DirectXManager
-	// DirectXManagerの機能
+#pragma region DXGI
 	// デバイス取得
 	static ID3D12Device* GetDirectXDevice();
+
+#pragma endregion
+
+#pragma region DirectXManager
+	// DirectXManagerの機能
 	// コマンドリスト取得関数
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
 	// バッファリソースの作成
@@ -370,6 +375,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<D3DResourceLeakChecker> leakCheck_;
 #endif // _DEBUG
 	static std::unique_ptr<WindowManager> windowManager_;
+	static std::unique_ptr<DXGIManager> dxgiManager_;
 	static std::unique_ptr<DirectInput> directInput_;
 	static std::unique_ptr<DirectXManager> directXManager_;
 	static std::unique_ptr<ViewManager> viewManager_;

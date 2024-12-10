@@ -28,7 +28,7 @@ public: // 公開メンバ関数
 	~DirectXManager() = default;
 
 	// 初期化
-	void Initialize(WindowManager* windowManager, bool enableDebugLayer = true);
+	void Initialize(WindowManager* windowManager, DXGIManager* dxgi, bool enableDebugLayer = true);
 	// 描画前処理
 	void PreDraw();
 	// 描画後処理
@@ -52,7 +52,7 @@ public: // 公開メンバ関数
 	// rtvDescを取得
 	D3D12_RENDER_TARGET_VIEW_DESC GetRTVDesc() const;
 
-	ID3D12Device* GetDevice();
+	DXGIManager* GetDXGI();
 
 	ID3D12CommandQueue* GetCommandQueue();
 	ID3D12CommandAllocator* GetCommandAllocator();
@@ -68,13 +68,12 @@ public: // 公開メンバ関数
 	// UAV用のバッファリソース作成
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateUAVBufferResource(size_t sizeInBytes);
 
-	// ディスクリプタヒープの作成
-	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
-
 private: // プライベートメンバ関数
 
 	// WinAPIのインスタンスをコピー
 	void SetWindowManager(WindowManager* windowManager);
+	// DXGIをセット
+	void SetDXGI(DXGIManager* dxgi);
 
 	// スワップチェーンを生成する
 	void CreateSwapChain();
@@ -107,7 +106,7 @@ private: // プライベートメンバ関数
 private: // メンバ変数
 
 	// DXGI
-	std::unique_ptr<DXGIManager> dxgi_ = nullptr;
+	DXGIManager* dxgi_ = nullptr;
 	// DirectXCommand
 	std::unique_ptr<DirectXCommand> dxCommand_ = nullptr;
 

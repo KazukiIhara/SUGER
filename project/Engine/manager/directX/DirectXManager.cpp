@@ -7,18 +7,14 @@
 #include "manager/window/WindowManager.h"
 #include "debugTools/logger/Logger.h"
 
-void DirectXManager::Initialize(WindowManager* windowManager, bool enableDebugLayer) {
+void DirectXManager::Initialize(WindowManager* windowManager, DXGIManager* dxgi, bool enableDebugLayer) {
 	// WindowManagerのインスタンスをセット
 	SetWindowManager(windowManager);
-
-	// DXGIデバイスの初期化
-	dxgi_ = std::make_unique<DXGIManager>();
-	dxgi_->Initialize();
-
+	// DXGIのセット
+	SetDXGI(dxgi);
 	// コマンドの初期化
 	dxCommand_ = std::make_unique<DirectXCommand>();
-	dxCommand_->Initialize(dxgi_.get());
-
+	dxCommand_->Initialize(dxgi_);
 	// FPS固定処理の初期化
 	fixFPS_ = std::make_unique<FixFPS>();
 	fixFPS_->Initialize();
@@ -137,9 +133,10 @@ D3D12_RENDER_TARGET_VIEW_DESC DirectXManager::GetRTVDesc() const {
 	return rtvDesc_;
 }
 
-ID3D12Device* DirectXManager::GetDevice() {
-	return dxgi_->GetDevice();
+DXGIManager* DirectXManager::GetDXGI() {
+	return dxgi_;
 }
+
 
 ID3D12CommandQueue* DirectXManager::GetCommandQueue() {
 	return dxCommand_->GetQueue();
@@ -234,21 +231,14 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectXManager::CreateUAVBufferResource(s
 	return resource;
 }
 
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXManager::CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible) {
-	// ディスクリプタヒープの生成
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap = nullptr;
-	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{};
-	descriptorHeapDesc.Type = heapType;
-	descriptorHeapDesc.NumDescriptors = numDescriptors;
-	descriptorHeapDesc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	HRESULT hr = device->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
-	// ディスクリプターヒープが作れなかったので起動できない
-	assert(SUCCEEDED(hr));
-	return descriptorHeap;
+void DirectXManager::SetWindowManager(WindowManager* windowManager) {
+	assert(windowManager);
+	windowManager_ = windowManager;
 }
 
-void DirectXManager::SetWindowManager(WindowManager* windowManager) {
-	windowManager_ = windowManager;
+void DirectXManager::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
+	dxgi_ = dxgi;
 }
 
 void DirectXManager::CreateSwapChain() {
@@ -268,7 +258,7 @@ void DirectXManager::CreateSwapChain() {
 void DirectXManager::CreateRenderTargetView() {
 	// ディスクリプタヒープの生成
 	// RTV用のヒープでディスクリプタの数は２。RTVはShader内で触るものではないので、ShaderVisibleはfalse
-	rtvDescriptorHeap_ = CreateDescriptorHeap(dxgi_->GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
+	rtvDescriptorHeap_ = dxgi_->CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
 	// スワップチェーンからリソースを引っ張ってくる
 	hr_ = swapChain_->GetBuffer(0, IID_PPV_ARGS(&swapChainResources_[0]));
 	// うまく取得出来なければ起動できない
@@ -296,7 +286,7 @@ void DirectXManager::CreateDepthStencilView() {
 	depthStencilResource_ = CreateDepthStencilTextureResource(dxgi_->GetDevice(), WindowManager::kClientWidth, WindowManager::kClientHeight);
 
 	// DSV用のヒープでディスクリプタの数は1
-	dsvDescriptorHeap_ = CreateDescriptorHeap(dxgi_->GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+	dsvDescriptorHeap_ = dxgi_->CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
 
 	// DSVの設定
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};

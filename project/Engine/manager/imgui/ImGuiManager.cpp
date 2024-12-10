@@ -19,7 +19,7 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(windowManager_->GetHwnd());
-	ImGui_ImplDX12_Init(directXManager_->GetDevice(),
+	ImGui_ImplDX12_Init(directXManager_->GetDXGI()->GetDevice(),
 		directXManager_->GetSwapChainDesc().BufferCount,
 		directXManager_->GetRTVDesc().Format,
 		srvManager_->GetDescriptorHeap(),

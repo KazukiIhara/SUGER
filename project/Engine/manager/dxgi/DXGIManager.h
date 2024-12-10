@@ -12,6 +12,9 @@ public:
 
 	void Initialize();
 
+	// ディスクリプタヒープの作成
+	ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
+
 	ID3D12Device* GetDevice();
 	IDXGIFactory7* GetFactory();
 private:

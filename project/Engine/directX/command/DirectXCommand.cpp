@@ -36,5 +36,6 @@ ID3D12GraphicsCommandList* DirectXCommand::GetList() {
 }
 
 void DirectXCommand::SetDXGIManager(DXGIManager* dxgi) {
+	assert(dxgi);
 	dxgi_ = dxgi;
 }
