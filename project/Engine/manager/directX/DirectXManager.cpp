@@ -258,7 +258,6 @@ void DirectXManager::CreateSwapChain() {
 }
 
 void DirectXManager::CreateRenderTargetView() {
-	// ディスクリプタヒープの生成
 	// スワップチェーンからリソースを引っ張ってくる
 	hr_ = swapChain_->GetBuffer(0, IID_PPV_ARGS(&swapChainResources_[0]));
 	// うまく取得出来なければ起動できない
@@ -266,13 +265,10 @@ void DirectXManager::CreateRenderTargetView() {
 	hr_ = swapChain_->GetBuffer(1, IID_PPV_ARGS(&swapChainResources_[1]));
 	assert(SUCCEEDED(hr_));
 
-
 	// まず1つを作る
-
 	swapchainIndex_[0] = SUGER::RTVAllocate();
 	SUGER::CreateRTVTexture2d(swapchainIndex_[0], swapChainResources_[0].Get());
 	// 2つ目のディスクリプタハンドルを得る
-
 	swapchainIndex_[1] = SUGER::RTVAllocate();
 	// 2つ目を作る
 	SUGER::CreateRTVTexture2d(swapchainIndex_[1], swapChainResources_[1].Get());

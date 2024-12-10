@@ -15,6 +15,7 @@
 class DXGIManager;
 class DirectXCommand;
 class WindowManager;
+class RTVManager;
 
 class SwapChain {
 public:
@@ -22,7 +23,7 @@ public:
 	~SwapChain() = default;
 
 	// 初期化
-	void Initialize(WindowManager* windowmanager, DXGIManager* dxgi);
+	void Initialize(WindowManager* windowmanager, DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager);
 
 	// 現在のバックバッファインデックスを取得
 	UINT GetCurrentBuckBufferIndex();
@@ -30,10 +31,17 @@ public:
 private:
 	// スワップチェーン作成
 	void CreateSwapChain();
-	// DXGIをセット
-	void SetDXGI(DXGIManager* dxgi);
+	// スワップチェーンのRTVリソースを作成
+	void CreateSwapChainResources();
+private:
 	// WindowManagerをセット
 	void SetWindowManager(WindowManager* windowManager);
+	// DXGIをセット
+	void SetDXGI(DXGIManager* dxgi);
+	// Commandをセット
+	void SetCommand(DirectXCommand* command);
+	// RTVManagerのセット
+	void SetRTVManager(RTVManager* rtvManager);
 private:
 	// スワップチェーン
 	ComPtr<IDXGISwapChain4> swapChain_ = nullptr;
@@ -45,8 +53,12 @@ private:
 	// エラー判別君
 	HRESULT hr_ = S_FALSE;
 private:
-	// dxgiのインスタンスを受け取る箱
-	DXGIManager* dxgi_ = nullptr; 
 	// WindowManagerのインスタンスを受け取る箱
 	WindowManager* windowManager_ = nullptr;
+	// dxgiのインスタンスを受け取る箱
+	DXGIManager* dxgi_ = nullptr;
+	// Commandのインスタンスを受け取る箱
+	DirectXCommand* command_ = nullptr;
+	// RTVmanagerのインスタンスを受け取る箱
+	RTVManager* rtvManager_ = nullptr;
 };
