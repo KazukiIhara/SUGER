@@ -27,7 +27,9 @@ public:
 	// GPUとOSに画面の交換を行うよう通知する
 	void Present();
 	// 現在のバックバッファのリソースを取得
-	ID3D12Resource* GetCurrentBuckBufferResource();
+	ID3D12Resource* GetCurrentBackBufferResource();
+	// 描画先のRTVハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE GetCurrentBackBufferRTVHandle();
 private:
 	// スワップチェーン作成
 	void CreateSwapChain();

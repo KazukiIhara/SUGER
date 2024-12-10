@@ -24,9 +24,14 @@ void SwapChain::Present() {
 	swapChain_->Present(1, 0);
 }
 
-ID3D12Resource* SwapChain::GetCurrentBuckBufferResource() {
+ID3D12Resource* SwapChain::GetCurrentBackBufferResource() {
 	backBufferIndex_ = swapChain_->GetCurrentBackBufferIndex();
 	return swapChainResources_[backBufferIndex_].Get();
+}
+
+D3D12_CPU_DESCRIPTOR_HANDLE SwapChain::GetCurrentBackBufferRTVHandle() {
+	backBufferIndex_ = swapChain_->GetCurrentBackBufferIndex();
+	return rtvManager_->GetDescriptorHandleCPU(swapChainIndex_[backBufferIndex_]);
 }
 
 void SwapChain::CreateSwapChain() {

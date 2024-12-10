@@ -8,25 +8,30 @@
 void Barrier::Initialize(DirectXCommand* command, SwapChain* swapChain) {
 	SetSwapChain(swapChain);
 	SetCommand(command);
+	// タイプはトランジション
+	swapChainBarrier_.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	// None
+	swapChainBarrier_.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
 }
 
 void Barrier::PreDrawBarrierSwapChain() {
-	// 今回のバリアはトランジション
-	barrier_.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	// None
-	barrier_.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
 	// バリアを張る対象のリソース
-	barrier_.Transition.pResource = swapChian_->GetCurrentBuckBufferResource();
+	swapChainBarrier_.Transition.pResource = swapChian_->GetCurrentBackBufferResource();
 	// 遷移前のリソースステート
-	barrier_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+	swapChainBarrier_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
 	// 遷移後のリソースステート
-	barrier_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	swapChainBarrier_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	// トランジションバリアを張る
-	command_->GetList()->ResourceBarrier(1, &barrier_);
+	command_->GetList()->ResourceBarrier(1, &swapChainBarrier_);
 }
 
 void Barrier::PostDrawBarrierSwapChain() {
-
+	// 遷移前のリソースステート
+	swapChainBarrier_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	// 遷移後の
+	swapChainBarrier_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+	// トランジションバリアを張る
+	command_->GetList()->ResourceBarrier(1, &swapChainBarrier_);
 }
 
 void Barrier::SetCommand(DirectXCommand* command) {

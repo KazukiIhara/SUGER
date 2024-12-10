@@ -117,8 +117,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
     <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
     <ClCompile Include="Engine\directX\barrier\Barrier.cpp" />
+    <ClCompile Include="Engine\directX\depthStencil\DepthStencil.cpp" />
     <ClCompile Include="Engine\directX\fence\Fence.cpp" />
-    <ClCompile Include="Engine\directX\renderTarget\RenderTarget.cpp" />
+    <ClCompile Include="Engine\directX\renderer\Renderer.cpp" />
     <ClCompile Include="Engine\directX\scissorRect\ScissorRect.cpp" />
     <ClCompile Include="Engine\directX\swapChain\SwapChain.cpp" />
     <ClCompile Include="Engine\directX\viewport\ViewPort.cpp" />
@@ -126,6 +127,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3d\line\LineGroup.cpp" />
     <ClCompile Include="Engine\collider\Collider.cpp" />
     <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
+    <ClCompile Include="Engine\manager\dsv\DSVManager.cpp" />
     <ClCompile Include="Engine\manager\line\LineGroupManager.cpp" />
     <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
     <ClCompile Include="Engine\manager\rtv\RTVManager.cpp" />
@@ -196,8 +198,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
     <ClInclude Include="Engine\directX\barrier\Barrier.h" />
+    <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
     <ClInclude Include="Engine\directX\fence\Fence.h" />
-    <ClInclude Include="Engine\directX\renderTarget\RenderTarget.h" />
+    <ClInclude Include="Engine\directX\renderer\Renderer.h" />
     <ClInclude Include="Engine\directX\scissorRect\ScissorRect.h" />
     <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
     <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
@@ -209,6 +212,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\enum\FadeEnum.h" />
     <ClInclude Include="Engine\enum\SceneEnum.h" />
     <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
+    <ClInclude Include="Engine\manager\dsv\DSVManager.h" />
     <ClInclude Include="Engine\manager\line\LineGroupManager.h" />
     <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
     <ClInclude Include="Engine\manager\rtv\RTVManager.h" />

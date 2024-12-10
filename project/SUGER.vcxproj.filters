@@ -391,7 +391,12 @@
     <ClCompile Include="Engine\manager\rtv\RTVManager.cpp" />
     <ClCompile Include="Engine\directX\fence\Fence.cpp" />
     <ClCompile Include="Engine\directX\swapChain\SwapChain.cpp" />
-    <ClCompile Include="Engine\directX\renderTarget\RenderTarget.cpp" />
+    <ClCompile Include="Engine\directX\renderer\Renderer.cpp" />
+    <ClCompile Include="Engine\directX\barrier\Barrier.cpp" />
+    <ClCompile Include="Engine\directX\scissorRect\ScissorRect.cpp" />
+    <ClCompile Include="Engine\directX\viewport\ViewPort.cpp" />
+    <ClCompile Include="Engine\directX\depthStencil\DepthStencil.cpp" />
+    <ClCompile Include="Engine\manager\dsv\DSVManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -592,7 +597,12 @@
     <ClInclude Include="Engine\manager\rtv\RTVManager.h" />
     <ClInclude Include="Engine\directX\fence\Fence.h" />
     <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
-    <ClInclude Include="Engine\directX\renderTarget\RenderTarget.h" />
+    <ClInclude Include="Engine\directX\renderer\Renderer.h" />
+    <ClInclude Include="Engine\directX\barrier\Barrier.h" />
+    <ClInclude Include="Engine\directX\scissorRect\ScissorRect.h" />
+    <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
+    <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
+    <ClInclude Include="Engine\manager\dsv\DSVManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
