@@ -15,7 +15,12 @@ public:
 	// ディスクリプタヒープの作成
 	ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
+	// バッファリソースの作成
+	ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes, bool isforUAV = false);
+
+	// DXGIデバイスの取得
 	ID3D12Device* GetDevice();
+	// DXGIファクトリーの取得
 	IDXGIFactory7* GetFactory();
 private:
 	// エラー判別
