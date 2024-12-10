@@ -119,7 +119,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\directX\barrier\Barrier.cpp" />
     <ClCompile Include="Engine\directX\depthStencil\DepthStencil.cpp" />
     <ClCompile Include="Engine\directX\fence\Fence.cpp" />
-    <ClCompile Include="Engine\directX\renderer\Renderer.cpp" />
+    <ClCompile Include="Engine\directX\targetRenderPass\TargetRenderPass.cpp" />
     <ClCompile Include="Engine\directX\scissorRect\ScissorRect.cpp" />
     <ClCompile Include="Engine\directX\swapChain\SwapChain.cpp" />
     <ClCompile Include="Engine\directX\viewport\ViewPort.cpp" />
@@ -200,7 +200,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\directX\barrier\Barrier.h" />
     <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
     <ClInclude Include="Engine\directX\fence\Fence.h" />
-    <ClInclude Include="Engine\directX\renderer\Renderer.h" />
+    <ClInclude Include="Engine\directX\targetRenderPass\TargetRenderPass.h" />
     <ClInclude Include="Engine\directX\scissorRect\ScissorRect.h" />
     <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
     <ClInclude Include="Engine\directX\viewport\ViewPort.h" />

@@ -4,10 +4,10 @@
 class DirectXCommand;
 class SwapChain;
 
-class Renderer {
+class TargetRenderPass {
 public:
-	Renderer() = default;
-	~Renderer() = default;
+	TargetRenderPass() = default;
+	~TargetRenderPass() = default;
 
 	// 初期化
 	void Initialize(DirectXCommand* command, SwapChain* swapChain);
