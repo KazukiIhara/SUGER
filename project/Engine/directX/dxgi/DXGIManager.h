@@ -1,9 +1,13 @@
 #pragma once
-#include "directX/includes/ComPtr.h"
+
+// C++
+#include <cstdint>
 
 // DirectX
 #include <d3d12.h>
 #include <dxgi1_6.h>
+
+#include "directX/includes/ComPtr.h"
 
 class DXGIManager {
 public:
