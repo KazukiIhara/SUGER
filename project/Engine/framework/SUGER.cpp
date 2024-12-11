@@ -12,7 +12,7 @@ std::unique_ptr<DXGIManager> SUGER::dxgiManager_ = nullptr;
 std::unique_ptr<RTVManager> SUGER::rtvManager_ = nullptr;
 std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
 std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
-std::unique_ptr<ViewManager> SUGER::viewManager_ = nullptr;
+std::unique_ptr<SRVUAVManager> SUGER::viewManager_ = nullptr;
 std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
@@ -57,7 +57,7 @@ void SUGER::Initialize() {
 	directXManager_->Initialize(windowManager_.get(),dxgiManager_.get());
 
 	// ViewManagerの初期化
-	viewManager_ = std::make_unique<ViewManager>();
+	viewManager_ = std::make_unique<SRVUAVManager>();
 	viewManager_->Initialize(directXManager_.get());
 
 	// ImGuiManagerの初期化

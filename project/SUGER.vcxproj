@@ -183,7 +183,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\worldTransform\WorldTransform.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp" />
-    <ClCompile Include="Engine\manager\view\ViewManager.cpp" />
+    <ClCompile Include="Engine\manager\srvUav\SRVUAVManager.cpp" />
     <ClCompile Include="Engine\manager\window\WindowManager.cpp" />
     <ClCompile Include="Engine\debugTools\logger\Logger.cpp" />
   </ItemGroup>
@@ -264,7 +264,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\object\2d\Object2DManager.h" />
     <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h" />
     <ClInclude Include="Engine\manager\scene\SceneManager.h" />
-    <ClInclude Include="Engine\manager\view\ViewManager.h" />
+    <ClInclude Include="Engine\manager\srvUav\SRVUAVManager.h" />
     <ClInclude Include="Engine\manager\texture\TextureManager.h" />
     <ClInclude Include="Engine\manager\window\WindowManager.h" />
     <ClInclude Include="Engine\debugTools\logger\Logger.h" />

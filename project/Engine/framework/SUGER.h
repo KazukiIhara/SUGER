@@ -15,7 +15,7 @@
 #include "input/direct/DirectInput.h"
 #include "manager/rtv/RTVManager.h"
 #include "manager/directX/DirectXManager.h"
-#include "manager/view/ViewManager.h"
+#include "manager/srvUav/SRVUAVManager.h"
 #include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
@@ -162,7 +162,7 @@ public: // クラスメソッド
 	static void FiXFPSInitialize();
 #pragma endregion
 
-#pragma region ViewManager
+#pragma region SRVUAVManager
 	// ViewManagerの機能
 	// CPUの特定のインデックスハンドルを取得
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetSRVUAVDescriptorHandleCPU(uint32_t index);
@@ -418,7 +418,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<RTVManager> rtvManager_;
 	static std::unique_ptr<DirectInput> directInput_;
 	static std::unique_ptr<DirectXManager> directXManager_;
-	static std::unique_ptr<ViewManager> viewManager_;
+	static std::unique_ptr<SRVUAVManager> viewManager_;
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;

@@ -15,7 +15,7 @@
 class WindowManager;
 class DirectXManager;
 class DirectXCommand;
-class ViewManager;
+class SRVUAVManager;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
@@ -28,7 +28,7 @@ public: // 公開メンバ関数
 	~ImGuiManager() = default;
 
 	// 初期化
-	void Initialize(WindowManager* windowManager, DirectXManager* directXManager, ViewManager* srvManager);
+	void Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVUAVManager* srvManager);
 
 	// フォント設定
 	void FontSetting();
@@ -57,7 +57,7 @@ public: // 公開メンバ関数
 private:
 	void SetWindowManager(WindowManager* windowManager);
 	void SetDirectXManager(DirectXManager* directXManager);
-	void SetSrvManager(ViewManager* srvManager);
+	void SetSrvManager(SRVUAVManager* srvManager);
 
 private:
 	// プレビュー描画のSrvIndex
@@ -69,6 +69,6 @@ private: // インスタンスを受け取る変数
 	// DirectXManager
 	DirectXManager* directXManager_ = nullptr;
 	// SrvManager
-	ViewManager* srvManager_ = nullptr;
+	SRVUAVManager* srvManager_ = nullptr;
 };
 

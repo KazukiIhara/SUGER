@@ -9,15 +9,16 @@
 #include "directX/includes/ComPtr.h"
 
 // 前方宣言
-class DirectXManager;
+class DXGIManager;
+class DirectXCommand;
 
-class ViewManager {
+class SRVUAVManager {
 public: // 公開メンバ関数
-	ViewManager() = default;
-	~ViewManager() = default;
+	SRVUAVManager() = default;
+	~SRVUAVManager() = default;
 
 	// 初期化
-	void Initialize(DirectXManager* directX);
+	void Initialize(DXGIManager* dxgi, DirectXCommand* command);
 	// 割り当て関数
 	uint32_t Allocate();
 	// CPUの特定のインデックスハンドルを取得
@@ -30,36 +31,40 @@ public: // 公開メンバ関数
 	void CreateSrvStructuredBuffer(uint32_t viewIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 	// UAV作成
 	void CreateUavStructuredBuffer(uint32_t viewIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
-	
+
 	// Viewの数が最大数を上回っているかどうか
 	bool IsLowerViewMax();
 	// コマンド前処理
 	void PreCommand();
-	// ルートパラメータインデックスと、srv番号に対応したDescriptorTableを取得
+	// ルートパラメータインデックスと、srv番号に対応したDescriptorTableを取得(compute用)
 	void SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
-	// ルートパラメータインデックスと、srv番号に対応したDescriptorTableを取得
+	// ルートパラメータインデックスと、srv番号に対応したDescriptorTableを取得(graphics用)
 	void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 
-	// srvディスクリプタヒープを取得
+	// ディスクリプタヒープを取得
 	ID3D12DescriptorHeap* GetDescriptorHeap() const;
 
-	// srvディスクリプタのサイズを取得
+	// ディスクリプタのサイズを取得
 	uint32_t GetDescriptorSize() const;
 
 private:
-	// DirectX
-	void SetDirectXManager(DirectXManager* directX);
+	// DXGIのインスタンスをセット
+	void SetDXGI(DXGIManager* dxgi);
+	// コマンドのインスタンスをセット
+	void SetCommand(DirectXCommand* command);
 public: // 公開メンバ変数
 	// 最大SRV数
-	static const uint32_t kMaxViewCount = 512;
+	static const uint32_t kMaxViewCount_ = 512;
 private: // 非公開メンバ変数
 	// DescriptorHeap
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap_ = nullptr;
+	ComPtr<ID3D12DescriptorHeap> descriptorHeap_ = nullptr;
 	// Discriptorのサイズ
 	uint32_t descriptorSize_ = 0u;
 	// 使用しているviewのインデックス
 	uint32_t useIndex = 0;
 private: // インスタンスコピーポインタ
-	// DirectXManager
-	DirectXManager* directX_ = nullptr;
+	// DXGIのインスタンスを受け取る箱
+	DXGIManager* dxgi_ = nullptr;
+	// コマンドのインスタンスを受け取る箱
+	DirectXCommand* command_ = nullptr;
 };

@@ -4,9 +4,9 @@
 #include "manager/directX/DirectXManager.h"
 #include "directX/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
-#include "manager/view/ViewManager.h"
+#include "manager/srvUav/SRVUAVManager.h"
 
-void TextureManager::Initialize(DirectXManager* directXManager, ViewManager* srvManager) {
+void TextureManager::Initialize(DirectXManager* directXManager, SRVUAVManager* srvManager) {
 	// 必要なインスタンスのポインタを取得
 	SetDirectXCommon(directXManager);
 	SetSrvManager(srvManager);
@@ -60,7 +60,7 @@ void TextureManager::SetDirectXCommon(DirectXManager* directX) {
 	directXManager_ = directX;
 }
 
-void TextureManager::SetSrvManager(ViewManager* srvManager) {
+void TextureManager::SetSrvManager(SRVUAVManager* srvManager) {
 	srvManager_ = srvManager;
 }
 

@@ -5,9 +5,9 @@
 #include "manager/window/WindowManager.h"
 #include "manager/directX/DirectXManager.h"
 #include "directX/command/DirectXCommand.h"
-#include "manager/view/ViewManager.h"
+#include "manager/srvUav/SRVUAVManager.h"
 
-void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* directXManager, ViewManager* srvManager) {
+void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVUAVManager* srvManager) {
 
 	// インスタンスのセット
 	SetWindowManager(windowManager);
@@ -131,6 +131,6 @@ void ImGuiManager::SetDirectXManager(DirectXManager* directXManager) {
 	directXManager_ = directXManager;
 }
 
-void ImGuiManager::SetSrvManager(ViewManager* srvManager) {
+void ImGuiManager::SetSrvManager(SRVUAVManager* srvManager) {
 	srvManager_ = srvManager;
 }
