@@ -32,6 +32,15 @@ D3D12_GPU_DESCRIPTOR_HANDLE DSVManager::GetDescriptorHandleGPU(uint32_t index) {
 	return handleGPU;
 }
 
+void DSVManager::CreateDSVTexture2d(uint32_t dsvIndex, ID3D12Resource* pResource, DXGI_FORMAT format) {
+	// dsvの設定
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
+	dsvDesc.Format = format;
+	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+	// dsv作成
+	dxgi_->GetDevice()->CreateDepthStencilView(pResource, &dsvDesc, GetDescriptorHandleCPU(dsvIndex));
+}
+
 bool DSVManager::IsLowerViewMax() {
 	return useIndex < kMaxDSVCount_;
 }

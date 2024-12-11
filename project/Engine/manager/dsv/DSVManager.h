@@ -25,7 +25,8 @@ public:
 	D3D12_CPU_DESCRIPTOR_HANDLE GetDescriptorHandleCPU(uint32_t index);
 	// GPUの特定のインデックスハンドルを取得
 	D3D12_GPU_DESCRIPTOR_HANDLE GetDescriptorHandleGPU(uint32_t index);
-
+	// DSV生成
+	void CreateDSVTexture2d(uint32_t dsvIndex, ID3D12Resource* pResource, DXGI_FORMAT format);
 	// Viewの数が最大数を上回っているかどうか
 	bool IsLowerViewMax();
 	// ディスクリプタヒープを取得

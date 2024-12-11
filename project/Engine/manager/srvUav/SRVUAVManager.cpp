@@ -12,7 +12,7 @@ void SRVUAVManager::Initialize(DXGIManager* dxgi, DirectXCommand* command) {
 	SetDXGI(dxgi);
 	SetCommand(command);
 	// デスクリプタヒープの作成
-	descriptorHeap_ = dxgi_->CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxViewCount, true);
+	descriptorHeap_ = dxgi_->CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxViewCount_, true);
 	// デスクリプタ一個分のサイズを取得して記録
 	descriptorSize_ = dxgi_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
