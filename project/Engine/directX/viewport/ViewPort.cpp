@@ -7,7 +7,6 @@
 
 void ViewPort::Initialize(DirectXCommand* command) {
 	SetCommand(command);
-
 }
 
 void ViewPort::SettingViewport() {
