@@ -13,7 +13,7 @@
 
 // 前方宣言
 class WindowManager;
-class DirectXManager;
+class DXGIManager;
 class DirectXCommand;
 class SRVUAVManager;
 
@@ -28,13 +28,10 @@ public: // 公開メンバ関数
 	~ImGuiManager() = default;
 
 	// 初期化
-	void Initialize(WindowManager* windowManager, DirectXManager* directXManager, SRVUAVManager* srvManager);
+	void Initialize(WindowManager* windowManager, DXGIManager* dxgi, DirectXCommand* command, SRVUAVManager* srvManager);
 
 	// フォント設定
 	void FontSetting();
-
-	// プレビューウィンドウのSRV作成
-	void CreatePreviewSrv();
 
 	// 更新処理の先頭に呼び出す処理
 	void BeginFrame();
@@ -45,8 +42,6 @@ public: // 公開メンバ関数
 	// 描画
 	void Draw();
 
-	// プレビューウィンドウ描画
-	void ShowPreviewWindow();
 
 	// ImGuiの終了処理
 	void Finalize();
@@ -56,7 +51,8 @@ public: // 公開メンバ関数
 
 private:
 	void SetWindowManager(WindowManager* windowManager);
-	void SetDirectXManager(DirectXManager* directXManager);
+	void SetDXGI(DXGIManager* dxgi);
+	void SetCommand(DirectXCommand* command);
 	void SetSrvManager(SRVUAVManager* srvManager);
 
 private:
@@ -66,9 +62,11 @@ private:
 private: // インスタンスを受け取る変数
 	// WinAPI
 	WindowManager* windowManager_ = nullptr;
-	// DirectXManager
-	DirectXManager* directXManager_ = nullptr;
+	// dxgi
+	DXGIManager* dxgi_ = nullptr;
+	// command
+	DirectXCommand* command_ = nullptr;
 	// SrvManager
-	SRVUAVManager* srvManager_ = nullptr;
+	SRVUAVManager* srvUavManager_ = nullptr;
 };
 

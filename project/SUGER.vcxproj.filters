@@ -246,9 +246,6 @@
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
       <Filter>engine\input\direct</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\directX\DirectXManager.cpp">
-      <Filter>engine\manager\directX</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp">
       <Filter>engine\manager\imgui</Filter>
     </ClCompile>
@@ -404,9 +401,6 @@
     </ClInclude>
     <ClInclude Include="Engine\directX\includes\ComPtr.h">
       <Filter>engine\include</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\manager\directX\DirectXManager.h">
-      <Filter>engine\manager\directX</Filter>
     </ClInclude>
     <ClInclude Include="Engine\manager\imgui\ImGuiManager.h">
       <Filter>engine\manager\imgui</Filter>

@@ -3,7 +3,9 @@
 
 #include "directX/dxgi/DXGIManager.h"
 
-void Fence::Initialize() {
+void Fence::Initialize(DXGIManager* dxgi) {
+	// dxgiのインスタンスをセット
+	SetDXGI(dxgi);
 	// フェンスバリューを0
 	fenceValue_ = 0;
 	// フェンスの作成

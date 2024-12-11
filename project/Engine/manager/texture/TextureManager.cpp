@@ -38,12 +38,12 @@ void TextureManager::Load(const std::string& filePath) {
 	directXManager_->ResetCommandList();
 
 	// SRVを作成するDescriptorHeapの場所を決める
-	texture.srvIndex = srvManager_->Allocate();
+	texture.srvIndex = srvUavManager_->Allocate();
 	// srvの作成
-	srvManager_->CreateSrvTexture2d(texture.srvIndex, textures_[filePath].resource.Get(), texture.metaData.format, UINT(texture.metaData.mipLevels));
+	srvUavManager_->CreateSrvTexture2d(texture.srvIndex, textures_[filePath].resource.Get(), texture.metaData.format, UINT(texture.metaData.mipLevels));
 
 	// テクスチャ枚数上限チェック
-	assert(srvManager_->IsLowerViewMax());
+	assert(srvUavManager_->IsLowerViewMax());
 }
 
 std::unordered_map<std::string, Texture>& TextureManager::GetTexture() {
@@ -61,7 +61,7 @@ void TextureManager::SetDirectXCommon(DirectXManager* directX) {
 }
 
 void TextureManager::SetSrvManager(SRVUAVManager* srvManager) {
-	srvManager_ = srvManager;
+	srvUavManager_ = srvManager;
 }
 
 DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath) {

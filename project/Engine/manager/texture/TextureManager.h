@@ -45,5 +45,5 @@ private: // インスタンス受け取り変数
 	// DirectXCommon
 	DirectXManager* directXManager_ = nullptr;
 	// SrvManager
-	SRVUAVManager* srvManager_ = nullptr;
+	SRVUAVManager* srvUavManager_ = nullptr;
 };

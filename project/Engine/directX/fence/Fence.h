@@ -17,14 +17,13 @@ public:
 	~Fence() = default;
 
 	// 初期化
-	void Initialize();
+	void Initialize(DXGIManager* dxgi);
+private:
 	// フェンス作成
 	void CreateFence();
-
 private:
 	// DXGIのインスタンスをセット
 	void SetDXGI(DXGIManager* dxgi);
-
 private:
 	// フェンス
 	ComPtr<ID3D12Fence> fence_ = nullptr;

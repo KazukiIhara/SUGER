@@ -7,15 +7,23 @@
 #include "d3d12.h"
 
 #include "manager/window/WindowManager.h"
-#include "directX/dxgi/DXGIManager.h"
+#include "input/direct/DirectInput.h"
 
+#include "directX/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
 #include "directX/fence/Fence.h"
-#include "directX/swapChain/SwapChain.h"
-#include "input/direct/DirectInput.h"
+
 #include "manager/rtv/RTVManager.h"
-#include "manager/directX/DirectXManager.h"
+#include "manager/dsv/DSVManager.h"
 #include "manager/srvUav/SRVUAVManager.h"
+
+#include "directX/swapChain/SwapChain.h"
+#include "directX/depthStencil/DepthStencil.h"
+#include "directX/barrier/Barrier.h"
+#include "directX/targetRenderPass/TargetRenderPass.h"
+#include "directX/viewport/ViewPort.h"
+#include "directX/scissorRect/ScissorRect.h"
+
 #include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
@@ -146,20 +154,6 @@ public: // クラスメソッド
 	// RTVの作成
 	static void CreateRTVTexture2d(uint32_t rtvIndex, ID3D12Resource* pResource);
 
-#pragma endregion
-
-#pragma region DirectXManager
-	// DirectXManagerの機能
-	// コマンドリスト取得関数
-	static ID3D12GraphicsCommandList* GetDirectXCommandList();
-	// バッファリソースの作成
-	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
-	// UAV用のバッファリソースの作成
-	static ComPtr<ID3D12Resource> CreateBufferResourceUAV(size_t sizeInbytes);
-	// コマンド実行後処理
-	static void PostCommand();
-	// FIXFPS初期化
-	static void FiXFPSInitialize();
 #pragma endregion
 
 #pragma region SRVUAVManager
@@ -414,13 +408,23 @@ private: // クラスのポインタ
 	static std::unique_ptr<D3DResourceLeakChecker> leakCheck_;
 #endif // _DEBUG
 	static std::unique_ptr<WindowManager> windowManager_;
-	static std::unique_ptr<DXGIManager> dxgiManager_;
-
-	static std::unique_ptr<DirectXCommand> command_;
-	static std::unique_ptr<RTVManager> rtvManager_;
 	static std::unique_ptr<DirectInput> directInput_;
-	static std::unique_ptr<DirectXManager> directXManager_;
+
+	static std::unique_ptr<DXGIManager> dxgiManager_;
+	static std::unique_ptr<DirectXCommand> command_;
+	static std::unique_ptr<Fence> fence_;
+
+	static std::unique_ptr<RTVManager> rtvManager_;
+	static std::unique_ptr<DSVManager> dsvmanager_;
 	static std::unique_ptr<SRVUAVManager> srvUavManager_;
+
+	static std::unique_ptr<SwapChain> swapChain_;
+	static std::unique_ptr<DepthStencil> depthStencil_;
+	static std::unique_ptr<Barrier> barrier_;
+	static std::unique_ptr<TargetRenderPass> targetRenderPass_;
+	static std::unique_ptr<ViewPort> viewPort_;
+	static std::unique_ptr<ScissorRect> scissorRect_;
+
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
