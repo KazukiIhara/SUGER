@@ -13,7 +13,9 @@ void TargetRenderPass::SetRenderTarget() {
 	
 }
 
-void TargetRenderPass::ClearRenderTarget() {}
+void TargetRenderPass::ClearRenderTarget() {
+	
+}
 
 void TargetRenderPass::SetCommand(DirectXCommand* command) {
 	assert(command);

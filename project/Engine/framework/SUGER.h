@@ -415,10 +415,12 @@ private: // クラスのポインタ
 #endif // _DEBUG
 	static std::unique_ptr<WindowManager> windowManager_;
 	static std::unique_ptr<DXGIManager> dxgiManager_;
+
+	static std::unique_ptr<DirectXCommand> command_;
 	static std::unique_ptr<RTVManager> rtvManager_;
 	static std::unique_ptr<DirectInput> directInput_;
 	static std::unique_ptr<DirectXManager> directXManager_;
-	static std::unique_ptr<SRVUAVManager> viewManager_;
+	static std::unique_ptr<SRVUAVManager> srvUavManager_;
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;

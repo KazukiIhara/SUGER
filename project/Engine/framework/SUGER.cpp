@@ -9,10 +9,12 @@ std::unique_ptr<D3DResourceLeakChecker> SUGER::leakCheck_ = nullptr;
 // Staticメンバ変数の初期化
 std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
 std::unique_ptr<DXGIManager> SUGER::dxgiManager_ = nullptr;
+std::unique_ptr<DirectXCommand> SUGER::command_ = nullptr;
+
 std::unique_ptr<RTVManager> SUGER::rtvManager_ = nullptr;
 std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
 std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
-std::unique_ptr<SRVUAVManager> SUGER::viewManager_ = nullptr;
+std::unique_ptr<SRVUAVManager> SUGER::srvUavManager_ = nullptr;
 std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
@@ -44,6 +46,10 @@ void SUGER::Initialize() {
 	dxgiManager_ = std::make_unique<DXGIManager>();
 	dxgiManager_->Initialize();
 
+	// Commandの初期化
+	command_ = std::make_unique<DirectXCommand>();
+	command_->Initialize(dxgiManager_.get());
+
 	// RTVManagerの初期化
 	rtvManager_ = std::make_unique<RTVManager>();
 	rtvManager_->Initialize(dxgiManager_.get());
@@ -57,16 +63,16 @@ void SUGER::Initialize() {
 	directXManager_->Initialize(windowManager_.get(),dxgiManager_.get());
 
 	// ViewManagerの初期化
-	viewManager_ = std::make_unique<SRVUAVManager>();
-	viewManager_->Initialize(directXManager_.get());
+	srvUavManager_ = std::make_unique<SRVUAVManager>();
+	srvUavManager_->Initialize(dxgiManager_.get(), command_.get());
 
 	// ImGuiManagerの初期化
 	imguiManager_ = std::make_unique<ImGuiManager>();
-	imguiManager_->Initialize(windowManager_.get(), directXManager_.get(), viewManager_.get());
+	imguiManager_->Initialize(windowManager_.get(), directXManager_.get(), srvUavManager_.get());
 
 	// TextureManagerの初期化
 	textureManager_ = std::make_unique<TextureManager>();
-	textureManager_->Initialize(directXManager_.get(), viewManager_.get());
+	textureManager_->Initialize(directXManager_.get(), srvUavManager_.get());
 
 	// GraphicsPipelineManagerの初期化
 	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
@@ -243,8 +249,8 @@ void SUGER::Finalize() {
 	}
 
 	// ViewManagerの終了処理
-	if (viewManager_) {
-		viewManager_.reset();
+	if (srvUavManager_) {
+		srvUavManager_.reset();
 	}
 
 	// DirectXManagerの終了処理
@@ -255,6 +261,11 @@ void SUGER::Finalize() {
 	// DirectInputの終了処理
 	if (directInput_) {
 		directInput_.reset();
+	}
+
+	// commandの終了処理
+	if (command_) {
+		command_.reset();
 	}
 
 	// DXGIManagerの終了処理
@@ -362,7 +373,7 @@ void SUGER::PreDraw() {
 	// DirectX描画前処理
 	directXManager_->PreDraw();
 	// SrvManager描画前処理
-	viewManager_->PreCommand();
+	srvUavManager_->PreCommand();
 }
 
 void SUGER::PostCommand() {
@@ -495,35 +506,35 @@ void SUGER::FiXFPSInitialize() {
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVUAVDescriptorHandleCPU(uint32_t index) {
-	return viewManager_->GetDescriptorHandleCPU(index);
+	return srvUavManager_->GetDescriptorHandleCPU(index);
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetSRVUAVDescriptorHandleGPU(uint32_t index) {
-	return viewManager_->GetDescriptorHandleGPU(index);
+	return srvUavManager_->GetDescriptorHandleGPU(index);
 }
 
 void SUGER::SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
-	viewManager_->SetComputeRootDescriptorTable(rootParameterIndex, srvIndex);
+	srvUavManager_->SetComputeRootDescriptorTable(rootParameterIndex, srvIndex);
 }
 
 void SUGER::PreCommand() {
-	viewManager_->PreCommand();
+	srvUavManager_->PreCommand();
 }
 
 void SUGER::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
-	viewManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
+	srvUavManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
 }
 
 uint32_t SUGER::ViewAllocate() {
-	return viewManager_->Allocate();
+	return srvUavManager_->Allocate();
 }
 
 void SUGER::CreateSrvStructuredBuffer(uint32_t viewIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
-	viewManager_->CreateSrvStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
+	srvUavManager_->CreateSrvStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
 }
 
 void SUGER::CreateUavStructuredBuffer(uint32_t viewIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
-	viewManager_->CreateUavStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
+	srvUavManager_->CreateUavStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
 }
 
 void SUGER::LoadTexture(const std::string& filePath) {

@@ -16,7 +16,6 @@ class DXGIManager;
 class DirectXCommand;
 class WindowManager;
 class RTVManager;
-class DSVManager;
 
 class SwapChain {
 public:
