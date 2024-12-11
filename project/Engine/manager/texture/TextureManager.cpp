@@ -1,14 +1,14 @@
 #include "TextureManager.h"
 
 #include "debugTools/logger/Logger.h"
-#include "manager/directX/DirectXManager.h"
 #include "directX/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
 #include "manager/srvUav/SRVUAVManager.h"
 
-void TextureManager::Initialize(DirectXManager* directXManager, SRVUAVManager* srvManager) {
+void TextureManager::Initialize(DXGIManager* dxgi, DirectXCommand* command, SRVUAVManager* srvManager) {
 	// 必要なインスタンスのポインタを取得
-	SetDirectXCommon(directXManager);
+	SetDXGI(dxgi);
+	SetCommand(command);
 	SetSrvManager(srvManager);
 	// エンジンで使うテクスチャを読み込む
 	// 既定のディレクトリ
@@ -56,11 +56,19 @@ const DirectX::TexMetadata& TextureManager::GetMetaData(const std::string& fileP
 	return texture.metaData;
 }
 
-void TextureManager::SetDirectXCommon(DirectXManager* directX) {
-	directXManager_ = directX;
+
+void TextureManager::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
+	dxgi_ = dxgi;
+}
+
+void TextureManager::SetCommand(DirectXCommand* command) {
+	assert(command);
+	command_ = command;
 }
 
 void TextureManager::SetSrvManager(SRVUAVManager* srvManager) {
+	assert(srvManager);
 	srvUavManager_ = srvManager;
 }
 

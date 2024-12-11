@@ -3,7 +3,8 @@
 #include "structs/TextureStruct.h"
 
 // 前方宣言
-class DirectXManager;
+class DXGIManager;
+class DirectXCommand;
 class SRVUAVManager;
 
 class TextureManager {
@@ -12,7 +13,7 @@ public: // 公開メンバ関数
 	~TextureManager() = default;
 
 	// 初期化
-	void Initialize(DirectXManager* directXManager, SRVUAVManager* srvManager);
+	void Initialize(DXGIManager* dxgi, DirectXCommand* command, SRVUAVManager* srvManager);
 
 	// テクスチャのロード
 	void Load(const std::string& filePath);
@@ -25,8 +26,10 @@ public: // 公開メンバ関数
 
 
 private: // 非公開メンバ関数
-	// DirectXCommon
-	void SetDirectXCommon(DirectXManager* directX);
+	// DXGIのインスタンスをセット
+	void SetDXGI(DXGIManager* dxgi);
+	// Commandのインスタンスをセット
+	void SetCommand(DirectXCommand* command);
 	// SrvManager
 	void SetSrvManager(SRVUAVManager* srvManager);
 
@@ -42,8 +45,10 @@ private: // メンバ変数
 	// テクスチャコンテナ
 	std::unordered_map<std::string, Texture> textures_;
 private: // インスタンス受け取り変数
-	// DirectXCommon
-	DirectXManager* directXManager_ = nullptr;
+	// DXGI
+	DXGIManager* dxgi_ = nullptr;
+	// DirectXCommand
+	DirectXCommand* command_ = nullptr;
 	// SrvManager
 	SRVUAVManager* srvUavManager_ = nullptr;
 };

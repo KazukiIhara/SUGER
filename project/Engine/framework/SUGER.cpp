@@ -103,66 +103,55 @@ void SUGER::Initialize() {
 	scissorRect_->Initialize(command_.get());
 #pragma endregion
 
+#pragma region Manager
 	// ImGuiManagerの初期化
 	imguiManager_ = std::make_unique<ImGuiManager>();
 	imguiManager_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), srvUavManager_.get());
-
 	// TextureManagerの初期化
 	textureManager_ = std::make_unique<TextureManager>();
 	textureManager_->Initialize(directXManager_.get(), srvUavManager_.get());
-
 	// GraphicsPipelineManagerの初期化
 	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
 	graphicsPipelineManager_->Initialize(directXManager_.get());
-
 	// ComputePipelineManagerの初期化
 	computePipelineManager_ = std::make_unique<ComputePipelineManager>();
 	computePipelineManager_->Initialize(directXManager_.get());
-
 	// ModelManagerの初期化
 	modelManager_ = std::make_unique<ModelManager>();
 	modelManager_->Initialize();
-
 	// object2dManagerの初期化
 	object2dManager_ = std::make_unique<Object2DManager>();
 	object2dManager_->Initialize();
-
 	// emptyManagerの初期化
 	emptyManager_ = std::make_unique<EmptyManager>();
 	emptyManager_->Initialize();
-
 	// entityManagerの初期化
 	entityManager_ = std::make_unique<EntityManager>();
 	entityManager_->Initialize(modelManager_.get());
-
 	// emitterManagerの初期化
 	emitterManager_ = std::make_unique<EmitterManager>();
 	emitterManager_->Initialize();
-
 	// ParticleManagerの初期化
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
-
 	// LineManagerの初期化
 	lineManager_ = std::make_unique<LineGroupManager>();
 	lineManager_->Initialize();
-
 	// soundManagerの初期化
 	soundManager_ = std::make_unique<SoundManager>();
 	soundManager_->Initialize();
-
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
 	collisionManager_->Initialize(lineManager_.get());
-
 	// JsonLevelDataManagerの初期化
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
 	jsonLevelDataManager_->Initialize();
-
 	// grobalDataManagerの初期化
 	grobalDataManager_ = std::make_unique<GrobalDataManager>();
 	grobalDataManager_->Initialize(directXManager_.get());
+#pragma endregion
 
+#pragma region System
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
 	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
@@ -178,6 +167,8 @@ void SUGER::Initialize() {
 	// LineSystemの初期化
 	lineSystem_ = std::make_unique<LineSystem>();
 	lineSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+#pragma endregion
+
 }
 
 void SUGER::Finalize() {
@@ -683,16 +674,16 @@ std::string SUGER::CreateParticle(const std::string& name, const ParticleType& p
 	const std::string& textureDirectoryPath = "resources/images/";
 	// パーティクルタイプに応じてパーティクルを作成
 	switch (particleType) {
-	case kPlane:
-		// 板ポリパーティクルを作成
-		return particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
-		break;
-	case kModel:
-		// モデルパーティクルを作成
-		return particleManager_->CreateModelParticle(name, filePath);
-		break;
-	default:
-		return "";
+		case kPlane:
+			// 板ポリパーティクルを作成
+			return particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
+			break;
+		case kModel:
+			// モデルパーティクルを作成
+			return particleManager_->CreateModelParticle(name, filePath);
+			break;
+		default:
+			return "";
 	}
 }
 
