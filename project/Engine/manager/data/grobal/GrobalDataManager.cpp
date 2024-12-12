@@ -2,11 +2,11 @@
 
 #include "manager/imgui/ImGuiManager.h"
 
-#include "manager/directX/DirectXManager.h"
+#include "FixFPS/FixFPS.h"
 
-void GrobalDataManager::Initialize(DirectXManager* directXManager) {
-	// DirectXManagerのセット
-	SetDirectXManager(directXManager);
+void GrobalDataManager::Initialize(FixFPS* fixFPS) {
+	// FixFPSのセット
+	fixFPS_ = fixFPS;
 	// 配列をクリア
 	datas_.clear();
 	// ヘッダ内で宣言しているディレクトリ内のjsonFileを読み込み
@@ -158,7 +158,7 @@ void GrobalDataManager::SaveFile(const std::string& groupName) {
 	ofs.close();
 
 	// フレーム制限処理
-	directX_->InitializeFixFPS();
+	fixFPS_->Initialize();
 }
 
 void GrobalDataManager::LoadFile(const std::string& groupName) {
@@ -403,6 +403,8 @@ void GrobalDataManager::AddItem(const std::string& groupName, const std::string&
 	}
 }
 
-void GrobalDataManager::SetDirectXManager(DirectXManager* directXmanager) {
-	directX_ = directXmanager;
+void GrobalDataManager::SetFixFPS(FixFPS* fixFPS) {
+	assert(fixFPS);
+	fixFPS_ = fixFPS;
 }
+

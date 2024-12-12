@@ -8,6 +8,7 @@
 
 #include "manager/window/WindowManager.h"
 #include "input/direct/DirectInput.h"
+#include "FixFPS/FixFPS.h"
 
 #include "directX/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
@@ -409,6 +410,7 @@ private: // クラスのポインタ
 #endif // _DEBUG
 	static std::unique_ptr<WindowManager> windowManager_;
 	static std::unique_ptr<DirectInput> directInput_;
+	static std::unique_ptr<FixFPS> fixFPS_;
 
 	static std::unique_ptr<DXGIManager> dxgiManager_;
 	static std::unique_ptr<DirectXCommand> command_;

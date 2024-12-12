@@ -3,9 +3,9 @@
 #include <cassert>
 
 #include "debugTools/logger/Logger.h"
-#include "manager/directX/DirectXManager.h"
+#include "directX/dxgi/DXGIManager.h"
 
-void Object3DGraphicsPipeline::Initialize(DirectXManager* directXManager) {
+void Object3DGraphicsPipeline::Initialize(DXGIManager*dxgi) {
 	SetDirectXManager(directXManager);
 	InitializeDxCompiler();
 	CreateRootSignature();
@@ -335,4 +335,8 @@ D3D12_RASTERIZER_DESC Object3DGraphicsPipeline::RasterizerStateSetting() {
 	rasterizerDesc_.FillMode = D3D12_FILL_MODE_SOLID;
 
 	return rasterizerDesc_;
+}
+
+void Object3DGraphicsPipeline::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
 }

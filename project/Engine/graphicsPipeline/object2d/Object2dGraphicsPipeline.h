@@ -11,7 +11,7 @@
 #include "directX/includes/ComPtr.h"
 #include "enum/GraphicsPipelineEnum.h"
 
-class DirectXManager;
+class DXGIManager;
 
 class Object2DGraphicsPipeline {
 public:
@@ -20,7 +20,7 @@ public:
 	~Object2DGraphicsPipeline() = default;
 
 	// 初期化処理
-	void Initialize(DirectXManager* directXManager);
+	void Initialize(DXGIManager* dxgi);
 
 	// ルートシグネチャを取得する
 	ID3D12RootSignature* GetRootSignature();
@@ -29,8 +29,7 @@ public:
 	ID3D12PipelineState* GetPipelineState(BlendMode blendMode);
 
 private:
-	// DirectXの共通設定を行う
-	void SetDirectXCommon(DirectXManager* directX);
+	// DXGIのセット
 
 	// ルートシグネチャを作成する
 	void CreateRootSignature();
@@ -68,6 +67,10 @@ private:
 	// RasterizerStateの設定を行う
 	D3D12_RASTERIZER_DESC RasterizerStateSetting();
 
+private:
+	// DXGIのセット
+	void SetDXGI(DXGIManager* dxgi);
+
 private: // 静的メンバ変数
 	// ブレンドモードの数
 	static const uint32_t kBlendModeNum = 6;
@@ -90,6 +93,7 @@ private:
 	IDxcCompiler3* dxcCompiler = nullptr;
 	IDxcIncludeHandler* includeHandler = nullptr;
 
-private: // ポインタでDirectXManagerのインスタンスを保持
-	DirectXManager* directX_ = nullptr;
+private: 
+	// DXGIのインスタンス
+	DXGIManager* dxgi_ = nullptr;
 };

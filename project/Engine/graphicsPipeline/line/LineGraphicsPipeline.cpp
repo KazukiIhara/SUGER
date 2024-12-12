@@ -3,10 +3,10 @@
 #include <cassert>
 
 #include "debugTools/logger/Logger.h"
-#include "manager/directX/DirectXManager.h"
+#include "directX/dxgi/DXGIManager.h"
 
-void LineGraphicsPipeline::Initialize(DirectXManager* directXManager) {
-	SetDirectXManager(directXManager);
+void LineGraphicsPipeline::Initialize(DXGIManager* dxgi) {
+	SetDXGI(dxgi);
 	InitializeDxCompiler();
 	CreateRootSignature();
 	CompileShaders();
@@ -19,11 +19,6 @@ ID3D12RootSignature* LineGraphicsPipeline::GetRootSignature() {
 
 ID3D12PipelineState* LineGraphicsPipeline::GetPipelineState(BlendMode blendMode) {
 	return graphicsPipelineState_[blendMode].Get();
-}
-
-void LineGraphicsPipeline::SetDirectXManager(DirectXManager* directX) {
-	assert(directX);
-	directX_ = directX;
 }
 
 void LineGraphicsPipeline::CreateRootSignature() {
@@ -74,7 +69,7 @@ void LineGraphicsPipeline::CreateRootSignature() {
 
 	// バイナリをもとに生成
 	rootSignature_ = nullptr;
-	hr = directX_->GetDXGI()->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
+	hr = dxgi_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 }
@@ -128,7 +123,7 @@ void LineGraphicsPipeline::CreateGraphicsPipelineObject() {
 	for (uint32_t i = 0; i < kBlendModeNum; i++) {
 		graphicsPipelineStateDesc.BlendState = BlendStateSetting(i); // ブレンド設定
 		graphicsPipelineState_[i] = nullptr;
-		hr = directX_->GetDXGI()->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+		hr = dxgi_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 			IID_PPV_ARGS(&graphicsPipelineState_[i]));
 		assert(SUCCEEDED(hr));
 	}
@@ -299,4 +294,9 @@ D3D12_RASTERIZER_DESC LineGraphicsPipeline::RasterizerStateSetting() {
 	rasterizerDesc_.DepthClipEnable = true;
 
 	return rasterizerDesc_;
+}
+
+void LineGraphicsPipeline::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
+	dxgi_ = dxgi;
 }

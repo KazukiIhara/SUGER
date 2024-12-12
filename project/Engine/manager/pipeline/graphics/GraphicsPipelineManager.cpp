@@ -9,38 +9,38 @@
 
 // カスタムヘッダー
 #include "debugTools/logger/Logger.h"  // ログ出力に使用
-#include "manager/directX/DirectXManager.h"  // DirectXManager依存関係
+#include "directX/dxgi/DXGIManager.h"
 
 // GraphicsPipelineManagerの初期化処理
 // DirectXManagerを使用して2D用のグラフィックスパイプラインを設定
-void GraphicsPipelineManager::Initialize(DirectXManager* directXManager) {
+void GraphicsPipelineManager::Initialize(DXGIManager* dxgi) {
 	// 2Dオブジェクトのグラフィックスパイプラインを生成、初期化
 	object2dGraphicsPipeline_ = std::make_unique<Object2DGraphicsPipeline>();
-	object2dGraphicsPipeline_->Initialize(directXManager);
+	object2dGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kObject2d);
 	SetGraphicsPipelineState(kObject2d);
 
 	// 3Dオブジェクトのグラフィックスパイプラインを生成、初期化
 	object3dGraphicsPipeline_ = std::make_unique<Object3DGraphicsPipeline>();
-	object3dGraphicsPipeline_->Initialize(directXManager);
+	object3dGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kObject3d);
 	SetGraphicsPipelineState(kObject3d);
 
 	// Skinning3Dオブジェクトのグラフィックスパイプラインを生成、初期化
 	object3dSkinningGraphicsPipeline_ = std::make_unique<Object3DSkinningGraphicsPipeline>();
-	object3dSkinningGraphicsPipeline_->Initialize(directXManager);
+	object3dSkinningGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kObject3dSkinning);
 	SetGraphicsPipelineState(kObject3dSkinning);
 
 	// Particleグラフィックスパイプラインを生成、初期化
 	particleGraphicsPipeline_ = std::make_unique<ParticleGraphicsPipeline>();
-	particleGraphicsPipeline_->Initialize(directXManager);
+	particleGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kParticle);
 	SetGraphicsPipelineState(kParticle);
 
 	// Lineグラフィックスパイプラインを生成、初期化
 	lineGraphicsPipeline_ = std::make_unique<LineGraphicsPipeline>();
-	lineGraphicsPipeline_->Initialize(directXManager);
+	lineGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kLine);
 	SetGraphicsPipelineState(kLine);
 

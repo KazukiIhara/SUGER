@@ -21,6 +21,13 @@ public:
 
 	// 初期化
 	void Initialize(DXGIManager* dxgi);
+
+	// コマンドの実行
+	void KickCommand();
+
+	// コマンドのリセット
+	void ResetCommand();
+
 	// キューの取得
 	ID3D12CommandQueue* GetQueue();
 	// アロケータの取得

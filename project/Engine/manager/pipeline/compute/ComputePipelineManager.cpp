@@ -1,9 +1,10 @@
 #include "ComputePipelineManager.h"
+#include "directX/dxgi/DXGIManager.h"
 
-void ComputePipelineManager::Initialize(DirectXManager* directXManager) {
+void ComputePipelineManager::Initialize(DXGIManager* dxgi) {
 	// Skinning用のパイプラインを作成、初期化
 	skinningComputePipeline_ = std::make_unique<SkinningComputePipeline>();
-	skinningComputePipeline_->Initialize(directXManager);
+	skinningComputePipeline_->Initialize(dxgi);
 	SetRootSignature(kSkinning);
 	SetGraphicsPipelineState(kSkinning);
 }

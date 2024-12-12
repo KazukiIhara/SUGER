@@ -9,6 +9,7 @@ std::unique_ptr<D3DResourceLeakChecker> SUGER::leakCheck_ = nullptr;
 // Staticメンバ変数の初期化
 std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
 std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
+std::unique_ptr<FixFPS> SUGER::fixFPS_ = nullptr;
 
 std::unique_ptr<DXGIManager> SUGER::dxgiManager_ = nullptr;
 std::unique_ptr<DirectXCommand> SUGER::command_ = nullptr;
@@ -56,6 +57,9 @@ void SUGER::Initialize() {
 	// DirectInputの初期化
 	directInput_ = std::make_unique<DirectInput>();
 	directInput_->Initialize(windowManager_.get());
+	// FixFPS
+	fixFPS_ = std::make_unique<FixFPS>();
+	fixFPS_->Initialize();
 #pragma endregion
 
 #pragma region DirectXBaseSystems
@@ -109,13 +113,13 @@ void SUGER::Initialize() {
 	imguiManager_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), srvUavManager_.get());
 	// TextureManagerの初期化
 	textureManager_ = std::make_unique<TextureManager>();
-	textureManager_->Initialize(directXManager_.get(), srvUavManager_.get());
+	textureManager_->Initialize(dxgiManager_.get(), command_.get(), srvUavManager_.get());
 	// GraphicsPipelineManagerの初期化
 	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
-	graphicsPipelineManager_->Initialize(directXManager_.get());
+	graphicsPipelineManager_->Initialize(dxgiManager_.get());
 	// ComputePipelineManagerの初期化
 	computePipelineManager_ = std::make_unique<ComputePipelineManager>();
-	computePipelineManager_->Initialize(directXManager_.get());
+	computePipelineManager_->Initialize(dxgiManager_.get());
 	// ModelManagerの初期化
 	modelManager_ = std::make_unique<ModelManager>();
 	modelManager_->Initialize();
@@ -148,25 +152,25 @@ void SUGER::Initialize() {
 	jsonLevelDataManager_->Initialize();
 	// grobalDataManagerの初期化
 	grobalDataManager_ = std::make_unique<GrobalDataManager>();
-	grobalDataManager_->Initialize(directXManager_.get());
+	grobalDataManager_->Initialize(fixFPS_.get());
 #pragma endregion
 
 #pragma region System
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
-	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+	object2dSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
 
 	// Object3DSystemの初期化
 	object3dSystem_ = std::make_unique<Object3DSystem>();
-	object3dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+	object3dSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
 
 	// ParticleSystemの初期化
 	particleSystem_ = std::make_unique<ParticleSystem>();
-	particleSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+	particleSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
 
 	// LineSystemの初期化
 	lineSystem_ = std::make_unique<LineSystem>();
-	lineSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+	lineSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
 #pragma endregion
 
 }
@@ -305,7 +309,7 @@ void SUGER::Finalize() {
 
 void SUGER::Update() {
 
-	// ウィンドウマネージャの更新処理(本当はよくない気がする)
+	// ウィンドウマネージャの更新処理
 	windowManager_->Update();
 
 	// ウィンドウにメッセージが来ていたら最優先で処理
@@ -315,6 +319,9 @@ void SUGER::Update() {
 
 	// 入力の更新
 	directInput_->Update();
+
+	// FixFPSの更新
+	fixFPS_->Update();
 
 	// F11キーでフルスクリーン切り替え処理
 	if (directInput_->TriggerKey(DIK_F11)) {
@@ -348,9 +355,6 @@ void SUGER::Draw() {
 	DrawEntiteis();
 	// Skining付きEntity描画処理
 	DrawSkiningEntities();
-
-	// Skinningあり3Dオブジェクト描画前処理
-	PreDrawObject3DSkinning();
 
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
@@ -674,16 +678,16 @@ std::string SUGER::CreateParticle(const std::string& name, const ParticleType& p
 	const std::string& textureDirectoryPath = "resources/images/";
 	// パーティクルタイプに応じてパーティクルを作成
 	switch (particleType) {
-		case kPlane:
-			// 板ポリパーティクルを作成
-			return particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
-			break;
-		case kModel:
-			// モデルパーティクルを作成
-			return particleManager_->CreateModelParticle(name, filePath);
-			break;
-		default:
-			return "";
+	case kPlane:
+		// 板ポリパーティクルを作成
+		return particleManager_->CreatePlaneParticle(name, textureDirectoryPath + filePath);
+		break;
+	case kModel:
+		// モデルパーティクルを作成
+		return particleManager_->CreateModelParticle(name, filePath);
+		break;
+	default:
+		return "";
 	}
 }
 
