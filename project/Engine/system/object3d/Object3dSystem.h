@@ -21,9 +21,7 @@ private:
 	// コマンドのインスタンスをセット
 	void SetCommand(DirectXCommand* command);
 	// PipelineManager
-	void SetPipelineManager(GraphicsPipelineManager* pipelineManager) {
-		pipelineManager_ = pipelineManager;
-	}
+	void SetPipelineManager(GraphicsPipelineManager* pipelineManager);
 private: // インスタンスを受け取るポインタ
 	// コマンドのインスタンスを受け取る箱
 	DirectXCommand* command_ = nullptr;

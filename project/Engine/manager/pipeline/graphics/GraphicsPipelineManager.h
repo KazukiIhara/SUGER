@@ -18,7 +18,7 @@
 #include "graphicsPipeline/particle/ParticleGraphicsPipeline.h"
 #include "graphicsPipeline/line/LineGraphicsPipeline.h"
 
-class DirectXManager;
+class DXGIManager;
 
 class GraphicsPipelineManager {
 public: // 公開メンバ変数

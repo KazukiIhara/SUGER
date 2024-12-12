@@ -16,7 +16,10 @@ public:
 	// レンダーターゲットのセット
 	void SetRenderTarget();
 	// レンダーターゲットのクリア
-	void ClearRenderTarget(float clearColor[]);
+	void ClearRenderTarget();
+
+	// クリアカラーのセット
+	void SetClearColor(const Vector4& clearColor);
 private:
 	// コマンドのインスタンスをセット
 	void SetCommand(DirectXCommand* command);
@@ -32,5 +35,6 @@ private:
 	// デプスステンシルのインスタンスを受け取る箱
 	DepthStencil* depthStencil_ = nullptr;
 	// 画面クリアカラー
-	Vector4 clearColor = { 0.25f,0.25f,0.25f,1.0f };
+	Vector4 clearColor_ = { 0.05f,0.05f,0.05f,1.0f };
+
 };

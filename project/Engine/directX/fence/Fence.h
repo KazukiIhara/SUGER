@@ -10,6 +10,7 @@
 #include "directX/includes/ComPtr.h"
 
 class DXGIManager;
+class DirectXCommand;
 
 class Fence {
 public:
@@ -17,7 +18,7 @@ public:
 	~Fence() = default;
 
 	// 初期化
-	void Initialize(DXGIManager* dxgi);
+	void Initialize(DXGIManager* dxgi, DirectXCommand* command);
 	// GPUを待機
 	void WaitGPU();
 private:
@@ -26,6 +27,8 @@ private:
 private:
 	// DXGIのインスタンスをセット
 	void SetDXGI(DXGIManager* dxgi);
+	// コマンドのインスタンスをセット
+	void SetCommand(DirectXCommand* command);
 private:
 	// フェンス
 	ComPtr<ID3D12Fence> fence_ = nullptr;
@@ -36,4 +39,6 @@ private:
 private:
 	// DXGIのインスタンスを受け取る箱
 	DXGIManager* dxgi_ = nullptr;
+	// Commandのインスタンスを受け取る箱
+	DirectXCommand* command_ = nullptr;
 };

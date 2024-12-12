@@ -107,7 +107,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadJsonLevelData("baseScene");
 
 	// ロードによる待機時間を考慮して、FIXFPSの処理をリセットする
-	SUGER::FiXFPSInitialize();
+	SUGER::InitializeFixFPS();
 }
 
 void LoadScene::LoadSceneStateLoadingUpdate() {

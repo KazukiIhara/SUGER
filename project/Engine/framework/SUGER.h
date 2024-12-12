@@ -126,22 +126,31 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region FixFPS
+	// FixFPSの初期化
+	static void InitializeFixFPS();
+#pragma endregion
+
 #pragma region DXGI
 	// デバイス取得
 	static ID3D12Device* GetDirectXDevice();
+	// バッファリソースを作成
+	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes, bool isUav = false);
 
 #pragma endregion
 
 #pragma region Command
-	// コマンド後処理
-	static void PostCommand();
-
+	// コマンドリストを取得
+	static ID3D12GraphicsCommandList* GetDirectXCommandList();
+	// コマンド実行
+	static void KickCommand();
+	// コマンドをリセット
+	static void ResetCommand();
 #pragma endregion
 
 #pragma region Fence
-
-
-
+	// GPUをまつ
+	static void WaitGPU();
 
 #pragma endregion
 

@@ -5,6 +5,7 @@
 // 前方宣言
 class DXGIManager;
 class DirectXCommand;
+class Fence;
 class SRVUAVManager;
 
 class TextureManager {
@@ -13,7 +14,7 @@ public: // 公開メンバ関数
 	~TextureManager() = default;
 
 	// 初期化
-	void Initialize(DXGIManager* dxgi, DirectXCommand* command, SRVUAVManager* srvManager);
+	void Initialize(DXGIManager* dxgi, DirectXCommand* command, Fence* fence, SRVUAVManager* srvManager);
 
 	// テクスチャのロード
 	void Load(const std::string& filePath);
@@ -30,6 +31,8 @@ private: // 非公開メンバ関数
 	void SetDXGI(DXGIManager* dxgi);
 	// Commandのインスタンスをセット
 	void SetCommand(DirectXCommand* command);
+	// Fenceのインスタンスをセット
+	void SetFence(Fence* fence);
 	// SrvManager
 	void SetSrvManager(SRVUAVManager* srvManager);
 
@@ -49,6 +52,8 @@ private: // インスタンス受け取り変数
 	DXGIManager* dxgi_ = nullptr;
 	// DirectXCommand
 	DirectXCommand* command_ = nullptr;
+	// Fence
+	Fence* fence_ = nullptr;
 	// SrvManager
 	SRVUAVManager* srvUavManager_ = nullptr;
 };

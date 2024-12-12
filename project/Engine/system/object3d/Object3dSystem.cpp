@@ -6,6 +6,7 @@
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 
 void Object3DSystem::Initialize(DirectXCommand* command, GraphicsPipelineManager* pipelineManager) {
+	SetCommand(command);
 	SetPipelineManager(pipelineManager);
 }
 
@@ -26,4 +27,9 @@ void Object3DSystem::PreDrawSkinning() {
 void Object3DSystem::SetCommand(DirectXCommand* command) {
 	assert(command);
 	command_ = command;
+}
+
+void Object3DSystem::SetPipelineManager(GraphicsPipelineManager* pipelineManager) {
+	assert(pipelineManager);
+	pipelineManager_ = pipelineManager;
 }

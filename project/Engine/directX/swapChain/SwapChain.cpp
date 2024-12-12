@@ -14,6 +14,9 @@ void SwapChain::Initialize(WindowManager* windowmanager, DXGIManager* dxgi, Dire
 	SetDXGI(dxgi);
 	// Commandのセット
 	SetCommand(command);
+	// RTVManagerのインスタンスをセット
+	SetRTVManager(rtvManager);
+
 	// スワップチェーン作成
 	CreateSwapChain();
 	// スワップチェーンのリソースを作成

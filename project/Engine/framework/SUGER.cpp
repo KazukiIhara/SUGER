@@ -71,7 +71,7 @@ void SUGER::Initialize() {
 	command_->Initialize(dxgiManager_.get());
 	// Fenceの初期化
 	fence_ = std::make_unique<Fence>();
-	fence_->Initialize(dxgiManager_.get());
+	fence_->Initialize(dxgiManager_.get(), command_.get());
 #pragma endregion
 
 #pragma region ViewManagers
@@ -92,7 +92,7 @@ void SUGER::Initialize() {
 	swapChain_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), rtvManager_.get());
 	// DepthStencilの初期化
 	depthStencil_ = std::make_unique<DepthStencil>();
-	depthStencil_->Initialize(command_.get(), dsvmanager_.get());
+	depthStencil_->Initialize(dxgiManager_.get(), command_.get(), dsvmanager_.get());
 	// Barrierの初期化
 	barrier_ = std::make_unique<Barrier>();
 	barrier_->Initialize(command_.get(), swapChain_.get());
@@ -103,7 +103,7 @@ void SUGER::Initialize() {
 	viewPort_ = std::make_unique<ViewPort>();
 	viewPort_->Initialize(command_.get());
 	// ScissorRectの初期化
-	scissorRect_ = std::unique_ptr<ScissorRect>();
+	scissorRect_ = std::make_unique<ScissorRect>();
 	scissorRect_->Initialize(command_.get());
 #pragma endregion
 
@@ -113,7 +113,7 @@ void SUGER::Initialize() {
 	imguiManager_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), srvUavManager_.get());
 	// TextureManagerの初期化
 	textureManager_ = std::make_unique<TextureManager>();
-	textureManager_->Initialize(dxgiManager_.get(), command_.get(), srvUavManager_.get());
+	textureManager_->Initialize(dxgiManager_.get(), command_.get(), fence_.get(), srvUavManager_.get());
 	// GraphicsPipelineManagerの初期化
 	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
 	graphicsPipelineManager_->Initialize(dxgiManager_.get());
@@ -398,23 +398,36 @@ void SUGER::PreDraw() {
 	// ImGui内部コマンド生成
 	imguiManager_->EndFrame();
 	// DirectX描画前処理
-
-
+	// スワップチェーン描画前のバリアを張る
+	barrier_->PreDrawBarrierSwapChain();
+	// レンダーターゲットを設定
+	targetRenderPass_->SetRenderTarget();
+	// 深度をクリア
+	depthStencil_->ClearDepthView();
+	// 画面をクリア
+	targetRenderPass_->ClearRenderTarget();
+	// ビューポートの設定
+	viewPort_->SettingViewport();
+	// シザー矩形の設定
+	scissorRect_->SettingScissorRect();
 	// SrvManager描画前処理
 	srvUavManager_->PreCommand();
-}
-
-void SUGER::PostCommand() {
-	command_->KickCommand();
-	fence_->WaitGPU();
-	command_->ResetCommand();
 }
 
 void SUGER::PostDraw() {
 	// ImGui描画処理
 	imguiManager_->Draw();
 	// DirectX描画後処理
-	directXManager_->PostDraw();
+	// 描画後のバリアを張る
+	barrier_->PostDrawBarrierSwapChain();
+	// コマンドの実行
+	command_->KickCommand();
+	// GPUとOSに画面の交換を行うように通知する
+	swapChain_->Present();
+	// GPUを待機
+	fence_->WaitGPU();
+	// コマンドをリセット
+	command_->ResetCommand();
 }
 
 HWND SUGER::GetWindowHandle() {
@@ -497,8 +510,32 @@ bool SUGER::IsPadLeft(int controllerID) {
 	return directInput_->IsPadLeft(controllerID);
 }
 
+void SUGER::InitializeFixFPS() {
+	fixFPS_->Initialize();
+}
+
 ID3D12Device* SUGER::GetDirectXDevice() {
 	return dxgiManager_->GetDevice();
+}
+
+ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes, bool isuav) {
+	return dxgiManager_->CreateBufferResource(sizeInBytes, isuav);
+}
+
+ID3D12GraphicsCommandList* SUGER::GetDirectXCommandList() {
+	return command_->GetList();
+}
+
+void SUGER::KickCommand() {
+	command_->KickCommand();
+}
+
+void SUGER::ResetCommand() {
+	command_->ResetCommand();
+}
+
+void SUGER::WaitGPU() {
+	fence_->WaitGPU();
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetRTVDescriptorHandleCPU(uint32_t index) {

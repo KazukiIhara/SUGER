@@ -77,7 +77,7 @@ bool SRVUAVManager::IsLowerViewMax() {
 }
 
 void SRVUAVManager::PreCommand() {
-	// 描画用のDescriptorHeapの設定
+	// DescriptorHeapを設定
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { descriptorHeap_ };
 	command_->GetList()->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
 }

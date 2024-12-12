@@ -16,7 +16,7 @@ public:
 	~DepthStencil() = default;
 
 	// 初期化
-	void Initialize(DirectXCommand* command, DSVManager* dsvManager);
+	void Initialize(DXGIManager* dxgi, DirectXCommand* command, DSVManager* dsvManager);
 	// デプスをクリア
 	void ClearDepthView();
 	// デプスステンシルリソースのCPUハンドルの取得

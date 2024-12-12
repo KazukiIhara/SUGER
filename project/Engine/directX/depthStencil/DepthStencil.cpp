@@ -7,9 +7,15 @@
 #include "directX/command/DirectXCommand.h"
 #include "manager/dsv/DSVManager.h"
 
-void DepthStencil::Initialize(DirectXCommand* command, DSVManager* dsvManager) {
+void DepthStencil::Initialize(DXGIManager* dxgi, DirectXCommand* command, DSVManager* dsvManager) {
+	// DXGIのセット
+	SetDXGI(dxgi);
+	// コマンドをセット
 	SetCommand(command);
+	// DSVマネージャをセット
 	SetDSVManager(dsvManager);
+	// DepthStencilViewを作成
+	CreateDepthStencilView();
 }
 
 void DepthStencil::ClearDepthView() {
