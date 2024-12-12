@@ -18,6 +18,8 @@ public:
 
 	// 初期化
 	void Initialize(DXGIManager* dxgi);
+	// GPUを待機
+	void WaitGPU();
 private:
 	// フェンス作成
 	void CreateFence();

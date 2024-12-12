@@ -405,9 +405,9 @@ void SUGER::PreDraw() {
 }
 
 void SUGER::PostCommand() {
-	directXManager_->KickCommand();
-	directXManager_->WaitGPU();
-	directXManager_->ResetCommandList();
+	command_->KickCommand();
+	fence_->WaitGPU();
+	command_->ResetCommand();
 }
 
 void SUGER::PostDraw() {

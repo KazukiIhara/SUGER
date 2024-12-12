@@ -133,8 +133,8 @@ public: // クラスメソッド
 #pragma endregion
 
 #pragma region Command
-
-
+	// コマンド後処理
+	static void PostCommand();
 
 #pragma endregion
 

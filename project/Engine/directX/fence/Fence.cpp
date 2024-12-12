@@ -12,6 +12,10 @@ void Fence::Initialize(DXGIManager* dxgi) {
 	CreateFence();
 }
 
+void Fence::WaitGPU() {
+
+}
+
 void Fence::CreateFence() {
 	// 初期値0でフェンスを作る
 	hr_ = dxgi_->GetDevice()->CreateFence(fenceValue_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
