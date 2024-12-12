@@ -8,7 +8,7 @@ void WindowManager::Initialize() {
 	// システムタイマー分解能をあげる
 	timeBeginPeriod(1);
 	// ゲームウィンドウの作成
-	CreateGameWindow(L"LE2A_01_イハラ_カズキ");
+	CreateGameWindow();
 }
 
 void WindowManager::Update() {
