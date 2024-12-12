@@ -3,10 +3,10 @@
 #include <cassert>
 
 #include "debugTools/logger/Logger.h"
-#include "manager/directX/DirectXManager.h"
+#include "directX/dxgi/DXGIManager.h"
 
-void Object3DSkinningGraphicsPipeline::Initialize(DirectXManager* directXManager) {
-	SetDirectXManager(directXManager);
+void Object3DSkinningGraphicsPipeline::Initialize(DXGIManager* dxgi) {
+	SetDXGI(dxgi);
 	InitializeDxCompiler();
 	CreateRootSignature();
 	CompileShaders();
@@ -21,9 +21,6 @@ ID3D12PipelineState* Object3DSkinningGraphicsPipeline::GetPipelineState(BlendMod
 	return graphicsPipelineState_[blendMode].Get();
 }
 
-void Object3DSkinningGraphicsPipeline::SetDirectXManager(DirectXManager* directX) {
-	directX_ = directX;
-}
 
 void Object3DSkinningGraphicsPipeline::CreateRootSignature() {
 	HRESULT hr = S_FALSE;
@@ -100,7 +97,7 @@ void Object3DSkinningGraphicsPipeline::CreateRootSignature() {
 	}
 	// バイナリをもとに生成
 	rootSignature_ = nullptr;
-	hr = directX_->GetDXGI()->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
+	hr = dxgi_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 }
@@ -149,7 +146,7 @@ void Object3DSkinningGraphicsPipeline::CreatePipelineStateObject() {
 	for (uint32_t i = 0; i < kBlendModeNum; i++) {
 		graphicsPipelineStateDesc.BlendState = BlendStateSetting(i);
 		graphicsPipelineState_[i] = nullptr;
-		hr = directX_->GetDXGI()->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+		hr = dxgi_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 			IID_PPV_ARGS(&graphicsPipelineState_[i]));
 		assert(SUCCEEDED(hr));
 	}
@@ -345,4 +342,9 @@ D3D12_RASTERIZER_DESC Object3DSkinningGraphicsPipeline::RasterizerStateSetting()
 	rasterizerDesc_.FillMode = D3D12_FILL_MODE_SOLID;
 
 	return rasterizerDesc_;
+}
+
+void Object3DSkinningGraphicsPipeline::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
+	dxgi_ = dxgi;
 }

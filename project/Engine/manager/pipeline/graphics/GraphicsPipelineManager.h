@@ -18,7 +18,7 @@
 #include "graphicsPipeline/particle/ParticleGraphicsPipeline.h"
 #include "graphicsPipeline/line/LineGraphicsPipeline.h"
 
-class DirectXManager;
+class DXGIManager;
 
 class GraphicsPipelineManager {
 public: // 公開メンバ変数
@@ -26,7 +26,7 @@ public: // 公開メンバ変数
 	~GraphicsPipelineManager() = default;
 
 	// 初期化
-	void Initialize(DirectXManager* directXManager);
+	void Initialize(DXGIManager* dxgi);
 
 	// ルートシグネイチャのゲッター
 	ID3D12RootSignature* GetRootSignature(GraphicsPipelineStateType pipelineState);

@@ -125,15 +125,23 @@ void Model::Skinning() {
 	commandList->SetComputeRootSignature(SUGER::GetRootSignature(ComputePipelineStateType::kSkinning));
 	commandList->SetPipelineState(SUGER::GetPipelineState(ComputePipelineStateType::kSkinning));
 
+	// SRVUAVのディスクリプタヒープを設定
 	SUGER::PreCommand();
+	// コマンドを積む
 	SUGER::SetComputeRootDescriptorTable(0, skinCluster_.paletteSrvIndex);
 	SUGER::SetComputeRootDescriptorTable(1, vertexSrvIndex_[0]);
 	SUGER::SetComputeRootDescriptorTable(2, skinCluster_.influenceSrvIndex);
-
 	SUGER::SetComputeRootDescriptorTable(3, vertexUavIndex_[0]);
 	commandList->SetComputeRootConstantBufferView(4, skinningInformationResource_->GetGPUVirtualAddress());
+	// コマンド発行
 	commandList->Dispatch(UINT(modelData_.meshes[0].vertices.size() + 1023) / 1024, 1, 1);
-	SUGER::PostCommand();
+
+	// コマンド実行
+	SUGER::KickCommand();
+	// GPUを待機
+	SUGER::WaitGPU();
+	// コマンドをリセット
+	SUGER::ResetCommand();
 }
 
 void Model::DrawPlaneParticle(const uint32_t& instanceCount, const std::string& textureFileName) {
@@ -607,7 +615,7 @@ void Model::CreateSkinningVertexResources() {
 	for (size_t i = 0; i < modelData_.meshes.size(); i++) {
 		ComPtr<ID3D12Resource> vertexResource;
 		if (modelData_.meshes[i].material.haveUV_) {
-			vertexResource = SUGER::CreateBufferResourceUAV(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size());
+			vertexResource = SUGER::CreateBufferResource(sizeof(VertexData3D) * modelData_.meshes[i].vertices.size(), true);
 			vertexUavIndex_.push_back(SUGER::ViewAllocate());
 			SUGER::CreateUavStructuredBuffer(vertexUavIndex_[i], vertexResource.Get(), static_cast<uint32_t>(modelData_.meshes[i].vertices.size()), sizeof(VertexData3D));
 		} else {

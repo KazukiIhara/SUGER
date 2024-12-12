@@ -7,10 +7,24 @@
 #include "d3d12.h"
 
 #include "manager/window/WindowManager.h"
-#include "manager/dxgi/DXGIManager.h"
 #include "input/direct/DirectInput.h"
-#include "manager/directX/DirectXManager.h"
-#include "manager/srv/SRVManager.h"
+#include "FixFPS/FixFPS.h"
+
+#include "directX/dxgi/DXGIManager.h"
+#include "directX/command/DirectXCommand.h"
+#include "directX/fence/Fence.h"
+
+#include "manager/rtv/RTVManager.h"
+#include "manager/dsv/DSVManager.h"
+#include "manager/srvUav/SRVUAVManager.h"
+
+#include "directX/swapChain/SwapChain.h"
+#include "directX/depthStencil/DepthStencil.h"
+#include "directX/barrier/Barrier.h"
+#include "directX/targetRenderPass/TargetRenderPass.h"
+#include "directX/viewport/ViewPort.h"
+#include "directX/scissorRect/ScissorRect.h"
+
 #include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
@@ -112,32 +126,52 @@ public: // クラスメソッド
 
 #pragma endregion
 
+#pragma region FixFPS
+	// FixFPSの初期化
+	static void InitializeFixFPS();
+#pragma endregion
+
 #pragma region DXGI
 	// デバイス取得
 	static ID3D12Device* GetDirectXDevice();
+	// バッファリソースを作成
+	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes, bool isUav = false);
 
 #pragma endregion
 
-#pragma region DirectXManager
-	// DirectXManagerの機能
-	// コマンドリスト取得関数
+#pragma region Command
+	// コマンドリストを取得
 	static ID3D12GraphicsCommandList* GetDirectXCommandList();
-	// バッファリソースの作成
-	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
-	// UAV用のバッファリソースの作成
-	static ComPtr<ID3D12Resource> CreateBufferResourceUAV(size_t sizeInbytes);
-	// コマンド実行後処理
-	static void PostCommand();
-	// FIXFPS初期化
-	static void FiXFPSInitialize();
+	// コマンド実行
+	static void KickCommand();
+	// コマンドをリセット
+	static void ResetCommand();
 #pragma endregion
 
-#pragma region ViewManager
+#pragma region Fence
+	// GPUをまつ
+	static void WaitGPU();
+
+#pragma endregion
+
+#pragma region RTVManager
+	// CPUの特定のインデックスハンドルを取得
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetRTVDescriptorHandleCPU(uint32_t index);
+	// GPUの特定のインデックスハンドルを取得
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetRTVDescriptorHandleGPU(uint32_t index);
+	// 割り当て関数
+	static uint32_t RTVAllocate();
+	// RTVの作成
+	static void CreateRTVTexture2d(uint32_t rtvIndex, ID3D12Resource* pResource);
+
+#pragma endregion
+
+#pragma region SRVUAVManager
 	// ViewManagerの機能
 	// CPUの特定のインデックスハンドルを取得
-	static D3D12_CPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleCPU(uint32_t index);
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetSRVUAVDescriptorHandleCPU(uint32_t index);
 	// GPUの特定のインデックスハンドルを取得
-	static D3D12_GPU_DESCRIPTOR_HANDLE GetSRVDescriptorHandleGPU(uint32_t index);
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetSRVUAVDescriptorHandleGPU(uint32_t index);
 	// 計算ディスクリプターテーブルのセット
 	static void SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 	// コマンド前処理
@@ -151,8 +185,17 @@ public: // クラスメソッド
 	// UAV作成
 	static void CreateUavStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 
+#pragma endregion
+
+#pragma region RenderTarget
+
+
+
+#pragma endregion
+
 #pragma region ImGuiManager
 	// ImGuiManagerの機能
+
 #pragma endregion
 
 #pragma region TextureManager
@@ -375,10 +418,24 @@ private: // クラスのポインタ
 	static std::unique_ptr<D3DResourceLeakChecker> leakCheck_;
 #endif // _DEBUG
 	static std::unique_ptr<WindowManager> windowManager_;
-	static std::unique_ptr<DXGIManager> dxgiManager_;
 	static std::unique_ptr<DirectInput> directInput_;
-	static std::unique_ptr<DirectXManager> directXManager_;
-	static std::unique_ptr<ViewManager> viewManager_;
+	static std::unique_ptr<FixFPS> fixFPS_;
+
+	static std::unique_ptr<DXGIManager> dxgiManager_;
+	static std::unique_ptr<DirectXCommand> command_;
+	static std::unique_ptr<Fence> fence_;
+
+	static std::unique_ptr<RTVManager> rtvManager_;
+	static std::unique_ptr<DSVManager> dsvmanager_;
+	static std::unique_ptr<SRVUAVManager> srvUavManager_;
+
+	static std::unique_ptr<SwapChain> swapChain_;
+	static std::unique_ptr<DepthStencil> depthStencil_;
+	static std::unique_ptr<Barrier> barrier_;
+	static std::unique_ptr<TargetRenderPass> targetRenderPass_;
+	static std::unique_ptr<ViewPort> viewPort_;
+	static std::unique_ptr<ScissorRect> scissorRect_;
+
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
 	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;

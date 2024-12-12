@@ -14,7 +14,7 @@
 
 #include "computePipeline/skinning/SkinningComputePipeline.h"
 
-class DirectXManager;
+class DXGIManager;
 
 class ComputePipelineManager {
 public:
@@ -22,7 +22,7 @@ public:
 	~ComputePipelineManager() = default;
 
 	// 初期化
-	void Initialize(DirectXManager* directXManager);
+	void Initialize(DXGIManager* dxgi);
 
 	// ルートシグネイチャのゲッター
 	ID3D12RootSignature* GetRootSignature(ComputePipelineStateType pipelineState);

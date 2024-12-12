@@ -11,19 +11,32 @@
 
 // 自作ファイル
 #include "directX/includes/ComPtr.h"
-#include "manager/dxgi/DXGIManager.h"
+
+class DXGIManager;
 
 class DirectXCommand {
 public:
 	DirectXCommand() = default;
 	~DirectXCommand() = default;
 
+	// 初期化
 	void Initialize(DXGIManager* dxgi);
 
+	// コマンドの実行
+	void KickCommand();
+
+	// コマンドのリセット
+	void ResetCommand();
+
+	// キューの取得
 	ID3D12CommandQueue* GetQueue();
+	// アロケータの取得
 	ID3D12CommandAllocator* GetAllocator();
+	// リストの取得
 	ID3D12GraphicsCommandList* GetList();
 
+private:
+	// DXGIのセット
 	void SetDXGIManager(DXGIManager* dxgi);
 private:
 	// SUCCEEDEDでエラー判別君

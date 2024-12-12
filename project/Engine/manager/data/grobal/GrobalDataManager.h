@@ -12,7 +12,7 @@
 
 #include "math/function/MathFunction.h"
 
-class DirectXManager;
+class FixFPS;
 
 /// <summary>
 /// using宣言
@@ -38,7 +38,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(DirectXManager* directXManager);
+	void Initialize(FixFPS* fixFPS);
 
 	/// <summary>
 	/// 終了
@@ -101,7 +101,8 @@ public:
 #pragma endregion
 
 private:
-	void SetDirectXManager(DirectXManager* directXmanager);
+	// FixFPS
+	void SetFixFPS(FixFPS* fixFPS);
 
 private:
 	// 全データ
@@ -110,6 +111,6 @@ private:
 	const std::string kDirectoryPath = "resources/globalDatas/";
 
 private:
-	// DirectXManager
-	DirectXManager* directX_ = nullptr;
+	// FixFPSのインスタンスをセット
+	FixFPS* fixFPS_ = nullptr;
 };

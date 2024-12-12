@@ -1,7 +1,7 @@
 #pragma once
 
 // 前方宣言
-class DirectXManager;
+class DirectXCommand;
 class GraphicsPipelineManager;
 
 class LineSystem {
@@ -10,22 +10,19 @@ public:
 	~LineSystem() = default;
 
 	// 初期化処理
-	void Initialize(DirectXManager* directXManager, GraphicsPipelineManager* pipelineManager);
+	void Initialize(DirectXCommand* command, GraphicsPipelineManager* pipelineManager);
 
 	// 描画前処理
 	void PreDraw();
 private:
-	// DirectXCommon
-	void SetDirectXManager(DirectXManager* directX) {
-		directXManager_ = directX;
-	}
+	// コマンドのインスタンスをセット
+	void SetCommand(DirectXCommand* command);
 	// PipelineManager
-	void SetPipelineManager(GraphicsPipelineManager* pipelineManager) {
-		pipelineManager_ = pipelineManager;
-	}
+	void SetPipelineManager(GraphicsPipelineManager* pipelineManager);
+
 private: // インスタンスを受け取るポインタ
-	// DirectXManager
-	DirectXManager* directXManager_ = nullptr;
+	// コマンドのインスタンスを受け取る箱
+	DirectXCommand* command_ = nullptr;
 	// PipelineManager
 	GraphicsPipelineManager* pipelineManager_ = nullptr;
 

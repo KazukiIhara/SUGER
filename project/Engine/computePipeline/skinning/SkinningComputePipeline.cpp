@@ -3,10 +3,10 @@
 #include <cassert>
 
 #include "debugTools/logger/Logger.h"
-#include "manager/directX/DirectXManager.h"
+#include "directX/dxgi/DXGIManager.h"
 
-void SkinningComputePipeline::Initialize(DirectXManager* directXManager) {
-	SetDirectXManager(directXManager);
+void SkinningComputePipeline::Initialize(DXGIManager* dxgi) {
+	SetDXGI(dxgi);
 	InitializeDxCompiler();
 	CreateRootSignature();
 	CompileShaders();
@@ -19,10 +19,6 @@ ID3D12RootSignature* SkinningComputePipeline::GetRootSignature() {
 
 ID3D12PipelineState* SkinningComputePipeline::GetPipelineState() {
 	return pipelineState_.Get();
-}
-
-void SkinningComputePipeline::SetDirectXManager(DirectXManager* directX) {
-	directX_ = directX;
 }
 
 void SkinningComputePipeline::CreateRootSignature() {
@@ -117,7 +113,7 @@ void SkinningComputePipeline::CreateRootSignature() {
 	}
 
 	// Root Signature作成
-	hr = directX_->GetDXGI()->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
+	hr = dxgi_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 
@@ -143,7 +139,7 @@ void SkinningComputePipeline::CreatePipelineStateObject() {
 	};
 	computePipelineStateDesc.pRootSignature = rootSignature_.Get();
 	pipelineState_ = nullptr;
-	hr = directX_->GetDXGI()->GetDevice()->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&pipelineState_));
+	hr = dxgi_->GetDevice()->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&pipelineState_));
 	assert(SUCCEEDED(hr));
 }
 
@@ -209,4 +205,9 @@ ComPtr<ID3DBlob> SkinningComputePipeline::CompileShader(const std::wstring& file
 
 	// 実行用のバイナリを追加
 	return shaderBlob;
+}
+
+void SkinningComputePipeline::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
+	dxgi_ = dxgi;
 }

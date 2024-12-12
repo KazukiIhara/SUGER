@@ -50,7 +50,7 @@ void BaseScene::Initialize() {
 	SUGER::InitializeColliderLineGroup();
 
 	// FixFPSを初期化
-	SUGER::FiXFPSInitialize();
+	SUGER::InitializeFixFPS();
 }
 
 void BaseScene::Update() {

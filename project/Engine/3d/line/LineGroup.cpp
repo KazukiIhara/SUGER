@@ -49,7 +49,7 @@ void LineGroup::Draw() {
 	// ViewProjectionを転送
 	commandList->SetGraphicsRootConstantBufferView(0, viewProjectionResource_->GetGPUVirtualAddress());
 	// StructuredBufferのSRVを設定する
-	commandList->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVDescriptorHandleGPU(srvIndex_));
+	commandList->SetGraphicsRootDescriptorTable(1, SUGER::GetSRVUAVDescriptorHandleGPU(srvIndex_));
 	// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	commandList->DrawInstanced(2, instanceCount_, 0, 0);
 }

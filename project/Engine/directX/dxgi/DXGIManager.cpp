@@ -104,6 +104,112 @@ ComPtr<ID3D12DescriptorHeap> DXGIManager::CreateDescriptorHeap(D3D12_DESCRIPTOR_
 	return descriptorHeap;
 }
 
+ComPtr<ID3D12Resource> DXGIManager::CreateBufferResource(size_t sizeInBytes, bool isforUAV) {
+	if (!isforUAV) {
+		HRESULT hr = S_FALSE;
+		// 頂点リソース用のヒープの設定
+		D3D12_HEAP_PROPERTIES uplodeHeapProperties{};
+		uplodeHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;//UploadHeapを使う
+
+		// マテリアル用のリソースの設定
+		D3D12_RESOURCE_DESC resourceDesc{};
+		// バッファリソース。テクスチャの場合はまた別の設定をする
+		resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+		resourceDesc.Width = sizeInBytes;
+		// バッファの場合はこれらは1にする決まり
+		resourceDesc.Height = 1;
+		resourceDesc.DepthOrArraySize = 1;
+		resourceDesc.MipLevels = 1;
+		resourceDesc.SampleDesc.Count = 1;
+		// バッファの場合はこれにする決まり
+		resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+		// バッファリソースを作る
+		Microsoft::WRL::ComPtr<ID3D12Resource>resource = nullptr;
+		hr = device_->CreateCommittedResource(
+			&uplodeHeapProperties,
+			D3D12_HEAP_FLAG_NONE,
+			&resourceDesc,
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			nullptr,
+			IID_PPV_ARGS(&resource)
+		);
+		assert(SUCCEEDED(hr));
+
+		return resource;
+	} else {
+
+		HRESULT hr = S_FALSE;
+
+		// UAVリソース用ヒーププロパティ(一般的なGPU上のデフォルトヒープ)
+		D3D12_HEAP_PROPERTIES defaultHeapProperties{};
+		defaultHeapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
+
+		// UAV用バッファリソース設定
+		D3D12_RESOURCE_DESC resourceDesc{};
+		resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+		resourceDesc.Width = sizeInBytes;
+		resourceDesc.Height = 1;
+		resourceDesc.DepthOrArraySize = 1;
+		resourceDesc.MipLevels = 1;
+		resourceDesc.SampleDesc.Count = 1;
+		resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+		// UAVを許可するフラグを設定
+		resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
+
+		// UAV用リソースを作成
+		Microsoft::WRL::ComPtr<ID3D12Resource> resource = nullptr;
+		hr = device_->CreateCommittedResource(
+			&defaultHeapProperties,
+			D3D12_HEAP_FLAG_NONE,
+			&resourceDesc,
+			D3D12_RESOURCE_STATE_COMMON,
+			nullptr,
+			IID_PPV_ARGS(&resource)
+		);
+		assert(SUCCEEDED(hr));
+
+		return resource;
+	}
+}
+
+ComPtr<ID3D12Resource> DXGIManager::CreateDepthStencilTextureResource(int32_t width, int32_t height) {
+	// 生成するResourceの設定
+	D3D12_RESOURCE_DESC resourceDesc{};
+	resourceDesc.Width = width;
+	resourceDesc.Height = height;
+	resourceDesc.MipLevels = 1;
+	resourceDesc.DepthOrArraySize = 1;
+	resourceDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	resourceDesc.SampleDesc.Count = 1;
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+
+	// 利用するHeapの設定
+	D3D12_HEAP_PROPERTIES heapProperties{};
+	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
+
+	// 深度値のクリア設定
+	D3D12_CLEAR_VALUE depthClearValue{};
+	depthClearValue.DepthStencil.Depth = 1.0f;
+	depthClearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+	// Resourceの生成
+	Microsoft::WRL::ComPtr<ID3D12Resource> resource = nullptr;
+	HRESULT hr = device_->CreateCommittedResource(
+		&heapProperties,// Heapの設定
+		D3D12_HEAP_FLAG_NONE,// Heapの特殊な設定。特になし。
+		&resourceDesc,	// Resourceの設定
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,// 深度地を書き込む状態にしておく
+		&depthClearValue,// Clear最適値
+		IID_PPV_ARGS(&resource));// 作成するResourceポインタへのポインタ
+	assert(SUCCEEDED(hr));
+
+	return resource;
+}
+
+
 ID3D12Device* DXGIManager::GetDevice() {
 	return device_.Get();
 }

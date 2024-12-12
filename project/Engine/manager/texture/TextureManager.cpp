@@ -1,14 +1,16 @@
 #include "TextureManager.h"
 
 #include "debugTools/logger/Logger.h"
-#include "manager/directX/DirectXManager.h"
-#include "manager/dxgi/DXGIManager.h"
+#include "directX/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
-#include "manager/srv/SRVManager.h"
+#include "directX/fence/Fence.h"
+#include "manager/srvUav/SRVUAVManager.h"
 
-void TextureManager::Initialize(DirectXManager* directXManager, ViewManager* srvManager) {
+void TextureManager::Initialize(DXGIManager* dxgi, DirectXCommand* command, Fence* fence, SRVUAVManager* srvManager) {
 	// 必要なインスタンスのポインタを取得
-	SetDirectXCommon(directXManager);
+	SetDXGI(dxgi);
+	SetCommand(command);
+	SetFence(fence);
 	SetSrvManager(srvManager);
 	// エンジンで使うテクスチャを読み込む
 	// 既定のディレクトリ
@@ -33,17 +35,17 @@ void TextureManager::Load(const std::string& filePath) {
 	Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = UploadTextureData(texture.resource.Get(), mipImage_);
 
 	// コマンドのクローズと実行
-	directXManager_->KickCommand();
-	directXManager_->WaitGPU();
-	directXManager_->ResetCommandList();
+	command_->KickCommand();
+	fence_->WaitGPU();
+	command_->ResetCommand();
 
 	// SRVを作成するDescriptorHeapの場所を決める
-	texture.srvIndex = srvManager_->Allocate();
+	texture.srvIndex = srvUavManager_->Allocate();
 	// srvの作成
-	srvManager_->CreateSrvTexture2d(texture.srvIndex, textures_[filePath].resource.Get(), texture.metaData.format, UINT(texture.metaData.mipLevels));
+	srvUavManager_->CreateSrvTexture2d(texture.srvIndex, textures_[filePath].resource.Get(), texture.metaData.format, UINT(texture.metaData.mipLevels));
 
 	// テクスチャ枚数上限チェック
-	assert(srvManager_->IsLowerViewMax());
+	assert(srvUavManager_->IsLowerViewMax());
 }
 
 std::unordered_map<std::string, Texture>& TextureManager::GetTexture() {
@@ -56,12 +58,25 @@ const DirectX::TexMetadata& TextureManager::GetMetaData(const std::string& fileP
 	return texture.metaData;
 }
 
-void TextureManager::SetDirectXCommon(DirectXManager* directX) {
-	directXManager_ = directX;
+
+void TextureManager::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
+	dxgi_ = dxgi;
 }
 
-void TextureManager::SetSrvManager(ViewManager* srvManager) {
-	srvManager_ = srvManager;
+void TextureManager::SetCommand(DirectXCommand* command) {
+	assert(command);
+	command_ = command;
+}
+
+void TextureManager::SetFence(Fence* fence) {
+	assert(fence);
+	fence_ = fence;
+}
+
+void TextureManager::SetSrvManager(SRVUAVManager* srvManager) {
+	assert(srvManager);
+	srvUavManager_ = srvManager;
 }
 
 DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath) {
@@ -97,7 +112,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(con
 
 	// Resourceの作成
 	Microsoft::WRL::ComPtr<ID3D12Resource> resource = nullptr;
-	HRESULT hr = directXManager_->GetDXGI()->GetDevice()->CreateCommittedResource(
+	HRESULT hr = dxgi_->GetDevice()->CreateCommittedResource(
 		&heapProperties,// Heapの設定
 		D3D12_HEAP_FLAG_NONE,// Heapの特殊な設定。特になし。
 		&resourceDesc,// リソースの設定
@@ -111,10 +126,10 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(con
 [[nodiscard]]
 Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages) {
 	std::vector<D3D12_SUBRESOURCE_DATA> subresources;
-	DirectX::PrepareUpload(directXManager_->GetDXGI()->GetDevice(), mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
+	DirectX::PrepareUpload(dxgi_->GetDevice(), mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
 	uint64_t intermediateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresources.size()));
-	Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = directXManager_->CreateBufferResource(intermediateSize);
-	UpdateSubresources(directXManager_->GetCommandList(), texture, intermediateResource.Get(), 0, 0, UINT(subresources.size()), subresources.data());
+	Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = dxgi_->CreateBufferResource(intermediateSize);
+	UpdateSubresources(command_->GetList(), texture, intermediateResource.Get(), 0, 0, UINT(subresources.size()), subresources.data());
 	// Textureへの転送後は利用できるよう、D3D12_RESOURCE_STATE_COPY_DESTからD3D12_RESOURCE_STATE_GENERIC_READへResourceStateを変更する
 	D3D12_RESOURCE_BARRIER barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -123,6 +138,6 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::UploadTextureData(ID3D12R
 	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
-	directXManager_->GetCommandList()->ResourceBarrier(1, &barrier);
+	command_->GetList()->ResourceBarrier(1, &barrier);
 	return intermediateResource;
 }

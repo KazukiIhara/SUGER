@@ -8,10 +8,24 @@ std::unique_ptr<D3DResourceLeakChecker> SUGER::leakCheck_ = nullptr;
 
 // Staticメンバ変数の初期化
 std::unique_ptr<WindowManager> SUGER::windowManager_ = nullptr;
-std::unique_ptr<DXGIManager> SUGER::dxgiManager_ = nullptr;
 std::unique_ptr<DirectInput> SUGER::directInput_ = nullptr;
-std::unique_ptr<DirectXManager> SUGER::directXManager_ = nullptr;
-std::unique_ptr<ViewManager> SUGER::viewManager_ = nullptr;
+std::unique_ptr<FixFPS> SUGER::fixFPS_ = nullptr;
+
+std::unique_ptr<DXGIManager> SUGER::dxgiManager_ = nullptr;
+std::unique_ptr<DirectXCommand> SUGER::command_ = nullptr;
+std::unique_ptr<Fence> SUGER::fence_ = nullptr;
+
+std::unique_ptr<RTVManager> SUGER::rtvManager_ = nullptr;
+std::unique_ptr<DSVManager> SUGER::dsvmanager_ = nullptr;
+std::unique_ptr<SRVUAVManager> SUGER::srvUavManager_ = nullptr;
+
+std::unique_ptr<SwapChain> SUGER::swapChain_ = nullptr;
+std::unique_ptr<DepthStencil> SUGER::depthStencil_ = nullptr;
+std::unique_ptr<Barrier> SUGER::barrier_ = nullptr;
+std::unique_ptr<TargetRenderPass> SUGER::targetRenderPass_ = nullptr;
+std::unique_ptr<ViewPort> SUGER::viewPort_ = nullptr;
+std::unique_ptr<ScissorRect> SUGER::scissorRect_ = nullptr;
+
 std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
@@ -33,103 +47,132 @@ std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
 std::unique_ptr<LineSystem> SUGER::lineSystem_ = nullptr;
 
 void SUGER::Initialize() {
+	// フレームワーク初期化ログ
 	Logger::Log("SUGER,Initialize\n");
 
+#pragma region BaseSystems
 	// WindowManagerの初期化
 	windowManager_ = std::make_unique<WindowManager>();
 	windowManager_->Initialize();
-
-	// DXGIManagerの初期化
-	dxgiManager_ = std::make_unique<DXGIManager>();
-	dxgiManager_->Initialize();
-
 	// DirectInputの初期化
 	directInput_ = std::make_unique<DirectInput>();
 	directInput_->Initialize(windowManager_.get());
+	// FixFPS
+	fixFPS_ = std::make_unique<FixFPS>();
+	fixFPS_->Initialize();
+#pragma endregion
 
-	// DirectXManagerの初期化
-	directXManager_ = std::make_unique<DirectXManager>();
-	directXManager_->Initialize(windowManager_.get(),dxgiManager_.get());
+#pragma region DirectXBaseSystems
+	// DXGIManagerの初期化
+	dxgiManager_ = std::make_unique<DXGIManager>();
+	dxgiManager_->Initialize();
+	// Commandの初期化
+	command_ = std::make_unique<DirectXCommand>();
+	command_->Initialize(dxgiManager_.get());
+	// Fenceの初期化
+	fence_ = std::make_unique<Fence>();
+	fence_->Initialize(dxgiManager_.get(), command_.get());
+#pragma endregion
 
-	// ViewManagerの初期化
-	viewManager_ = std::make_unique<ViewManager>();
-	viewManager_->Initialize(directXManager_.get());
+#pragma region ViewManagers
+	// RTVManagerの初期化
+	rtvManager_ = std::make_unique<RTVManager>();
+	rtvManager_->Initialize(dxgiManager_.get());
+	// DSVManagerの初期化
+	dsvmanager_ = std::make_unique<DSVManager>();
+	dsvmanager_->Initialize(dxgiManager_.get(), command_.get());
+	// SRVUAVManagerの初期化
+	srvUavManager_ = std::make_unique<SRVUAVManager>();
+	srvUavManager_->Initialize(dxgiManager_.get(), command_.get());
+#pragma endregion
 
+#pragma region DirectXRenderSystem
+	// SwapChainの初期化
+	swapChain_ = std::make_unique<SwapChain>();
+	swapChain_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), rtvManager_.get());
+	// DepthStencilの初期化
+	depthStencil_ = std::make_unique<DepthStencil>();
+	depthStencil_->Initialize(dxgiManager_.get(), command_.get(), dsvmanager_.get());
+	// Barrierの初期化
+	barrier_ = std::make_unique<Barrier>();
+	barrier_->Initialize(command_.get(), swapChain_.get());
+	// TargetRenderPassの初期化
+	targetRenderPass_ = std::make_unique<TargetRenderPass>();
+	targetRenderPass_->Initialize(command_.get(), swapChain_.get(), depthStencil_.get());
+	// Viewportの初期化
+	viewPort_ = std::make_unique<ViewPort>();
+	viewPort_->Initialize(command_.get());
+	// ScissorRectの初期化
+	scissorRect_ = std::make_unique<ScissorRect>();
+	scissorRect_->Initialize(command_.get());
+#pragma endregion
+
+#pragma region Manager
 	// ImGuiManagerの初期化
 	imguiManager_ = std::make_unique<ImGuiManager>();
-	imguiManager_->Initialize(windowManager_.get(), directXManager_.get(), viewManager_.get());
-
+	imguiManager_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), srvUavManager_.get());
 	// TextureManagerの初期化
 	textureManager_ = std::make_unique<TextureManager>();
-	textureManager_->Initialize(directXManager_.get(), viewManager_.get());
-
+	textureManager_->Initialize(dxgiManager_.get(), command_.get(), fence_.get(), srvUavManager_.get());
 	// GraphicsPipelineManagerの初期化
 	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
-	graphicsPipelineManager_->Initialize(directXManager_.get());
-
+	graphicsPipelineManager_->Initialize(dxgiManager_.get());
 	// ComputePipelineManagerの初期化
 	computePipelineManager_ = std::make_unique<ComputePipelineManager>();
-	computePipelineManager_->Initialize(directXManager_.get());
-
+	computePipelineManager_->Initialize(dxgiManager_.get());
 	// ModelManagerの初期化
 	modelManager_ = std::make_unique<ModelManager>();
 	modelManager_->Initialize();
-
 	// object2dManagerの初期化
 	object2dManager_ = std::make_unique<Object2DManager>();
 	object2dManager_->Initialize();
-
 	// emptyManagerの初期化
 	emptyManager_ = std::make_unique<EmptyManager>();
 	emptyManager_->Initialize();
-
 	// entityManagerの初期化
 	entityManager_ = std::make_unique<EntityManager>();
 	entityManager_->Initialize(modelManager_.get());
-
 	// emitterManagerの初期化
 	emitterManager_ = std::make_unique<EmitterManager>();
 	emitterManager_->Initialize();
-
 	// ParticleManagerの初期化
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_->Initialize(modelManager_.get(), textureManager_.get());
-
 	// LineManagerの初期化
 	lineManager_ = std::make_unique<LineGroupManager>();
 	lineManager_->Initialize();
-
 	// soundManagerの初期化
 	soundManager_ = std::make_unique<SoundManager>();
 	soundManager_->Initialize();
-
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
 	collisionManager_->Initialize(lineManager_.get());
-
 	// JsonLevelDataManagerの初期化
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
 	jsonLevelDataManager_->Initialize();
-
 	// grobalDataManagerの初期化
 	grobalDataManager_ = std::make_unique<GrobalDataManager>();
-	grobalDataManager_->Initialize(directXManager_.get());
+	grobalDataManager_->Initialize(fixFPS_.get());
+#pragma endregion
 
+#pragma region System
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
-	object2dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+	object2dSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
 
 	// Object3DSystemの初期化
 	object3dSystem_ = std::make_unique<Object3DSystem>();
-	object3dSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+	object3dSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
 
 	// ParticleSystemの初期化
 	particleSystem_ = std::make_unique<ParticleSystem>();
-	particleSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+	particleSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
 
 	// LineSystemの初期化
 	lineSystem_ = std::make_unique<LineSystem>();
-	lineSystem_->Initialize(directXManager_.get(), graphicsPipelineManager_.get());
+	lineSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
+#pragma endregion
+
 }
 
 void SUGER::Finalize() {
@@ -238,18 +281,18 @@ void SUGER::Finalize() {
 	}
 
 	// ViewManagerの終了処理
-	if (viewManager_) {
-		viewManager_.reset();
-	}
-
-	// DirectXManagerの終了処理
-	if (directXManager_) {
-		directXManager_.reset();
+	if (srvUavManager_) {
+		srvUavManager_.reset();
 	}
 
 	// DirectInputの終了処理
 	if (directInput_) {
 		directInput_.reset();
+	}
+
+	// commandの終了処理
+	if (command_) {
+		command_.reset();
 	}
 
 	// DXGIManagerの終了処理
@@ -266,7 +309,7 @@ void SUGER::Finalize() {
 
 void SUGER::Update() {
 
-	// ウィンドウマネージャの更新処理(本当はよくない気がする)
+	// ウィンドウマネージャの更新処理
 	windowManager_->Update();
 
 	// ウィンドウにメッセージが来ていたら最優先で処理
@@ -276,6 +319,9 @@ void SUGER::Update() {
 
 	// 入力の更新
 	directInput_->Update();
+
+	// FixFPSの更新
+	fixFPS_->Update();
 
 	// F11キーでフルスクリーン切り替え処理
 	if (directInput_->TriggerKey(DIK_F11)) {
@@ -309,9 +355,6 @@ void SUGER::Draw() {
 	DrawEntiteis();
 	// Skining付きEntity描画処理
 	DrawSkiningEntities();
-
-	// Skinningあり3Dオブジェクト描画前処理
-	PreDrawObject3DSkinning();
 
 	// 3Dパーティクル描画前処理
 	PreDrawParticle3D();
@@ -355,22 +398,36 @@ void SUGER::PreDraw() {
 	// ImGui内部コマンド生成
 	imguiManager_->EndFrame();
 	// DirectX描画前処理
-	directXManager_->PreDraw();
+	// スワップチェーン描画前のバリアを張る
+	barrier_->PreDrawBarrierSwapChain();
+	// レンダーターゲットを設定
+	targetRenderPass_->SetRenderTarget();
+	// 深度をクリア
+	depthStencil_->ClearDepthView();
+	// 画面をクリア
+	targetRenderPass_->ClearRenderTarget();
+	// ビューポートの設定
+	viewPort_->SettingViewport();
+	// シザー矩形の設定
+	scissorRect_->SettingScissorRect();
 	// SrvManager描画前処理
-	viewManager_->PreCommand();
-}
-
-void SUGER::PostCommand() {
-	directXManager_->KickCommand();
-	directXManager_->WaitGPU();
-	directXManager_->ResetCommandList();
+	srvUavManager_->PreCommand();
 }
 
 void SUGER::PostDraw() {
 	// ImGui描画処理
 	imguiManager_->Draw();
 	// DirectX描画後処理
-	directXManager_->PostDraw();
+	// 描画後のバリアを張る
+	barrier_->PostDrawBarrierSwapChain();
+	// コマンドの実行
+	command_->KickCommand();
+	// GPUとOSに画面の交換を行うように通知する
+	swapChain_->Present();
+	// GPUを待機
+	fence_->WaitGPU();
+	// コマンドをリセット
+	command_->ResetCommand();
 }
 
 HWND SUGER::GetWindowHandle() {
@@ -453,56 +510,80 @@ bool SUGER::IsPadLeft(int controllerID) {
 	return directInput_->IsPadLeft(controllerID);
 }
 
+void SUGER::InitializeFixFPS() {
+	fixFPS_->Initialize();
+}
+
 ID3D12Device* SUGER::GetDirectXDevice() {
 	return dxgiManager_->GetDevice();
 }
 
+ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes, bool isuav) {
+	return dxgiManager_->CreateBufferResource(sizeInBytes, isuav);
+}
+
 ID3D12GraphicsCommandList* SUGER::GetDirectXCommandList() {
-	return directXManager_->GetCommandList();
+	return command_->GetList();
 }
 
-ComPtr<ID3D12Resource> SUGER::CreateBufferResource(size_t sizeInBytes) {
-	return directXManager_->CreateBufferResource(sizeInBytes);
+void SUGER::KickCommand() {
+	command_->KickCommand();
 }
 
-ComPtr<ID3D12Resource> SUGER::CreateBufferResourceUAV(size_t sizeInbytes) {
-	return directXManager_->CreateUAVBufferResource(sizeInbytes);
+void SUGER::ResetCommand() {
+	command_->ResetCommand();
 }
 
-void SUGER::FiXFPSInitialize() {
-	directXManager_->InitializeFixFPS();
+void SUGER::WaitGPU() {
+	fence_->WaitGPU();
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleCPU(uint32_t index) {
-	return viewManager_->GetDescriptorHandleCPU(index);
+D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetRTVDescriptorHandleCPU(uint32_t index) {
+	return rtvManager_->GetDescriptorHandleCPU(index);
 }
 
-D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetSRVDescriptorHandleGPU(uint32_t index) {
-	return viewManager_->GetDescriptorHandleGPU(index);
+D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetRTVDescriptorHandleGPU(uint32_t index) {
+	return rtvManager_->GetDescriptorHandleGPU(index);
+}
+
+uint32_t SUGER::RTVAllocate() {
+	return rtvManager_->Allocate();
+}
+
+void SUGER::CreateRTVTexture2d(uint32_t rtvIndex, ID3D12Resource* pResource) {
+	rtvManager_->CreateRTVTexture2d(rtvIndex, pResource);
+}
+
+D3D12_CPU_DESCRIPTOR_HANDLE SUGER::GetSRVUAVDescriptorHandleCPU(uint32_t index) {
+	return srvUavManager_->GetDescriptorHandleCPU(index);
+}
+
+D3D12_GPU_DESCRIPTOR_HANDLE SUGER::GetSRVUAVDescriptorHandleGPU(uint32_t index) {
+	return srvUavManager_->GetDescriptorHandleGPU(index);
 }
 
 void SUGER::SetComputeRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
-	viewManager_->SetComputeRootDescriptorTable(rootParameterIndex, srvIndex);
+	srvUavManager_->SetComputeRootDescriptorTable(rootParameterIndex, srvIndex);
 }
 
 void SUGER::PreCommand() {
-	viewManager_->PreCommand();
+	srvUavManager_->PreCommand();
 }
 
 void SUGER::SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex) {
-	viewManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
+	srvUavManager_->SetGraphicsRootDescriptorTable(rootParameterIndex, srvIndex);
 }
 
 uint32_t SUGER::ViewAllocate() {
-	return viewManager_->Allocate();
+	return srvUavManager_->Allocate();
 }
 
 void SUGER::CreateSrvStructuredBuffer(uint32_t viewIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
-	viewManager_->CreateSrvStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
+	srvUavManager_->CreateSrvStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
 }
 
 void SUGER::CreateUavStructuredBuffer(uint32_t viewIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride) {
-	viewManager_->CreateUavStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
+	srvUavManager_->CreateUavStructuredBuffer(viewIndex, pResource, numElements, structureByteStride);
 }
 
 void SUGER::LoadTexture(const std::string& filePath) {

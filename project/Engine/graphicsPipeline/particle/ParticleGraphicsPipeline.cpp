@@ -3,10 +3,10 @@
 #include <cassert>
 
 #include "debugTools/logger/Logger.h"
-#include "manager/directX/DirectXManager.h"
+#include "directX/dxgi/DXGIManager.h"
 
-void ParticleGraphicsPipeline::Initialize(DirectXManager* directXManager) {
-	SetDirectXManager(directXManager);
+void ParticleGraphicsPipeline::Initialize(DXGIManager* dxgi) {
+	SetDXGI(dxgi);
 	InitializeDxCompiler();
 	CreateRootSignature();
 	CompileShaders();
@@ -19,11 +19,6 @@ ID3D12RootSignature* ParticleGraphicsPipeline::GetRootSignature() {
 
 ID3D12PipelineState* ParticleGraphicsPipeline::GetPipelineState(BlendMode blendMode) {
 	return graphicsPipelineState_[blendMode].Get();
-}
-
-void ParticleGraphicsPipeline::SetDirectXManager(DirectXManager* directX) {
-	assert(directX);
-	directX_ = directX;
 }
 
 void ParticleGraphicsPipeline::CreateRootSignature() {
@@ -89,7 +84,7 @@ void ParticleGraphicsPipeline::CreateRootSignature() {
 	}
 	//バイナリをもとに生成
 	rootSignature_ = nullptr;
-	hr = directX_->GetDXGI()->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
+	hr = dxgi_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 }
@@ -130,15 +125,15 @@ void ParticleGraphicsPipeline::CreateGraphicsPipelineObject() {
 	//どのように画面に色を打ち込むかの設定(気にしなくて良い)
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-	/*DepthStencilの設定*/
+	// DepthStencilの設定
 	graphicsPipelineStateDesc.DepthStencilState = DepthStecilDescSetting();
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	//実際に生成
+	// 実際に生成
 	for (uint32_t i = 0; i < kBlendModeNum; i++) {
 		graphicsPipelineStateDesc.BlendState = BlendStateSetting(i);
 		graphicsPipelineState_[i] = nullptr;
-		hr = directX_->GetDXGI()->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+		hr = dxgi_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 			IID_PPV_ARGS(&graphicsPipelineState_[i]));
 		assert(SUCCEEDED(hr));
 	}
@@ -280,13 +275,13 @@ D3D12_BLEND_DESC ParticleGraphicsPipeline::BlendStateSetting(uint32_t blendModeN
 }
 
 D3D12_DEPTH_STENCIL_DESC ParticleGraphicsPipeline::DepthStecilDescSetting() {
-	/*DepthStencilStateの設定*/
+	// DepthStencilStateの設定
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};
-	/*Depthの機能を有効化する*/
+	// Depthの機能を有効化する
 	depthStencilDesc.DepthEnable = true;
 	// Depthの書き込みを行わない
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
-	/*比較関数はLessEqual*/
+	// 比較関数はLessEqual
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 
 	return depthStencilDesc;
@@ -326,4 +321,9 @@ D3D12_RASTERIZER_DESC ParticleGraphicsPipeline::RasterizerStateSetting() {
 	rasterizerDesc_.FillMode = D3D12_FILL_MODE_SOLID;
 
 	return rasterizerDesc_;
+}
+
+void ParticleGraphicsPipeline::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
+	dxgi_ = dxgi;
 }

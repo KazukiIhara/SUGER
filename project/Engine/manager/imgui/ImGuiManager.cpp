@@ -3,15 +3,15 @@
 
 // MyHedder
 #include "manager/window/WindowManager.h"
-#include "manager/directX/DirectXManager.h"
+#include "directX/dxgi/DXGIManager.h"
 #include "directX/command/DirectXCommand.h"
-#include "manager/srv/SRVManager.h"
+#include "manager/srvUav/SRVUAVManager.h"
 
-void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* directXManager, ViewManager* srvManager) {
-
+void ImGuiManager::Initialize(WindowManager* windowManager, DXGIManager* dxgi, DirectXCommand* command, SRVUAVManager* srvManager) {
 	// インスタンスのセット
 	SetWindowManager(windowManager);
-	SetDirectXManager(directXManager);
+	SetDXGI(dxgi);
+	SetCommand(command);
 	SetSrvManager(srvManager);
 
 	// ImGuiの初期化
@@ -19,18 +19,18 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DirectXManager* dire
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(windowManager_->GetHwnd());
-	ImGui_ImplDX12_Init(directXManager_->GetDXGI()->GetDevice(),
-		directXManager_->GetSwapChainDesc().BufferCount,
-		directXManager_->GetRTVDesc().Format,
-		srvManager_->GetDescriptorHeap(),
-		srvManager_->GetDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
-		srvManager_->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart()
+	ImGui_ImplDX12_Init(dxgi_->GetDevice(),
+		2,
+		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
+		srvUavManager_->GetDescriptorHeap(),
+		srvUavManager_->GetDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
+		srvUavManager_->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart()
 	);
 
 	// フォントサイズ変更
 	FontSetting();
 
-	srvManager_->Allocate();
+	srvUavManager_->Allocate();
 }
 
 void ImGuiManager::FontSetting() {
@@ -43,11 +43,6 @@ void ImGuiManager::FontSetting() {
 	io.Fonts->AddFontDefault(&fontConfig);
 	// フォントを再構築
 	io.Fonts->Build();
-}
-
-void ImGuiManager::CreatePreviewSrv() {
-	// Srv作成
-	
 }
 
 void ImGuiManager::BeginFrame() {
@@ -66,12 +61,7 @@ void ImGuiManager::EndFrame() {
 
 void ImGuiManager::Draw() {
 	// 実際のCommandListのImGuiの描画コマンドを積む
-	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), directXManager_->GetCommandList());
-}
-
-void ImGuiManager::ShowPreviewWindow() {
-
-	
+	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), command_->GetList());
 }
 
 void ImGuiManager::Finalize() {
@@ -124,13 +114,21 @@ void ImGuiManager::SetImGuiDarkTheme() {
 }
 
 void ImGuiManager::SetWindowManager(WindowManager* windowManager) {
+	assert(windowManager);
 	windowManager_ = windowManager;
 }
 
-void ImGuiManager::SetDirectXManager(DirectXManager* directXManager) {
-	directXManager_ = directXManager;
+void ImGuiManager::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
+	dxgi_ = dxgi;
 }
 
-void ImGuiManager::SetSrvManager(ViewManager* srvManager) {
-	srvManager_ = srvManager;
+void ImGuiManager::SetCommand(DirectXCommand* command) {
+	assert(command);
+	command_ = command;
+}
+
+void ImGuiManager::SetSrvManager(SRVUAVManager* srvUavManager) {
+	assert(srvUavManager);
+	srvUavManager_ = srvUavManager;
 }

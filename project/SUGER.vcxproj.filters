@@ -246,19 +246,16 @@
     <ClCompile Include="Engine\input\direct\DirectInput.cpp">
       <Filter>engine\input\direct</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\directX\DirectXManager.cpp">
-      <Filter>engine\manager\directX</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp">
       <Filter>engine\manager\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Engine\manager\window\WindowManager.cpp">
       <Filter>engine\manager\window</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\dxgi\DXGIManager.cpp">
+    <ClCompile Include="Engine\directX\dxgi\DXGIManager.cpp">
       <Filter>engine\manager\dxgi</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\manager\srv\SRVManager.cpp">
+    <ClCompile Include="Engine\manager\srvUav\SRVUAVManager.cpp">
       <Filter>engine\manager\srv</Filter>
     </ClCompile>
     <ClCompile Include="Engine\directX\command\DirectXCommand.cpp">
@@ -389,6 +386,14 @@
     <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
     <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
     <ClCompile Include="Engine\manager\rtv\RTVManager.cpp" />
+    <ClCompile Include="Engine\directX\fence\Fence.cpp" />
+    <ClCompile Include="Engine\directX\swapChain\SwapChain.cpp" />
+    <ClCompile Include="Engine\directX\targetRenderPass\TargetRenderPass.cpp" />
+    <ClCompile Include="Engine\directX\barrier\Barrier.cpp" />
+    <ClCompile Include="Engine\directX\scissorRect\ScissorRect.cpp" />
+    <ClCompile Include="Engine\directX\viewport\ViewPort.cpp" />
+    <ClCompile Include="Engine\directX\depthStencil\DepthStencil.cpp" />
+    <ClCompile Include="Engine\manager\dsv\DSVManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -397,19 +402,16 @@
     <ClInclude Include="Engine\directX\includes\ComPtr.h">
       <Filter>engine\include</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\directX\DirectXManager.h">
-      <Filter>engine\manager\directX</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\manager\imgui\ImGuiManager.h">
       <Filter>engine\manager\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Engine\manager\window\WindowManager.h">
       <Filter>engine\manager\window</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\dxgi\DXGIManager.h">
+    <ClInclude Include="Engine\directX\dxgi\DXGIManager.h">
       <Filter>engine\manager\dxgi</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\manager\srv\SRVManager.h">
+    <ClInclude Include="Engine\manager\srvUav\SRVUAVManager.h">
       <Filter>engine\manager\srv</Filter>
     </ClInclude>
     <ClInclude Include="Engine\directX\command\DirectXCommand.h">
@@ -587,6 +589,14 @@
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
     <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
     <ClInclude Include="Engine\manager\rtv\RTVManager.h" />
+    <ClInclude Include="Engine\directX\fence\Fence.h" />
+    <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
+    <ClInclude Include="Engine\directX\targetRenderPass\TargetRenderPass.h" />
+    <ClInclude Include="Engine\directX\barrier\Barrier.h" />
+    <ClInclude Include="Engine\directX\scissorRect\ScissorRect.h" />
+    <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
+    <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
+    <ClInclude Include="Engine\manager\dsv\DSVManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

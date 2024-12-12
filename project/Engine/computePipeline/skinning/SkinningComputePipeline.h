@@ -10,7 +10,7 @@
 // ヘッダファイル
 #include "directX/includes/ComPtr.h"
 
-class DirectXManager;
+class DXGIManager;
 
 class SkinningComputePipeline {
 public:
@@ -18,7 +18,7 @@ public:
 	~SkinningComputePipeline() = default;
 
 	// 初期化
-	void Initialize(DirectXManager* directXManager);
+	void Initialize(DXGIManager* dxgi);
 
 	// ルートシグネチャを取得する
 	ID3D12RootSignature* GetRootSignature();
@@ -27,9 +27,6 @@ public:
 	ID3D12PipelineState* GetPipelineState();
 
 private:
-	// DirectXのインスタンスをセット
-	void SetDirectXManager(DirectXManager* directX);
-
 	// ルートシグネチャを作成する
 	void CreateRootSignature();
 
@@ -55,6 +52,10 @@ private:
 	);
 
 private:
+	// DXGIのインスタンスをセット
+	void SetDXGI(DXGIManager* dxgi);
+
+private:
 	// ルートシグネチャ
 	ComPtr<ID3D12RootSignature> rootSignature_;
 
@@ -69,6 +70,7 @@ private:
 	IDxcCompiler3* dxcCompiler = nullptr;
 	IDxcIncludeHandler* includeHandler = nullptr;
 
-private: // ポインタでDirectXManagerのインスタンスを保持
-	DirectXManager* directX_ = nullptr;
+private:
+	// DXGIのインスタンス受け取る箱
+	DXGIManager* dxgi_ = nullptr;
 };

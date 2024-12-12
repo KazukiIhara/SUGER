@@ -3,10 +3,10 @@
 #include <cassert>
 
 #include "debugTools/logger/Logger.h"
-#include "manager/directX/DirectXManager.h"
+#include "directX/dxgi/DXGIManager.h"
 
-void Object2DGraphicsPipeline::Initialize(DirectXManager* directXManager) {
-	SetDirectXCommon(directXManager);
+void Object2DGraphicsPipeline::Initialize(DXGIManager* dxgi) {
+	SetDXGI(dxgi);
 	InitializeDxCompiler();
 	CreateRootSignature();
 	CompileShaders();
@@ -19,10 +19,6 @@ ID3D12RootSignature* Object2DGraphicsPipeline::GetRootSignature() {
 
 ID3D12PipelineState* Object2DGraphicsPipeline::GetPipelineState(BlendMode blendMode) {
 	return graphicsPipelineState_[blendMode].Get();
-}
-
-void Object2DGraphicsPipeline::SetDirectXCommon(DirectXManager* directX) {
-	directX_ = directX;
 }
 
 void Object2DGraphicsPipeline::CreateRootSignature() {
@@ -81,7 +77,7 @@ void Object2DGraphicsPipeline::CreateRootSignature() {
 	}
 	//バイナリをもとに生成
 	rootSignature_ = nullptr;
-	hr = directX_->GetDXGI()->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
+	hr = dxgi_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
 }
@@ -130,7 +126,7 @@ void Object2DGraphicsPipeline::CreateGraphicsPipelineObject() {
 	for (uint32_t i = 0; i < kBlendModeNum; i++) {
 		graphicsPipelineStateDesc.BlendState = BlendStateSetting(i);
 		graphicsPipelineState_[i] = nullptr;
-		hr = directX_->GetDXGI()->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+		hr = dxgi_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 			IID_PPV_ARGS(&graphicsPipelineState_[i]));
 		assert(SUCCEEDED(hr));
 	}
@@ -314,4 +310,9 @@ D3D12_RASTERIZER_DESC Object2DGraphicsPipeline::RasterizerStateSetting() {
 	rasterizerDesc_.FillMode = D3D12_FILL_MODE_SOLID;
 
 	return rasterizerDesc_;
+}
+
+void Object2DGraphicsPipeline::SetDXGI(DXGIManager* dxgi) {
+	assert(dxgi);
+	dxgi_ = dxgi;
 }
