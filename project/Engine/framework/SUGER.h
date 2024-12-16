@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include "d3d12.h"
+#include <d3d12.h>
 
 #include "manager/window/WindowManager.h"
 #include "input/direct/DirectInput.h"
