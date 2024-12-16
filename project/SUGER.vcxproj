@@ -133,6 +133,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
     <ClCompile Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.cpp" />
     <ClCompile Include="Engine\manager\rtv\RTVManager.cpp" />
+    <ClCompile Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.cpp" />
     <ClCompile Include="Engine\system\line\LineSystem.cpp" />
     <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
@@ -221,6 +222,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
     <ClInclude Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.h" />
     <ClInclude Include="Engine\manager\rtv\RTVManager.h" />
+    <ClInclude Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.h" />
     <ClInclude Include="Engine\system\line\LineSystem.h" />
     <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
     <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
