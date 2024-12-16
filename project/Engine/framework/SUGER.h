@@ -31,6 +31,7 @@
 
 #include "manager/pipeline/graphics/GraphicsPipelineManager.h"
 #include "manager/pipeline/compute/ComputePipelineManager.h"
+#include "manager/pipeline/postEffect/PostEffectPipelineManager.h"
 
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "manager/data/grobal/GrobalDataManager.h"
@@ -428,6 +429,28 @@ private: // クラスのポインタ
 	static std::unique_ptr<DSVManager> dsvmanager_;
 	static std::unique_ptr<SRVUAVManager> srvUavManager_;
 
+	static std::unique_ptr<TextureManager> textureManager_;
+	static std::unique_ptr<ModelManager> modelManager_;
+	static std::unique_ptr<SoundManager> soundManager_;
+
+	static std::unique_ptr<Object2DManager> object2dManager_;
+	static std::unique_ptr<EmptyManager> emptyManager_;
+	static std::unique_ptr<EntityManager> entityManager_;
+	static std::unique_ptr<EmitterManager> emitterManager_;
+	static std::unique_ptr<ParticleManager> particleManager_;
+	static std::unique_ptr<LineGroupManager> lineManager_;
+
+	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
+	static std::unique_ptr<ComputePipelineManager> computePipelineManager_;
+	static std::unique_ptr<PostEffectPipelineManager> postEffectPipelineManager_;
+
+	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
+	static std::unique_ptr<GrobalDataManager> grobalDataManager_;
+
+	static std::unique_ptr<CollisionManager> collisionManager_;
+	static std::unique_ptr<ImGuiManager> imguiManager_;
+
+
 	static std::unique_ptr<SwapChain> swapChain_;
 	static std::unique_ptr<RenderTexture> renderTexture_;
 	static std::unique_ptr<DepthStencil> depthStencil_;
@@ -436,21 +459,6 @@ private: // クラスのポインタ
 	static std::unique_ptr<ViewPort> viewPort_;
 	static std::unique_ptr<ScissorRect> scissorRect_;
 
-	static std::unique_ptr<ImGuiManager> imguiManager_;
-	static std::unique_ptr<TextureManager> textureManager_;
-	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
-	static std::unique_ptr<ComputePipelineManager> computePipelineManager_;
-	static std::unique_ptr<ModelManager> modelManager_;
-	static std::unique_ptr<Object2DManager> object2dManager_;
-	static std::unique_ptr<EmptyManager> emptyManager_;
-	static std::unique_ptr<EntityManager> entityManager_;
-	static std::unique_ptr<EmitterManager> emitterManager_;
-	static std::unique_ptr<ParticleManager> particleManager_;
-	static std::unique_ptr<LineGroupManager> lineManager_;
-	static std::unique_ptr<SoundManager> soundManager_;
-	static std::unique_ptr<CollisionManager> collisionManager_;
-	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
-	static std::unique_ptr<GrobalDataManager> grobalDataManager_;
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
 	static std::unique_ptr<ParticleSystem> particleSystem_;

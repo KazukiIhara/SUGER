@@ -132,6 +132,27 @@ void SUGER::Initialize() {
 	// ComputePipelineManagerの初期化
 	computePipelineManager_ = std::make_unique<ComputePipelineManager>();
 	computePipelineManager_->Initialize(dxgiManager_.get());
+	// PostEffectPipelineManagerの初期化
+	postEffectPipelineManager_ = std::make_unique<PostEffectPipelineManager>();
+	postEffectPipelineManager_->Initialize(dxgiManager_.get());
+#pragma endregion
+
+#pragma region DataManagers
+	// JsonLevelDataManagerの初期化
+	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
+	jsonLevelDataManager_->Initialize();
+	// grobalDataManagerの初期化
+	grobalDataManager_ = std::make_unique<GrobalDataManager>();
+	grobalDataManager_->Initialize(fixFPS_.get());
+#pragma endregion
+
+#pragma region SystemManagers
+	// collisionManager
+	collisionManager_ = std::make_unique<CollisionManager>();
+	collisionManager_->Initialize(lineManager_.get());
+	// ImGuiManagerの初期化
+	imguiManager_ = std::make_unique<ImGuiManager>();
+	imguiManager_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), srvUavManager_.get());
 #pragma endregion
 
 #pragma region DirectXRenderSystems
@@ -156,24 +177,6 @@ void SUGER::Initialize() {
 	// ScissorRectの初期化
 	scissorRect_ = std::make_unique<ScissorRect>();
 	scissorRect_->Initialize(command_.get());
-#pragma endregion
-
-#pragma region DataManagers
-	// JsonLevelDataManagerの初期化
-	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
-	jsonLevelDataManager_->Initialize();
-	// grobalDataManagerの初期化
-	grobalDataManager_ = std::make_unique<GrobalDataManager>();
-	grobalDataManager_->Initialize(fixFPS_.get());
-#pragma endregion
-
-#pragma region SystemManagers
-	// collisionManager
-	collisionManager_ = std::make_unique<CollisionManager>();
-	collisionManager_->Initialize(lineManager_.get());
-	// ImGuiManagerの初期化
-	imguiManager_ = std::make_unique<ImGuiManager>();
-	imguiManager_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), srvUavManager_.get());
 #pragma endregion
 
 #pragma region Systems
@@ -442,7 +445,6 @@ void SUGER::Draw() {
 	PreDrawObject2D();
 	// 2Dオブジェクト描画処理
 	Draw2DObjects();
-
 }
 
 void SUGER::Run() {
@@ -470,14 +472,13 @@ void SUGER::PreDraw() {
 	// ImGui内部コマンド生成
 	imguiManager_->EndFrame();
 	// DirectX描画前処理
-	// スワップチェーン描画前のバリアを張る
-	barrier_->PostDrawBarrierTransition();
-	// レンダーターゲットを設定
-	targetRenderPass_->SetRenderTarget(RenderTargetType::kSwapChain);
+	// RenderTexture描画前処理
+	// レンダーターゲットをセット
+	targetRenderPass_->SetRenderTarget(RenderTargetType::kRenderTexture);
+	// レンダーターゲットビューをクリア
+	targetRenderPass_->ClearRenderTarget(RenderTargetType::kRenderTexture);
 	// 深度をクリア
 	depthStencil_->ClearDepthView();
-	// 画面をクリア
-	targetRenderPass_->ClearRenderTarget(RenderTargetType::kSwapChain);
 	// ビューポートの設定
 	viewPort_->SettingViewport();
 	// シザー矩形の設定
@@ -487,9 +488,24 @@ void SUGER::PreDraw() {
 }
 
 void SUGER::PostDraw() {
+	// DirectX描画後処理
+	// スワップチェーン描画前のバリアを張る
+	barrier_->PostDrawBarrierTransition();
+	// レンダーターゲットを設定
+	targetRenderPass_->SetRenderTarget(RenderTargetType::kSwapChain);
+	// 画面をクリア
+	targetRenderPass_->ClearRenderTarget(RenderTargetType::kSwapChain);
+	// ビューポートの設定
+	viewPort_->SettingViewport();
+	// シザー矩形の設定
+	scissorRect_->SettingScissorRect();
+
+	// レンダーテクスチャの描画
+	renderTexture_->Draw();
+
 	// ImGui描画処理
 	imguiManager_->Draw();
-	// DirectX描画後処理
+
 	// 描画後のバリアを張る
 	barrier_->PreSwapChainPresentBarrierTransition();
 	// コマンドの実行
