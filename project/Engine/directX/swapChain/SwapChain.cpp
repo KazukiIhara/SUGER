@@ -19,8 +19,10 @@ void SwapChain::Initialize(WindowManager* windowmanager, DXGIManager* dxgi, Dire
 
 	// スワップチェーン作成
 	CreateSwapChain();
-	// スワップチェーンのリソースを作成
-	CreateSwapChainResources();
+	// リソースを作成
+	CreateResources();
+	// RTVを作成
+	CreateRTV();
 }
 
 void SwapChain::Present() {
@@ -51,14 +53,16 @@ void SwapChain::CreateSwapChain() {
 	assert(SUCCEEDED(hr_));
 }
 
-void SwapChain::CreateSwapChainResources() {
+void SwapChain::CreateResources() {
 	// スワップチェーンからリソースを引っ張ってくる
 	hr_ = swapChain_->GetBuffer(0, IID_PPV_ARGS(&swapChainResources_[0]));
 	// うまく取得出来なければ起動できない
 	assert(SUCCEEDED(hr_));
 	hr_ = swapChain_->GetBuffer(1, IID_PPV_ARGS(&swapChainResources_[1]));
 	assert(SUCCEEDED(hr_));
+}
 
+void SwapChain::CreateRTV() {
 	// 1つめ
 	rtvIndex_[0] = rtvManager_->Allocate();
 	rtvManager_->CreateRTVTexture2d(rtvIndex_[0], swapChainResources_[0].Get());

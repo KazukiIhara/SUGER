@@ -4,6 +4,7 @@
 
 #include "directX/command/DirectXCommand.h"
 #include "directX/swapChain/SwapChain.h"
+#include "directX/renderTexture/RenderTexture.h"
 #include "directX/depthStencil/DepthStencil.h"
 
 void TargetRenderPass::Initialize(DirectXCommand* command, SwapChain* swapChain, DepthStencil* depthStencil) {
@@ -47,6 +48,11 @@ void TargetRenderPass::SetCommand(DirectXCommand* command) {
 void TargetRenderPass::SetSwapChain(SwapChain* swapChain) {
 	assert(swapChain);
 	swapChain_ = swapChain;
+}
+
+void TargetRenderPass::SetRenderTexture(RenderTexture* renderTexture) {
+	assert(renderTexture);
+	renderTexture_ = renderTexture;
 }
 
 void TargetRenderPass::SetDepthStencil(DepthStencil* depthStencil) {

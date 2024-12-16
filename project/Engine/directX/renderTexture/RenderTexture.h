@@ -11,6 +11,7 @@
 
 // 自作ファイル
 #include "directX/includes/ComPtr.h"
+#include "math/types/Vector4.h"
 
 class DXGIManager;
 class DirectXCommand;
@@ -26,6 +27,13 @@ public:
 	void Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager, SRVUAVManager* srvUavManager);
 
 private:
+	// レンダーテクスチャのリソースを作成
+	void CreateResource();
+	// RTVを作成
+	void CreateRTV();
+	// SRVを作成
+	void CreateSRV();
+private:
 	// DXGIをセット
 	void SetDXGI(DXGIManager* dxgi);
 	// Commandをセット
@@ -36,9 +44,15 @@ private:
 	void SetSRVUAVManager(SRVUAVManager* srvUavManager);
 private:
 	// レンダーテクスチャ用のリソース
-	ComPtr<ID3D12Resource> renderTextureResource = nullptr;
+	ComPtr<ID3D12Resource> resource_ = nullptr;
 	// RTVリソースのインデックス
 	uint32_t rtvIndex_ = 0;
+	// SRVリソースのインデックス
+	uint32_t srvIndex_ = 0;
+	// クリアカラー
+	const Vector4 kClearColor_ = { 0.0f,0.0f,1.0f,1.0f };
+	// エラー判別君
+	HRESULT hr_ = S_FALSE;
 private:
 	// dxgiのインスタンスを受け取る箱
 	DXGIManager* dxgi_ = nullptr;

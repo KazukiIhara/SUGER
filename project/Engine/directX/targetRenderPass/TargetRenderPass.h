@@ -4,6 +4,7 @@
 
 class DirectXCommand;
 class SwapChain;
+class RenderTexture;
 class DepthStencil;
 
 class TargetRenderPass {
@@ -25,6 +26,8 @@ private:
 	void SetCommand(DirectXCommand* command);
 	// スワップチェーンのインスタンスをセット
 	void SetSwapChain(SwapChain* swapChain);
+	// レンダーテクスチャのインスタンスをセット
+	void SetRenderTexture(RenderTexture* renderTexture);
 	// デプスステンシルをセット
 	void SetDepthStencil(DepthStencil* depthStencil);
 private:
@@ -32,9 +35,10 @@ private:
 	DirectXCommand* command_ = nullptr;
 	// スワップチェーンのインスタンスを受け取る箱
 	SwapChain* swapChain_ = nullptr;
+	// レンダーテクスチャのインスタンスを受け取る箱
+	RenderTexture* renderTexture_ = nullptr;
 	// デプスステンシルのインスタンスを受け取る箱
 	DepthStencil* depthStencil_ = nullptr;
 	// 画面クリアカラー
 	Vector4 clearColor_ = { 0.05f,0.05f,0.05f,1.0f };
-
 };

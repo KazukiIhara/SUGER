@@ -33,7 +33,9 @@ private:
 	// スワップチェーン作成
 	void CreateSwapChain();
 	// スワップチェーンのRTVリソースを作成
-	void CreateSwapChainResources();
+	void CreateResources();
+	// RTVを作成
+	void CreateRTV();
 private:
 	// WindowManagerをセット
 	void SetWindowManager(WindowManager* windowManager);
