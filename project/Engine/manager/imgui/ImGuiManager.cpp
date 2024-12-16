@@ -14,6 +14,9 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DXGIManager* dxgi, D
 	SetCommand(command);
 	SetSrvManager(srvManager);
 
+	// srvインデックスを割り当て
+	uint32_t srvIndex = srvUavManager_->Allocate();
+
 	// ImGuiの初期化
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -23,14 +26,12 @@ void ImGuiManager::Initialize(WindowManager* windowManager, DXGIManager* dxgi, D
 		2,
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		srvUavManager_->GetDescriptorHeap(),
-		srvUavManager_->GetDescriptorHeap()->GetCPUDescriptorHandleForHeapStart(),
-		srvUavManager_->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart()
+		srvUavManager_->GetDescriptorHandleCPU(srvIndex),
+		srvUavManager_->GetDescriptorHandleGPU(srvIndex)
 	);
 
 	// フォントサイズ変更
 	FontSetting();
-
-	srvUavManager_->Allocate();
 }
 
 void ImGuiManager::FontSetting() {
