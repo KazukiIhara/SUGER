@@ -14,10 +14,11 @@ public:
 	// 初期化
 	void Initialize(DirectXCommand* command, SwapChain* swapChain, RenderTexture* renderTexture);
 
-	// スワップチェーン描画前のスワップチェーンのバリア
-	void PreDrawBarrierSwapChain();
-	// スワップチェーン描画後のスワップチェーンのバリア
-	void PostDrawBarrierSwapChain();
+	// 描画前のバリア遷移
+	void PostDrawBarrierTransition();
+	// swapChainプレゼント前のバリア遷移
+	void PreSwapChainPresentBarrierTransition();
+
 
 private:
 	// コマンドのインスタンスをセット
@@ -28,8 +29,10 @@ private:
 	void SetRenderTexture(RenderTexture* renderTexture);
 
 private:
-	// リソースバリア
+	// リソースバリア(スワップチェーン用)
 	D3D12_RESOURCE_BARRIER swapChainBarrier_{};
+	// リソースバリア(レンダーテクスチャ用)
+	D3D12_RESOURCE_BARRIER renderTextureBarrier_{};
 private:
 	// コマンドのインスタンスを受け取る箱
 	DirectXCommand* command_ = nullptr;

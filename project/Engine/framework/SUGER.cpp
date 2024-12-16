@@ -471,7 +471,7 @@ void SUGER::PreDraw() {
 	imguiManager_->EndFrame();
 	// DirectX描画前処理
 	// スワップチェーン描画前のバリアを張る
-	barrier_->PreDrawBarrierSwapChain();
+	barrier_->PostDrawBarrierTransition();
 	// レンダーターゲットを設定
 	targetRenderPass_->SetRenderTarget(RenderTargetType::kSwapChain);
 	// 深度をクリア
@@ -491,7 +491,7 @@ void SUGER::PostDraw() {
 	imguiManager_->Draw();
 	// DirectX描画後処理
 	// 描画後のバリアを張る
-	barrier_->PostDrawBarrierSwapChain();
+	barrier_->PreSwapChainPresentBarrierTransition();
 	// コマンドの実行
 	command_->KickCommand();
 	// GPUとOSに画面の交換を行うように通知する

@@ -32,6 +32,8 @@ public:
 	Vector4 GetClearColor()const;
 	// RTVハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetRTVHandle();
+	// リソースを取得
+	ID3D12Resource* GetResource();
 private:
 	// レンダーテクスチャのリソースを作成
 	void CreateResource();

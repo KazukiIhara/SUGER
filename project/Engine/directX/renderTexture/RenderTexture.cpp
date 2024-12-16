@@ -36,6 +36,10 @@ D3D12_CPU_DESCRIPTOR_HANDLE RenderTexture::GetRTVHandle() {
 	return rtvManager_->GetDescriptorHandleCPU(rtvIndex_);
 }
 
+ID3D12Resource* RenderTexture::GetResource() {
+	return resource_.Get();
+}
+
 void RenderTexture::CreateResource() {
 	// リソースの設定
 	D3D12_RESOURCE_DESC resourceDesc{};
