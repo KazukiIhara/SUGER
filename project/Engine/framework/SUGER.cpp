@@ -20,6 +20,7 @@ std::unique_ptr<DSVManager> SUGER::dsvmanager_ = nullptr;
 std::unique_ptr<SRVUAVManager> SUGER::srvUavManager_ = nullptr;
 
 std::unique_ptr<SwapChain> SUGER::swapChain_ = nullptr;
+std::unique_ptr<RenderTexture> SUGER::renderTexture_ = nullptr;
 std::unique_ptr<DepthStencil> SUGER::depthStencil_ = nullptr;
 std::unique_ptr<Barrier> SUGER::barrier_ = nullptr;
 std::unique_ptr<TargetRenderPass> SUGER::targetRenderPass_ = nullptr;
@@ -86,16 +87,19 @@ void SUGER::Initialize() {
 	srvUavManager_->Initialize(dxgiManager_.get(), command_.get());
 #pragma endregion
 
-#pragma region DirectXRenderSystem
+#pragma region DirectXRenderSystems
 	// SwapChainの初期化
 	swapChain_ = std::make_unique<SwapChain>();
 	swapChain_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), rtvManager_.get());
+	// RenderTextureの初期化
+	renderTexture_ = std::make_unique<RenderTexture>();
+	renderTexture_->Initialize(dxgiManager_.get(), command_.get(), rtvManager_.get(), srvUavManager_.get());
 	// DepthStencilの初期化
 	depthStencil_ = std::make_unique<DepthStencil>();
 	depthStencil_->Initialize(dxgiManager_.get(), command_.get(), dsvmanager_.get());
 	// Barrierの初期化
 	barrier_ = std::make_unique<Barrier>();
-	barrier_->Initialize(command_.get(), swapChain_.get());
+	barrier_->Initialize(command_.get(), swapChain_.get(), renderTexture_.get());
 	// TargetRenderPassの初期化
 	targetRenderPass_ = std::make_unique<TargetRenderPass>();
 	targetRenderPass_->Initialize(command_.get(), swapChain_.get(), depthStencil_.get());
@@ -107,7 +111,7 @@ void SUGER::Initialize() {
 	scissorRect_->Initialize(command_.get());
 #pragma endregion
 
-#pragma region Manager
+#pragma region Managers
 	// ImGuiManagerの初期化
 	imguiManager_ = std::make_unique<ImGuiManager>();
 	imguiManager_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), srvUavManager_.get());
@@ -155,24 +159,20 @@ void SUGER::Initialize() {
 	grobalDataManager_->Initialize(fixFPS_.get());
 #pragma endregion
 
-#pragma region System
+#pragma region Systems
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
 	object2dSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
-
 	// Object3DSystemの初期化
 	object3dSystem_ = std::make_unique<Object3DSystem>();
 	object3dSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
-
 	// ParticleSystemの初期化
 	particleSystem_ = std::make_unique<ParticleSystem>();
 	particleSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
-
 	// LineSystemの初期化
 	lineSystem_ = std::make_unique<LineSystem>();
 	lineSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
 #pragma endregion
-
 }
 
 void SUGER::Finalize() {
@@ -280,14 +280,59 @@ void SUGER::Finalize() {
 		imguiManager_.reset();
 	}
 
-	// ViewManagerの終了処理
+	// ScissorRectの終了処理
+	if (scissorRect_) {
+		scissorRect_.reset();
+	}
+
+	// Viewportの終了処理
+	if (viewPort_) {
+		viewPort_.reset();
+	}
+
+	// TargetRenderPassの終了処理
+	if (targetRenderPass_) {
+		targetRenderPass_.reset();
+	}
+
+	// Barrierの終了処理
+	if (barrier_) {
+		barrier_.reset();
+	}
+
+	// DepthStencilの終了処理
+	if (depthStencil_) {
+		depthStencil_.reset();
+	}
+
+	// RenderTextureの終了処理
+	if (renderTexture_) {
+		renderTexture_.reset();
+	}
+
+	// SwapChainの終了処理
+	if (swapChain_) {
+		swapChain_.reset();
+	}
+
+	// SrvUavManagerの終了処理
 	if (srvUavManager_) {
 		srvUavManager_.reset();
 	}
 
-	// DirectInputの終了処理
-	if (directInput_) {
-		directInput_.reset();
+	// DSVManagerの終了処理
+	if (dsvmanager_) {
+		dsvmanager_.reset();
+	}
+
+	// RTVManagerの終了処理
+	if (rtvManager_) {
+		rtvManager_.reset();
+	}
+
+	// fenceの終了処理
+	if (fence_) {
+		fence_.reset();
 	}
 
 	// commandの終了処理
@@ -298,6 +343,16 @@ void SUGER::Finalize() {
 	// DXGIManagerの終了処理
 	if (dxgiManager_) {
 		dxgiManager_.reset();
+	}
+
+	// FixFPSの終了処理
+	if (fixFPS_) {
+		fixFPS_.reset();
+	}
+
+	// inputの終了処理
+	if (directInput_) {
+		directInput_.reset();
 	}
 
 	// WindowManagerの終了処理

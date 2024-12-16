@@ -599,6 +599,7 @@
     <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
     <ClInclude Include="Engine\manager\dsv\DSVManager.h" />
     <ClInclude Include="Engine\directX\renderTexture\RenderTexture.h" />
+    <ClInclude Include="Engine\enum\RenderTargetEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

@@ -23,6 +23,10 @@ void RenderTexture::Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVMa
 	CreateSRV();
 }
 
+Vector4 RenderTexture::GetClearColor()const {
+	return kClearColor_;
+}
+
 void RenderTexture::CreateResource() {
 	// リソースの設定
 	D3D12_RESOURCE_DESC resourceDesc{};

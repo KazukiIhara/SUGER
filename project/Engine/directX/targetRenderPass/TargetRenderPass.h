@@ -1,6 +1,7 @@
 #pragma once
 
 #include "math/types/Vector4.h"
+#include "enum/RenderTargetEnum.h"
 
 class DirectXCommand;
 class SwapChain;
@@ -31,6 +32,9 @@ private:
 	// デプスステンシルをセット
 	void SetDepthStencil(DepthStencil* depthStencil);
 private:
+	// 画面クリアカラー
+	Vector4 clearColor_ = { 0.05f,0.05f,0.05f,1.0f };
+private:
 	// コマンドのインスタンスを受け取る箱
 	DirectXCommand* command_ = nullptr;
 	// スワップチェーンのインスタンスを受け取る箱
@@ -39,6 +43,5 @@ private:
 	RenderTexture* renderTexture_ = nullptr;
 	// デプスステンシルのインスタンスを受け取る箱
 	DepthStencil* depthStencil_ = nullptr;
-	// 画面クリアカラー
-	Vector4 clearColor_ = { 0.05f,0.05f,0.05f,1.0f };
+
 };

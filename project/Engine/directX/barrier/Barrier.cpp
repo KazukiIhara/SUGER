@@ -5,9 +5,11 @@
 #include "directX/swapChain/SwapChain.h"
 #include "directX/command/DirectXCommand.h"
 
-void Barrier::Initialize(DirectXCommand* command, SwapChain* swapChain) {
+void Barrier::Initialize(DirectXCommand* command, SwapChain* swapChain, RenderTexture* renderTexture) {
+	// インスタンスをセット
 	SetSwapChain(swapChain);
 	SetCommand(command);
+	SetRenderTexture(renderTexture);
 	// タイプはトランジション
 	swapChainBarrier_.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	// None
@@ -42,4 +44,9 @@ void Barrier::SetCommand(DirectXCommand* command) {
 void Barrier::SetSwapChain(SwapChain* swapChain) {
 	assert(swapChain);
 	swapChian_ = swapChain;
+}
+
+void Barrier::SetRenderTexture(RenderTexture* renderTexture) {
+	assert(renderTexture);
+	renderTexture_ = renderTexture;
 }

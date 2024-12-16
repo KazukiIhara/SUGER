@@ -25,7 +25,8 @@ public:
 
 	// 初期化
 	void Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager, SRVUAVManager* srvUavManager);
-
+	// クリアカラーを取得
+	Vector4 GetClearColor()const;
 private:
 	// レンダーテクスチャのリソースを作成
 	void CreateResource();

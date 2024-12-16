@@ -19,6 +19,7 @@
 #include "manager/srvUav/SRVUAVManager.h"
 
 #include "directX/swapChain/SwapChain.h"
+#include "directX/renderTexture/RenderTexture.h"
 #include "directX/depthStencil/DepthStencil.h"
 #include "directX/barrier/Barrier.h"
 #include "directX/targetRenderPass/TargetRenderPass.h"
@@ -430,6 +431,7 @@ private: // クラスのポインタ
 	static std::unique_ptr<SRVUAVManager> srvUavManager_;
 
 	static std::unique_ptr<SwapChain> swapChain_;
+	static std::unique_ptr<RenderTexture> renderTexture_;
 	static std::unique_ptr<DepthStencil> depthStencil_;
 	static std::unique_ptr<Barrier> barrier_;
 	static std::unique_ptr<TargetRenderPass> targetRenderPass_;

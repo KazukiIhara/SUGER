@@ -206,6 +206,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
     <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
     <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
+    <ClInclude Include="Engine\enum\RenderTargetEnum.h" />
     <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\line\LineGroup.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
