@@ -25,8 +25,13 @@ public:
 
 	// 初期化
 	void Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager, SRVUAVManager* srvUavManager);
+	// 描画
+	void Draw();
+
 	// クリアカラーを取得
 	Vector4 GetClearColor()const;
+	// RTVハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE GetRTVHandle();
 private:
 	// レンダーテクスチャのリソースを作成
 	void CreateResource();

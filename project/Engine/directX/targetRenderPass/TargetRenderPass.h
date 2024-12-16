@@ -16,9 +16,9 @@ public:
 	// 初期化
 	void Initialize(DirectXCommand* command, SwapChain* swapChain, DepthStencil* depthStencil);
 	// レンダーターゲットのセット
-	void SetRenderTarget();
+	void SetRenderTarget(const RenderTargetType& type);
 	// レンダーターゲットのクリア
-	void ClearRenderTarget();
+	void ClearRenderTarget(const RenderTargetType& type);
 
 	// クリアカラーのセット
 	void SetClearColor(const Vector4& clearColor);

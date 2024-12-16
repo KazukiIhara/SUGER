@@ -13,27 +13,54 @@ void TargetRenderPass::Initialize(DirectXCommand* command, SwapChain* swapChain,
 	SetDepthStencil(depthStencil);
 }
 
-void TargetRenderPass::SetRenderTarget() {
-	// スワップチェーンの現在のバックバッファのRTVハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE swapChainRTVHandle = swapChain_->GetCurrentBackBufferRTVHandle();
+void TargetRenderPass::SetRenderTarget(const RenderTargetType& type) {
+	// RTVハンドルの受取先
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle{};
+	switch (type) {
+	case RenderTargetType::kSwapChain:
+		// SwapChainの現在のバックバッファのRTVハンドルを取得
+		rtvHandle = swapChain_->GetCurrentBackBufferRTVHandle();
+		break;
+	case RenderTargetType::kRenderTexture:
+		// RenderTextureのRTVハンドルを取得
+		rtvHandle = renderTexture_->GetRTVHandle();
+		break;
+	}
 	// デプスステンシルのDSVハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvhandle = depthStencil_->GetDepthStencilResorceCPUHandle();
 	// 描画先のRTVとDSVを指定
-	command_->GetList()->OMSetRenderTargets(1, &swapChainRTVHandle, false, &dsvhandle);
+	command_->GetList()->OMSetRenderTargets(1, &rtvHandle, false, &dsvhandle);
 }
 
-void TargetRenderPass::ClearRenderTarget() {
-	// スワップチェーンの現在のバックバッファのRTVハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE swapChainRTVHandle = swapChain_->GetCurrentBackBufferRTVHandle();
-	// クリアカラー変換
-	float clearColor[4];
-	clearColor[0] = clearColor_.x;
-	clearColor[1] = clearColor_.y;
-	clearColor[2] = clearColor_.z;
-	clearColor[3] = clearColor_.w;
-
-	// 指定した色で画面全体をクリアする
-	command_->GetList()->ClearRenderTargetView(swapChainRTVHandle, clearColor, 0, nullptr);
+void TargetRenderPass::ClearRenderTarget(const RenderTargetType& type) {
+	// RTVハンドルを受取先
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle{};
+	// クリアカラー
+	float clearColor[4]{};
+	switch (type) {
+	case RenderTargetType::kSwapChain:
+		// SwapChainの現在のバックバッファのRTVハンドルを取得
+		rtvHandle = swapChain_->GetCurrentBackBufferRTVHandle();
+		// クリアカラー変換
+		clearColor[0] = clearColor_.x;
+		clearColor[1] = clearColor_.y;
+		clearColor[2] = clearColor_.z;
+		clearColor[3] = clearColor_.w;
+		break;
+	case RenderTargetType::kRenderTexture:
+		// RenderTextureのクリアカラーを取得
+		Vector4 renderTextureClearColor = renderTexture_->GetClearColor();
+		// クリアカラー変換
+		clearColor[0] = renderTextureClearColor.x;
+		clearColor[1] = renderTextureClearColor.y;
+		clearColor[2] = renderTextureClearColor.z;
+		clearColor[3] = renderTextureClearColor.w;
+		// RenderTextureのRTVハンドルを取得
+		rtvHandle = renderTexture_->GetRTVHandle();
+		break;
+	}
+	// 指定したレンダーターゲットと色で画面全体をクリアする
+	command_->GetList()->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 }
 
 void TargetRenderPass::SetClearColor(const Vector4& clearColor) {

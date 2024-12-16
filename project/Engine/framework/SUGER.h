@@ -18,6 +18,26 @@
 #include "manager/dsv/DSVManager.h"
 #include "manager/srvUav/SRVUAVManager.h"
 
+#include "manager/texture/TextureManager.h"
+#include "manager/model/ModelManager.h"
+#include "manager/sound/SoundManager.h"
+
+#include "manager/object/2d/Object2DManager.h"
+#include "manager/emptyManager/EmptyManager.h"
+#include "manager/entityManager/EntityManager.h"
+#include "manager/emitter/EmitterManager.h"
+#include "manager/particle/ParticleManager.h"
+#include "manager/line/LineGroupManager.h"
+
+#include "manager/pipeline/graphics/GraphicsPipelineManager.h"
+#include "manager/pipeline/compute/ComputePipelineManager.h"
+
+#include "manager/data/level/json/JsonLevelDataManager.h"
+#include "manager/data/grobal/GrobalDataManager.h"
+
+#include "manager/collision/CollisionManager.h"
+#include "manager/imgui/ImGuiManager.h"
+
 #include "directX/swapChain/SwapChain.h"
 #include "directX/renderTexture/RenderTexture.h"
 #include "directX/depthStencil/DepthStencil.h"
@@ -26,26 +46,12 @@
 #include "directX/viewport/ViewPort.h"
 #include "directX/scissorRect/ScissorRect.h"
 
-#include "manager/imgui/ImGuiManager.h"
-#include "manager/texture/TextureManager.h"
-#include "manager/pipeline/graphics/GraphicsPipelineManager.h"
-#include "manager/pipeline/compute/ComputePipelineManager.h"
-#include "iScene/abstractFactory/AbstractSceneFactory.h"
-#include "manager/model/ModelManager.h"
-#include "manager/object/2d/Object2DManager.h"
-#include "manager/emptyManager/EmptyManager.h"
-#include "manager/entityManager/EntityManager.h"
-#include "manager/emitter/EmitterManager.h"
-#include "manager/particle/ParticleManager.h"
-#include "manager/line/LineGroupManager.h"
-#include "manager/sound/SoundManager.h"
-#include "manager/collision/CollisionManager.h"
-#include "manager/data/level/json/JsonLevelDataManager.h"
-#include "manager/data/grobal/GrobalDataManager.h"
 #include "system/object2d/Object2dSystem.h"
 #include "system/object3d/Object3dSystem.h"
 #include "system/particle/ParticleSystem.h"
 #include "system/line/LineSystem.h"
+
+#include "iScene/abstractFactory/AbstractSceneFactory.h"
 
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"

@@ -23,8 +23,16 @@ void RenderTexture::Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVMa
 	CreateSRV();
 }
 
+void RenderTexture::Draw() {
+
+}
+
 Vector4 RenderTexture::GetClearColor()const {
 	return kClearColor_;
+}
+
+D3D12_CPU_DESCRIPTOR_HANDLE RenderTexture::GetRTVHandle() {
+	return rtvManager_->GetDescriptorHandleCPU(rtvIndex_);
 }
 
 void RenderTexture::CreateResource() {
