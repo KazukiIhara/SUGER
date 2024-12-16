@@ -394,6 +394,7 @@
     <ClCompile Include="Engine\directX\viewport\ViewPort.cpp" />
     <ClCompile Include="Engine\directX\depthStencil\DepthStencil.cpp" />
     <ClCompile Include="Engine\manager\dsv\DSVManager.cpp" />
+    <ClCompile Include="Engine\directX\renderTexture\RenderTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -597,6 +598,7 @@
     <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
     <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
     <ClInclude Include="Engine\manager\dsv\DSVManager.h" />
+    <ClInclude Include="Engine\directX\renderTexture\RenderTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
