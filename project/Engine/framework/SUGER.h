@@ -130,7 +130,6 @@ public: // クラスメソッド
 	static bool IsPadRight(int controllerID);
 	static bool IsPadDown(int controllerID);
 	static bool IsPadLeft(int controllerID);
-
 #pragma endregion
 
 #pragma region FixFPS
@@ -143,7 +142,6 @@ public: // クラスメソッド
 	static ID3D12Device* GetDirectXDevice();
 	// バッファリソースを作成
 	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes, bool isUav = false);
-
 #pragma endregion
 
 #pragma region Command
@@ -158,7 +156,6 @@ public: // クラスメソッド
 #pragma region Fence
 	// GPUをまつ
 	static void WaitGPU();
-
 #pragma endregion
 
 #pragma region RTVManager
@@ -170,7 +167,6 @@ public: // クラスメソッド
 	static uint32_t RTVAllocate();
 	// RTVの作成
 	static void CreateRTVTexture2d(uint32_t rtvIndex, ID3D12Resource* pResource);
-
 #pragma endregion
 
 #pragma region SRVUAVManager
@@ -191,7 +187,6 @@ public: // クラスメソッド
 	static void CreateSrvStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 	// UAV作成
 	static void CreateUavStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
-
 #pragma endregion
 
 #pragma region RenderTarget
@@ -213,14 +208,12 @@ public: // クラスメソッド
 	static std::unordered_map<std::string, Texture>& GetTexture();
 	// メタデータ取得
 	static const DirectX::TexMetadata& GetTextureMetaData(const std::string& filePath);
-
 #pragma endregion
 
 #pragma region GraphicsPipelineManager
 	// GraphicsPipelineManagerの機能
 	// パイプライン取得関数
 	static ID3D12PipelineState* GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode);
-
 #pragma endregion
 
 #pragma region ComputePipelineManager
@@ -229,7 +222,6 @@ public: // クラスメソッド
 	static ID3D12RootSignature* GetRootSignature(ComputePipelineStateType pipelineState);
 	// パイプライン取得関数
 	static ID3D12PipelineState* GetPipelineState(ComputePipelineStateType pipelineState);
-
 #pragma endregion
 
 #pragma region ModelManager

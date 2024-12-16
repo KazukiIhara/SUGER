@@ -131,6 +131,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\manager\dsv\DSVManager.cpp" />
     <ClCompile Include="Engine\manager\line\LineGroupManager.cpp" />
     <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
+    <ClCompile Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.cpp" />
     <ClCompile Include="Engine\manager\rtv\RTVManager.cpp" />
     <ClCompile Include="Engine\system\line\LineSystem.cpp" />
     <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
@@ -206,6 +207,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
     <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
     <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
+    <ClInclude Include="Engine\enum\PostEffectPipelineEnum.h" />
     <ClInclude Include="Engine\enum\RenderTargetEnum.h" />
     <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\line\LineGroup.h" />
@@ -217,6 +219,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\dsv\DSVManager.h" />
     <ClInclude Include="Engine\manager\line\LineGroupManager.h" />
     <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
+    <ClInclude Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.h" />
     <ClInclude Include="Engine\manager\rtv\RTVManager.h" />
     <ClInclude Include="Engine\system\line\LineSystem.h" />
     <ClInclude Include="Engine\VFX\explosion\Explosion.h" />

@@ -18,31 +18,31 @@ void GraphicsPipelineManager::Initialize(DXGIManager* dxgi) {
 	object2dGraphicsPipeline_ = std::make_unique<Object2DGraphicsPipeline>();
 	object2dGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kObject2d);
-	SetGraphicsPipelineState(kObject2d);
+	SetPipelineState(kObject2d);
 
 	// 3Dオブジェクトのグラフィックスパイプラインを生成、初期化
 	object3dGraphicsPipeline_ = std::make_unique<Object3DGraphicsPipeline>();
 	object3dGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kObject3d);
-	SetGraphicsPipelineState(kObject3d);
+	SetPipelineState(kObject3d);
 
 	// Skinning3Dオブジェクトのグラフィックスパイプラインを生成、初期化
 	object3dSkinningGraphicsPipeline_ = std::make_unique<Object3DSkinningGraphicsPipeline>();
 	object3dSkinningGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kObject3dSkinning);
-	SetGraphicsPipelineState(kObject3dSkinning);
+	SetPipelineState(kObject3dSkinning);
 
 	// Particleグラフィックスパイプラインを生成、初期化
 	particleGraphicsPipeline_ = std::make_unique<ParticleGraphicsPipeline>();
 	particleGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kParticle);
-	SetGraphicsPipelineState(kParticle);
+	SetPipelineState(kParticle);
 
 	// Lineグラフィックスパイプラインを生成、初期化
 	lineGraphicsPipeline_ = std::make_unique<LineGraphicsPipeline>();
 	lineGraphicsPipeline_->Initialize(dxgi);
 	SetRootSignature(kLine);
-	SetGraphicsPipelineState(kLine);
+	SetPipelineState(kLine);
 
 }
 
@@ -90,7 +90,7 @@ void GraphicsPipelineManager::SetRootSignature(GraphicsPipelineStateType pipelin
 }
 
 // 指定されたパイプラインステートに対応するグラフィックスパイプラインステートを設定する
-void GraphicsPipelineManager::SetGraphicsPipelineState(GraphicsPipelineStateType pipelineState) {
+void GraphicsPipelineManager::SetPipelineState(GraphicsPipelineStateType pipelineState) {
 	// パイプラインステートごとに対応するグラフィックスパイプラインを設定
 	switch (pipelineState) {
 	case kObject2d:

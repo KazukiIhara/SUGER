@@ -19,7 +19,6 @@ public:
 	// スワップチェーン描画後のスワップチェーンのバリア
 	void PostDrawBarrierSwapChain();
 
-
 private:
 	// コマンドのインスタンスをセット
 	void SetCommand(DirectXCommand* command);

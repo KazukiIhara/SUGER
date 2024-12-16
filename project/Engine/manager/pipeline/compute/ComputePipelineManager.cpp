@@ -6,7 +6,7 @@ void ComputePipelineManager::Initialize(DXGIManager* dxgi) {
 	skinningComputePipeline_ = std::make_unique<SkinningComputePipeline>();
 	skinningComputePipeline_->Initialize(dxgi);
 	SetRootSignature(kSkinning);
-	SetGraphicsPipelineState(kSkinning);
+	SetPipelineState(kSkinning);
 }
 
 ID3D12RootSignature* ComputePipelineManager::GetRootSignature(ComputePipelineStateType pipelineState) {
@@ -29,7 +29,7 @@ void ComputePipelineManager::SetRootSignature(ComputePipelineStateType pipelineS
 	}
 }
 
-void ComputePipelineManager::SetGraphicsPipelineState(ComputePipelineStateType pipelineState) {
+void ComputePipelineManager::SetPipelineState(ComputePipelineStateType pipelineState) {
 	// パイプラインごとに対応するルートイグネイチャを設定
 	switch (pipelineState) {
 	case kSkinning:

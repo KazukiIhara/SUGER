@@ -8,6 +8,7 @@
 #include "manager/rtv/RTVManager.h"
 #include "manager/srvUav/SRVUAVManager.h"
 
+
 void RenderTexture::Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager, SRVUAVManager* srvUavManager) {
 	// インスタンスをセット
 	SetDXGI(dxgi);

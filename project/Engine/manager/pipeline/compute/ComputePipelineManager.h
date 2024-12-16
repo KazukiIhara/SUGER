@@ -32,7 +32,7 @@ public:
 
 	void SetRootSignature(ComputePipelineStateType pipelineState);
 
-	void SetGraphicsPipelineState(ComputePipelineStateType pipelineState);
+	void SetPipelineState(ComputePipelineStateType pipelineState);
 
 private:
 	// パイプラインの種類の数 
