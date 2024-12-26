@@ -119,6 +119,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\directX\barrier\Barrier.cpp" />
     <ClCompile Include="Engine\directX\depthStencil\DepthStencil.cpp" />
     <ClCompile Include="Engine\directX\fence\Fence.cpp" />
+    <ClCompile Include="Engine\directX\renderTexture\RenderTexture.cpp" />
     <ClCompile Include="Engine\directX\targetRenderPass\TargetRenderPass.cpp" />
     <ClCompile Include="Engine\directX\scissorRect\ScissorRect.cpp" />
     <ClCompile Include="Engine\directX\swapChain\SwapChain.cpp" />
@@ -130,7 +131,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\manager\dsv\DSVManager.cpp" />
     <ClCompile Include="Engine\manager\line\LineGroupManager.cpp" />
     <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
+    <ClCompile Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.cpp" />
     <ClCompile Include="Engine\manager\rtv\RTVManager.cpp" />
+    <ClCompile Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.cpp" />
     <ClCompile Include="Engine\system\line\LineSystem.cpp" />
     <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
     <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
@@ -199,11 +202,15 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\directX\barrier\Barrier.h" />
     <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
     <ClInclude Include="Engine\directX\fence\Fence.h" />
+    <ClInclude Include="Engine\directX\renderTexture\RenderTexture.h" />
     <ClInclude Include="Engine\directX\targetRenderPass\TargetRenderPass.h" />
     <ClInclude Include="Engine\directX\scissorRect\ScissorRect.h" />
     <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
     <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
+    <ClInclude Include="Engine\enum\BlendModeEnum.h" />
     <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
+    <ClInclude Include="Engine\enum\PostEffectPipelineEnum.h" />
+    <ClInclude Include="Engine\enum\RenderTargetEnum.h" />
     <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
     <ClInclude Include="Engine\3d\line\LineGroup.h" />
     <ClInclude Include="Engine\collider\Collider.h" />
@@ -214,7 +221,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\manager\dsv\DSVManager.h" />
     <ClInclude Include="Engine\manager\line\LineGroupManager.h" />
     <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
+    <ClInclude Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.h" />
     <ClInclude Include="Engine\manager\rtv\RTVManager.h" />
+    <ClInclude Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.h" />
     <ClInclude Include="Engine\system\line\LineSystem.h" />
     <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
     <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
@@ -356,6 +365,18 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="resources\shaders\postEffects\none\nonePostEffect.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\postEffects\none\nonePostEffect.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="resources\shaders\skinning\skinning.CS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
@@ -383,6 +404,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="resources\shaders\particle\particle.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\shaders\postEffects\none\nonePostEffect.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>

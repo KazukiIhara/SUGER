@@ -1,11 +1,11 @@
-#include "LineGraphicsPipeline.h"
+#include "NonePostEffectPipeline.h"
 
 #include <cassert>
 
 #include "debugTools/logger/Logger.h"
 #include "directX/dxgi/DXGIManager.h"
 
-void LineGraphicsPipeline::Initialize(DXGIManager* dxgi) {
+void NonePostEffectPipeline::Initialize(DXGIManager* dxgi) {
 	SetDXGI(dxgi);
 	InitializeDxCompiler();
 	CreateRootSignature();
@@ -13,20 +13,19 @@ void LineGraphicsPipeline::Initialize(DXGIManager* dxgi) {
 	CreateGraphicsPipelineObject();
 }
 
-ID3D12RootSignature* LineGraphicsPipeline::GetRootSignature() {
+ID3D12RootSignature* NonePostEffectPipeline::GetRootSignature() {
 	return rootSignature_.Get();
 }
 
-ID3D12PipelineState* LineGraphicsPipeline::GetPipelineState(BlendMode blendMode) {
+ID3D12PipelineState* NonePostEffectPipeline::GetPipelineState(BlendMode blendMode) {
 	return pipelineState_[blendMode].Get();
 }
 
-void LineGraphicsPipeline::CreateRootSignature() {
+void NonePostEffectPipeline::CreateRootSignature() {
 	HRESULT hr = S_FALSE;
 
-	// DescriptorRange設定
 	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
-	descriptorRange[0].BaseShaderRegister = 0; // SRVをb0にバインド
+	descriptorRange[0].BaseShaderRegister = 0;
 	descriptorRange[0].NumDescriptors = 1;
 	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
@@ -36,26 +35,29 @@ void LineGraphicsPipeline::CreateRootSignature() {
 	descriptionRootSignature.Flags =
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
-	// RootParameter作成
-	D3D12_ROOT_PARAMETER rootParameters[2] = {};
+	// RootParameter作成。
+	D3D12_ROOT_PARAMETER rootParameters[1] = {};
 
-	// CBV の設定
-	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX; // 頂点シェーダーで使用
-	rootParameters[0].Descriptor.ShaderRegister = 0; // b0にバインド
+	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;		// DescriptorTable使う
+	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;					// PixelShaderで使う
+	rootParameters[0].DescriptorTable.pDescriptorRanges = descriptorRange;				//Tableの中身の配列を指定
+	rootParameters[0].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);	// Tableで利用する数
 
-	// SRV の設定
-	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX; // 頂点シェーダーで使用
-	rootParameters[1].DescriptorTable.pDescriptorRanges = descriptorRange;
-	rootParameters[1].DescriptorTable.NumDescriptorRanges = 1;
+	descriptionRootSignature.pParameters = rootParameters;				//ルートパラメータ配列へのポインタ
+	descriptionRootSignature.NumParameters = _countof(rootParameters);	//配列の長さ
 
-	descriptionRootSignature.pParameters = rootParameters;
-	descriptionRootSignature.NumParameters = _countof(rootParameters);
-
-	// サンプラーは使用しない
-	descriptionRootSignature.pStaticSamplers = nullptr;
-	descriptionRootSignature.NumStaticSamplers = 0;
+	// Samplerの設定
+	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;			//バイリニアフィルタ
+	staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;		//0~1の範囲外をリピート
+	staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;		//比較しない
+	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;						//ありったけのMipmapを使う
+	staticSamplers[0].ShaderRegister = 0;								//レジスタ番号0を使う
+	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	//PixelShaderで使う
+	descriptionRootSignature.pStaticSamplers = staticSamplers;
+	descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
 
 	// シリアライズしてバイナリにする
 	ID3DBlob* signatureBlob = nullptr;
@@ -66,62 +68,57 @@ void LineGraphicsPipeline::CreateRootSignature() {
 		Logger::Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
 		assert(false);
 	}
-
-	// バイナリをもとに生成
+	//バイナリをもとに生成
 	rootSignature_ = nullptr;
 	hr = dxgi_->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(hr));
+
 }
 
-void LineGraphicsPipeline::CompileShaders() {
+void NonePostEffectPipeline::CompileShaders() {
 	vertexShaderBlob_ = nullptr;
-	vertexShaderBlob_ = CompileShader(L"resources/shaders/line/line.VS.hlsl",
+	vertexShaderBlob_ = CompileShader(L"resources/shaders/postEffects/none/nonePostEffect.VS.hlsl",
 		L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(vertexShaderBlob_ != nullptr);
 
 	pixelShaderBlob_ = nullptr;
-	pixelShaderBlob_ = CompileShader(L"resources/shaders/line/line.PS.hlsl",
+	pixelShaderBlob_ = CompileShader(L"resources/shaders/postEffects/none/nonePostEffect.PS.hlsl",
 		L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(pixelShaderBlob_ != nullptr);
 }
 
-void LineGraphicsPipeline::CreateGraphicsPipelineObject() {
+void NonePostEffectPipeline::CreateGraphicsPipelineObject() {
 	HRESULT hr;
 
-	// 必須のリソースが存在することを確認
 	assert(rootSignature_);
 	assert(vertexShaderBlob_);
 	assert(pixelShaderBlob_);
 
-	// グラフィックスパイプラインステートの設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
-	graphicsPipelineStateDesc.pRootSignature = rootSignature_.Get(); // ルートシグネチャ
-	graphicsPipelineStateDesc.InputLayout = InputLayoutSetting();    // 入力レイアウト
+	graphicsPipelineStateDesc.pRootSignature = rootSignature_.Get();
+	graphicsPipelineStateDesc.InputLayout = InputLayoutSetting();
 	graphicsPipelineStateDesc.VS = { vertexShaderBlob_->GetBufferPointer(),
-									 vertexShaderBlob_->GetBufferSize() }; // 頂点シェーダー
+	vertexShaderBlob_->GetBufferSize() };
 	graphicsPipelineStateDesc.PS = { pixelShaderBlob_->GetBufferPointer(),
-									 pixelShaderBlob_->GetBufferSize() }; // ピクセルシェーダー
-	graphicsPipelineStateDesc.RasterizerState = RasterizerStateSetting(); // ラスタライザ設定
-
-	// 書き込むRTVの情報
+	pixelShaderBlob_->GetBufferSize() };
+	graphicsPipelineStateDesc.RasterizerState = RasterizerStateSetting();
+	//書き込むRTVの情報
 	graphicsPipelineStateDesc.NumRenderTargets = 1;
 	graphicsPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-
-	// 利用するトポロジ (ライン用に設定)
-	graphicsPipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
-
-	// サンプル設定
+	//利用するトポロジ(形状)のタイプ、三角形
+	graphicsPipelineStateDesc.PrimitiveTopologyType =
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	//どのように画面に色を打ち込むかの設定(気にしなくて良い)
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-
-	// DepthStencilの設定
+	/*DepthStencilの設定*/
 	graphicsPipelineStateDesc.DepthStencilState = DepthStecilDescSetting();
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	// 実際に生成
-	for (uint32_t i = 0; i < kBlendModeNum; i++) {
-		graphicsPipelineStateDesc.BlendState = BlendStateSetting(i); // ブレンド設定
+	//実際に生成
+	for (uint32_t i = 0; i < BlendMode::blendModeNum; i++) {
+		graphicsPipelineStateDesc.BlendState = BlendStateSetting(i);
 		pipelineState_[i] = nullptr;
 		hr = dxgi_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 			IID_PPV_ARGS(&pipelineState_[i]));
@@ -129,7 +126,7 @@ void LineGraphicsPipeline::CreateGraphicsPipelineObject() {
 	}
 }
 
-void LineGraphicsPipeline::InitializeDxCompiler() {
+void NonePostEffectPipeline::InitializeDxCompiler() {
 	HRESULT hr = S_FALSE;
 	// dxCompilerを初期化
 	hr = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
@@ -140,7 +137,7 @@ void LineGraphicsPipeline::InitializeDxCompiler() {
 	assert(SUCCEEDED(hr));
 }
 
-ComPtr<ID3DBlob> LineGraphicsPipeline::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler) {
+ComPtr<ID3DBlob> NonePostEffectPipeline::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler) {
 	// これからシェーダーをコンパイルする旨をログに出す
 	Logger::Log(Logger::ConvertString(std::format(L"Begin CompileShader, path:{}, profile:{}\n", filePath, profile)));
 	// hlslファイルを読む
@@ -193,7 +190,7 @@ ComPtr<ID3DBlob> LineGraphicsPipeline::CompileShader(const std::wstring& filePat
 	return shaderBlob;
 }
 
-D3D12_BLEND_DESC LineGraphicsPipeline::BlendStateSetting(uint32_t blendModeNum) {
+D3D12_BLEND_DESC NonePostEffectPipeline::BlendStateSetting(uint32_t blendModeNum) {
 	D3D12_BLEND_DESC blendDesc{};
 	switch (blendModeNum) {
 	case 0:// kBlendModeNone
@@ -263,40 +260,32 @@ D3D12_BLEND_DESC LineGraphicsPipeline::BlendStateSetting(uint32_t blendModeNum) 
 	return blendDesc;
 }
 
-D3D12_DEPTH_STENCIL_DESC LineGraphicsPipeline::DepthStecilDescSetting() {
+D3D12_DEPTH_STENCIL_DESC NonePostEffectPipeline::DepthStecilDescSetting() {
 	// DepthStencilStateの設定
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};
-	// Depthの機能を有効化する
-	depthStencilDesc.DepthEnable = true;
-	// Depthの書き込みを行う
-	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	// 比較関数はLess
-	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
-
+	// Depthの機能を無効化する
+	depthStencilDesc.DepthEnable = false;
 	return depthStencilDesc;
 }
 
-D3D12_INPUT_LAYOUT_DESC LineGraphicsPipeline::InputLayoutSetting() {
+D3D12_INPUT_LAYOUT_DESC NonePostEffectPipeline::InputLayoutSetting() {
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
-	inputLayoutDesc.pInputElementDescs = nullptr; // 頂点バッファなし
+	inputLayoutDesc.pInputElementDescs = nullptr;
 	inputLayoutDesc.NumElements = 0;
 	return inputLayoutDesc;
 }
 
-D3D12_RASTERIZER_DESC LineGraphicsPipeline::RasterizerStateSetting() {
+D3D12_RASTERIZER_DESC NonePostEffectPipeline::RasterizerStateSetting() {
 	// RasterizerStateの設定
 	D3D12_RASTERIZER_DESC rasterizerDesc_{};
-	// カリングを無効化（両面を描画する）
-	rasterizerDesc_.CullMode = D3D12_CULL_MODE_NONE;
-	// 線を描画する
-	rasterizerDesc_.FillMode = D3D12_FILL_MODE_WIREFRAME;
-	// デフォルトの深度クリッピングを有効化
-	rasterizerDesc_.DepthClipEnable = true;
-
+	// 裏側(時計回り)を表示しない
+	rasterizerDesc_.CullMode = D3D12_CULL_MODE_BACK;
+	// 三角形の中を塗りつぶす
+	rasterizerDesc_.FillMode = D3D12_FILL_MODE_SOLID;
 	return rasterizerDesc_;
 }
 
-void LineGraphicsPipeline::SetDXGI(DXGIManager* dxgi) {
+void NonePostEffectPipeline::SetDXGI(DXGIManager* dxgi) {
 	assert(dxgi);
 	dxgi_ = dxgi;
 }

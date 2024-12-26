@@ -394,6 +394,9 @@
     <ClCompile Include="Engine\directX\viewport\ViewPort.cpp" />
     <ClCompile Include="Engine\directX\depthStencil\DepthStencil.cpp" />
     <ClCompile Include="Engine\manager\dsv\DSVManager.cpp" />
+    <ClCompile Include="Engine\directX\renderTexture\RenderTexture.cpp" />
+    <ClCompile Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.cpp" />
+    <ClCompile Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -597,6 +600,12 @@
     <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
     <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
     <ClInclude Include="Engine\manager\dsv\DSVManager.h" />
+    <ClInclude Include="Engine\directX\renderTexture\RenderTexture.h" />
+    <ClInclude Include="Engine\enum\RenderTargetEnum.h" />
+    <ClInclude Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.h" />
+    <ClInclude Include="Engine\enum\PostEffectPipelineEnum.h" />
+    <ClInclude Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.h" />
+    <ClInclude Include="Engine\enum\BlendModeEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
@@ -622,6 +631,8 @@
     <FxCompile Include="resources\shaders\line\line.PS.hlsl" />
     <FxCompile Include="resources\shaders\line\line.VS.hlsl" />
     <FxCompile Include="resources\shaders\skinning\skinning.CS.hlsl" />
+    <FxCompile Include="resources\shaders\postEffects\none\nonePostEffect.VS.hlsl" />
+    <FxCompile Include="resources\shaders\postEffects\none\nonePostEffect.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\objects\2d\object2d.hlsli">
@@ -636,5 +647,6 @@
     <None Include="resources\shaders\objects\3dSkinning\object3dSkinning.hlsli" />
     <None Include="resources\shaders\line\line.hlsli" />
     <None Include="resources\shaders\skinning\skinning.hlsli" />
+    <None Include="resources\shaders\postEffects\none\nonePostEffect.hlsli" />
   </ItemGroup>
 </Project>

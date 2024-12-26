@@ -4,6 +4,7 @@
 
 class DirectXCommand;
 class SwapChain;
+class RenderTexture;
 
 class Barrier {
 public:
@@ -11,26 +12,32 @@ public:
 	~Barrier() = default;
 
 	// 初期化
-	void Initialize(DirectXCommand* command, SwapChain* swapChain);
+	void Initialize(DirectXCommand* command, SwapChain* swapChain, RenderTexture* renderTexture);
 
-	// スワップチェーン描画前のバリア
-	void PreDrawBarrierSwapChain();
+	// 描画前のバリア遷移
+	void PostDrawBarrierTransition();
+	// swapChainプレゼント前のバリア遷移
+	void PreSwapChainPresentBarrierTransition();
 
-	// スワップチェーン描画後のバリア
-	void PostDrawBarrierSwapChain();
+
 private:
 	// コマンドのインスタンスをセット
 	void SetCommand(DirectXCommand* command);
 	// スワップチェーンのインスタンスをセット
 	void SetSwapChain(SwapChain* swapChain);
+	// レンダーテクスチャのインスタンスをセット
+	void SetRenderTexture(RenderTexture* renderTexture);
 
 private:
-	// リソースバリア
+	// リソースバリア(スワップチェーン用)
 	D3D12_RESOURCE_BARRIER swapChainBarrier_{};
+	// リソースバリア(レンダーテクスチャ用)
+	D3D12_RESOURCE_BARRIER renderTextureBarrier_{};
 private:
 	// コマンドのインスタンスを受け取る箱
 	DirectXCommand* command_ = nullptr;
 	// スワップチェーンのインスタンスを受け取る箱
 	SwapChain* swapChian_ = nullptr;
-
+	// レンダーテクスチャのインスタンスを受け取る箱
+	RenderTexture* renderTexture_ = nullptr;
 };

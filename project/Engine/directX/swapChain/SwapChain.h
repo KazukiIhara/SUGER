@@ -33,7 +33,9 @@ private:
 	// スワップチェーン作成
 	void CreateSwapChain();
 	// スワップチェーンのRTVリソースを作成
-	void CreateSwapChainResources();
+	void CreateResources();
+	// RTVを作成
+	void CreateRTV();
 private:
 	// WindowManagerをセット
 	void SetWindowManager(WindowManager* windowManager);
@@ -50,7 +52,7 @@ private:
 	ComPtr<ID3D12Resource> swapChainResources_[2] = { nullptr };
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_{};
 	// RTVリソースのインデックス
-	uint32_t swapChainIndex_[2]{};
+	uint32_t rtvIndex_[2]{};
 	// バックバッファインデックス
 	UINT backBufferIndex_ = 0;
 	// エラー判別君

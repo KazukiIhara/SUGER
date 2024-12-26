@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include "d3d12.h"
+#include <d3d12.h>
 
 #include "manager/window/WindowManager.h"
 #include "input/direct/DirectInput.h"
@@ -18,33 +18,41 @@
 #include "manager/dsv/DSVManager.h"
 #include "manager/srvUav/SRVUAVManager.h"
 
-#include "directX/swapChain/SwapChain.h"
-#include "directX/depthStencil/DepthStencil.h"
-#include "directX/barrier/Barrier.h"
-#include "directX/targetRenderPass/TargetRenderPass.h"
-#include "directX/viewport/ViewPort.h"
-#include "directX/scissorRect/ScissorRect.h"
-
-#include "manager/imgui/ImGuiManager.h"
 #include "manager/texture/TextureManager.h"
-#include "manager/pipeline/graphics/GraphicsPipelineManager.h"
-#include "manager/pipeline/compute/ComputePipelineManager.h"
-#include "iScene/abstractFactory/AbstractSceneFactory.h"
 #include "manager/model/ModelManager.h"
+#include "manager/sound/SoundManager.h"
+
 #include "manager/object/2d/Object2DManager.h"
 #include "manager/emptyManager/EmptyManager.h"
 #include "manager/entityManager/EntityManager.h"
 #include "manager/emitter/EmitterManager.h"
 #include "manager/particle/ParticleManager.h"
 #include "manager/line/LineGroupManager.h"
-#include "manager/sound/SoundManager.h"
-#include "manager/collision/CollisionManager.h"
+
+#include "manager/pipeline/graphics/GraphicsPipelineManager.h"
+#include "manager/pipeline/compute/ComputePipelineManager.h"
+#include "manager/pipeline/postEffect/PostEffectPipelineManager.h"
+
 #include "manager/data/level/json/JsonLevelDataManager.h"
 #include "manager/data/grobal/GrobalDataManager.h"
+
+#include "manager/collision/CollisionManager.h"
+#include "manager/imgui/ImGuiManager.h"
+
+#include "directX/swapChain/SwapChain.h"
+#include "directX/renderTexture/RenderTexture.h"
+#include "directX/depthStencil/DepthStencil.h"
+#include "directX/barrier/Barrier.h"
+#include "directX/targetRenderPass/TargetRenderPass.h"
+#include "directX/viewport/ViewPort.h"
+#include "directX/scissorRect/ScissorRect.h"
+
 #include "system/object2d/Object2dSystem.h"
 #include "system/object3d/Object3dSystem.h"
 #include "system/particle/ParticleSystem.h"
 #include "system/line/LineSystem.h"
+
+#include "iScene/abstractFactory/AbstractSceneFactory.h"
 
 #ifdef _DEBUG
 #include "debugTools/leakChecker/d3dResource/D3DResourceLeakChecker.h"
@@ -123,7 +131,6 @@ public: // クラスメソッド
 	static bool IsPadRight(int controllerID);
 	static bool IsPadDown(int controllerID);
 	static bool IsPadLeft(int controllerID);
-
 #pragma endregion
 
 #pragma region FixFPS
@@ -136,7 +143,6 @@ public: // クラスメソッド
 	static ID3D12Device* GetDirectXDevice();
 	// バッファリソースを作成
 	static ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes, bool isUav = false);
-
 #pragma endregion
 
 #pragma region Command
@@ -151,7 +157,6 @@ public: // クラスメソッド
 #pragma region Fence
 	// GPUをまつ
 	static void WaitGPU();
-
 #pragma endregion
 
 #pragma region RTVManager
@@ -163,7 +168,6 @@ public: // クラスメソッド
 	static uint32_t RTVAllocate();
 	// RTVの作成
 	static void CreateRTVTexture2d(uint32_t rtvIndex, ID3D12Resource* pResource);
-
 #pragma endregion
 
 #pragma region SRVUAVManager
@@ -184,7 +188,6 @@ public: // クラスメソッド
 	static void CreateSrvStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
 	// UAV作成
 	static void CreateUavStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, uint32_t numElements, UINT structureByteStride);
-
 #pragma endregion
 
 #pragma region RenderTarget
@@ -206,14 +209,12 @@ public: // クラスメソッド
 	static std::unordered_map<std::string, Texture>& GetTexture();
 	// メタデータ取得
 	static const DirectX::TexMetadata& GetTextureMetaData(const std::string& filePath);
-
 #pragma endregion
 
 #pragma region GraphicsPipelineManager
 	// GraphicsPipelineManagerの機能
 	// パイプライン取得関数
 	static ID3D12PipelineState* GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode);
-
 #pragma endregion
 
 #pragma region ComputePipelineManager
@@ -222,6 +223,9 @@ public: // クラスメソッド
 	static ID3D12RootSignature* GetRootSignature(ComputePipelineStateType pipelineState);
 	// パイプライン取得関数
 	static ID3D12PipelineState* GetPipelineState(ComputePipelineStateType pipelineState);
+#pragma endregion
+
+#pragma region PostEffectPipelineManager
 
 #pragma endregion
 
@@ -429,28 +433,36 @@ private: // クラスのポインタ
 	static std::unique_ptr<DSVManager> dsvmanager_;
 	static std::unique_ptr<SRVUAVManager> srvUavManager_;
 
-	static std::unique_ptr<SwapChain> swapChain_;
-	static std::unique_ptr<DepthStencil> depthStencil_;
-	static std::unique_ptr<Barrier> barrier_;
-	static std::unique_ptr<TargetRenderPass> targetRenderPass_;
-	static std::unique_ptr<ViewPort> viewPort_;
-	static std::unique_ptr<ScissorRect> scissorRect_;
-
-	static std::unique_ptr<ImGuiManager> imguiManager_;
 	static std::unique_ptr<TextureManager> textureManager_;
-	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
-	static std::unique_ptr<ComputePipelineManager> computePipelineManager_;
 	static std::unique_ptr<ModelManager> modelManager_;
+	static std::unique_ptr<SoundManager> soundManager_;
+
 	static std::unique_ptr<Object2DManager> object2dManager_;
 	static std::unique_ptr<EmptyManager> emptyManager_;
 	static std::unique_ptr<EntityManager> entityManager_;
 	static std::unique_ptr<EmitterManager> emitterManager_;
 	static std::unique_ptr<ParticleManager> particleManager_;
 	static std::unique_ptr<LineGroupManager> lineManager_;
-	static std::unique_ptr<SoundManager> soundManager_;
-	static std::unique_ptr<CollisionManager> collisionManager_;
+
+	static std::unique_ptr<GraphicsPipelineManager> graphicsPipelineManager_;
+	static std::unique_ptr<ComputePipelineManager> computePipelineManager_;
+	static std::unique_ptr<PostEffectPipelineManager> postEffectPipelineManager_;
+
 	static std::unique_ptr<JsonLevelDataManager> jsonLevelDataManager_;
 	static std::unique_ptr<GrobalDataManager> grobalDataManager_;
+
+	static std::unique_ptr<CollisionManager> collisionManager_;
+	static std::unique_ptr<ImGuiManager> imguiManager_;
+
+
+	static std::unique_ptr<SwapChain> swapChain_;
+	static std::unique_ptr<RenderTexture> renderTexture_;
+	static std::unique_ptr<DepthStencil> depthStencil_;
+	static std::unique_ptr<Barrier> barrier_;
+	static std::unique_ptr<TargetRenderPass> targetRenderPass_;
+	static std::unique_ptr<ViewPort> viewPort_;
+	static std::unique_ptr<ScissorRect> scissorRect_;
+
 	static std::unique_ptr<Object2DSystem> object2dSystem_;
 	static std::unique_ptr<Object3DSystem> object3dSystem_;
 	static std::unique_ptr<ParticleSystem> particleSystem_;

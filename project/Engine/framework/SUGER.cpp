@@ -19,28 +19,35 @@ std::unique_ptr<RTVManager> SUGER::rtvManager_ = nullptr;
 std::unique_ptr<DSVManager> SUGER::dsvmanager_ = nullptr;
 std::unique_ptr<SRVUAVManager> SUGER::srvUavManager_ = nullptr;
 
-std::unique_ptr<SwapChain> SUGER::swapChain_ = nullptr;
-std::unique_ptr<DepthStencil> SUGER::depthStencil_ = nullptr;
-std::unique_ptr<Barrier> SUGER::barrier_ = nullptr;
-std::unique_ptr<TargetRenderPass> SUGER::targetRenderPass_ = nullptr;
-std::unique_ptr<ViewPort> SUGER::viewPort_ = nullptr;
-std::unique_ptr<ScissorRect> SUGER::scissorRect_ = nullptr;
-
-std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
 std::unique_ptr<TextureManager> SUGER::textureManager_ = nullptr;
-std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
-std::unique_ptr<ComputePipelineManager> SUGER::computePipelineManager_ = nullptr;
 std::unique_ptr<ModelManager> SUGER::modelManager_ = nullptr;
+std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
+
 std::unique_ptr<Object2DManager> SUGER::object2dManager_ = nullptr;
 std::unique_ptr<EmptyManager> SUGER::emptyManager_ = nullptr;
 std::unique_ptr<EntityManager> SUGER::entityManager_ = nullptr;
 std::unique_ptr<EmitterManager> SUGER::emitterManager_ = nullptr;
 std::unique_ptr<ParticleManager> SUGER::particleManager_ = nullptr;
 std::unique_ptr<LineGroupManager> SUGER::lineManager_ = nullptr;
-std::unique_ptr<SoundManager> SUGER::soundManager_ = nullptr;
-std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
+
+std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
+std::unique_ptr<ComputePipelineManager> SUGER::computePipelineManager_ = nullptr;
+std::unique_ptr<PostEffectPipelineManager> SUGER::postEffectPipelineManager_ = nullptr;
+
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
 std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
+
+std::unique_ptr<CollisionManager> SUGER::collisionManager_ = nullptr;
+std::unique_ptr<ImGuiManager> SUGER::imguiManager_ = nullptr;
+
+std::unique_ptr<SwapChain> SUGER::swapChain_ = nullptr;
+std::unique_ptr<RenderTexture> SUGER::renderTexture_ = nullptr;
+std::unique_ptr<DepthStencil> SUGER::depthStencil_ = nullptr;
+std::unique_ptr<Barrier> SUGER::barrier_ = nullptr;
+std::unique_ptr<TargetRenderPass> SUGER::targetRenderPass_ = nullptr;
+std::unique_ptr<ViewPort> SUGER::viewPort_ = nullptr;
+std::unique_ptr<ScissorRect> SUGER::scissorRect_ = nullptr;
+
 std::unique_ptr<Object2DSystem> SUGER::object2dSystem_ = nullptr;
 std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
@@ -86,43 +93,19 @@ void SUGER::Initialize() {
 	srvUavManager_->Initialize(dxgiManager_.get(), command_.get());
 #pragma endregion
 
-#pragma region DirectXRenderSystem
-	// SwapChainの初期化
-	swapChain_ = std::make_unique<SwapChain>();
-	swapChain_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), rtvManager_.get());
-	// DepthStencilの初期化
-	depthStencil_ = std::make_unique<DepthStencil>();
-	depthStencil_->Initialize(dxgiManager_.get(), command_.get(), dsvmanager_.get());
-	// Barrierの初期化
-	barrier_ = std::make_unique<Barrier>();
-	barrier_->Initialize(command_.get(), swapChain_.get());
-	// TargetRenderPassの初期化
-	targetRenderPass_ = std::make_unique<TargetRenderPass>();
-	targetRenderPass_->Initialize(command_.get(), swapChain_.get(), depthStencil_.get());
-	// Viewportの初期化
-	viewPort_ = std::make_unique<ViewPort>();
-	viewPort_->Initialize(command_.get());
-	// ScissorRectの初期化
-	scissorRect_ = std::make_unique<ScissorRect>();
-	scissorRect_->Initialize(command_.get());
-#pragma endregion
-
-#pragma region Manager
-	// ImGuiManagerの初期化
-	imguiManager_ = std::make_unique<ImGuiManager>();
-	imguiManager_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), srvUavManager_.get());
+#pragma region ResourceManagers
 	// TextureManagerの初期化
 	textureManager_ = std::make_unique<TextureManager>();
 	textureManager_->Initialize(dxgiManager_.get(), command_.get(), fence_.get(), srvUavManager_.get());
-	// GraphicsPipelineManagerの初期化
-	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
-	graphicsPipelineManager_->Initialize(dxgiManager_.get());
-	// ComputePipelineManagerの初期化
-	computePipelineManager_ = std::make_unique<ComputePipelineManager>();
-	computePipelineManager_->Initialize(dxgiManager_.get());
 	// ModelManagerの初期化
 	modelManager_ = std::make_unique<ModelManager>();
 	modelManager_->Initialize();
+	// soundManagerの初期化
+	soundManager_ = std::make_unique<SoundManager>();
+	soundManager_->Initialize();
+#pragma endregion
+
+#pragma region ObjectManagers
 	// object2dManagerの初期化
 	object2dManager_ = std::make_unique<Object2DManager>();
 	object2dManager_->Initialize();
@@ -141,12 +124,21 @@ void SUGER::Initialize() {
 	// LineManagerの初期化
 	lineManager_ = std::make_unique<LineGroupManager>();
 	lineManager_->Initialize();
-	// soundManagerの初期化
-	soundManager_ = std::make_unique<SoundManager>();
-	soundManager_->Initialize();
-	// collisionManager
-	collisionManager_ = std::make_unique<CollisionManager>();
-	collisionManager_->Initialize(lineManager_.get());
+#pragma endregion
+
+#pragma region PipeLineManagers
+	// GraphicsPipelineManagerの初期化
+	graphicsPipelineManager_ = std::make_unique<GraphicsPipelineManager>();
+	graphicsPipelineManager_->Initialize(dxgiManager_.get());
+	// ComputePipelineManagerの初期化
+	computePipelineManager_ = std::make_unique<ComputePipelineManager>();
+	computePipelineManager_->Initialize(dxgiManager_.get());
+	// PostEffectPipelineManagerの初期化
+	postEffectPipelineManager_ = std::make_unique<PostEffectPipelineManager>();
+	postEffectPipelineManager_->Initialize(dxgiManager_.get());
+#pragma endregion
+
+#pragma region DataManagers
 	// JsonLevelDataManagerの初期化
 	jsonLevelDataManager_ = std::make_unique<JsonLevelDataManager>();
 	jsonLevelDataManager_->Initialize();
@@ -155,24 +147,53 @@ void SUGER::Initialize() {
 	grobalDataManager_->Initialize(fixFPS_.get());
 #pragma endregion
 
-#pragma region System
+#pragma region SystemManagers
+	// collisionManager
+	collisionManager_ = std::make_unique<CollisionManager>();
+	collisionManager_->Initialize(lineManager_.get());
+	// ImGuiManagerの初期化
+	imguiManager_ = std::make_unique<ImGuiManager>();
+	imguiManager_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), srvUavManager_.get());
+#pragma endregion
+
+#pragma region DirectXRenderSystems
+	// SwapChainの初期化
+	swapChain_ = std::make_unique<SwapChain>();
+	swapChain_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), rtvManager_.get());
+	// RenderTextureの初期化
+	renderTexture_ = std::make_unique<RenderTexture>();
+	renderTexture_->Initialize(dxgiManager_.get(), command_.get(), rtvManager_.get(), srvUavManager_.get(),postEffectPipelineManager_.get());
+	// DepthStencilの初期化
+	depthStencil_ = std::make_unique<DepthStencil>();
+	depthStencil_->Initialize(dxgiManager_.get(), command_.get(), dsvmanager_.get());
+	// Barrierの初期化
+	barrier_ = std::make_unique<Barrier>();
+	barrier_->Initialize(command_.get(), swapChain_.get(), renderTexture_.get());
+	// TargetRenderPassの初期化
+	targetRenderPass_ = std::make_unique<TargetRenderPass>();
+	targetRenderPass_->Initialize(command_.get(), swapChain_.get(), renderTexture_.get(), depthStencil_.get());
+	// Viewportの初期化
+	viewPort_ = std::make_unique<ViewPort>();
+	viewPort_->Initialize(command_.get());
+	// ScissorRectの初期化
+	scissorRect_ = std::make_unique<ScissorRect>();
+	scissorRect_->Initialize(command_.get());
+#pragma endregion
+
+#pragma region Systems
 	// Object2DSystemの初期化
 	object2dSystem_ = std::make_unique<Object2DSystem>();
 	object2dSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
-
 	// Object3DSystemの初期化
 	object3dSystem_ = std::make_unique<Object3DSystem>();
 	object3dSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
-
 	// ParticleSystemの初期化
 	particleSystem_ = std::make_unique<ParticleSystem>();
 	particleSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
-
 	// LineSystemの初期化
 	lineSystem_ = std::make_unique<LineSystem>();
 	lineSystem_->Initialize(command_.get(), graphicsPipelineManager_.get());
 #pragma endregion
-
 }
 
 void SUGER::Finalize() {
@@ -200,6 +221,53 @@ void SUGER::Finalize() {
 		object2dSystem_.reset();
 	}
 
+	// ScissorRectの終了処理
+	if (scissorRect_) {
+		scissorRect_.reset();
+	}
+
+	// Viewportの終了処理
+	if (viewPort_) {
+		viewPort_.reset();
+	}
+
+	// TargetRenderPassの終了処理
+	if (targetRenderPass_) {
+		targetRenderPass_.reset();
+	}
+
+	// Barrierの終了処理
+	if (barrier_) {
+		barrier_.reset();
+	}
+
+	// DepthStencilの終了処理
+	if (depthStencil_) {
+		depthStencil_.reset();
+	}
+
+	// RenderTextureの終了処理
+	if (renderTexture_) {
+		renderTexture_.reset();
+	}
+
+	// SwapChainの終了処理
+	if (swapChain_) {
+		swapChain_.reset();
+	}
+
+	// ImGuiManagerの終了処理
+	if (imguiManager_) {
+		imguiManager_->Finalize();
+		imguiManager_.reset();
+	}
+
+	// collisionManagerの終了処理
+	if (collisionManager_) {
+		collisionManager_->Finalize();
+		collisionManager_.reset();
+	}
+
 	// grobalDataManagerの終了処理
 	if (grobalDataManager_) {
 		grobalDataManager_->Finalize();
@@ -212,16 +280,19 @@ void SUGER::Finalize() {
 		jsonLevelDataManager_.reset();
 	}
 
-	// collisionManagerの終了処理
-	if (collisionManager_) {
-		collisionManager_->Finalize();
-		collisionManager_.reset();
+	// PostEffectPipelineManagerの終了処理
+	if (postEffectPipelineManager_) {
+		postEffectPipelineManager_.reset();
 	}
 
-	// soundManagerの終了処理
-	if (soundManager_) {
-		soundManager_->Finalize();
-		soundManager_.reset();
+	// ComputePipelineManagerの終了処理
+	if (computePipelineManager_) {
+		computePipelineManager_.reset();
+	}
+
+	// GraphicsPipelineManagerの終了処理
+	if (graphicsPipelineManager_) {
+		graphicsPipelineManager_.reset();
 	}
 
 	// emitterManagerの終了処理
@@ -230,16 +301,10 @@ void SUGER::Finalize() {
 		emitterManager_.reset();
 	}
 
-	// FixParticleManagerの終了処理
+	// ParticleManagerの終了処理
 	if (particleManager_) {
 		particleManager_->Finalize();
 		particleManager_.reset();
-	}
-
-	// Object2DManagerの終了処理
-	if (object2dManager_) {
-		object2dManager_->Finalize();
-		object2dManager_.reset();
 	}
 
 	// EmptyManagerの終了処理
@@ -254,19 +319,21 @@ void SUGER::Finalize() {
 		entityManager_.reset();
 	}
 
+	// Object2DManagerの終了処理
+	if (object2dManager_) {
+		object2dManager_->Finalize();
+		object2dManager_.reset();
+	}
+
+	// soundManagerの終了処理
+	if (soundManager_) {
+		soundManager_->Finalize();
+		soundManager_.reset();
+	}
+
 	// ModelManagerの終了処理
 	if (modelManager_) {
 		modelManager_.reset();
-	}
-
-	// ComputePipelineManagerの終了処理
-	if (computePipelineManager_) {
-		computePipelineManager_.reset();
-	}
-
-	// GraphicsPipelineManagerの終了処理
-	if (graphicsPipelineManager_) {
-		graphicsPipelineManager_.reset();
 	}
 
 	// TextureManagerの終了処理
@@ -274,20 +341,24 @@ void SUGER::Finalize() {
 		textureManager_.reset();
 	}
 
-	// ImGuiManagerの終了処理
-	if (imguiManager_) {
-		imguiManager_->Finalize();
-		imguiManager_.reset();
-	}
-
-	// ViewManagerの終了処理
+	// SrvUavManagerの終了処理
 	if (srvUavManager_) {
 		srvUavManager_.reset();
 	}
 
-	// DirectInputの終了処理
-	if (directInput_) {
-		directInput_.reset();
+	// DSVManagerの終了処理
+	if (dsvmanager_) {
+		dsvmanager_.reset();
+	}
+
+	// RTVManagerの終了処理
+	if (rtvManager_) {
+		rtvManager_.reset();
+	}
+
+	// fenceの終了処理
+	if (fence_) {
+		fence_.reset();
 	}
 
 	// commandの終了処理
@@ -298,6 +369,16 @@ void SUGER::Finalize() {
 	// DXGIManagerの終了処理
 	if (dxgiManager_) {
 		dxgiManager_.reset();
+	}
+
+	// FixFPSの終了処理
+	if (fixFPS_) {
+		fixFPS_.reset();
+	}
+
+	// inputの終了処理
+	if (directInput_) {
+		directInput_.reset();
 	}
 
 	// WindowManagerの終了処理
@@ -370,7 +451,6 @@ void SUGER::Draw() {
 	PreDrawObject2D();
 	// 2Dオブジェクト描画処理
 	Draw2DObjects();
-
 }
 
 void SUGER::Run() {
@@ -398,14 +478,13 @@ void SUGER::PreDraw() {
 	// ImGui内部コマンド生成
 	imguiManager_->EndFrame();
 	// DirectX描画前処理
-	// スワップチェーン描画前のバリアを張る
-	barrier_->PreDrawBarrierSwapChain();
-	// レンダーターゲットを設定
-	targetRenderPass_->SetRenderTarget();
+	// RenderTexture描画前処理
+	// レンダーターゲットをセット
+	targetRenderPass_->SetRenderTarget(RenderTargetType::kRenderTexture);
+	// レンダーターゲットビューをクリア
+	targetRenderPass_->ClearRenderTarget(RenderTargetType::kRenderTexture);
 	// 深度をクリア
 	depthStencil_->ClearDepthView();
-	// 画面をクリア
-	targetRenderPass_->ClearRenderTarget();
 	// ビューポートの設定
 	viewPort_->SettingViewport();
 	// シザー矩形の設定
@@ -415,11 +494,26 @@ void SUGER::PreDraw() {
 }
 
 void SUGER::PostDraw() {
+	// DirectX描画後処理
+	// スワップチェーン描画前のバリアを張る
+	barrier_->PostDrawBarrierTransition();
+	// レンダーターゲットを設定
+	targetRenderPass_->SetRenderTarget(RenderTargetType::kSwapChain);
+	// 画面をクリア
+	targetRenderPass_->ClearRenderTarget(RenderTargetType::kSwapChain);
+	// ビューポートの設定
+	viewPort_->SettingViewport();
+	// シザー矩形の設定
+	scissorRect_->SettingScissorRect();
+
+	// レンダーテクスチャの描画
+	renderTexture_->Draw();
+
 	// ImGui描画処理
 	imguiManager_->Draw();
-	// DirectX描画後処理
+
 	// 描画後のバリアを張る
-	barrier_->PostDrawBarrierSwapChain();
+	barrier_->PreSwapChainPresentBarrierTransition();
 	// コマンドの実行
 	command_->KickCommand();
 	// GPUとOSに画面の交換を行うように通知する

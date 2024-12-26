@@ -11,6 +11,7 @@
 // MyHedder
 #include "directX/includes/ComPtr.h"
 #include "enum/GraphicsPipelineEnum.h"
+#include "enum/BlendModeEnum.h"
 
 #include "graphicsPipeline/object2d/Object2dGraphicsPipeline.h"
 #include "graphicsPipeline/ocject3d/Object3dGraphicsPipeline.h"
@@ -34,22 +35,20 @@ public: // 公開メンバ変数
 	// パイプラインステイトのゲッター
 	ID3D12PipelineState* GetPipelineState(GraphicsPipelineStateType pipelineState, BlendMode blendMode);
 
+	// ルートシグネイチャをセット
 	void SetRootSignature(GraphicsPipelineStateType pipelineState);
 
-	void SetGraphicsPipelineState(GraphicsPipelineStateType pipelineState);
+	// パイプラインをセット
+	void SetPipelineState(GraphicsPipelineStateType pipelineState);
 
 private: // 静的メンバ変数
-	// ブレンドモードの数
-	static const uint32_t kBlendModeNum = 6;
 	// パイプラインの種類の数 
 	static const uint32_t kGraphicsPipelineStateNum = 5;
-
 private: // メンバ変数
 	// ルートシグネイチャ
 	ComPtr<ID3D12RootSignature> rootSignatures_[kGraphicsPipelineStateNum];
 	// グラフィックスパイプライン
-	ComPtr<ID3D12PipelineState> graphicsPipelineStates_[kGraphicsPipelineStateNum][kBlendModeNum];
-
+	ComPtr<ID3D12PipelineState> graphicsPipelineStates_[kGraphicsPipelineStateNum][BlendMode::blendModeNum];
 private:
 	// 2DGraphicsPipeline
 	std::unique_ptr<Object2DGraphicsPipeline> object2dGraphicsPipeline_ = nullptr;

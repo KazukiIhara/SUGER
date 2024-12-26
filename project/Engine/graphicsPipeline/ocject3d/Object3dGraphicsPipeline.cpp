@@ -18,7 +18,7 @@ ID3D12RootSignature* Object3DGraphicsPipeline::GetRootSignature() {
 }
 
 ID3D12PipelineState* Object3DGraphicsPipeline::GetPipelineState(BlendMode blendMode) {
-	return graphicsPipelineState_[blendMode].Get();
+	return pipelineState_[blendMode].Get();
 }
 
 void Object3DGraphicsPipeline::CreateRootSignature() {
@@ -141,11 +141,11 @@ void Object3DGraphicsPipeline::CreateGraphicsPipelineObject() {
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 	// 実際に生成
-	for (uint32_t i = 0; i < kBlendModeNum; i++) {
+	for (uint32_t i = 0; i < BlendMode::blendModeNum; i++) {
 		graphicsPipelineStateDesc.BlendState = BlendStateSetting(i);
-		graphicsPipelineState_[i] = nullptr;
+		pipelineState_[i] = nullptr;
 		hr = dxgi_->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
-			IID_PPV_ARGS(&graphicsPipelineState_[i]));
+			IID_PPV_ARGS(&pipelineState_[i]));
 		assert(SUCCEEDED(hr));
 	}
 }

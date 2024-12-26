@@ -9,15 +9,14 @@
 
 // ヘッダファイル
 #include "directX/includes/ComPtr.h"
-#include "enum/GraphicsPipelineEnum.h"
 #include "enum/BlendModeEnum.h"
 
 class DXGIManager;
 
-class LineGraphicsPipeline {
+class NonePostEffectPipeline {
 public:
-	LineGraphicsPipeline() = default;
-	~LineGraphicsPipeline() = default;
+	NonePostEffectPipeline() = default;
+	~NonePostEffectPipeline() = default;
 
 	// 初期化処理
 	void Initialize(DXGIManager* dxgi);
@@ -66,19 +65,16 @@ private:
 	D3D12_RASTERIZER_DESC RasterizerStateSetting();
 
 private:
-	// DXGIのセット
+	// DXGIのインスタンスをセット
 	void SetDXGI(DXGIManager* dxgi);
 
-private: // 静的メンバ変数
-	// ブレンドモードの数
-	static const uint32_t kBlendModeNum = 6;
-
 private:
+
 	// ルートシグネチャ
 	ComPtr<ID3D12RootSignature> rootSignature_;
 
-	// グラフィックスパイプラインステート (ブレンドモードごとに設定)
-	ComPtr<ID3D12PipelineState> pipelineState_[kBlendModeNum];
+	// グラフィックスパイプラインステート
+	ComPtr<ID3D12PipelineState> pipelineState_[BlendMode::blendModeNum];
 
 	// 頂点シェーダーのバイナリデータ
 	ComPtr<ID3DBlob> vertexShaderBlob_;
@@ -91,7 +87,7 @@ private:
 	IDxcCompiler3* dxcCompiler = nullptr;
 	IDxcIncludeHandler* includeHandler = nullptr;
 
-private: 
+private:
 	// DXGIのインスタンスを受け取る箱
 	DXGIManager* dxgi_ = nullptr;
 };

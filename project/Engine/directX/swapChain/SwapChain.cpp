@@ -19,8 +19,10 @@ void SwapChain::Initialize(WindowManager* windowmanager, DXGIManager* dxgi, Dire
 
 	// スワップチェーン作成
 	CreateSwapChain();
-	// スワップチェーンのリソースを作成
-	CreateSwapChainResources();
+	// リソースを作成
+	CreateResources();
+	// RTVを作成
+	CreateRTV();
 }
 
 void SwapChain::Present() {
@@ -34,7 +36,7 @@ ID3D12Resource* SwapChain::GetCurrentBackBufferResource() {
 
 D3D12_CPU_DESCRIPTOR_HANDLE SwapChain::GetCurrentBackBufferRTVHandle() {
 	backBufferIndex_ = swapChain_->GetCurrentBackBufferIndex();
-	return rtvManager_->GetDescriptorHandleCPU(swapChainIndex_[backBufferIndex_]);
+	return rtvManager_->GetDescriptorHandleCPU(rtvIndex_[backBufferIndex_]);
 }
 
 void SwapChain::CreateSwapChain() {
@@ -51,20 +53,22 @@ void SwapChain::CreateSwapChain() {
 	assert(SUCCEEDED(hr_));
 }
 
-void SwapChain::CreateSwapChainResources() {
+void SwapChain::CreateResources() {
 	// スワップチェーンからリソースを引っ張ってくる
 	hr_ = swapChain_->GetBuffer(0, IID_PPV_ARGS(&swapChainResources_[0]));
 	// うまく取得出来なければ起動できない
 	assert(SUCCEEDED(hr_));
 	hr_ = swapChain_->GetBuffer(1, IID_PPV_ARGS(&swapChainResources_[1]));
 	assert(SUCCEEDED(hr_));
+}
 
+void SwapChain::CreateRTV() {
 	// 1つめ
-	swapChainIndex_[0] = rtvManager_->Allocate();
-	rtvManager_->CreateRTVTexture2d(swapChainIndex_[0], swapChainResources_[0].Get());
+	rtvIndex_[0] = rtvManager_->Allocate();
+	rtvManager_->CreateRTVTexture2d(rtvIndex_[0], swapChainResources_[0].Get());
 	// 2つめ
-	swapChainIndex_[1] = rtvManager_->Allocate();
-	rtvManager_->CreateRTVTexture2d(swapChainIndex_[1], swapChainResources_[1].Get());
+	rtvIndex_[1] = rtvManager_->Allocate();
+	rtvManager_->CreateRTVTexture2d(rtvIndex_[1], swapChainResources_[1].Get());
 }
 
 void SwapChain::SetDXGI(DXGIManager* dxgi) {
