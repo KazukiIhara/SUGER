@@ -11,12 +11,15 @@
 
 // 自作ファイル
 #include "directX/includes/ComPtr.h"
+#include "enum/BlendModeEnum.h"
+#include "enum/PostEffectPipelineEnum.h"
 #include "math/types/Vector4.h"
 
 class DXGIManager;
 class DirectXCommand;
 class RTVManager;
 class SRVUAVManager;
+class PostEffectPipelineManager;
 
 class RenderTexture {
 public:
@@ -24,7 +27,7 @@ public:
 	~RenderTexture() = default;
 
 	// 初期化
-	void Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager, SRVUAVManager* srvUavManager);
+	void Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager, SRVUAVManager* srvUavManager, PostEffectPipelineManager* postEffectPipelineManager);
 	// 描画
 	void Draw();
 
@@ -50,6 +53,8 @@ private:
 	void SetRTVManager(RTVManager* rtvManager);
 	// SRVUAVManagerのセット
 	void SetSRVUAVManager(SRVUAVManager* srvUavManager);
+	// PostEffectPipelineManagerのセット
+	void SetPostEffectPipelineManager(PostEffectPipelineManager* postEffectPipelineManager);
 private:
 	// レンダーテクスチャ用のリソース
 	ComPtr<ID3D12Resource> resource_ = nullptr;
@@ -59,6 +64,10 @@ private:
 	uint32_t srvIndex_ = 0;
 	// クリアカラー
 	const Vector4 kClearColor_ = { 0.0f,0.0f,1.0f,1.0f };
+	// ポストエフェクトのタイプ
+	PostEffectPipelineType postEffectType_ = kPostEffectNone;
+	// ブレンドモード
+	BlendMode blendMode_ = kBlendModeNone;
 	// エラー判別君
 	HRESULT hr_ = S_FALSE;
 private:
@@ -70,4 +79,6 @@ private:
 	RTVManager* rtvManager_ = nullptr;
 	// SRVUAVManagerのインスタンスを受け取る箱
 	SRVUAVManager* srvUavManager_ = nullptr;
+	// PostEffectPipelineManagerのインスタンスを受け取る箱
+	PostEffectPipelineManager* postEffectPipelineManager_ = nullptr;
 };

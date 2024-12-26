@@ -10,6 +10,7 @@
 // ヘッダファイル
 #include "directX/includes/ComPtr.h"
 #include "enum/GraphicsPipelineEnum.h"
+#include "enum/BlendModeEnum.h"
 
 class DXGIManager;
 
@@ -69,16 +70,12 @@ private:
 	// DXGIのインスタンスをセット
 	void SetDXGI(DXGIManager* dxgi);
 
-private: // 静的メンバ変数
-	// ブレンドモードの数
-	static const uint32_t kBlendModeNum = 6;
-
 private:
 	// ルートシグネチャ
 	ComPtr<ID3D12RootSignature> rootSignature_;
 
 	// グラフィックスパイプラインステート (ブレンドモードごとに設定)
-	ComPtr<ID3D12PipelineState> graphicsPipelineState_[kBlendModeNum];
+	ComPtr<ID3D12PipelineState> pipelineState_[BlendMode::blendModeNum];
 
 	// 頂点シェーダーのバイナリデータ
 	ComPtr<ID3DBlob> vertexShaderBlob_;

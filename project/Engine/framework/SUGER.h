@@ -225,6 +225,10 @@ public: // クラスメソッド
 	static ID3D12PipelineState* GetPipelineState(ComputePipelineStateType pipelineState);
 #pragma endregion
 
+#pragma region PostEffectPipelineManager
+
+#pragma endregion
+
 #pragma region ModelManager
 	// モデルの読み込み
 	static void LoadModel(const std::string& filePath);

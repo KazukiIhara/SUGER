@@ -11,6 +11,9 @@
 // MyHedder
 #include "directX/includes/ComPtr.h"
 #include "enum/PostEffectPipelineEnum.h"
+#include "enum/BlendModeEnum.h"
+
+#include "postEffectPipeline/none/NonePostEffectPipeline.h"
 
 class DXGIManager;
 
@@ -26,7 +29,7 @@ public:
 	ID3D12RootSignature* GetRootSignature(PostEffectPipelineType pipelineType);
 
 	// パイプラインステイトのゲッター
-	ID3D12PipelineState* GetPipelineState(PostEffectPipelineType pipelineType);
+	ID3D12PipelineState* GetPipelineState(PostEffectPipelineType pipelineType, BlendMode blendMode);
 
 	// ルートシグネイチャをセット
 	void SetRootSignature(PostEffectPipelineType pipelineType);
@@ -41,7 +44,8 @@ private: // メンバ変数
 	// ルートシグネイチャ
 	ComPtr<ID3D12RootSignature> rootSignatures_[kPostEffectPipelineStateNum];
 	// グラフィックスパイプライン
-	ComPtr<ID3D12PipelineState> graphicsPipelineStates_[kPostEffectPipelineStateNum];
+	ComPtr<ID3D12PipelineState> pipelineStates_[kPostEffectPipelineStateNum][BlendMode::blendModeNum];
 private:
-
+	// NonePostEffect
+	std::unique_ptr<NonePostEffectPipeline> nonePostEffectPipeline_ = nullptr;
 };

@@ -7,14 +7,15 @@
 #include "directX/command/DirectXCommand.h"
 #include "manager/rtv/RTVManager.h"
 #include "manager/srvUav/SRVUAVManager.h"
+#include "manager/pipeline/postEffect/PostEffectPipelineManager.h"
 
-
-void RenderTexture::Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager, SRVUAVManager* srvUavManager) {
+void RenderTexture::Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVManager* rtvManager, SRVUAVManager* srvUavManager, PostEffectPipelineManager* postEffectPipelineManager) {
 	// インスタンスをセット
 	SetDXGI(dxgi);
 	SetCommand(command);
 	SetRTVManager(rtvManager);
 	SetSRVUAVManager(srvUavManager);
+	SetPostEffectPipelineManager(postEffectPipelineManager);
 
 	// リソースを作成
 	CreateResource();
@@ -25,7 +26,14 @@ void RenderTexture::Initialize(DXGIManager* dxgi, DirectXCommand* command, RTVMa
 }
 
 void RenderTexture::Draw() {
+	// ルートシグネイチャを設定
+	command_->GetList()->SetGraphicsRootSignature(postEffectPipelineManager_->GetRootSignature(postEffectType_));
+	// PSOを設定
+	command_->GetList()->SetPipelineState(postEffectPipelineManager_->GetPipelineState(postEffectType_, blendMode_));
+	// ディスクリプタテーブルを設定
+	srvUavManager_->SetGraphicsRootDescriptorTable(0, srvIndex_);
 
+	command_->GetList()->DrawInstanced(3, 1, 0, 0);
 }
 
 Vector4 RenderTexture::GetClearColor()const {
@@ -108,4 +116,9 @@ void RenderTexture::SetRTVManager(RTVManager* rtvManager) {
 void RenderTexture::SetSRVUAVManager(SRVUAVManager* srvUavManager) {
 	assert(srvUavManager);
 	srvUavManager_ = srvUavManager;
+}
+
+void RenderTexture::SetPostEffectPipelineManager(PostEffectPipelineManager* postEffectPipelineManager) {
+	assert(postEffectPipelineManager);
+	postEffectPipelineManager_ = postEffectPipelineManager;
 }

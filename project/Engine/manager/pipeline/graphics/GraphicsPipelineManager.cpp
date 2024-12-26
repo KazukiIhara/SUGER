@@ -94,31 +94,30 @@ void GraphicsPipelineManager::SetPipelineState(GraphicsPipelineStateType pipelin
 	// パイプラインステートごとに対応するグラフィックスパイプラインを設定
 	switch (pipelineState) {
 	case kObject2d:
-		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+		for (int mode = kBlendModeNone; mode < blendModeNum; ++mode) {
 			graphicsPipelineStates_[pipelineState][mode] = object2dGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
 		}
 		break;
 	case kObject3d:
-		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+		for (int mode = kBlendModeNone; mode < blendModeNum; ++mode) {
 			graphicsPipelineStates_[pipelineState][mode] = object3dGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
 		}
 		break;
 	case kObject3dSkinning:
-		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+		for (int mode = kBlendModeNone; mode < blendModeNum; ++mode) {
 			graphicsPipelineStates_[pipelineState][mode] = object3dSkinningGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
 		}
 		break;
 	case kParticle:
-		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+		for (int mode = kBlendModeNone; mode < blendModeNum; ++mode) {
 			graphicsPipelineStates_[pipelineState][mode] = particleGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
 		}
 		break;
 	case kLine:
-		for (int mode = kBlendModeNone; mode <= kBlendModeScreen; ++mode) {
+		for (int mode = kBlendModeNone; mode < blendModeNum; ++mode) {
 			graphicsPipelineStates_[pipelineState][mode] = lineGraphicsPipeline_->GetPipelineState(static_cast<BlendMode>(mode));
 		}
 		break;
-
 
 		// 他のパイプラインステートが追加された場合はここに追加
 	}

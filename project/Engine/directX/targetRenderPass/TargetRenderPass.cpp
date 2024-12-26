@@ -7,9 +7,10 @@
 #include "directX/renderTexture/RenderTexture.h"
 #include "directX/depthStencil/DepthStencil.h"
 
-void TargetRenderPass::Initialize(DirectXCommand* command, SwapChain* swapChain, DepthStencil* depthStencil) {
+void TargetRenderPass::Initialize(DirectXCommand* command, SwapChain* swapChain, RenderTexture* renderTexture, DepthStencil* depthStencil) {
 	SetCommand(command);
 	SetSwapChain(swapChain);
+	SetRenderTexture(renderTexture);
 	SetDepthStencil(depthStencil);
 }
 

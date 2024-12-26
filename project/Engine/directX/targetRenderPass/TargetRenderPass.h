@@ -14,7 +14,7 @@ public:
 	~TargetRenderPass() = default;
 
 	// 初期化
-	void Initialize(DirectXCommand* command, SwapChain* swapChain, DepthStencil* depthStencil);
+	void Initialize(DirectXCommand* command, SwapChain* swapChain, RenderTexture* renderTexture,DepthStencil* depthStencil);
 	// レンダーターゲットのセット
 	void SetRenderTarget(const RenderTargetType& type);
 	// レンダーターゲットのクリア
@@ -43,5 +43,4 @@ private:
 	RenderTexture* renderTexture_ = nullptr;
 	// デプスステンシルのインスタンスを受け取る箱
 	DepthStencil* depthStencil_ = nullptr;
-
 };

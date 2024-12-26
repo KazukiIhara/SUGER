@@ -9,6 +9,7 @@
 
 // ヘッダファイル
 #include "directX/includes/ComPtr.h"
+#include "enum/BlendModeEnum.h"
 
 class DXGIManager;
 
@@ -24,7 +25,7 @@ public:
 	ID3D12RootSignature* GetRootSignature();
 
 	// 指定されたブレンドモードに対応するパイプラインステートを取得する
-	ID3D12PipelineState* GetPipelineState();
+	ID3D12PipelineState* GetPipelineState(BlendMode blendMode);
 
 private:
 	// ルートシグネチャを作成する
@@ -68,11 +69,12 @@ private:
 	void SetDXGI(DXGIManager* dxgi);
 
 private:
+
 	// ルートシグネチャ
 	ComPtr<ID3D12RootSignature> rootSignature_;
 
 	// グラフィックスパイプラインステート
-	ComPtr<ID3D12PipelineState> graphicsPipelineState_;
+	ComPtr<ID3D12PipelineState> pipelineState_[BlendMode::blendModeNum];
 
 	// 頂点シェーダーのバイナリデータ
 	ComPtr<ID3DBlob> vertexShaderBlob_;

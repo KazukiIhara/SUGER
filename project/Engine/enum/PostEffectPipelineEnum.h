@@ -1,5 +1,5 @@
 #pragma once
 
 enum PostEffectPipelineType {
-	kNone,
+	kPostEffectNone,
 };

@@ -32,6 +32,7 @@ std::unique_ptr<LineGroupManager> SUGER::lineManager_ = nullptr;
 
 std::unique_ptr<GraphicsPipelineManager> SUGER::graphicsPipelineManager_ = nullptr;
 std::unique_ptr<ComputePipelineManager> SUGER::computePipelineManager_ = nullptr;
+std::unique_ptr<PostEffectPipelineManager> SUGER::postEffectPipelineManager_ = nullptr;
 
 std::unique_ptr<JsonLevelDataManager> SUGER::jsonLevelDataManager_ = nullptr;
 std::unique_ptr<GrobalDataManager> SUGER::grobalDataManager_ = nullptr;
@@ -161,7 +162,7 @@ void SUGER::Initialize() {
 	swapChain_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), rtvManager_.get());
 	// RenderTextureの初期化
 	renderTexture_ = std::make_unique<RenderTexture>();
-	renderTexture_->Initialize(dxgiManager_.get(), command_.get(), rtvManager_.get(), srvUavManager_.get());
+	renderTexture_->Initialize(dxgiManager_.get(), command_.get(), rtvManager_.get(), srvUavManager_.get(),postEffectPipelineManager_.get());
 	// DepthStencilの初期化
 	depthStencil_ = std::make_unique<DepthStencil>();
 	depthStencil_->Initialize(dxgiManager_.get(), command_.get(), dsvmanager_.get());
@@ -170,7 +171,7 @@ void SUGER::Initialize() {
 	barrier_->Initialize(command_.get(), swapChain_.get(), renderTexture_.get());
 	// TargetRenderPassの初期化
 	targetRenderPass_ = std::make_unique<TargetRenderPass>();
-	targetRenderPass_->Initialize(command_.get(), swapChain_.get(), depthStencil_.get());
+	targetRenderPass_->Initialize(command_.get(), swapChain_.get(), renderTexture_.get(), depthStencil_.get());
 	// Viewportの初期化
 	viewPort_ = std::make_unique<ViewPort>();
 	viewPort_->Initialize(command_.get());
@@ -277,6 +278,11 @@ void SUGER::Finalize() {
 	if (jsonLevelDataManager_) {
 		jsonLevelDataManager_->Finalize();
 		jsonLevelDataManager_.reset();
+	}
+
+	// PostEffectPipelineManagerの終了処理
+	if (postEffectPipelineManager_) {
+		postEffectPipelineManager_.reset();
 	}
 
 	// ComputePipelineManagerの終了処理

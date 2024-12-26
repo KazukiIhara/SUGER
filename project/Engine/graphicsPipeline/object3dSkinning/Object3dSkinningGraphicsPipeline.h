@@ -10,6 +10,7 @@
 // ヘッダファイル
 #include "directX/includes/ComPtr.h"
 #include "enum/GraphicsPipelineEnum.h"
+#include "enum/BlendModeEnum.h"
 
 class DXGIManager;
 
@@ -78,7 +79,7 @@ private:
 	ComPtr<ID3D12RootSignature> rootSignature_;
 
 	// グラフィックスパイプラインステート (ブレンドモードごとに設定)
-	ComPtr<ID3D12PipelineState> graphicsPipelineState_[kBlendModeNum];
+	ComPtr<ID3D12PipelineState> pipelineState_[kBlendModeNum];
 
 	// 頂点シェーダーのバイナリデータ
 	ComPtr<ID3DBlob> vertexShaderBlob_;

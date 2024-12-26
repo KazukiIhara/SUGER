@@ -8,6 +8,7 @@
 #include "collider/Collider.h"
 
 #include "enum/GraphicsPipelineEnum.h"
+#include "enum/BlendModeEnum.h"
 
 // モデルつきの3Dオブジェクト
 class Entity :public Empty {
