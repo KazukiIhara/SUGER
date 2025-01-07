@@ -9,7 +9,7 @@ void Entity::Initialize() {
 	// マテリアル初期化
 	material_.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	material_.enableLighting = true;
-	material_.shininess = 0.0f;
+	material_.shininess = 40.0f;
 	material_.uvTransformMatrix = MakeIdentityMatrix4x4();
 
 	// WVP用のリソース作成
