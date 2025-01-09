@@ -427,6 +427,7 @@ void SUGER::Update() {
 	ShowFPS();
 #endif // _DEBUG
 
+
 }
 
 void SUGER::Draw() {

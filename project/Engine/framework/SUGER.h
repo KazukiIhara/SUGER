@@ -71,7 +71,7 @@ public:
 	// 描画
 	virtual void Draw();
 	// 終了チェック
-	virtual bool IsEndRequest() {
+	bool IsEndRequest() {
 		return endRequest_;
 	}
 public: // 公開メンバ関数
