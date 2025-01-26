@@ -43,5 +43,5 @@ private: // 非公開メンバ変数
 
 	Vector3	rotate_;
 
-	Vector3	translate_;
+	Vector3	translate_ = { 0.0f,1.0f,0.0f };
 };
