@@ -29,7 +29,8 @@ void SampleScene::Initialize() {
 	terrain_ = std::make_unique<EntityController>();
 	terrain_->Initialize(SUGER::CreateEntity("terrain", "terrain"));
 
-	
+
+
 
 	//
 	// GrobalData
@@ -48,6 +49,13 @@ void SampleScene::SceneStatePlayInitialize() {
 }
 
 void SampleScene::SceneStatePlayUpdate() {
+	ImGui::Begin("Sphere Setting");
+	ImGui::DragFloat3("Scale", &scale_.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &rotate_.x, 0.01f);
+	ImGui::DragFloat3("Translate", &translate_.x, 0.01f);
+	ImGui::End();
 
-
+	teapot_->SetScale(scale_);
+	teapot_->SetRotate(rotate_);
+	teapot_->SetTranslate(translate_);
 }

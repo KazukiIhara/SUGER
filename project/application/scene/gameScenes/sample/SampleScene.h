@@ -11,7 +11,7 @@
 #include "objects/pronamaChan/PronamaChan.h"
 #include "objects/teapot/Teapot.h"
 
-class SampleScene :public BaseScene {
+class SampleScene:public BaseScene {
 public: // 公開メンバ関数
 	// コンストラクタ
 	SampleScene() = default;
@@ -38,4 +38,10 @@ private: // 非公開メンバ変数
 
 	// Emitterコントローラ
 	EmitterController emitter_;
+
+	Vector3 scale_ = { 1.0f,1.0f,1.0f };
+
+	Vector3	rotate_;
+
+	Vector3	translate_;
 };
