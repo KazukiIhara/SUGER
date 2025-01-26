@@ -33,8 +33,7 @@ private: // 非公開メンバ変数
 	std::unique_ptr<PronamaChan> pronamaChan_ = nullptr;
 	// ティーポット
 	std::unique_ptr<Teapot> teapot_ = nullptr;
-	// jeanne用のオブジェクト2Dコントローラ
-	Object2DController pronamaChanTex;
+
 	// Emitterコントローラ
 	EmitterController emitter_;
 };

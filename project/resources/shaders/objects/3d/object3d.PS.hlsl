@@ -29,7 +29,7 @@ PixelShaderOutput main(VertexShaderOutput input)
         // DirectionalLight    
         float32_t3 halfVector = normalize(-gPunctualLight.directionalLight.direction + toEye);
         float NDotH = dot(normal, halfVector);
-        float specularPow = 0.0f;
+        float specularPow = pow(saturate(NDotH), gMaterial.shininess);
 
         // PointLight
         float32_t3 pointLightDirection = normalize(input.worldPosition - gPunctualLight.pointLight.position);
@@ -37,7 +37,7 @@ PixelShaderOutput main(VertexShaderOutput input)
         float32_t pointLightFactor = pow(saturate(-pointLightDistance / gPunctualLight.pointLight.radius + 1.0), gPunctualLight.pointLight.decay);
         float32_t3 halfVectorPointLight = normalize(-pointLightDirection + toEye);
         float NDotHPoint = dot(normal, halfVectorPointLight);
-        float specularPowPointLight = 0.0f;
+        float specularPowPointLight = pow(saturate(NDotHPoint), gMaterial.shininess);
 
         // SpotLight
         float32_t3 spotLightDirectionOnSurface = normalize(input.worldPosition - gPunctualLight.spotLight.position);
@@ -46,7 +46,7 @@ PixelShaderOutput main(VertexShaderOutput input)
     
         float32_t3 spotLightHalfVector = normalize(-spotLightDirectionOnSurface + toEye);
         float spotLightNDotH = dot(normal, spotLightHalfVector);
-        float specularPowSpotLight = 0.0f;
+        float specularPowSpotLight = pow(saturate(spotLightNDotH), gMaterial.shininess);
 
         float32_t cosAngle = dot(spotLightDirectionOnSurface, gPunctualLight.spotLight.direction);
         float32_t falloffFactor = saturate((cosAngle - gPunctualLight.spotLight.cosAngle) / (gPunctualLight.spotLight.cosFalloffStart - gPunctualLight.spotLight.cosAngle));
