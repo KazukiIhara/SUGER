@@ -34,6 +34,8 @@ private: // 非公開メンバ変数
 	// ティーポット
 	std::unique_ptr<Teapot> teapot_ = nullptr;
 
+	std::unique_ptr<EntityController> terrain_ = nullptr;
+
 	// Emitterコントローラ
 	EmitterController emitter_;
 };

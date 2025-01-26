@@ -21,10 +21,15 @@ void SampleScene::Initialize() {
 	EulerTransform3D teapotDefaultTransform;
 	teapotDefaultTransform.rotate = { 0.0f,0.0f,0.0f };
 	teapotDefaultTransform.scale = { 1.0f,1.0f,1.0f };
-	teapotDefaultTransform.translate = { 0.0f,0.0f,0.0f };
+	teapotDefaultTransform.translate = { 0.0f,1.0f,0.0f };
 	// teapot作成
 	teapot_ = std::make_unique<Teapot>();
 	teapot_->Initialize(SUGER::CreateEntity("teapot", "Sphere", teapotDefaultTransform));
+
+	terrain_ = std::make_unique<EntityController>();
+	terrain_->Initialize(SUGER::CreateEntity("terrain", "terrain"));
+
+	
 
 	//
 	// GrobalData

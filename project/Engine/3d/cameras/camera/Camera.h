@@ -81,8 +81,8 @@ protected:
 	Matrix4x4 billboardMatrix_{};
 
 	// カメラの初期トランスフォーム
-	const Vector3 kDefaultCameraRotate_ = { 0.0f,0.0f,0.0f };
-	const Vector3 kDefaultCameraTranslate_ = { 0.0f,0.0f,-3.5f };
+	const Vector3 kDefaultCameraRotate_ = { 0.3f,0.0f,0.0f };
+	const Vector3 kDefaultCameraTranslate_ = { 0.0f,4.0f,-7.0f };
 
 	// Camera用リソース
 	ComPtr<ID3D12Resource> cameraResource_ = nullptr;
