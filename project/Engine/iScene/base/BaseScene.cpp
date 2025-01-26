@@ -54,6 +54,14 @@ void BaseScene::Initialize() {
 }
 
 void BaseScene::Update() {
+	ImGui::Begin("Directional Light Setting");
+	ImGui::DragFloat("intensity", &light_->GetLight().directionalLight.intensity, 0.01f);
+	ImGui::ColorEdit3("color", &light_->GetLight().directionalLight.color.x);
+	ImGui::DragFloat3("direction", &direction_.x, 0.01f);
+	direction_ = Normalize(direction_);
+	light_->GetLight().directionalLight.direction = direction_;
+	ImGui::End();
+
 	// デバッグカメラコントロール
 	DebugCameraOperation();
 	// デバッグカメラのアップデート

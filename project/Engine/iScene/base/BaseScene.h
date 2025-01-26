@@ -89,4 +89,6 @@ protected:
 
 	// デバッグカメラがアクティブかどうか
 	bool isActiveDebugCamera_ = false;
+
+	Vector3 direction_ = { 0.0,-1.0f,0.0f };
 };
